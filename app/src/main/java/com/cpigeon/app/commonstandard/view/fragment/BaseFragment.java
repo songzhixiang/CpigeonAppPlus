@@ -59,19 +59,20 @@ public abstract class BaseFragment extends Fragment implements IView {
                 return true;
         }
     }
+
     @Override
     public boolean checkLogin() {
         try {
             boolean res = (boolean) SharedPreferencesTool.Get(getActivity(), "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);
-            res &= SharedPreferencesTool.Get(getActivity(), "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN) ==
-                    Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(getActivity(), "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]);
+            res &= SharedPreferencesTool.Get(getActivity(), "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN).equals(
+                    Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(getActivity(), "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]));
             return res;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public Map<String, Object> getLoginUserInfo(){
+    public Map<String, Object> getLoginUserInfo() {
         Map<String, Object> map = new HashMap<>();
         map.put("username", getString(R.string.user_name));
         map.put("touxiang", "");

@@ -12,7 +12,7 @@ import com.cpigeon.app.modular.home.model.daoimpl.AdDaoImpl;
 public class HomePresenter extends BasePresenter<IHomeView,IBaseDao>{
     public HomePresenter(IHomeView mView) {
         super(mView);
-        mModel = new AdDaoImpl();
+//        mModel = new AdDaoImpl();
     }
 
 

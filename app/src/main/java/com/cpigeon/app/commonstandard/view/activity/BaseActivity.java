@@ -30,7 +30,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/5.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements IView{
+public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     /**
      * 网络观察者
@@ -97,33 +97,35 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // TODO Auto-generated method stub
-        if(ev.getAction() == MotionEvent.ACTION_DOWN) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
-            if(isHideInput(view, ev)) {
+            if (isHideInput(view, ev)) {
                 HideSoftInput(view.getWindowToken());
             }
         }
         return super.dispatchTouchEvent(ev);
     }
+
     // 判定是否需要隐藏
     private boolean isHideInput(View v, MotionEvent ev) {
-        if(v != null && (v instanceof EditText)) {
+        if (v != null && (v instanceof EditText)) {
             int[] l = {0, 0};
             v.getLocationInWindow(l);
             int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
                     + v.getWidth();
-            if(ev.getX() > left && ev.getX() < right && ev.getY() > top
+            if (ev.getX() > left && ev.getX() < right && ev.getY() > top
                     && ev.getY() < bottom) {
                 return false;
-            }else {
+            } else {
                 return true;
             }
         }
         return false;
     }
+
     // 隐藏软键盘
     private void HideSoftInput(IBinder token) {
-        if(token != null) {
+        if (token != null) {
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             manager.hideSoftInputFromWindow(token,
                     InputMethodManager.HIDE_NOT_ALWAYS);
@@ -171,18 +173,20 @@ public abstract class BaseActivity extends AppCompatActivity implements IView{
                 return true;
         }
     }
+
     @Override
     public boolean checkLogin() {
         try {
             boolean res = (boolean) SharedPreferencesTool.Get(this, "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);
-            res &= SharedPreferencesTool.Get(this, "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN) ==
-                    Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(this, "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]);
+            res &= SharedPreferencesTool.Get(this, "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN).equals(
+                    Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(this, "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]));
             return res;
         } catch (Exception e) {
             return false;
         }
     }
-    public Map<String, Object> getLoginUserInfo(){
+
+    public Map<String, Object> getLoginUserInfo() {
         Map<String, Object> map = new HashMap<>();
         map.put("username", getString(R.string.user_name));
         map.put("touxiang", "");

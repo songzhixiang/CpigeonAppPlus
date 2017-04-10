@@ -9,4 +9,5 @@
     <string name="prompt">提示</string>
     <string name="user_name">用户名</string>
     <string name="please_login">请您登陆</string>
+    <string name="spik">跳过</string>
 </resources>
