@@ -1,13 +1,9 @@
-package com.cpigeon.app.modular.usercenter.presenter;
+package com.cpigeon.app.modular.guide.presenter;
 
-import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.modular.usercenter.model.dao.ISplashDao;
-import com.cpigeon.app.modular.usercenter.model.daoimpl.SplashDaoImpl;
-import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ISplashView;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.cpigeon.app.modular.guide.model.dao.ISplashDao;
+import com.cpigeon.app.modular.guide.model.daoimpl.SplashDaoImpl;
+import com.cpigeon.app.modular.guide.view.viewdao.ISplashView;
 
 /**
  * Created by chenshuai on 2017/4/10.

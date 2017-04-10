@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.usercenter.view.activity.viewdao;
+package com.cpigeon.app.modular.guide.view.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
 

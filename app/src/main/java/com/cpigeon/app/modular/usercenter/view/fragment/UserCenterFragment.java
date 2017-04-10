@@ -142,11 +142,6 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
 
     }
 
-    @Override
-    public boolean checkLogin() {
-        return false;
-    }
-
 
     @Override
     public void showUserInfo(Map<String, Object> data) {

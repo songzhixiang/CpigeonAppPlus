@@ -1,16 +1,14 @@
-package com.cpigeon.app.modular.usercenter.model.daoimpl;
+package com.cpigeon.app.modular.guide.model.daoimpl;
 
 import android.text.TextUtils;
-import android.view.View;
 
 import com.cpigeon.app.MyApp;
-import com.cpigeon.app.modular.usercenter.model.dao.ISplashDao;
+import com.cpigeon.app.modular.guide.model.dao.ISplashDao;
 import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.CpigeonConfig;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;

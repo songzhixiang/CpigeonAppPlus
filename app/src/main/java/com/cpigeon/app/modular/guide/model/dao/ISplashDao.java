@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.usercenter.model.dao;
+package com.cpigeon.app.modular.guide.model.dao;
 
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 
