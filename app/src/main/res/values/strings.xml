@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CpigeonAppPlus</string>
+    <string name="regist_new_user">新用户注册</string>
+    <string name="reset_password">重置密码</string>
+    <string name="sentence_not_watch_pay_agreement_prompt">请仔细阅读并同意《中鸽网支付协议》</string>
+    <string name="sentence_not_watch_regist_agreement_prompt">请仔细阅读并同意《中鸽网注册协议》</string>
+    <string name="confirm">确定</string>
+    <string name="please_enter_the_correct_phone_number">请输入正确的手机号码</string>
+    <string name="prompt">提示</string>
+    <string name="user_name">用户名</string>
+    <string name="please_login">请您登陆</string>
+</resources>

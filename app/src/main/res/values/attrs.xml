@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SearchEditText">
+        <attr name="drawableDel" format="reference" />
+        <attr name="search_gravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

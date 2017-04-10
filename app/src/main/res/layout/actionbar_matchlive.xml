@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                style="@style/layout_custom_actionbar"
+                android:layout_width="match_parent"
+                android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <cn.bingoogolapple.badgeview.BGABadgeTextView
+            android:id="@+id/tv_actionbar_matchtype_xh"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_round_left_focus"
+            android:gravity="center"
+            android:text="协会直播"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"/>
+
+        <cn.bingoogolapple.badgeview.BGABadgeTextView
+            android:id="@+id/tv_actionbar_matchtype_gp"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_round_right_default"
+            android:gravity="center"
+            android:text="公棚直播"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            app:badge_gravity="rightTop"/>
+    </LinearLayout>
+</RelativeLayout>

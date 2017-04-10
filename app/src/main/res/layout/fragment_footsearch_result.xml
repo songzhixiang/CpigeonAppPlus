@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools">
+    <ScrollView
+       android:padding="8dp"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            card_view:cardUseCompatPadding="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_card_title_foot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="足环号码"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textSize="16sp"
+                        android:layout_margin="8dp"
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_foot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_card_title_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="鸽主姓名"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:id="@+id/tv_card_content_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:id="@+id/tv_card_title_xm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赛事项目"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_xm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:id="@+id/tv_card_title_org"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赛事组织"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_org"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_card_title_bskj"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:text="比赛空距"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_bskj"
+                        android:layout_width="match_parent"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_card_title_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:text="参赛时间"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_card_title_csys"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="参赛羽数"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_card_content_csys"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_card_title_mc"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="获得名次"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_card_content_mc"
+                        android:layout_width="match_parent"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="未知"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_card_title_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:text="赛鸽分速"/>
+
+                    <com.cpigeon.app.utils.customview.MarqueeTextView
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/tv_card_content_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="未知"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+</RelativeLayout>

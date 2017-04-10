@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--点击效果-->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <!-- android:radius 弧形的半径 -->
+            <solid android:color="@color/bgColor_alert_button_press"/>
+            <corners android:radius="@dimen/radius_alertview"/>
+        </shape>
+    </item>
+    <item android:drawable="@android:color/transparent"/>
+</selector>

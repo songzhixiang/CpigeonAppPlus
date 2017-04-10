@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="bottom-navigation-bar-1.4.1">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.ashokvarma.android/bottom-navigation-bar/1.4.1/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.ashokvarma.android/bottom-navigation-bar/1.4.1/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.ashokvarma.android/bottom-navigation-bar/1.4.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ashokvarma.android/bottom-navigation-bar/1.4.1/b9f16c4da6650ebe5c169b4061b8ceb09e72967/bottom-navigation-bar-1.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

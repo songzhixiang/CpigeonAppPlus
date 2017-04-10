@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLayoutGray4"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="1.输入手机号"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=">" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="2.输入验证码"
+            android:textColor="#adacac" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=">" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="3.设置密码"
+            android:textColor="#adacac" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_regist_phone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:hint="请输入您的手机号码"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="12dp"
+        android:textColorHint="@color/hintColor" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_regist_next"
+        style="@style/RegistButton"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:text="下一步" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_regist_protocol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:weightSum="1">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cb_regist_user_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:button="@drawable/checkbox_blue"
+                android:paddingLeft="4dp"
+                android:text="我已阅读并同意"
+                android:textColor="@color/textColor_protocolPrompt"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_regist_user_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="《中鸽网注册协议》"
+                android:textColor="@color/colorBlue"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

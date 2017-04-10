@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    signingConfigs {
+        //签名设置
+        release {
+            keyAlias "Cpigeon.APP"
+            keyPassword 'cpi+ge*on@2#017~'
+            storeFile file("C:\\APP\\cpigeonapp.jks")
+            storePassword "cpi+ge*on@2#01~7."
+        }
+    }
+    defaultConfig {
+        applicationId "com.cpigeon.app"
+        minSdkVersion 17
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SERVER", "\"http://www.cpigeon.com:818\"" //默认服务器地址配置
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+        }
+        debug {
+            buildConfigField "String", "SERVER", "\"http://192.168.0.52:8888\"" //配置BuildConfig字段
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    testCompile 'junit:junit:4.12'
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.0'
+    //权限管理
+    compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
+    //视图注解
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //视频播放
+    compile 'fm.jiecao:jiecaovideoplayer:5.5.2'
+    //图片加载
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //底部TabBar
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
+    //dex分包兼容5.0
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:cardview-v7:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.android.support:gridlayout-v7:25.3.0'
+    compile 'com.youth.banner:banner:1.4.9'
+    compile 'org.xutils:xutils:3.5.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.8'
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中lat est.release指代最新版本号，也可以指定明确的版本号，例如2.1.5
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
+    compile 'cn.bingoogolapple:bga-badgeview:1.1.3'
+    compile 'cn.pedant.sweetalert:library:1.3'
+    compile 'com.orhanobut:logger:1.15'
+    compile files('libs/commons-codec-1.10.jar')
+    compile files('libs/libammsdk.jar')
+}

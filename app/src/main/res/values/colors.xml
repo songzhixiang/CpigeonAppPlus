@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3e9cfc</color>
+    <color name="colorPrimaryDark">#3e9cfc</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="textColor_light_black">#383838</color>
+    <color name="textColor_gray2">#A2A2A2</color>
+    <color name="colorLayoutGray4">#F6F6F6</color>
+    <color name="colorButton_primary_focus">#1989fc</color>
+    <color name="colorButton_primary_disable">#d7dde1</color>
+    <color name="colorButton_primary_normal">#3e9cfc</color>
+    <color name="home_bottom_color">#616161</color>
+    <color name="user_center_header_top">#85C2FE</color>
+    <color name="textColor_gray">#777777</color>
+    <color name="light_red">#ff2f32</color>
+    <color name="svg_icon_gray">#7A7E83</color>
+    <color name="light_green">#34A556</color>
+    <color name="colorGreen">#0fa701</color>
+    <!--页面背景颜色-->
+    <color name="colorLayoutGray">#d8d8d9</color>
+    <color name="colorLayoutGray2">#ececec</color>
+    <color name="colorLayoutGray3">#E3E3E3</color>
+    <color name="colorLayoutSplitLineGray">#d6d6d6</color>
+    <color name="userCenterHeadBackground">#3e9cfc</color>
+    <color name="search_edit_gray">#ffcccccc</color>
+    <color name="match_info_detial_background">#F9FFD3</color>
+    <color name="user_center_header_bottom">#409FFF</color>
+    <color name="layout_background">#F0EFF5</color>
+    <color name="bg_layout_gg">#008891</color>
+
+    <!--图标颜色-->
+    <color name="svg_icon_black">#3d3d3d</color>
+    <color name="svg_icon_light_black">#616161</color>
+
+    <color name="svg_icon_light_gray">#a6aaaf</color>
+    <!--图标颜色 end-->
+
+
+    <color name="colorButton_secondary_disable">#7dbafa</color>
+    <color name="colorButton_secondary_normal">#3e9cfc</color>
+    <color name="colorButton_secondary_focus">#1989fc</color>
+
+    <color name="colorButton_Default_disable">#d7dde1</color>
+    <color name="colorButton_Default_normal">#fa2626</color>
+    <color name="colorButton_Default_focus">#ff5f5f</color>
+
+    <color name="colorButton_orange_normal">#ffa750</color>
+    <color name="colorButton_orange_focus">#dd7e21</color>
+
+    <color name="colorButton_YZM_disable">#ced7dc</color>
+    <color name="colorButton_YZM_normal">#4DAFEA</color>
+    <color name="colorButton_YZM_focus">#2C86E5</color>
+    <!--文本颜色-->
+    <color name="textColor_blue">#2C86E5</color>
+    <color name="textColor_gray_dark">#5e5e5e</color>
+    <color name="textColor_promptTitle">#979797</color>
+    <color name="textColor_promptContent">#5a5a5a</color>
+    <color name="textColor_promptContentExplain">#A2A2A2</color>
+    <color name="textColor_promptContentRight">#767676</color>
+    <color name="textColor_footSearchResultTitle">#6E6E6E</color>
+    <color name="textColor_footSearchResultContent">#027BFB</color>
+    <color name="hintColor">#d1d1d6</color>
+    <color name="textColor_protocolPrompt">#949494</color>
+
+
+    <!--其他颜色-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="light_blue">#6593cb</color>
+    <color name="light_blue2">#73b9ff</color>
+    <color name="light_blue3">#92c8fc</color>
+    <color name="light_red2">#F73327</color>
+    <color name="light_red3">#fa5950</color>
+    <color name="light_black">#2e2e2e</color>
+    <color name="light_black2">#383838</color>
+    <color name="light_black3">#545454</color>
+    <color name="user_about">#F0EFF5</color>
+    <color name="tran_black">#636363</color>
+    <color name="colorSign">#F4B757</color>
+    <color name="name_selector_color">#cccccc</color>
+    <color name="default_clickable_color">#cccccc</color>
+    <color name="color_8290AF">#8290AF</color>
+    <color name="praise_item_default">#333333</color>
+    <color name="praise_item_selector_default">#cccccc</color>
+    <color name="praise_item">#73b9ff</color>
+    <color name="im_line_color">#dadada</color>
+    <color name="im_font_color_text_hint">#abb1b6</color>
+    <color name="im_social_dig_name_bg">#DDDDDD</color>
+
+    <!--覆盖颜色-->
+    <color name="bgColor_overlay">#60000000</color>
+    <!--窗口背景颜色-->
+    <color name="bgColor_alertview_alert">#f8f8f8</color>
+    <color name="bgColor_alertview_alert_start">#f0f0f0</color>
+    <!--标题颜色-->
+    <color name="textColor_alert_title">#000000</color>
+    <color name="textColor_actionsheet_title">#8f8f8f</color>
+    <!--消息颜色-->
+    <color name="textColor_alert_msg">#000000</color>
+    <color name="textColor_actionsheet_msg">#8f8f8f</color>
+    <!--线条颜色-->
+    <color name="bgColor_divier">#d7d7db</color>
+    <!--取消按钮颜色-->
+    <color name="textColor_alert_button_cancel">#007aff</color>
+    <!--高亮按钮颜色-->
+    <color name="textColor_alert_button_destructive">#ff3b30</color>
+    <!--普通按钮文字颜色-->
+    <color name="textColor_alert_button_others">#007aff</color>
+    <!--点击颜色-->
+    <color name="bgColor_alert_button_press">#EAEAEA</color>
+    <!--actionsheet模式的取消按钮背景颜色-->
+    <color name="bgColor_actionsheet_cancel_nor">#ffffff</color>
+
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="background_guide">#c0030303</color>
+    <color name="colorBlue">#3e9cfc</color>
+
+
+
+</resources>

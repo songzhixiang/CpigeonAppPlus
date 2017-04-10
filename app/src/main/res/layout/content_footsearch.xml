@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@mipmap/footsearch_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_prompt_title"
+            android:textSize="18sp"
+            android:textColor="#0072e6"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_prompt_right"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:textColor="#242424"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_openServices"
+            android:layout_marginBottom="24dp"
+            android:textSize="16sp"
+            android:textColor="#ff5400"
+            android:layout_marginTop="24dp"
+            android:gravity="right"
+            android:layout_marginRight="8dp"
+            android:text="点击升级套餐查看更多结果>>"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/button_primary_bg"
+            android:id="@+id/tv_search"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_margin="8dp"
+            android:text="搜索"
+            android:textSize="18sp"/>
+
+        <com.cpigeon.app.utils.customview.SearchEditText
+            android:id="@+id/search_edittext"
+
+            style="@style/searchedittextstyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@id/tv_search"
+            android:hint="请输入足环号码、鸽主姓名"
+            android:layout_marginStart="16dp"
+            app:drawableDel="@mipmap/ic_delete"/>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="64dp"
+        android:textColor="#5f5f5f"
+        android:textSize="16sp"
+        android:text="温馨提示：请输入完整足环进行查询"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#5f5f5f"
+        android:textSize="16sp"
+        android:text="统一环号格式为2017-01-123456"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#5f5f5f"
+        android:textSize="16sp"
+        android:text="特比环号格式为17丰泽夏80203"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

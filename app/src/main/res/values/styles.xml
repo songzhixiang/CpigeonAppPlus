@@ -1,0 +1,129 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--自定义ActionBar样式-->
+    <style name="layout_custom_actionbar">
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="searchedittextstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/search_edit_bg</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:inputType">text</item>
+        <item name="android:drawableLeft">@mipmap/ic_search</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/textColor_gray2</item>
+        <item name="android:textColor">@color/textColor_light_black</item>
+        <item name="android:hint">搜索</item>
+    </style>
+    <style name="SingleLine">
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="Marquee" parent="SingleLine">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:focusable">false</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
+
+    <style name="race_info_detial_title" parent="SingleLine">
+        <item name="android:paddingTop">@dimen/listitem_race_info_detial_title_padding</item>
+        <item name="android:paddingBottom">@dimen/listitem_race_info_detial_title_padding</item>
+        <item name="android:minWidth">@dimen/listitem_race_info_detial_title_minwidth</item>
+        <item name="android:textSize">@dimen/listitem_race_info_detial_title_textsize</item>
+        <item name="android:textColor">@color/light_black</item>
+    </style>
+
+    <style name="race_info_detial_content" parent="Marquee">
+        <item name="android:paddingTop">@dimen/listitem_race_info_detial_content_padding</item>
+        <item name="android:paddingBottom">@dimen/listitem_race_info_detial_content_padding</item>
+        <item name="android:layout_marginLeft">@dimen/listitem_race_info_detial_content_marginleft
+        </item>
+        <item name="android:textSize">@dimen/listitem_race_info_detial_content_textsize</item>
+        <item name="android:textColor">@color/light_black2</item>
+    </style>
+
+
+    <style name="foot_search_result_content" parent="Marquee">
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:gravity">center_vertical</item>
+
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:textColor">@color/textColor_footSearchResultContent</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">@dimen/fragment_foot_search_textview_promptContent_textsize
+        </item>
+    </style>
+
+    <style name="foot_search_result_title" parent="SingleLine">
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:textColor">@color/textColor_footSearchResultTitle</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:gravity">right|center_vertical</item>
+
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">@dimen/fragment_foot_search_textview_promptContent_textsize
+        </item>
+    </style>
+
+    <!-- 自定义仿IOS的ActionSheet底部Dialog的样式 ，有模糊效果 -->
+    <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
+
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
+    </style>
+
+    <!-- ActionSheet进出动画 -->
+    <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
+    </style>
+
+    <style name="RegistButton">
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/button_primary_bg</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+</resources>

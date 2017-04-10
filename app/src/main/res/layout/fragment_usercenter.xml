@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_user_center_userInfo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_user_center_layout_userinfo_height"
+        android:background="@drawable/background_user_center_header">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fragment_user_center_userLogo"
+            android:layout_width="@dimen/fragment_user_center_imageview_headimg_width"
+            android:layout_height="@dimen/fragment_user_center_imageview_headimg_height"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/fragment_user_center_imageview_headimg_marginleft"
+            android:layout_marginTop="@dimen/fragment_user_center_imageview_headimg_margintop" />
+
+        <TextView
+            android:id="@+id/fragment_user_center_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/fragment_user_center_userLogo"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/fragment_user_center_textview_username_marginleft"
+            android:layout_marginTop="@dimen/fragment_user_center_textview_username_margintop"
+            android:layout_toRightOf="@id/fragment_user_center_userLogo"
+            android:singleLine="true"
+            android:text="用户名"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/fragment_user_center_textview_username_textsize"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/fragment_user_center_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/fragment_user_center_userName"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/fragment_user_center_userLogo"
+            android:padding="@dimen/dp_10"
+            android:singleLine="true"
+            android:text="个人信息"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/fragment_user_center_textview_userinfo_textsize"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_sign"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/colorSign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_marginRight="2dp"
+                    android:src="@mipmap/ic_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_sign_status"
+                    android:textColor="@color/colorWhite"
+                    android:text="签到"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/user_center_header_bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_user_center_person"
+            android:padding="@dimen/dp_10"
+            android:text="个人中心"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLayoutGray4"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:id="@+id/ll_user_center_msg"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_msg"
+                app:badge_gravity="rightTop"/>
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="消息通知"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_center_feelback"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_feedback"
+                app:badge_gravity="rightTop"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="意见反馈"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"
+                android:id="@+id/marqueeTextView" />
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_center_focus"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_coll"
+                app:badge_gravity="rightTop"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="我的关注"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:background="@color/colorLayoutGray4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:id="@+id/ll_user_center_order"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_orders"
+                app:badge_gravity="rightTop"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="我的订单"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_money"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_balance"
+                app:badge_gravity="rightTop"/>
+            <TextView
+                android:id="@+id/tv_user_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:textColor="@color/textColor_gray"
+                android:textSize="13sp"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="账户余额"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_jifen"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_score"
+                app:badge_gravity="rightTop"/>
+            <TextView
+                android:id="@+id/tv_user_jifen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:textColor="@color/textColor_gray"
+                android:textSize="14sp"/>
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="我的积分"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/colorLayoutGray4"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:id="@+id/ll_user_center_setting"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_setting"
+                app:badge_gravity="rightTop"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="设置"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_center_aboutus"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_about"
+                app:badge_gravity="rightTop"/>
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="关于我们"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4"/>
+        <LinearLayout
+            android:id="@+id/ll_user_center_help"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <cn.bingoogolapple.badgeview.BGABadgeImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                android:src="@mipmap/ic_usercenter_help"
+                app:badge_gravity="rightTop"/>
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:layout_marginTop="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="帮助"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
