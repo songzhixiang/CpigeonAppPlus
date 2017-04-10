@@ -18,7 +18,7 @@
         android:hint="比赛/协会名称"
         app:search_gravity="center"/>
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/viewpager_matchlive"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

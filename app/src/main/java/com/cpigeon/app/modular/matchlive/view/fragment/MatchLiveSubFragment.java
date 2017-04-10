@@ -39,6 +39,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private static final int TOTAL_COUNTER = 18;
     private static final int PAGE_SIZE = 6;
     private MatchLiveSubPre pre = new MatchLiveSubPre(this);
+    String currMatchType = "";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         ButterKnife.bind(this, mView);
         initView();
         pre.loadGPData(0);
+        pre.loadXHData(0);
         return mView;
     }
 
@@ -58,7 +60,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void showGPData(List<MatchInfo> matchInfoList,int type) {
-        this.matchInfos = new ArrayList<>();
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
@@ -67,7 +68,10 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void showXHData(List<MatchInfo> matchInfoList,int type) {
-
+        this.matchInfos = matchInfoList;
+        matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
+        matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        mRecyclerView.setAdapter(matchLiveAdapter);
     }
 
     @Override
@@ -85,7 +89,9 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     }
 
-
+    public void setMatchType(String matchType) {
+        currMatchType = matchType;
+    }
 
     @Override
     public void onRefresh() {
@@ -98,5 +104,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                 matchLiveAdapter.setEnableLoadMore(true);
             }
         }, delayMillis);
+    }
+
+    public interface OnRefreshListener {
+        void onStartRefresh(MatchLiveSubFragment fragment);
+
+        void onRefreshFinished(MatchLiveSubFragment fragment, int loadCount);
     }
 }

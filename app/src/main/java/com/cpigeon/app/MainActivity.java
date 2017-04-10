@@ -19,6 +19,7 @@ import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
 import com.cpigeon.app.modular.home.view.fragment.IHomeView;
 import com.cpigeon.app.modular.home.model.bean.AD;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
+import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveSubFragment;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.utils.CommonTool;
@@ -40,13 +41,13 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     BottomNavigationBar mBottomNavigationBar;
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
-
+    private OnMatchTypeChangeListener onMatchTypeChangeListener;
     private int lastTabIndex = -1;//当前页面索引
 
     //主页
     private HomeFragment homeFragment;
     //直播
-    private MatchLiveSubFragment matchLiveFragment;
+    private MatchLiveFragment matchLiveFragment;
     //个人中心
     private UserCenterFragment userCenterFragment;
     //足环查询
@@ -58,7 +59,9 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     private BadgeItem numberBadgeItem;
     private int laseSelectedPosition = 0;
     private boolean mHasUpdata = false;
-
+    public void setOnMatchTypeChangeListener(OnMatchTypeChangeListener onMatchTypeChangeListener) {
+        this.onMatchTypeChangeListener = onMatchTypeChangeListener;
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +69,11 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
 //        CrashReport.setUserId("" + CpigeonData.getInstance().getUserId(mContext));
         ButterKnife.bind(this);
         initView();
-        mPresenter=new HomePresenter(this);
     }
 
     private void initView() {
         homeFragment = new HomeFragment();
-        matchLiveFragment = new MatchLiveSubFragment();
+        matchLiveFragment = new MatchLiveFragment();
         userCenterFragment = new UserCenterFragment();
         footSearchFragment = new FootSearchFragment();
 //        mCpigeonGroupFragment = new CpigeonGroupFragment();
@@ -148,7 +150,7 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
                 break;
             case 1:
                 if (matchLiveFragment == null) {
-                    matchLiveFragment = new MatchLiveSubFragment();
+                    matchLiveFragment = new MatchLiveFragment();
                     transaction.add(R.id.viewpager, matchLiveFragment);
                 } else {
                     transaction.show(matchLiveFragment);
@@ -236,7 +238,12 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     public void hideLoading() {
 
     }
-
+    /**
+     * 比赛类型切换的监听器
+     */
+    public interface OnMatchTypeChangeListener {
+        void onChanged(String lastType, String currType);
+    }
 
     // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。
 //    private void setAlias() {
