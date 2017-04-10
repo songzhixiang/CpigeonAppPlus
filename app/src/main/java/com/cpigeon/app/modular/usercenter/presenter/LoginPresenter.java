@@ -1,9 +1,9 @@
 package com.cpigeon.app.modular.usercenter.presenter;
 
 
-import com.cpigeon.app.commonstandard.activity.IView;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.modular.usercenter.activity.viewdao.ILoginView;
+import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ILoginView;
 import com.cpigeon.app.modular.usercenter.model.dao.ILoginDao;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.LoginDaoImpl;
 

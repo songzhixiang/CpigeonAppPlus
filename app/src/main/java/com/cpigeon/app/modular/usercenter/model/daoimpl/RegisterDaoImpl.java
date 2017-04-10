@@ -1,7 +1,7 @@
 package com.cpigeon.app.modular.usercenter.model.daoimpl;
 
 
-import com.cpigeon.app.commonstandard.model.SendVerificationCodeImpl;
+import com.cpigeon.app.commonstandard.model.daoimpl.SendVerificationCodeImpl;
 import com.cpigeon.app.modular.usercenter.model.dao.IRegisterDao;
 import com.cpigeon.app.utils.CallAPI;
 

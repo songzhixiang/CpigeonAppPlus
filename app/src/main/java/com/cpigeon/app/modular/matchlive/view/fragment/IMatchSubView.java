@@ -1,6 +1,6 @@
 package com.cpigeon.app.modular.matchlive.view.fragment;
 
-import com.cpigeon.app.commonstandard.activity.IView;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 
 import java.util.List;

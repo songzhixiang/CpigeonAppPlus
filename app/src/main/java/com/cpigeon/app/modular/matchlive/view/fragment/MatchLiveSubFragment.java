@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.fragment.BaseFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
 
@@ -61,7 +61,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         this.matchInfos = new ArrayList<>();
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
-        matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecyclerView.setAdapter(matchLiveAdapter);
     }
 

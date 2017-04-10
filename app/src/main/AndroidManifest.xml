@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".modular.usercenter.activity.LoginActivity"
+            android:name=".modular.usercenter.view.activity.LoginActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,10 +29,10 @@
 
         </activity>
         <activity
-            android:name=".modular.usercenter.activity.RegisterActivity"
+            android:name=".modular.usercenter.view.activity.RegisterActivity"
             android:windowSoftInputMode="adjustPan|stateHidden">
         </activity>
-        <activity android:name=".modular.footsearch.activity.FootSearchActivity"
+        <activity android:name=".modular.footsearch.view.activity.FootSearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
     </application>
 

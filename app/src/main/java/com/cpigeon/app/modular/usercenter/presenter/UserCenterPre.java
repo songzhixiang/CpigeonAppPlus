@@ -2,9 +2,9 @@ package com.cpigeon.app.modular.usercenter.presenter;
 
 import android.os.Handler;
 
-import com.cpigeon.app.commonstandard.activity.IView;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.UserCenterDaoImpl;
-import com.cpigeon.app.modular.usercenter.fragment.viewdao.IUserCenterView;
+import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.dao.IUserCenterDao;
 
 import java.util.Map;

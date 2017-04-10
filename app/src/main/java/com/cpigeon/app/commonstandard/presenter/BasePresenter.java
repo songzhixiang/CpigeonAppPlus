@@ -2,8 +2,8 @@ package com.cpigeon.app.commonstandard.presenter;
 
 import android.os.Handler;
 
-import com.cpigeon.app.commonstandard.activity.IView;
-import com.cpigeon.app.commonstandard.model.IBaseDao;
+import com.cpigeon.app.commonstandard.view.activity.IView;
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 
 /**
  * Created by Administrator on 2017/4/6.

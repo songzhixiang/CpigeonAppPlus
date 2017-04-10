@@ -2,8 +2,8 @@ package com.cpigeon.app.modular.footsearch.presenter;
 
 import android.os.Handler;
 
-import com.cpigeon.app.commonstandard.activity.IView;
-import com.cpigeon.app.modular.footsearch.fragment.IFootSearchView;
+import com.cpigeon.app.commonstandard.view.activity.IView;
+import com.cpigeon.app.modular.footsearch.view.fragment.IFootSearchView;
 import com.cpigeon.app.modular.footsearch.model.dao.ICpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.model.daoimpl.CpigeonServicesInfoImpl;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;

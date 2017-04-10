@@ -2,14 +2,14 @@ package com.cpigeon.app.modular.usercenter.presenter;
 
 import android.text.TextUtils;
 
-import com.cpigeon.app.commonstandard.activity.IView;
-import com.cpigeon.app.commonstandard.model.ISendVerificationCode;
+import com.cpigeon.app.commonstandard.view.activity.IView;
+import com.cpigeon.app.commonstandard.model.dao.ISendVerificationCode;
 
 
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.modular.usercenter.activity.RegisterActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.RegisterActivity;
 
-import com.cpigeon.app.modular.usercenter.activity.viewdao.IRegisterView;
+import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IRegisterView;
 import com.cpigeon.app.modular.usercenter.model.dao.IRegisterDao;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.RegisterDaoImpl;
 import com.cpigeon.app.utils.CallAPI;
