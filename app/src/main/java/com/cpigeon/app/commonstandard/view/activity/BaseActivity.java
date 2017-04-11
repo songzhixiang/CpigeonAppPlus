@@ -250,13 +250,15 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             case DialogSuccess:
                 dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(tip)
+                dialogPrompt.setTitleText("成功")
+                        .setContentText(tip)
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogError:
                 dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(tip)
+                dialogPrompt.setTitleText("失败")
+                        .setContentText(tip)
                         //// TODO: 2017/4/10 图标
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;

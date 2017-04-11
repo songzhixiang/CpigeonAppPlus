@@ -166,7 +166,7 @@ public class WebActivity extends BaseActivity {
                 if (timeoutCountDownTimer != null) {
                     timeoutCountDownTimer.cancel();
                 }
-                timeoutCountDownTimer = new CountDownTimer(timeout, 100) {
+                timeoutCountDownTimer = new CountDownTimer(timeout, 500) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -181,7 +181,7 @@ public class WebActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (wvWebview.getProgress() < 100) {
+                                if (wvWebview != null && wvWebview.getProgress() < 100) {
                                     mHasError = true;
                                     wvWebview.stopLoading();
                                 }

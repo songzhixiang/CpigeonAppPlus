@@ -53,6 +53,14 @@
             android:name=".modular.usercenter.view.activity.FeedBackActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.UserOrderListActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.UserInfoActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

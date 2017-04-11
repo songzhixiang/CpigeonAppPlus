@@ -4040,7 +4040,6 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable addFeedback(final Context context,
-                                                                    int userid,
                                                                     final String content,
                                                                     final String phoneNum,
                                                                     @NonNull final Callback<Boolean> callback) {
@@ -4051,7 +4050,7 @@ public class CallAPI {
 
         RequestParams requestParams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.FEEDBACK_URL);
         pretreatmentParams(requestParams);
-        requestParams.addParameter("uid", userid);
+        requestParams.addParameter("uid", CpigeonData.getInstance().getUserId(context));
         requestParams.addParameter("t", "android");
         requestParams.addParameter("pnum", phoneNum);
         requestParams.addBodyParameter("c", content);

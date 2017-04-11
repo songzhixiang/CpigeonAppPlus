@@ -16,11 +16,15 @@ import android.widget.TextView;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.UserOrderListActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
+import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
@@ -117,9 +121,14 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         switch (view.getId()) {
             case R.id.fragment_user_center_details:
                 if (checkLogin()) {
+                    startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 }
                 break;
             case R.id.cv_sign:
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra(WebActivity.INTENT_DATA_KEY_BACKNAME, "我的");
+                intent.putExtra(WebActivity.INTENT_DATA_KEY_URL, CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.APP_SIGN_URL + "?uid=" + CpigeonData.getInstance().getUserId(getActivity()));
+                startActivity(intent);
                 break;
             case R.id.ll_user_center_msg:
                 break;
@@ -129,6 +138,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.ll_user_center_focus:
                 break;
             case R.id.ll_user_center_order:
+                startActivity(new Intent(getActivity(), UserOrderListActivity.class));
                 break;
             case R.id.ll_user_money:
                 break;
