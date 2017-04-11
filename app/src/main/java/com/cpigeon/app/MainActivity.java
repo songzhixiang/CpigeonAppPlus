@@ -113,7 +113,13 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
                     .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
                     .initialise();
         } else {
-
+            mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "首页").setActiveColorResource(R.color.colorPrimary).setBadgeItem(numberBadgeItem))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "直播").setActiveColorResource(R.color.colorPrimary))
+//                    .addItem(new BottomNavigationItem(R.drawable.svg_ic_cpigeon_group, "微鸽圈").setActiveColorResource(R.color.colorPrimary))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "查询").setActiveColorResource(R.color.colorPrimary))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "我的").setActiveColorResource(R.color.colorPrimary))
+                    .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
+                    .initialise();
         }
 
 
@@ -228,15 +234,6 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
 
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
     /**
      * 比赛类型切换的监听器
      */

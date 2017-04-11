@@ -61,8 +61,8 @@
     <!--actionbar_web end-->
     <!--activity_about start-->
     <dimen name="activity_about_logo_layout_minheight">240dp</dimen>
-    <dimen name="activity_about_logo_height">65dp</dimen>
-    <dimen name="activity_about_logo_margintop">30dp</dimen>
+    <dimen name="activity_about_logo_height">64dp</dimen>
+    <dimen name="activity_about_logo_margintop">32dp</dimen>
     <dimen name="activity_about_appname_matgintop">12dp</dimen>
     <dimen name="activity_about_appname_textsize">20sp</dimen>
     <dimen name="activity_about_versionname_margintop">8dp</dimen>

@@ -1,5 +1,6 @@
 package com.cpigeon.app.commonstandard.view.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,10 @@ public abstract class BaseFragment extends Fragment implements IView {
     protected View rootView;
     private Unbinder mUnbinder;
     protected boolean isVisible;
+    /**
+     * 加载中--对话框
+     */
+    protected SweetAlertDialog mLoadingSweetAlertDialog;
 
     @Nullable
     @Override
@@ -50,24 +55,22 @@ public abstract class BaseFragment extends Fragment implements IView {
         SweetAlertDialog dialogPrompt;
         switch (tipType) {
             case Dialog:
-                dialogPrompt = new SweetAlertDialog(getActivity());
+                dialogPrompt = new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE);
                 dialogPrompt.setCancelable(false);
                 dialogPrompt.setTitleText(getString(R.string.prompt))
                         .setContentText(tip)
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogSuccess:
-                dialogPrompt = new SweetAlertDialog(getActivity());
+                dialogPrompt = new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(getString(R.string.prompt))
-                        .setContentText(tip)
+                dialogPrompt.setTitleText(tip)
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogError:
-                dialogPrompt = new SweetAlertDialog(getActivity());
+                dialogPrompt = new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(getString(R.string.prompt))
-                        .setContentText(tip)
+                dialogPrompt.setTitleText(tip)
                         //// TODO: 2017/4/10 图标
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
@@ -75,6 +78,19 @@ public abstract class BaseFragment extends Fragment implements IView {
             case ViewSuccess:
             case ViewError:
                 return false;
+            case LoadingShow:
+                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
+                    mLoadingSweetAlertDialog.dismiss();
+                mLoadingSweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+                mLoadingSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                mLoadingSweetAlertDialog.setTitleText(tip);
+                mLoadingSweetAlertDialog.setCancelable(true);
+                mLoadingSweetAlertDialog.show();
+                return true;
+            case LoadingHide:
+                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
+                    mLoadingSweetAlertDialog.dismiss();
+                return true;
             case ToastLong:
                 Toast.makeText(getActivity(), tip, Toast.LENGTH_LONG).show();
                 return true;
@@ -82,8 +98,7 @@ public abstract class BaseFragment extends Fragment implements IView {
                 Toast.makeText(getActivity(), tip, Toast.LENGTH_SHORT).show();
                 return true;
             default:
-                Toast.makeText(getActivity(), tip, Toast.LENGTH_SHORT).show();
-                return true;
+                return false;
         }
     }
 

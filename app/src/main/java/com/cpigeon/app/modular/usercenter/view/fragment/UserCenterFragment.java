@@ -1,5 +1,6 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -13,7 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
@@ -58,8 +62,8 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     LinearLayout llUserCenterMsg;
     @BindView(R.id.marqueeTextView)
     MarqueeTextView marqueeTextView;
-    @BindView(R.id.ll_user_center_feelback)
-    LinearLayout llUserCenterFeelback;
+    @BindView(R.id.ll_user_center_feedback)
+    LinearLayout llUserCenterFeedback;
     @BindView(R.id.ll_user_center_focus)
     LinearLayout llUserCenterFocus;
     @BindView(R.id.ll_user_center_order)
@@ -108,7 +112,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         }
     }
 
-    @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
+    @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_feedback, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_user_center_details:
@@ -118,6 +122,9 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.cv_sign:
                 break;
             case R.id.ll_user_center_msg:
+                break;
+            case R.id.ll_user_center_feedback:
+                startActivity(new Intent(getActivity(), FeedBackActivity.class));
                 break;
             case R.id.ll_user_center_focus:
                 break;
@@ -130,23 +137,12 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.ll_user_center_setting:
                 break;
             case R.id.ll_user_center_aboutus:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_user_center_help:
                 break;
         }
     }
-
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
 
     @Override
     public void showUserInfo(Map<String, Object> data) {
@@ -169,7 +165,13 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         } else {
             tvSignStatus.setText(userSignStatus == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
         }
+    }
 
+    @Override
+    public boolean showTips(String tip, TipType tipType) {
+        if (tipType == TipType.LoadingHide || tipType == TipType.LoadingShow)
+            return true;
+        return super.showTips(tip, tipType);
     }
 
     private void refreshUserInfo() {

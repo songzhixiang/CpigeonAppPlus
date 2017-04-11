@@ -3,6 +3,7 @@ package com.cpigeon.app.commonstandard.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -45,6 +46,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     protected NetChangeObserver mNetChangeObserver = null;
 
     protected BasePresenter mPresenter;
+    /**
+     * 加载中--对话框
+     */
+    protected SweetAlertDialog mLoadingSweetAlertDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +129,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
 
     }
+
     /**
      * 通过Class跳转界面
      **/
@@ -176,8 +182,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         }
         startActivityForResult(intent, requestCode);
     }
-
-
 
 
     /**
@@ -237,24 +241,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         SweetAlertDialog dialogPrompt;
         switch (tipType) {
             case Dialog:
-                dialogPrompt = new SweetAlertDialog(this);
+                dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
                 dialogPrompt.setCancelable(false);
                 dialogPrompt.setTitleText(getString(R.string.prompt))
                         .setContentText(tip)
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogSuccess:
-                dialogPrompt = new SweetAlertDialog(this);
+                dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(getString(R.string.prompt))
-                        .setContentText(tip)
+                dialogPrompt.setTitleText(tip)
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogError:
-                dialogPrompt = new SweetAlertDialog(this);
+                dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
                 dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText(getString(R.string.prompt))
-                        .setContentText(tip)
+                dialogPrompt.setTitleText(tip)
                         //// TODO: 2017/4/10 图标
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
@@ -262,6 +264,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             case ViewSuccess:
             case ViewError:
                 return false;
+            case LoadingShow:
+                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
+                    mLoadingSweetAlertDialog.dismiss();
+                mLoadingSweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                mLoadingSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                mLoadingSweetAlertDialog.setCancelable(true);
+                mLoadingSweetAlertDialog.setTitleText(tip);
+                mLoadingSweetAlertDialog.show();
+                return true;
+            case LoadingHide:
+                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
+                    mLoadingSweetAlertDialog.dismiss();
+                return true;
             case ToastLong:
                 Toast.makeText(this, tip, Toast.LENGTH_LONG).show();
                 return true;
@@ -269,8 +284,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
                 Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
                 return true;
             default:
-                Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
-                return true;
+                return false;
         }
     }
 

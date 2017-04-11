@@ -64,15 +64,4 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-
 }

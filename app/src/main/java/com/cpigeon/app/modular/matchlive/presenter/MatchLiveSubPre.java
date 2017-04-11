@@ -2,6 +2,7 @@ package com.cpigeon.app.modular.matchlive.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.dao.IMatchInfo;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.MatchInfoImpl;
@@ -26,14 +27,14 @@ public class MatchLiveSubPre {
     public void loadXHData(final int type) {
         // 0 加载协会数据，显示
         // 1 加载协会数据，不显示
-        iMatchSubView.showLoading();
+        iMatchSubView.showTips("", IView.TipType.LoadingShow);
         iMatchInfo.loadXHDatas(new IMatchInfo.OnLoadCompleteListener() {
             @Override
             public void loadSuccess(final List<MatchInfo> matchInfoList) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iMatchSubView.hideLoading();
+                        iMatchSubView.showTips("", IView.TipType.LoadingHide);
                         iMatchSubView.showXHData(matchInfoList, type);
                     }
                 });
@@ -51,14 +52,14 @@ public class MatchLiveSubPre {
     public void loadGPData(final int type) {
         // 0 加载公棚数据，显示
         // 1 加载公棚数据，不显示
-        iMatchSubView.showLoading();
+        iMatchSubView.showTips("", IView.TipType.LoadingShow);
         iMatchInfo.loadGPDatas(new IMatchInfo.OnLoadCompleteListener() {
             @Override
             public void loadSuccess(final List<MatchInfo> matchInfoList) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iMatchSubView.hideLoading();
+                        iMatchSubView.showTips("", IView.TipType.LoadingHide);
                         iMatchSubView.showGPData(matchInfoList, type);
                     }
                 });
@@ -72,10 +73,11 @@ public class MatchLiveSubPre {
 
 
     }
+
     /**
      * 清除对外部对象的引用，内存泄露。
      */
-    public void recycle(){
+    public void recycle() {
         this.iMatchSubView = null;
     }
 }

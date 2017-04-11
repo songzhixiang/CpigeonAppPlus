@@ -19,32 +19,39 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
     ILoginDao.OnLoginListener onLoadCompleteListener = new ILoginDao.OnLoginListener() {
 
-
         @Override
         public void loginPreError(final ILoginDao.OperateCheck operateCheck) {
+            if (operateCheck != ILoginDao.OperateCheck.None) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (operateCheck.getVal() == ILoginDao.OperateCheck.UsernameIsEmpty.getVal()) {
+                            mView.focusEditTextLoginName();
+                        } else {
+                            mView.focusEditTextLoginPassword();
+                        }
+                        mView.showTips(operateCheck.getTip(), IView.TipType.DialogError);
+                    }
+                });
+                return;
+            }
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideLoading();
-                    if (operateCheck.getVal() == ILoginDao.OperateCheck.UsernameIsEmpty.getVal()) {
-                        mView.focusEditTextLoginName();
-                    } else {
-                        mView.focusEditTextLoginPassword();
-                    }
-                    mView.showTips(operateCheck.getTip(), IView.TipType.DialogError);
+                    mView.showTips("登录中...", IView.TipType.LoadingShow);
                 }
             });
         }
 
         @Override
         public void loginSuccess() {
-            mHandler.post(new Runnable() {
+            mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideLoading();
+                    mView.showTips("", IView.TipType.LoadingHide);
                     mView.loginSuccess();
                 }
-            });
+            }, 1000);
         }
 
         @Override
@@ -52,7 +59,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideLoading();
+                    mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
             });
@@ -82,7 +89,6 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
     };
 
     public void login() {
-        mView.showLoading();
         mModel.login(mView.getLoginName(), mView.getLoginPassword(), onLoadCompleteListener);
     }
 

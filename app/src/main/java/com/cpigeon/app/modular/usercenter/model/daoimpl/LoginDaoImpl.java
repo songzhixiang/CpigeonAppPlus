@@ -77,6 +77,9 @@ public class LoginDaoImpl implements ILoginDao {
                 onLoginListener.loginPreError(OperateCheck.PasswordIsEmpty);
                 return;
             }
+        if (onLoginListener != null) {
+            onLoginListener.loginPreError(OperateCheck.None);
+        }
 
         this.onLoginListener = onLoginListener;
         RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.LOGIN_URL);

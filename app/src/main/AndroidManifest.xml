@@ -41,7 +41,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".modular.home.view.activity.WebActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.AboutActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.FeedBackActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

@@ -40,7 +40,6 @@ public class UserRegistSetp2Fragment extends BaseFragment implements IRegisterVi
     Button btnGetYzm;
     @BindView(R.id.btn_regist_next)
     AppCompatButton btnRegistNext;
-    Unbinder unbinder;
     private View rootView;
     private String tipPhoneNumber;
     private String tipBtnGetYzm = "重新获取";
@@ -166,24 +165,6 @@ public class UserRegistSetp2Fragment extends BaseFragment implements IRegisterVi
             sendTimer = null;
         }
     }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-
 
     @OnClick({R.id.btn_get_yzm, R.id.btn_regist_next})
     public void onViewClicked(View view) {

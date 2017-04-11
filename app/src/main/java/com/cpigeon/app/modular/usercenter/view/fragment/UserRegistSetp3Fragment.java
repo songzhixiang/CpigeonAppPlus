@@ -34,8 +34,6 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
     EditText etRegistRepass;
     @BindView(R.id.btn_regist_submit)
     AppCompatButton btnRegistSubmit;
-    Unbinder unbinder;
-
 
 
     @Override
@@ -59,6 +57,7 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
         etRegistPass.addTextChangedListener(textWatcher);
         etRegistRepass.addTextChangedListener(textWatcher);
     }
+
 
     @Override
     protected int getLayoutResource() {
@@ -90,23 +89,6 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
     public void focusInputConfirmPassword() {
         etRegistRepass.requestFocus();
     }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
 
 
     @OnClick(R.id.btn_regist_submit)

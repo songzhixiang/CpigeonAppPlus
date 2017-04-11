@@ -51,10 +51,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     }
 
 
-
-
-
-
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_matchlive_sub;
@@ -73,7 +69,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
 
     @Override
-    public void showGPData(List<MatchInfo> matchInfoList,int type) {
+    public void showGPData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
@@ -81,7 +77,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     }
 
     @Override
-    public void showXHData(List<MatchInfo> matchInfoList,int type) {
+    public void showXHData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
@@ -90,16 +86,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void setLoadType(int type) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
 
     }
 
