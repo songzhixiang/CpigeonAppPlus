@@ -9,7 +9,7 @@
     <include layout="@layout/layout_toolbar"></include>
 
     <ProgressBar
-        android:id="@+id/activity_web_progressbar"
+        android:id="@+id/pb_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_web_progressbar_height" />
@@ -19,8 +19,8 @@
         android:layout_height="match_parent"
         android:background="@color/colorLayoutGray4">
 
-        <RelativeLayout
-            android:id="@+id/layout_tips"
+        <ViewStub
+            android:id="@+id/vs_tips"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
@@ -31,7 +31,7 @@
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="150dp"
-                android:src="@drawable/ic_lamp" />
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/tv_error_tips"
@@ -43,11 +43,10 @@
                 android:text="您的页面找不到回家的路了"
                 android:textSize="@dimen/dp_20" />
 
-        </RelativeLayout>
-
+        </ViewStub>
 
         <WebView
-            android:id="@+id/activity_web_webview"
+            android:id="@+id/wvWebview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
