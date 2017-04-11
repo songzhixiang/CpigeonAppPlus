@@ -46,16 +46,37 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
     private boolean isAgreeprotocol = false;
 
     @Override
+    protected void initView(View view) {
+        etRegistPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnRegistNext.setEnabled(getPhoneNumber().length() > 0);
+            }
+        });
+        if (((RegisterActivity) getActivity()).getRunModel() == RegisterActivity.START_TYPE_FINDPASSWORD)
+            layoutRegistProtocol.setVisibility(View.GONE);
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.fragment_regist_step_1;
     }
 
-
-
     @Override
-    public void initViews() {
+    protected void lazyLoad() {
 
     }
+
 
     @Override
     public String getPhoneNumber() {
@@ -92,27 +113,7 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
         unbinder.unbind();
     }
 
-    @Override
-    protected void lazyLoad() {
-        etRegistPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                btnRegistNext.setEnabled(getPhoneNumber().length() > 0);
-            }
-        });
-        if (((RegisterActivity) getActivity()).getRunModel() == RegisterActivity.START_TYPE_FINDPASSWORD)
-            layoutRegistProtocol.setVisibility(View.GONE);
-    }
 
     @OnClick({R.id.btn_regist_next})
     public void onViewClicked(View view) {

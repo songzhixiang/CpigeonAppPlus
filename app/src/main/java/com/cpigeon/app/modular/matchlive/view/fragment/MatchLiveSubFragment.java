@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
  */
 
 public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView, SwipeRefreshLayout.OnRefreshListener {
+    private boolean isPrepared;
     @BindView(R.id.recyclerview_matchlive)
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefreshlayout)
@@ -42,14 +43,8 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     String currMatchType = "";
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_matchlive_sub;
-    }
-
-    @Override
-    protected void lazyLoad() {
-        pre.loadGPData(0);
-        pre.loadXHData(0);
+    protected void initView(View view) {
+        isPrepared = true;
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,6 +53,23 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
 
 
+
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_matchlive_sub;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (isPrepared && isVisible) {
+            //做加载数据的网络操作
+            pre.loadGPData(0);
+            pre.loadXHData(0);
+            isPrepared = false;
+        }
+
+    }
 
 
     @Override
@@ -112,11 +124,5 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         void onStartRefresh(MatchLiveSubFragment fragment);
 
         void onRefreshFinished(MatchLiveSubFragment fragment, int loadCount);
-    }
-
-    @Override
-    protected void stopLoad() {
-        super.stopLoad();
-
     }
 }

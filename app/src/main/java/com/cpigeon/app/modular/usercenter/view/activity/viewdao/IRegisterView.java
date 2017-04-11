@@ -28,7 +28,6 @@ public interface IRegisterView extends IView {
 
     interface IRegisterSetp1View extends IView {
 
-        void initViews();
 
         /**
          * 获取手机号码
@@ -89,7 +88,6 @@ public interface IRegisterView extends IView {
 
     interface IRegisterSetp3View extends IView {
 
-        void initViews();
 
         /**
          * 获取密码

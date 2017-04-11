@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         doBeforeSetcontentView();
         setContentView(getLayoutId());
         // 默认着色状态栏
-        SetStatusBarColor();
+        SetTranslanteBar();
         mUnbinder = ButterKnife.bind(this);
         mContext = this;
 
@@ -100,7 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
      * 沉浸状态栏（4.4以上系统有效）
      */
     protected void SetTranslanteBar() {
-        StatusBarSetting.setTranslucent(this);
+        StatusBarSetting.setTransparent(this);
     }
 
     /**

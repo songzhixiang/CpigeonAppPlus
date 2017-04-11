@@ -33,6 +33,12 @@ public class HomeFragment extends BaseFragment {
     LinearLayout layoutWdsc;
     private View mView;
     private List<AD> adList;
+
+    @Override
+    protected void initView(View view) {
+
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_home;
@@ -40,8 +46,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        //这里写presenter的调用方法，以及一些视图的加载
+
     }
+
 
     @OnClick({R.id.layout_gpzb, R.id.layout_xhzb, R.id.layout_zhcx, R.id.layout_wdsc})
     public void onClick(View view) {
@@ -67,9 +74,5 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void stopLoad() {
-        super.stopLoad();
-        //这里写presenter的取消逻辑
-    }
+
 }

@@ -35,35 +35,41 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
     @BindView(R.id.btn_regist_submit)
     AppCompatButton btnRegistSubmit;
     Unbinder unbinder;
-    private View rootView;
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        }
+    @Override
+    protected void initView(View view) {
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        @Override
-        public void afterTextChanged(Editable s) {
-            btnRegistSubmit.setEnabled(etRegistPass.getText().toString().length() > 0 && etRegistRepass.getText().toString().length() > 0);
-        }
-    };
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnRegistSubmit.setEnabled(etRegistPass.getText().toString().length() > 0 && etRegistRepass.getText().toString().length() > 0);
+            }
+        };
+        etRegistPass.addTextChangedListener(textWatcher);
+        etRegistRepass.addTextChangedListener(textWatcher);
+    }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_regist_step_3;
     }
 
-
     @Override
-    public void initViews() {
+    protected void lazyLoad() {
 
     }
+
 
     @Override
     public String getPassword() {
@@ -101,11 +107,7 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
         unbinder.unbind();
     }
 
-    @Override
-    protected void lazyLoad() {
-        etRegistPass.addTextChangedListener(textWatcher);
-        etRegistRepass.addTextChangedListener(textWatcher);
-    }
+
 
     @OnClick(R.id.btn_regist_submit)
     public void onViewClicked() {

@@ -34,7 +34,7 @@ public class MatchLiveFragment extends BaseFragment {
     SearchEditText searchEdittext;
     @BindView(R.id.viewpager_matchlive)
     ViewPager mViewPager;
-    private View mView;
+    private boolean isPrepared;
     private String currMatchType = Const.MATCHLIVE_TYPE_XH;
     private MatchLiveSubFragment matchLiveSubFragment_GP;
     private MatchLiveSubFragment matchLiveSubFragment_XH;
@@ -42,12 +42,8 @@ public class MatchLiveFragment extends BaseFragment {
     private ContentFragmentAdapter mContentFragmentAdapter;
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_live;
-    }
-
-    @Override
-    protected void lazyLoad() {
+    protected void initView(View view) {
+        isPrepared = true;
         currMatchType = Const.MATCHLIVE_TYPE_XH;
         matchLiveSubFragment_GP = new MatchLiveSubFragment();
         matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);
@@ -86,10 +82,18 @@ public class MatchLiveFragment extends BaseFragment {
 
 
         });
-        mViewPager.setCurrentItem(0);
 
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_live;
+    }
+
+    @Override
+    protected void lazyLoad() {
+
+    }
 
 
     private MatchLiveSubFragment.OnRefreshListener onRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
@@ -161,10 +165,5 @@ public class MatchLiveFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void stopLoad() {
-        super.stopLoad();
-
-    }
 }
 

@@ -78,6 +78,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     LinearLayout llUserCenterAboutus;
     @BindView(R.id.ll_user_center_help)
     LinearLayout llUserCenterHelp;
+    private boolean isPrepared;
     private View mView;
     private UserCenterPre userCenterPre = new UserCenterPre(this);
     CpigeonData.OnDataChangedListener onDataChangedListener = new CpigeonData.OnDataChangedListener() {
@@ -88,19 +89,23 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     };
 
     @Override
+    protected void initView(View view) {
+        isPrepared = true;
+        mCpigeonData.addOnDataChangedListener(onDataChangedListener);
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.fragment_usercenter;
     }
 
     @Override
     protected void lazyLoad() {
-        userCenterPre.loadBalance();
-        userCenterPre.loadSignStatus();
-
-    }
-
-    public void initView() {
-        mCpigeonData.addOnDataChangedListener(onDataChangedListener);
+        if (isPrepared && isVisible) {
+            userCenterPre.loadBalance();
+            userCenterPre.loadSignStatus();
+            isPrepared = false;
+        }
     }
 
     @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
@@ -156,8 +161,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     public void isSign(Boolean data) {
         int userSignStatus = mCpigeonData.getUserSignStatus();
         if (userSignStatus == CpigeonData.USER_SIGN_STATUS_NONE) {
-            if (data)
-            {
+            if (data) {
                 CpigeonData.getInstance().setUserSignStatus(data ? CpigeonData.USER_SIGN_STATUS_SIGNED : CpigeonData.USER_SIGN_STATUS_NOT_SIGN);
                 tvSignStatus.setText(data ? "已签到" : "签到");
             }
@@ -237,8 +241,5 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
     }
 
-    @Override
-    protected void stopLoad() {
-        super.stopLoad();
-    }
+
 }

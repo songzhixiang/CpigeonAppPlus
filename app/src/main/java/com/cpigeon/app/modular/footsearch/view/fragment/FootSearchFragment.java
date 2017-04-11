@@ -59,6 +59,7 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
     private ArrayList<CpigeonServicesInfo> allServicesInfo;
     private String queryKey;
     private SweetAlertDialog pDialog;
+    private boolean isPrepared;
     private Callback.Cancelable mFoorSearchCancelable;
     private Handler mHandler = new Handler() {
 
@@ -69,6 +70,13 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         }
     };
     private FootSearchPre pre = new FootSearchPre(this);
+
+    @Override
+    protected void initView(View view) {
+        isPrepared  =true;
+        initToolbar();
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_footsearch;
@@ -76,8 +84,12 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
 
     @Override
     protected void lazyLoad() {
-        pre.loadUserServiceInfo();
+        if (isPrepared && isVisible) {
+            pre.loadUserServiceInfo();
+            isPrepared = false;
+        }
     }
+
 
     private void initToolbar() {
         toolbar.setTitle("足环查询");
@@ -86,11 +98,6 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         setHasOptionsMenu(true);
     }
 
-    public void initView() {
-        initToolbar();
-
-
-    }
 
     @Override
     public void onResume() {
@@ -223,8 +230,5 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         }
     }
 
-    @Override
-    protected void stopLoad() {
-        super.stopLoad();
-    }
+
 }

@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     //足环查询
     private FootSearchFragment footSearchFragment;
     //鸽友圈
-//    private CpigeonGroupFragment mCpigeonGroupFragment;
     private List<Fragment> mFragments = new ArrayList<>();
     private ContentFragmentAdapter mContentFragmentAdapter;
     private BadgeItem numberBadgeItem;
@@ -85,7 +84,7 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
         mFragments.add(userCenterFragment);
         mContentFragmentAdapter = new ContentFragmentAdapter(getSupportFragmentManager(), mFragments);
         //设置limit
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mContentFragmentAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
