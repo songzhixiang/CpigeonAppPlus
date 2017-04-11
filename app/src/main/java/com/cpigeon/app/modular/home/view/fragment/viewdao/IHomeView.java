@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.home.view.fragment;
+package com.cpigeon.app.modular.home.view.fragment.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.home.model.bean.AD;

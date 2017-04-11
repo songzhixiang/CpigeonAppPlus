@@ -21,6 +21,7 @@ import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import org.xutils.common.util.DensityUtil;
 import org.xutils.image.ImageOptions;
@@ -194,16 +195,19 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             }
 
             if (!TextUtils.isEmpty(userHeadImageURl)) {
-                ImageOptions options = new ImageOptions.Builder()
-                        .setSize(DensityUtil.dip2px(50), DensityUtil.dip2px(50))//图片大小
-                        .setRadius(DensityUtil.dip2px(50))//ImageView圆角半径
-                        // .setCrop(true)// 如果ImageView的大小不是定义为wrap_content, 不要crop.
-                        .setImageScaleType(ImageView.ScaleType.CENTER_CROP)//缩放
-                        .setLoadingDrawableId(R.mipmap.head_image_default)//加载中默认显示图片
-                        .setUseMemCache(true)//设置使用缓存
-                        .setFailureDrawableId(R.mipmap.head_image_default)//加载失败后默认显示图片
-                        .build();
-                x.image().bind(fragmentUserCenterUserLogo, userHeadImageURl, options);
+//                ImageOptions options = new ImageOptions.Builder()
+//                        .setSize(DensityUtil.dip2px(50), DensityUtil.dip2px(50))//图片大小
+//                        .setRadius(DensityUtil.dip2px(50))//ImageView圆角半径
+//                        // .setCrop(true)// 如果ImageView的大小不是定义为wrap_content, 不要crop.
+//                        .setImageScaleType(CircleImageView.ScaleType.CENTER_CROP)//缩放
+//                        .setLoadingDrawableId(R.mipmap.head_image_default)//加载中默认显示图片
+//                        .setUseMemCache(true)//设置使用缓存
+//                        .setFailureDrawableId(R.mipmap.head_image_default)//加载失败后默认显示图片
+//                        .build();
+//                x.image().bind(fragmentUserCenterUserLogo, userHeadImageURl, options);
+                Picasso.with(getActivity())
+                        .load(userHeadImageURl)
+                        .into(fragmentUserCenterUserLogo);
             }
             final String name = nickName;
             fragmentUserCenterUserName.setText(name);
