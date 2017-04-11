@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:id="@+id/rl_copyright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_splash_layout_copyright_paddingbottom">
+
+        <TextView
+            android:id="@+id/tv_app_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/activity_splash_textview_version_paddingbottom"
+            android:text="V1.0"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_splash_textview_version_textsize" />
+
+        <TextView
+            android:id="@+id/tv_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_app_version"
+            android:gravity="center"
+            android:text="中鸽科技版权所有©Copyright 2016"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_splash_textview_copyright_textsize" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_ad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLayoutGray4"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_ad_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@null" />
+
+        <Button
+            android:id="@+id/btn_ad_spik"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/activity_splash_ad_spik_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/activity_splash_ad_spik_button_marginbottom"
+            android:layout_marginRight="@dimen/activity_splash_ad_spik_button_marginright"
+            android:background="@drawable/button_round_10"
+            android:text="@string/spik"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_linearlayout_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/rl_ad"
+        android:layout_toRightOf="@+id/rl_ad"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_splash_layout_logo_paddingbottom">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_splash_imageview_logo_paddingbottom"
+            app:srcCompat="@mipmap/logo" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_splash_imageview_appname_paddingbottom"
+            app:srcCompat="@mipmap/cpigeonlive" />
+    </LinearLayout>
+</RelativeLayout>
