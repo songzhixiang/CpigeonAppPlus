@@ -86,22 +86,21 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             refreshUserInfo();
         }
     };
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_usercenter, container, false);
-        ButterKnife.bind(this, mView);
 
-        initView();
-        return mView;
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_usercenter;
     }
 
-    private void initView() {
-
+    @Override
+    protected void lazyLoad() {
         userCenterPre.loadBalance();
         userCenterPre.loadSignStatus();
-        mCpigeonData.addOnDataChangedListener(onDataChangedListener);
 
+    }
+
+    public void initView() {
+        mCpigeonData.addOnDataChangedListener(onDataChangedListener);
     }
 
     @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
@@ -236,5 +235,10 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     public void onDestroy() {
         super.onDestroy();
         mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
+    }
+
+    @Override
+    protected void stopLoad() {
+        super.stopLoad();
     }
 }

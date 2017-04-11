@@ -70,27 +70,19 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
         return (RegisterPresenter) this.mPresenter;
     }
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regist);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_regist;
+    }
+
+    @Override
+    public void initPresenter() {
         mPresenter = new RegisterPresenter(this);
-        initViews();
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void initViews() {
+    public void initView() {
         type = getIntent().getIntExtra(INTENT_KEY_START_TYPE, START_TYPE_REGIST);
         if (type == START_TYPE_FINDPASSWORD) {
             toolbar.setTitle(R.string.reset_password);
@@ -114,6 +106,17 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
         tran.replace(R.id.fragment, mUserRegistSetp1Fragment);
         tran.commitAllowingStateLoss();
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
 
     /**
      * 下一步
@@ -159,6 +162,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
             return true;
         }
     }
+
+
 
     @Override
     public int getRunModel() {

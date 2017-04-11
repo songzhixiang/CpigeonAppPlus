@@ -40,23 +40,25 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private static final int PAGE_SIZE = 6;
     private MatchLiveSubPre pre = new MatchLiveSubPre(this);
     String currMatchType = "";
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_matchlive_sub, container, false);
-        ButterKnife.bind(this, mView);
-        initView();
-        pre.loadGPData(0);
-        pre.loadXHData(0);
-        return mView;
+    protected int getLayoutResource() {
+        return R.layout.fragment_matchlive_sub;
     }
 
-
-    private void initView() {
+    @Override
+    protected void lazyLoad() {
+        pre.loadGPData(0);
+        pre.loadXHData(0);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+
+
+
+
 
     @Override
     public void showGPData(List<MatchInfo> matchInfoList,int type) {
@@ -110,5 +112,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         void onStartRefresh(MatchLiveSubFragment fragment);
 
         void onRefreshFinished(MatchLiveSubFragment fragment, int loadCount);
+    }
+
+    @Override
+    protected void stopLoad() {
+        super.stopLoad();
+
     }
 }

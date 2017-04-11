@@ -1,6 +1,11 @@
 package com.cpigeon.app.commonstandard.view.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cpigeon.app.R;
@@ -11,6 +16,8 @@ import com.cpigeon.app.utils.SharedPreferencesTool;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -18,6 +25,31 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public abstract class BaseFragment extends Fragment implements IView {
+    protected boolean isInit = false;
+    protected boolean isLoad = false;
+    protected View rootView;
+    private boolean isFragmentVisible;
+    private Unbinder mUnbinder;
+    //是否是第一次开启网络加载
+    public boolean isFirst;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(getLayoutResource(), container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        isInit = true;
+        /**初始化的时候去加载数据**/
+        isCanLoadData();
+
+        return rootView;
+    }
+
+    //获取布局文件
+    protected abstract int getLayoutResource();
+
+
+
     @Override
     public boolean showTips(String tip, TipType tipType) {
         SweetAlertDialog dialogPrompt;
@@ -83,4 +115,46 @@ public abstract class BaseFragment extends Fragment implements IView {
         return SharedPreferencesTool.Get(getActivity(), map, SharedPreferencesTool.SP_FILE_LOGIN);
     }
 
+    /**
+     * 视图是否已经对用户可见，系统的方法
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isCanLoadData();
+    }
+
+    private void isCanLoadData() {
+        if (!isInit) {
+            return;
+        }
+
+        if (getUserVisibleHint()) {
+            lazyLoad();
+            isLoad = true;
+        } else {
+            if (isLoad) {
+                stopLoad();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isInit = false;
+        isLoad = false;
+        mUnbinder.unbind();
+    }
+
+    /**
+     * 当视图初始化并且对用户可见的时候去真正的加载数据
+     */
+    protected abstract void lazyLoad();
+
+    /**
+     * 当视图已经对用户不可见并且加载过数据，如果需要在切换到其他页面时停止加载数据，可以调用此方法
+     */
+    protected void stopLoad() {
+    }
 }

@@ -79,4 +79,11 @@ public class FootSearchPre {
             }
         });
     }
+
+    /**
+     * 清除对外部对象的引用，内存泄露。
+     */
+    public void recycle(){
+        this.iFootSearchView = null;
+    }
 }

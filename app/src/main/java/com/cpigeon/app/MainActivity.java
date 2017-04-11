@@ -60,16 +60,18 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     public void setOnMatchTypeChangeListener(OnMatchTypeChangeListener onMatchTypeChangeListener) {
         this.onMatchTypeChangeListener = onMatchTypeChangeListener;
     }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//        CrashReport.setUserId("" + CpigeonData.getInstance().getUserId(mContext));
-        ButterKnife.bind(this);
-        initView();
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
-    private void initView() {
+    @Override
+    public void initPresenter() {
+
+    }
+
+    public void initView() {
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
         userCenterFragment = new UserCenterFragment();

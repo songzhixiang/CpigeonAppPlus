@@ -72,5 +72,10 @@ public class MatchLiveSubPre {
 
 
     }
-
+    /**
+     * 清除对外部对象的引用，内存泄露。
+     */
+    public void recycle(){
+        this.iMatchSubView = null;
+    }
 }

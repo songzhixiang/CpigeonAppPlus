@@ -53,19 +53,16 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
         }
     };
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_regist_step_3, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        initViews();
-        return rootView;
+    protected int getLayoutResource() {
+        return R.layout.fragment_regist_step_3;
     }
+
 
     @Override
     public void initViews() {
-        etRegistPass.addTextChangedListener(textWatcher);
-        etRegistRepass.addTextChangedListener(textWatcher);
+
     }
 
     @Override
@@ -102,6 +99,12 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        etRegistPass.addTextChangedListener(textWatcher);
+        etRegistRepass.addTextChangedListener(textWatcher);
     }
 
     @OnClick(R.id.btn_regist_submit)

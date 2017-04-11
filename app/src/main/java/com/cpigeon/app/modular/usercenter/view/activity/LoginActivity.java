@@ -60,11 +60,17 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     RelativeLayout activityLogin;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public void initPresenter() {
         mPresenter = new LoginPresenter(this);
+    }
+
+    @Override
+    public void initView() {
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

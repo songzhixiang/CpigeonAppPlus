@@ -30,13 +30,16 @@ public class FootSearchActivity extends BaseActivity{
     private FootSearchResultCardFragment mFootSearchFragment;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_footsearch);
-        initView();
+    public int getLayoutId() {
+        return R.layout.activity_footsearch;
     }
 
-    private void initView() {
+    @Override
+    public void initPresenter() {
+
+    }
+
+    public void initView() {
         //setActionbarTitleText("查询结果");
         mFootSearchFragment = new FootSearchResultCardFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, mFootSearchFragment).commit();

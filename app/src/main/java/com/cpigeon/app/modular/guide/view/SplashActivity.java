@@ -54,13 +54,17 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     private static final long SHOW_TIME_MIN = 3400;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void initPresenter() {
         mPresenter = new SplashPresenter(this);
-        //隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public void initView() {
         tvAppVersion.setText("V " + CommonTool.getVersionName(SplashActivity.this));
         tvCopyright.setText("中鸽科技版权所有©Copyright " + (new Date(System.currentTimeMillis()).getYear() + 1900));
         mPresenter.welcome();

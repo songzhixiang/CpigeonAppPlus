@@ -50,36 +50,13 @@ public class UserRegistSetp2Fragment extends BaseFragment implements IRegisterVi
     int times = 0;
 
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_regist_step_2, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        initViews();
-        return rootView;
-    }
 
     @Override
-    public void initViews() {
-        etRegistYzm.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                btnRegistNext.setEnabled(getInputYZM().length() > 0);
-            }
-        });
-        tvSendPhoneNumber.setText(tipPhoneNumber);
-        btnGetYzm.setText(tipBtnGetYzm);
+    protected int getLayoutResource() {
+        return R.layout.fragment_regist_step_2;
     }
+
+
 
     @Override
     public String getInputYZM() {
@@ -179,6 +156,28 @@ public class UserRegistSetp2Fragment extends BaseFragment implements IRegisterVi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        etRegistYzm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnRegistNext.setEnabled(getInputYZM().length() > 0);
+            }
+        });
+        tvSendPhoneNumber.setText(tipPhoneNumber);
+        btnGetYzm.setText(tipBtnGetYzm);
     }
 
     @OnClick({R.id.btn_get_yzm, R.id.btn_regist_next})

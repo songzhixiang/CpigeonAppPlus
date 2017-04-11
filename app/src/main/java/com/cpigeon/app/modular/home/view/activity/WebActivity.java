@@ -35,11 +35,20 @@ public class WebActivity extends BaseActivity {
     @BindView(R.id.wvWebview)
     WebView wvWebview;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
-        ButterKnife.bind(this);
+    public int getLayoutId() {
+        return R.layout.activity_web;
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    public void initView() {
+
     }
 
     @Override

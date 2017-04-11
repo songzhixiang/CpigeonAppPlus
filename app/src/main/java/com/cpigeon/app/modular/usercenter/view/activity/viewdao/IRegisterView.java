@@ -8,7 +8,6 @@ import com.cpigeon.app.commonstandard.view.activity.IView;
 
 public interface IRegisterView extends IView {
 
-    void initViews();
 
     /**
      * 获取运行模式（注册，重置密码）
@@ -52,8 +51,6 @@ public interface IRegisterView extends IView {
     }
 
     interface IRegisterSetp2View extends IView {
-
-        void initViews();
 
         /**
          * 获取输入的验证码

@@ -45,35 +45,15 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
     private String phoneNumber;
     private boolean isAgreeprotocol = false;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_regist_step_1, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        initViews();
-        return rootView;
+    protected int getLayoutResource() {
+        return R.layout.fragment_regist_step_1;
     }
+
+
 
     @Override
     public void initViews() {
-        etRegistPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                btnRegistNext.setEnabled(getPhoneNumber().length() > 0);
-            }
-        });
-        if (((RegisterActivity) getActivity()).getRunModel() == RegisterActivity.START_TYPE_FINDPASSWORD)
-            layoutRegistProtocol.setVisibility(View.GONE);
 
     }
 
@@ -110,6 +90,28 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        etRegistPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnRegistNext.setEnabled(getPhoneNumber().length() > 0);
+            }
+        });
+        if (((RegisterActivity) getActivity()).getRunModel() == RegisterActivity.START_TYPE_FINDPASSWORD)
+            layoutRegistProtocol.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.btn_regist_next})

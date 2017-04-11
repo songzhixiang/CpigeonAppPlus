@@ -9,21 +9,26 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
+import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.networkstatus.NetChangeObserver;
 import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
+import com.cpigeon.app.utils.StatusBarSetting;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -31,7 +36,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements IView {
-
+    public Context mContext;
+    private Unbinder mUnbinder;
+    private int count;//记录开启进度条的情况 只能开一个
     /**
      * 网络观察者
      */
@@ -42,6 +49,15 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        doBeforeSetcontentView();
+        setContentView(getLayoutId());
+        // 默认着色状态栏
+        SetStatusBarColor();
+        mUnbinder = ButterKnife.bind(this);
+        mContext = this;
+
+        this.initPresenter();
+        this.initView();
         // 网络改变的一个回掉类
         mNetChangeObserver = new NetChangeObserver() {
             @Override
@@ -59,19 +75,110 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
     }
 
+    //获取布局文件
+    public abstract int getLayoutId();
 
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
+    public abstract void initPresenter();
+
+    public abstract void initView();
+
+    /**
+     * 着色状态栏（4.4以上系统有效）
+     */
+    protected void SetStatusBarColor() {
+        StatusBarSetting.setColor(this, getResources().getColor(R.color.colorPrimary));
+    }
+
+    /**
+     * 着色状态栏（4.4以上系统有效）
+     */
+    protected void SetStatusBarColor(int color) {
+        StatusBarSetting.setColor(this, color);
+    }
+
+    /**
+     * 沉浸状态栏（4.4以上系统有效）
+     */
+    protected void SetTranslanteBar() {
+        StatusBarSetting.setTranslucent(this);
+    }
+
+    /**
+     * 通过Class跳转界面
+     **/
+    public void startActivity(Class<?> cls) {
+        startActivity(cls, null);
         overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
+    /**
+     * 设置layout前配置
+     */
+    private void doBeforeSetcontentView() {
+        // 把actvity放到application栈中管理
+        AppManager.getAppManager().addActivity(this);
+        // 无标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 设置竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+    }
+    /**
+     * 通过Class跳转界面
+     **/
+    public void startActivityForResult(Class<?> cls, int requestCode) {
+        startActivityForResult(cls, null, requestCode);
+    }
+
+    /**
+     * 含有Bundle通过Class跳转界面
+     **/
+    public void startActivity(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(this, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
 
     @Override
-    public void finish() {
-        super.finish();
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
+        AppManager.getAppManager().finishActivity(this);
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_right);
     }
+
+    /**
+     * 含有Bundle通过Class跳转界面
+     **/
+    public void startActivityForResult(Class<?> cls, Bundle bundle,
+                                       int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
+
+
+
 
     /**
      * 网络连接状态
@@ -85,13 +192,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
      */
     protected abstract void onNetworkDisConnected();
 
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null)
-            mPresenter.dettach();
-        super.onDestroy();
-
-    }
 
     // 获取点击事件
     @Override

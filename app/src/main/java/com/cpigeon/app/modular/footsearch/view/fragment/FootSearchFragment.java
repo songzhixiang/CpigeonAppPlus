@@ -69,14 +69,14 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         }
     };
     private FootSearchPre pre = new FootSearchPre(this);
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_footsearch, container, false);
-        ButterKnife.bind(this, mView);
-        initToolbar();
-        initView();
-        return mView;
+    protected int getLayoutResource() {
+        return R.layout.fragment_footsearch;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        pre.loadUserServiceInfo();
     }
 
     private void initToolbar() {
@@ -86,8 +86,9 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         setHasOptionsMenu(true);
     }
 
-    private void initView() {
-        pre.loadUserServiceInfo();
+    public void initView() {
+        initToolbar();
+
 
     }
 
@@ -222,5 +223,8 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         }
     }
 
-
+    @Override
+    protected void stopLoad() {
+        super.stopLoad();
+    }
 }

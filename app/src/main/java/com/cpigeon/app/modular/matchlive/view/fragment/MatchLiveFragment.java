@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
+import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.customview.SearchEditText;
 
@@ -23,7 +24,7 @@ import cn.bingoogolapple.badgeview.BGABadgeTextView;
  * Created by Administrator on 2017/4/6.
  */
 
-public class MatchLiveFragment extends Fragment {
+public class MatchLiveFragment extends BaseFragment {
 
     @BindView(R.id.tv_actionbar_matchtype_xh)
     BGABadgeTextView tvActionbarMatchtypeXh;
@@ -40,22 +41,22 @@ public class MatchLiveFragment extends Fragment {
     private MatchLiveSubFragment currMatchLiveSubFragment;
     private ContentFragmentAdapter mContentFragmentAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_live, container, false);
-        ButterKnife.bind(this, mView);
-        initView();
-        return mView;
+    protected int getLayoutResource() {
+        return R.layout.fragment_live;
     }
 
-    private void initView() {
+    @Override
+    protected void lazyLoad() {
+        currMatchType = Const.MATCHLIVE_TYPE_XH;
         matchLiveSubFragment_GP = new MatchLiveSubFragment();
         matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);
-        matchLiveSubFragment_XH = new MatchLiveSubFragment();
 
-        matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);
+        matchLiveSubFragment_XH = new MatchLiveSubFragment();
+        matchLiveSubFragment_XH.setMatchType(Const.MATCHLIVE_TYPE_XH);
+
         currMatchLiveSubFragment = matchLiveSubFragment_XH;
+
         mContentFragmentAdapter = new ContentFragmentAdapter(getFragmentManager());
         mContentFragmentAdapter.appendData(matchLiveSubFragment_XH);
         mContentFragmentAdapter.appendData(matchLiveSubFragment_GP);
@@ -81,13 +82,15 @@ public class MatchLiveFragment extends Fragment {
                         setCurrMatchType(currType);
                     }
                 });
-
-                mViewPager.setCurrentItem(0);
             }
 
 
         });
+        mViewPager.setCurrentItem(0);
+
     }
+
+
 
     private MatchLiveSubFragment.OnRefreshListener onRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
         @Override
@@ -146,6 +149,22 @@ public class MatchLiveFragment extends Fragment {
                 break;
         }
         changeRaceTypeViewStarus();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected void stopLoad() {
+        super.stopLoad();
+
     }
 }
 
