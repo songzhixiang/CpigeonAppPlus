@@ -147,7 +147,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorLayoutGray4"/>
         <LinearLayout
-            android:id="@+id/ll_user_center_feelback"
+            android:id="@+id/ll_user_center_feedback"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -389,7 +389,6 @@
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_marginTop="16dp"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

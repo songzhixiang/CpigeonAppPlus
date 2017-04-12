@@ -23,14 +23,14 @@ public class UserCenterPre {
     }
     public void loadBalance()
     {
-        iUserCenterView.showLoading();
+        iUserCenterView.showTips("", IView.TipType.LoadingShow);
         iUserCenterDao.loadUserBalance(new IUserCenterDao.OnLoadCompleteListener() {
             @Override
             public void loadSuccess(final Map<String, Object> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iUserCenterView.hideLoading();
+                        iUserCenterView.showTips("", IView.TipType.LoadingHide);
                         iUserCenterView.showUserInfo(data);
                     }
                 });
@@ -42,7 +42,7 @@ public class UserCenterPre {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iUserCenterView.hideLoading();
+                        iUserCenterView.showTips("", IView.TipType.LoadingHide);
                         iUserCenterView.showTips("加载失败", IView.TipType.ViewError);
                     }
                 });

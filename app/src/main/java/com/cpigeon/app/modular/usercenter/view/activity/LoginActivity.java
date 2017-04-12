@@ -138,16 +138,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         }
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
     @OnClick({R.id.iv_pass_show, R.id.btn_login, R.id.tv_no_account, R.id.tv_forget_pass})
     public void onViewClicked(View view) {
         switch (view.getId()) {

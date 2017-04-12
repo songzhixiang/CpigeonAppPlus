@@ -23,18 +23,15 @@ public class FootSearchPre {
         this.iFootSearchView = iFootSearchView;
         this.iCpigeonServicesInfo = new CpigeonServicesInfoImpl();
     }
-    public void loadUserServiceInfo()
-    {
-        iFootSearchView.showLoading();
+
+    public void loadUserServiceInfo() {
         iCpigeonServicesInfo.getFootSearchService(iFootSearchView.getQueryService(), new ICpigeonServicesInfo.OnLoadCompleteListener() {
             @Override
             public void loadSuccess(final CpigeonUserServiceInfo serviceInfo) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iFootSearchView.hideLoading();
                         iFootSearchView.getFootSearchService(serviceInfo);
-
                     }
                 });
             }
@@ -44,7 +41,6 @@ public class FootSearchPre {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iFootSearchView.hideLoading();
                         iFootSearchView.showTips("加载用户套餐失败", IView.TipType.ToastShort);
                     }
                 });
@@ -53,8 +49,8 @@ public class FootSearchPre {
         });
     }
 
-    public void queryFoot(){
-        iFootSearchView.showLoading();
+    public void queryFoot() {
+        iFootSearchView.showTips("搜索中...", IView.TipType.LoadingShow);
         iCpigeonServicesInfo.queryFoot(iFootSearchView.getQueryKey(), new ICpigeonServicesInfo.OnQueryCompleteListener() {
             @Override
             public void querySuccess(final Map<String, Object> map) {
@@ -62,7 +58,7 @@ public class FootSearchPre {
                     @Override
                     public void run() {
                         iFootSearchView.queryFoot(map);
-                        iFootSearchView.hideLoading();
+                        iFootSearchView.showTips("", IView.TipType.LoadingHide);
                     }
                 });
             }
@@ -72,7 +68,7 @@ public class FootSearchPre {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iFootSearchView.hideLoading();
+                        iFootSearchView.showTips("", IView.TipType.LoadingHide);
                         iFootSearchView.showTips("加载用户套餐失败", IView.TipType.ToastShort);
                     }
                 });
@@ -83,7 +79,7 @@ public class FootSearchPre {
     /**
      * 清除对外部对象的引用，内存泄露。
      */
-    public void recycle(){
+    public void recycle() {
         this.iFootSearchView = null;
     }
 }

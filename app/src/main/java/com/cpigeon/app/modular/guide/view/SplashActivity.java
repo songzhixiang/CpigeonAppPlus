@@ -20,6 +20,8 @@ import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.modular.guide.view.viewdao.ISplashView;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.StatusBarSetting;
+import com.cpigeon.app.utils.StatusBarTool;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Date;
@@ -65,20 +67,12 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     @Override
     public void initView() {
+        StatusBarTool.hideStatusBar(this);
         tvAppVersion.setText("V " + CommonTool.getVersionName(SplashActivity.this));
         tvCopyright.setText("中鸽科技版权所有©Copyright " + (new Date(System.currentTimeMillis()).getYear() + 1900));
         mPresenter.welcome();
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
 
     @Override
     protected void onNetworkConnected(NetUtils.NetType type) {

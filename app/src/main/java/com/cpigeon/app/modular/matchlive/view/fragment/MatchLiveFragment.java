@@ -156,15 +156,6 @@ public class MatchLiveFragment extends BaseFragment {
         changeRaceTypeViewStarus();
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
 
 }
 

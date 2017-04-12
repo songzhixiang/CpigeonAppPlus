@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">CpigeonAppPlus</string>
+    <string name="cpigeon_intro">    中鸽网（亦称中国信鸽网或中鸽信鸽网）是专业的信鸽行业门户网站，创办于2005年6月。是目前信鸽（赛鸽）领域唯一的公益性信鸽专业门户平台，旨在为全球信鸽爱好者提供免费的信鸽资讯服务，同时为信鸽协会、赛鸽俱乐部、赛鸽公棚等信鸽企业提供形象展示、信息发布、比赛统计、比赛视频分享、信鸽交流、比赛直播等相关网络支持及服务。</string>
+    <string name="app_name">中鸽网</string>
     <string name="regist_new_user">新用户注册</string>
     <string name="reset_password">重置密码</string>
     <string name="sentence_not_watch_pay_agreement_prompt">请仔细阅读并同意《中鸽网支付协议》</string>
@@ -10,4 +11,12 @@
     <string name="user_name">用户名</string>
     <string name="please_login">请您登陆</string>
     <string name="spik">跳过</string>
+
+    <string name="function_introduction">功能介绍</string>
+    <string name="version_information">版本信息</string>
+    <string name="version_information_gs">成都市中鸽科技有限公司</string>
+    <string name="version_information_c" translatable="false">Copyright © 2006- 2017 All rights reserved.</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="version_number">V1.0</string>
+    <string name="submit">提交</string>
 </resources>

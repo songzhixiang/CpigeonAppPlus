@@ -75,13 +75,4 @@ public class FootSearchActivity extends BaseActivity{
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
 }

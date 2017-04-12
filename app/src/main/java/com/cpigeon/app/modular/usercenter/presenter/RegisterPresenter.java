@@ -50,7 +50,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideLoading();
+                    mView.showTips("", IView.TipType.LoadingHide);
                     mView.complete();
                 }
             });
@@ -62,7 +62,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideLoading();
+                    mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
             });
@@ -91,11 +91,11 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
                     setp2View.sendYZMFail(msg);
                     if (isInSetpFrist) {
                         if (errorCode == 1000 || errorCode == 1003 || errorCode == 1004 || errorCode == 1005 || errorCode == 1008) {
-                            mView.hideLoading();
+                            mView.showTips("", IView.TipType.LoadingHide);
                             mView.showTips(msg, IView.TipType.ToastShort);
                         }
                     } else {
-                        mView.hideLoading();
+                        mView.showTips("", IView.TipType.LoadingHide);
                         mView.showTips(msg, IView.TipType.ToastShort);
                     }
                 }
@@ -174,7 +174,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
         if (!checkPassword()) return;
         if (!checkConfirmPassword()) return;
 
-        mView.showLoading();
+        mView.showTips("注册中...", IView.TipType.LoadingShow);
         mModel.registUser(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
     }
 
@@ -184,8 +184,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
         if (!checkPassword()) return;
         if (!checkConfirmPassword()) return;
 
-        mView.showLoading();
-
+        mView.showTips("处理中...", IView.TipType.LoadingShow);
         mModel.findUserPassword(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
     }
 

@@ -16,15 +16,13 @@ public interface IView {
         Dialog,
         DialogSuccess,
         DialogError,
+        LoadingShow,
+        LoadingHide,
         ToastLong,
         ToastShort,
         SnackbarShort,
         SnackbarLong
     }
-
-    void showLoading();
-
-    void hideLoading();
 
     /**
      * 检查是否登录
@@ -34,12 +32,11 @@ public interface IView {
     boolean checkLogin();
 
     /**
-     * 显示提示(错误与正确)
+     * 显示提示(错误、正确、加载中)
      *
      * @param tip     提示内容
      * @param tipType 提示类型
      */
     boolean showTips(String tip, TipType tipType);
-
 
 }

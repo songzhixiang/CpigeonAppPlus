@@ -90,7 +90,6 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
         }
     }
 
-
     private void initToolbar() {
         toolbar.setTitle("足环查询");
         toolbar.setTitleTextColor(Color.WHITE);
@@ -111,7 +110,7 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
 
     @Override
     public void getFootSearchService(CpigeonUserServiceInfo info) {
-        boolean noService = TextUtils.isEmpty(info.getName());
+        boolean noService = info == null || TextUtils.isEmpty(info.getName());
         tvPromptTitle.setText(noService ? "未购买套餐,最多显示2条结果" :
                 info.getShowNumber() == 0 ? String.format("您当前使用%s,结果条数不限制", info.getPackageName()) :
                         String.format("您当前使用%s套餐，当前套餐最多显示%d条结果", info.getPackageName(), info.getShowNumber()));
@@ -176,17 +175,6 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
     }
 
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-
     private void footSearchRun(String queryKey) {
         this.queryKey = queryKey;
         if (TextUtils.isEmpty(queryKey)) {
@@ -211,7 +199,6 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
             pDialog.show();
             pre.queryFoot();
         }
-
 
 
     }

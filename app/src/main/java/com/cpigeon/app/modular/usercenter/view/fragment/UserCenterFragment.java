@@ -14,11 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
-import com.cpigeon.app.modular.order.view.activity.OrderActivity;
+import com.cpigeon.app.modular.home.view.activity.WebActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.UserOrderListActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
+import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
@@ -60,8 +66,8 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
     LinearLayout llUserCenterMsg;
     @BindView(R.id.marqueeTextView)
     MarqueeTextView marqueeTextView;
-    @BindView(R.id.ll_user_center_feelback)
-    LinearLayout llUserCenterFeelback;
+    @BindView(R.id.ll_user_center_feedback)
+    LinearLayout llUserCenterFeedback;
     @BindView(R.id.ll_user_center_focus)
     LinearLayout llUserCenterFocus;
     @BindView(R.id.ll_user_center_order)
@@ -110,21 +116,29 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         }
     }
 
-    @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
+    @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_feedback, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_user_center_details:
                 if (checkLogin()) {
+                    startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 }
                 break;
             case R.id.cv_sign:
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra(WebActivity.INTENT_DATA_KEY_BACKNAME, "我的");
+                intent.putExtra(WebActivity.INTENT_DATA_KEY_URL, CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.APP_SIGN_URL + "?uid=" + CpigeonData.getInstance().getUserId(getActivity()));
+                startActivity(intent);
                 break;
             case R.id.ll_user_center_msg:
+                break;
+            case R.id.ll_user_center_feedback:
+                startActivity(new Intent(getActivity(), FeedBackActivity.class));
                 break;
             case R.id.ll_user_center_focus:
                 break;
             case R.id.ll_user_center_order:
-                startActivity(new Intent(getActivity(), OrderActivity.class));
+                startActivity(new Intent(getActivity(), UserOrderListActivity.class));
                 break;
             case R.id.ll_user_money:
                 break;
@@ -133,23 +147,12 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.ll_user_center_setting:
                 break;
             case R.id.ll_user_center_aboutus:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_user_center_help:
                 break;
         }
     }
-
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
 
     @Override
     public void showUserInfo(Map<String, Object> data) {
@@ -172,7 +175,13 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
         } else {
             tvSignStatus.setText(userSignStatus == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
         }
+    }
 
+    @Override
+    public boolean showTips(String tip, TipType tipType) {
+        if (tipType == TipType.LoadingHide || tipType == TipType.LoadingShow)
+            return true;
+        return super.showTips(tip, tipType);
     }
 
     private void refreshUserInfo() {

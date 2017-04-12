@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -90,6 +91,13 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
             toolbar.setTitle(R.string.regist_new_user);
         }
         setSupportActionBar(this.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mUserRegistSetp1Fragment = new UserRegistSetp1Fragment();
         mUserRegistSetp2Fragment = new UserRegistSetp2Fragment();
@@ -106,17 +114,6 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
         tran.replace(R.id.fragment, mUserRegistSetp1Fragment);
         tran.commitAllowingStateLoss();
     }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
 
     /**
      * 下一步

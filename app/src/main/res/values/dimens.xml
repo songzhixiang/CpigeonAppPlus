@@ -9,13 +9,13 @@
     <dimen name="default_edittext_height">35dp</dimen>
 
     <!--layout common-->
-    <dimen name="actionbar_height">45dp</dimen>
+    <dimen name="actionbar_height">50dp</dimen>
+    <dimen name="layout_actionbar_height">50dp</dimen>
+    <dimen name="layout_actionbar_padding_v">5dp</dimen>
+    <dimen name="layout_actionbar_padding_h">10dp</dimen>
     <dimen name="actionbar_title_textsize">20sp</dimen>
-    <dimen name="layout_actionbar_height">45dp</dimen>
-    <dimen name="layout_actionbar_padding_v">4dp</dimen>
-    <dimen name="layout_actionbar_padding_h">8dp</dimen>
     <!--actionbar_home start-->
-    <dimen name="actionbar_home_imageview_margin">10dp</dimen>
+
     <!--actionbar_home end-->
     <!--actionbar_matchlive start-->
     <dimen name="actionbar_matchlive_relativelayout_height">@dimen/actionbar_height</dimen>
@@ -36,7 +36,7 @@
     </dimen>
     <dimen name="actionbar_title_secondary_imageview_back_width">30dp</dimen>
     <dimen name="actionbar_title_secondary_imageview_back_height">40dp</dimen>
-    <dimen name="actionbar_title_secondary_imageview_back_padding">10dp</dimen>
+    <dimen name="actionbar_title_secondary_imageview_back_padding">5dp</dimen>
     <dimen name="actionbar_title_secondary_imageview_coll_padding">5dp</dimen>
     <!--actionbar_title_secondary end-->
     <!--actionbar_title_secondary start-->
@@ -46,44 +46,45 @@
     </dimen>
     <dimen name="actionbar_title_secondary_2_imageview_back_width">30dp</dimen>
     <dimen name="actionbar_title_secondary_2_imageview_back_height">40dp</dimen>
-    <dimen name="actionbar_title_secondary_2_imageview_back_padding">10dp</dimen>
+    <dimen name="actionbar_title_secondary_2_imageview_back_padding">5dp</dimen>
     <dimen name="actionbar_title_secondary_2_imageview_coll_padding">5dp</dimen>
     <!--actionbar_title_secondary end-->
+
     <!--actionbar_web start-->
     <dimen name="actionbar_title_web_relativelayout_height">@dimen/actionbar_height
     </dimen>
-    <dimen name="actionbar_title_web_textview_back_textsize">18sp</dimen>
+    <dimen name="actionbar_title_web_textview_back_textsize">20sp</dimen>
     <dimen name="actionbar_title_web_textview_back_width">50dp</dimen>
-    <dimen name="actionbar_title_web_textview_menu_textsize">38sp</dimen>
+    <dimen name="actionbar_title_web_textview_menu_textsize">40sp</dimen>
     <dimen name="actionbar_title_web_textview_menu_padding">5dp</dimen>
-    <dimen name="actionbar_title_web_textview_textsize">18sp</dimen>
-    <dimen name="actionbar_title_web_imageview_back_width">18dp</dimen>
+    <dimen name="actionbar_title_web_textview_textsize">20sp</dimen>
+    <dimen name="actionbar_title_web_imageview_back_width">20dp</dimen>
     <!--actionbar_web end-->
     <!--activity_about start-->
-    <dimen name="activity_about_logo_layout_minheight">240dp</dimen>
-    <dimen name="activity_about_logo_height">65dp</dimen>
-    <dimen name="activity_about_logo_margintop">30dp</dimen>
-    <dimen name="activity_about_appname_matgintop">12dp</dimen>
-    <dimen name="activity_about_appname_textsize">20sp</dimen>
+    <dimen name="activity_about_logo_layout_minheight">250dp</dimen>
+    <dimen name="activity_about_logo_height">70dp</dimen>
+    <dimen name="activity_about_logo_margintop">35dp</dimen>
+    <dimen name="activity_about_appname_matgintop">14dp</dimen>
+    <dimen name="activity_about_appname_textsize">22sp</dimen>
     <dimen name="activity_about_versionname_margintop">8dp</dimen>
-    <dimen name="activity_about_versionname_textsize">14sp</dimen>
-    <dimen name="activity_about_company_intro_textsize">12sp</dimen>
-    <dimen name="activity_about_clickitem_layout_padding">10dp</dimen>
+    <dimen name="activity_about_versionname_textsize">16sp</dimen>
+    <dimen name="activity_about_company_intro_textsize">13sp</dimen>
+    <dimen name="activity_about_clickitem_layout_padding">12dp</dimen>
     <dimen name="activity_about_clickitem_maginleft">15dp</dimen>
-    <dimen name="activity_about_clickitem_textsize">14sp</dimen>
+    <dimen name="activity_about_clickitem_textsize">16sp</dimen>
     <dimen name="activity_about_copyright_layout_paddingbottom">10sp</dimen>
-    <dimen name="activity_about_copyright_textsize">12sp</dimen>
+    <dimen name="activity_about_copyright_textsize">13sp</dimen>
     <dimen name="activity_about_copyright_margintop">5dp</dimen>
     <!--activity_about end-->
     <!--activity_home start-->
     <dimen name="activity_home_banner_height">50dp</dimen>
     <dimen name="activity_home_bottom_menu_height">@dimen/layout_home_bottom_menu_minheight</dimen>
-    <dimen name="activity_home_layout_quickitem_marginbottom">18dp</dimen>
+    <dimen name="activity_home_layout_quickitem_marginbottom">20dp</dimen>
     <dimen name="activity_home_layout_quickitem_padding">5dp</dimen>
-    <dimen name="activity_home_imageview_quickitem_height">40dp</dimen>
-    <dimen name="activity_home_imageview_quickitem_width">40dp</dimen>
+    <dimen name="activity_home_imageview_quickitem_height">50dp</dimen>
+    <dimen name="activity_home_imageview_quickitem_width">50dp</dimen>
     <dimen name="activity_home_textview_quickitem_margintop">5dp</dimen>
-    <dimen name="activity_home_textview_quickitem_textsize">13sp</dimen>
+    <dimen name="activity_home_textview_quickitem_textsize">14sp</dimen>
     <!--activity_home end-->
     <!--activity_login start-->
     <dimen name="activity_login_input_layout_height">52dp</dimen>
@@ -140,10 +141,10 @@
     <!--activity_regist end-->
     <!--activity_setting start-->
     <dimen name="activity_setting_item_layout_height">50dp</dimen>
-    <dimen name="activity_setting_item_title_textsize">14sp</dimen>
-    <dimen name="activity_setting_item_propmt_textsize">12sp</dimen>
+    <dimen name="activity_setting_item_title_textsize">16sp</dimen>
+    <dimen name="activity_setting_item_propmt_textsize">14sp</dimen>
     <dimen name="activity_setting_button_logout_height">40dp</dimen>
-    <dimen name="activity_setting_button_logout_margin">18dp</dimen>
+    <dimen name="activity_setting_button_logout_margin">20dp</dimen>
     <!--activity_setting end-->
     <!--activity_splash start-->
     <dimen name="activity_splash_layout_logo_paddingbottom">200dp</dimen>
@@ -158,20 +159,22 @@
     <dimen name="activity_splash_ad_spik_button_marginright">20dp</dimen>
     <!--activity_splash end-->
     <!--activity_web start-->
-    <dimen name="activity_web_progressbar_height">2dp</dimen>
+    <dimen name="activity_web_progressbar_height">3dp</dimen>
     <!--activity_web end-->
 
     <!--fragment_foot_search start-->
-    <dimen name="fragment_foot_search_searchedittext_margin">8dp</dimen>
-    <dimen name="fragment_foot_search_searchedittext_padding">8dp</dimen>
-    <dimen name="fragment_foot_search_textview_promptTitle_padding_h">13dp</dimen>
-    <dimen name="fragment_foot_search_textview_promptTitle_padding_v">5dp</dimen>
-    <dimen name="fragment_foot_search_textview_promptTitle_textsize">12sp</dimen>
-    <dimen name="fragment_foot_search_textview_promptContent_padding_h">13dp</dimen>
-    <dimen name="fragment_foot_search_textview_promptContent_padding_v">5dp</dimen>
-    <dimen name="fragment_foot_search_textview_promptContent_textsize">14sp</dimen>
-    <dimen name="fragment_foot_search_textview_promptContentExplain_textsize">13sp</dimen>
+    <dimen name="fragment_foot_search_searchedittext_margin">10dp</dimen>
+    <dimen name="fragment_foot_search_searchedittext_padding">10dp</dimen>
+    <dimen name="fragment_foot_search_textview_promptTitle_padding_h">17dp</dimen>
+    <dimen name="fragment_foot_search_textview_promptTitle_padding_v">10dp</dimen>
+    <dimen name="fragment_foot_search_textview_promptTitle_textsize">15sp</dimen>
+    <dimen name="fragment_foot_search_textview_promptContent_padding_h">17dp</dimen>
+    <dimen name="fragment_foot_search_textview_promptContent_padding_v">10dp</dimen>
+    <dimen name="fragment_foot_search_textview_promptContent_textsize">17sp</dimen>
+    <dimen name="fragment_foot_search_textview_promptContentExplain_textsize">16sp</dimen>
     <!--fragment_foot_search end-->
+
+
     <!--fragment_guide_end start-->
     <dimen name="fragment_guide_end_button_entry_width">200dp</dimen>
     <dimen name="fragment_guide_end_button_entry_marginbotom">100dp</dimen>
@@ -201,9 +204,9 @@
     <dimen name="fragment_user_center_imageview_function_height">30dp</dimen>
     <dimen name="fragment_user_center_imageview_function_width">30dp</dimen>
     <dimen name="fragment_user_center_imageview_function_padding">5dp</dimen>
-    <dimen name="fragment_user_center_textview_function_textsize">14sp</dimen>
+    <dimen name="fragment_user_center_textview_function_textsize">16sp</dimen>
     <dimen name="fragment_user_center_view_function_splitline_margin">7dp</dimen>
-    <dimen name="fragment_user_center_splitarea_height">17dp</dimen>
+    <dimen name="fragment_user_center_splitarea_height">20dp</dimen>
     <dimen name="fragment_user_center_layout_menu_padding">8dp</dimen>
     <dimen name="fragment_user_center_imageview_menu_height">30dp</dimen>
     <dimen name="fragment_user_center_imageview_menu_width">30dp</dimen>
@@ -238,37 +241,37 @@
     <!--list_header_match_live start-->
     <!--list_header_match_live end-->
     <!--list_header_race_detial start-->
-    <dimen name="list_header_race_detial_layout_root_minheight">40dp</dimen>
-    <dimen name="list_header_race_detial_layout_datatype_minheight">35dp</dimen>
-    <dimen name="list_header_race_detial_textview_datatype_textsize">12sp</dimen>
+    <dimen name="list_header_race_detial_layout_root_minheight">50dp</dimen>
+    <dimen name="list_header_race_detial_layout_datatype_minheight">40dp</dimen>
+    <dimen name="list_header_race_detial_textview_datatype_textsize">14sp</dimen>
     <dimen name="list_header_race_detial_textview_datatype_margin">3dp</dimen>
-    <dimen name="list_header_race_detial_layout_racename_height">31dp</dimen>
-    <dimen name="list_header_race_detial_textview_racename_height">30dp</dimen>
-    <dimen name="list_header_race_detial_textview_racename_textsize">16sp</dimen>
-    <dimen name="list_header_race_detial_imageview_racedetialshow_marginright">7dp</dimen>
-    <dimen name="list_header_race_detial_layout_detial_padding">7dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_title_padding">2dp</dimen>
+    <dimen name="list_header_race_detial_layout_racename_height">41dp</dimen>
+    <dimen name="list_header_race_detial_textview_racename_height">40dp</dimen>
+    <dimen name="list_header_race_detial_textview_racename_textsize">20sp</dimen>
+    <dimen name="list_header_race_detial_imageview_racedetialshow_marginright">10dp</dimen>
+    <dimen name="list_header_race_detial_layout_detial_padding">10dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_title_padding">3dp</dimen>
     <dimen name="list_header_race_detial_textview_detial_title_minwidth">60dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_title_textsize">12sp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_title__right_minwidth">40dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_content_padding">2dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_content_marginleft">7dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_content_textsize">12sp</dimen>
-    <dimen name="list_header_race_detial_layout_gg_paddingleft">3dp</dimen>
-    <dimen name="list_header_race_detial_layout_gg_paddingright">3dp</dimen>
-    <dimen name="list_header_race_detial_layout_gg_paddingtop">1dp</dimen>
-    <dimen name="list_header_race_detial_layout_gg_paddingbottom">1dp</dimen>
-    <dimen name="list_header_race_detial_textview_gg_textsize">14sp</dimen>
-    <dimen name="list_header_race_detial_layout_tableheader_minheight">25dp</dimen>
-    <dimen name="list_header_race_detial_textview_tableheader_textsize">12sp</dimen>
-    <dimen name="list_header_race_detial_gg_minheight">23dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_title_textsize">14sp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_title__right_minwidth">45dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_content_padding">3dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_content_marginleft">10dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_content_textsize">14sp</dimen>
+    <dimen name="list_header_race_detial_layout_gg_paddingleft">5dp</dimen>
+    <dimen name="list_header_race_detial_layout_gg_paddingright">5dp</dimen>
+    <dimen name="list_header_race_detial_layout_gg_paddingtop">3dp</dimen>
+    <dimen name="list_header_race_detial_layout_gg_paddingbottom">3dp</dimen>
+    <dimen name="list_header_race_detial_textview_gg_textsize">16sp</dimen>
+    <dimen name="list_header_race_detial_layout_tableheader_minheight">30dp</dimen>
+    <dimen name="list_header_race_detial_textview_tableheader_textsize">14sp</dimen>
+    <dimen name="list_header_race_detial_gg_minheight">25dp</dimen>
+
     <!--list_header_race_detial end-->
     <!--list_item_pigeons_groups start-->
     <dimen name="list_item_pigeons_groups_layout_root_minheight">30dp</dimen>
     <dimen name="list_item_pigeons_groups_textview_textsize">14sp</dimen>
     <dimen name="list_item_pigeons_groups_textview_padding">10dp</dimen>
     <dimen name="list_item_pigeons_groups_imageview_height">20dp</dimen>
-
     <!--list_item_pigeons_groups end-->
     <!--list_no_more start-->
     <dimen name="list_no_more_layout_root_minhtight">50dp</dimen>
@@ -277,113 +280,119 @@
     <!--list_no_more end-->
     <!--list_race_report_detial start-->
     <dimen name="list_race_report_detial_layout_root_minheight">20dp</dimen>
-    <dimen name="list_race_report_detial_textview_title_width">60dp</dimen>
-    <dimen name="list_race_report_detial_textview_title_minwidth">65dp</dimen>
+    <dimen name="list_race_report_detial_textview_title_width">70dp</dimen>
+    <dimen name="list_race_report_detial_textview_title_minwidth">70dp</dimen>
     <dimen name="list_race_report_detial_textview_title_padding">10dp</dimen>
     <dimen name="list_race_report_detial_textview_title_paddingright">5dp</dimen>
-    <dimen name="list_race_report_detial_textview_title_textsize">12sp</dimen>
-    <dimen name="list_race_report_detial_textview_content_textsize">12sp</dimen>
+    <dimen name="list_race_report_detial_textview_title_textsize">14sp</dimen>
+    <dimen name="list_race_report_detial_textview_content_textsize">14sp</dimen>
     <!--list_race_report_detial end-->
     <!--listitem_race_collection start-->
-    <dimen name="listitem_race_collection_layout_root_minheight">60dp</dimen>
+    <dimen name="listitem_race_collection_layout_root_minheight">70dp</dimen>
     <dimen name="listitem_race_collection_layout_root_padding">15dp</dimen>
-    <dimen name="listitem_race_collection_textview_title_textsize">14sp</dimen>
-    <dimen name="listitem_race_collection_textview_detial_textsize">14sp</dimen>
-    <dimen name="listitem_race_collection_textview_time_textsize">12sp</dimen>
+    <dimen name="listitem_race_collection_textview_title_textsize">16sp</dimen>
+    <dimen name="listitem_race_collection_textview_detial_textsize">16sp</dimen>
+    <dimen name="listitem_race_collection_textview_time_textsize">14sp</dimen>
     <dimen name="listitem_race_collection_layout_detial_margintop">8dp</dimen>
     <!--listitem_race_collection end-->
     <!--listitem_race_info start-->
-    <dimen name="listitem_race_info_layout_root_minheight">60dp</dimen>
-    <dimen name="listitem_race_info_layout_root_margin">3dp</dimen>
-    <dimen name="listitem_race_info_layout_briefly_minheight">60dp</dimen>
-    <dimen name="listitem_race_info_layout_briefly_margin">7dp</dimen>
+    <dimen name="listitem_race_info_layout_root_minheight">70dp</dimen>
+    <dimen name="listitem_race_info_layout_root_margin">5dp</dimen>
+    <dimen name="listitem_race_info_layout_briefly_minheight">70dp</dimen>
+    <dimen name="listitem_race_info_layout_briefly_margin">10dp</dimen>
     <dimen name="listitem_race_info_textview_right_text_width">50dp</dimen>
-    <dimen name="listitem_race_info_textview_raceorg_textsize">14sp</dimen>
-    <dimen name="listitem_race_info_textview_racetype_textsize">10sp</dimen>
-    <dimen name="listitem_race_info_textview_racetype_margintop">6dp</dimen>
-    <dimen name="listitem_race_info_textview_racetype_marginright">3dp</dimen>
-    <dimen name="listitem_race_info_textview_racename_textsize">14sp</dimen>
-    <dimen name="listitem_race_info_textview_racename_margintop">5dp</dimen>
-    <dimen name="listitem_race_info_imageview_expand_margintop">30dp</dimen>
-    <dimen name="listitem_race_info_imageview_expand_width">13dp</dimen>
-    <dimen name="listitem_race_info_layout_detial_padding">8dp</dimen>
-    <dimen name="listitem_race_info_detial_title_padding">1dp</dimen>
-    <dimen name="listitem_race_info_detial_title_minwidth">55dp</dimen>
-    <dimen name="listitem_race_info_detial_title_textsize">12sp</dimen>
-    <dimen name="listitem_race_info_detial_content_textsize">12sp</dimen>
-    <dimen name="listitem_race_info_detial_content_padding">1dp</dimen>
+    <dimen name="listitem_race_info_textview_raceorg_textsize">16sp</dimen>
+    <dimen name="listitem_race_info_textview_racetype_textsize">12sp</dimen>
+    <dimen name="listitem_race_info_textview_racetype_margintop">8dp</dimen>
+    <dimen name="listitem_race_info_textview_racetype_marginright">5dp</dimen>
+    <dimen name="listitem_race_info_textview_racename_textsize">16sp</dimen>
+    <dimen name="listitem_race_info_textview_racename_margintop">8dp</dimen>
+    <dimen name="listitem_race_info_imageview_expand_margintop">35dp</dimen>
+    <dimen name="listitem_race_info_imageview_expand_width">15dp</dimen>
+    <dimen name="listitem_race_info_layout_detial_padding">10dp</dimen>
+    <dimen name="listitem_race_info_detial_title_padding">3dp</dimen>
+    <dimen name="listitem_race_info_detial_title_minwidth">50dp</dimen>
+    <dimen name="listitem_race_info_detial_title_textsize">14sp</dimen>
+    <dimen name="listitem_race_info_detial_content_textsize">14sp</dimen>
+    <dimen name="listitem_race_info_detial_content_padding">3dp</dimen>
     <dimen name="listitem_race_info_detial_content_marginleft">7dp</dimen>
-    <dimen name="listitem_race_info_textview_clickwhatch_marginbottom">7dp</dimen>
+    <dimen name="listitem_race_info_textview_clickwhatch_marginbottom">10dp</dimen>
     <!--listitem_race_info end-->
     <!--listitem_report_info start-->
-    <dimen name="listitem_report_info_layout_root_paddingtop">1dp</dimen>
+    <dimen name="listitem_report_info_layout_root_paddingtop">3dp</dimen>
     <dimen name="listitem_report_info_layout_jyxx_minheight">30dp</dimen>
-    <dimen name="listitem_report_info_textview_jyxx_textsize">12sp</dimen>
-    <dimen name="listitem_report_info_imageview_jyxx_width">20dp</dimen>
-    <dimen name="listitem_report_info_imageview_jyxx_height">20dp</dimen>
+    <dimen name="listitem_report_info_textview_jyxx_textsize">14sp</dimen>
+    <dimen name="listitem_report_info_imageview_jyxx_width">25dp</dimen>
+    <dimen name="listitem_report_info_imageview_jyxx_height">25dp</dimen>
     <!--listitem_report_info end-->
 
     <!--common-->
     <dimen name="split_line_width">1px</dimen>
-    <dimen name="search_edittext_height">30dp</dimen>
-    <dimen name="search_edittext_textsize">14sp</dimen>
-    <dimen name="search_edittext_margintop">7dp</dimen>
-    <dimen name="search_edittext_marginright">3dp</dimen>
-    <dimen name="search_edittext_marginbottom">3dp</dimen>
-    <dimen name="search_edittext_marginleft">3dp</dimen>
-    <dimen name="search_edittext_corners_radius">7dp</dimen>
+    <dimen name="search_edittext_height">35dp</dimen>
+    <dimen name="search_edittext_textsize">16sp</dimen>
+    <dimen name="search_edittext_margintop">8dp</dimen>
+    <dimen name="search_edittext_marginright">5dp</dimen>
+    <dimen name="search_edittext_marginbottom">5dp</dimen>
+    <dimen name="search_edittext_marginleft">5dp</dimen>
+    <dimen name="search_edittext_corners_radius">10dp</dimen>
 
-    <dimen name="search_edittext_home_margin_v">7dp</dimen>
-    <dimen name="search_edittext_home_margin_h">10dp</dimen>
+    <dimen name="search_edittext_home_margin_v">8dp</dimen>
+    <dimen name="search_edittext_home_margin_h">12dp</dimen>
 
     <dimen name="radius_alertview">15px</dimen>
     <!--通用-->
     <!--<dimen name="dp_0.5">0.4dp</dimen>-->
     <!--<dimen name="dp_1">0.75dp</dimen>-->
     <!--<dimen name="dp_2">2dp</dimen>-->
-    <!--<dimen name="dp_3">2dp</dimen>-->
-    <!--<dimen name="dp_4">3dp</dimen>-->
-    <!--<dimen name="dp_5">4dp</dimen>-->
-    <!--<dimen name="dp_7">5dp</dimen>-->
-    <!--<dimen name="dp_8">6dp</dimen>-->
-    <!--<dimen name="dp_10">8dp</dimen>-->
-    <!--<dimen name="dp_12">9dp</dimen>-->
-    <!--<dimen name="dp_14">11dp</dimen>-->
-    <!--<dimen name="dp_15">11dp</dimen>-->
-    <!--<dimen name="dp_20">15dp</dimen>-->
-    <!--<dimen name="dp_25">18dp</dimen>-->
-    <!--<dimen name="dp_30">22dp</dimen>-->
-    <!--<dimen name="dp_35">26dp</dimen>-->
-    <!--<dimen name="dp_40">30dp</dimen>-->
-    <!--<dimen name="dp_41">31dp</dimen>-->
-    <!--<dimen name="dp_50">38dp</dimen>-->
-    <!--<dimen name="dp_60">49dp</dimen>-->
+    <!--<dimen name="dp_3">3dp</dimen>-->
+    <!--<dimen name="dp_4">4dp</dimen>-->
+    <!--<dimen name="dp_5">5dp</dimen>-->
+    <!--<dimen name="dp_6">6dp</dimen>-->
+    <!--<dimen name="dp_7">7dp</dimen>-->
+    <!--<dimen name="dp_8">8dp</dimen>-->
+    <!--<dimen name="dp_10">10dp</dimen>-->
+    <!--<dimen name="dp_12">12dp</dimen>-->
+    <!--<dimen name="dp_14">14dp</dimen>-->
+    <!--<dimen name="dp_15">15dp</dimen>-->
+    <!--<dimen name="dp_20">20dp</dimen>-->
+    <!--<dimen name="dp_25">25dp</dimen>-->
+    <!--<dimen name="dp_30">30dp</dimen>-->
+    <!--<dimen name="dp_35">35dp</dimen>-->
+    <!--<dimen name="dp_40">40dp</dimen>-->
+    <!--<dimen name="dp_41">41dp</dimen>-->
+    <!--<dimen name="dp_50">50dp</dimen>-->
+    <!--<dimen name="dp_55">55dp</dimen>-->
+    <!--<dimen name="dp_60">60dp</dimen>-->
     <!--<dimen name="dp_65">65dp</dimen>-->
-    <!--<dimen name="dp_70">53dp</dimen>-->
-    <!--<dimen name="dp_75">56dp</dimen>-->
-    <!--<dimen name="dp_80">60dp</dimen>-->
-    <!--<dimen name="dp_100">75dp</dimen>-->
-    <!--<dimen name="dp_120">90dp</dimen>-->
-    <!--<dimen name="dp_130">98dp</dimen>-->
-    <!--<dimen name="dp_160">120dp</dimen>-->
-    <!--<dimen name="dp_200">150dp</dimen>-->
-    <!--<dimen name="dp_250">188dp</dimen>-->
+    <!--<dimen name="dp_70">70dp</dimen>-->
+    <!--<dimen name="dp_75">75dp</dimen>-->
+    <!--<dimen name="dp_80">80dp</dimen>-->
+    <!--<dimen name="dp_100">100dp</dimen>-->
+    <!--<dimen name="dp_120">120dp</dimen>-->
+    <!--<dimen name="dp_130">130dp</dimen>-->
+    <!--<dimen name="dp_160">160dp</dimen>-->
+    <!--<dimen name="dp_200">200dp</dimen>-->
+    <!--<dimen name="dp_250">250dp</dimen>-->
+    <!--<dimen name="dp_280">280dp</dimen>-->
 
-    <!--<dimen name="sp_12">9sp</dimen>-->
-    <!--<dimen name="sp_14">10.5sp</dimen>-->
-    <!--<dimen name="sp_16">12sp</dimen>-->
-    <!--<dimen name="sp_18">13.5sp</dimen>-->
-    <!--<dimen name="sp_20">15sp</dimen>-->
-    <!--<dimen name="sp_24">18sp</dimen>-->
-    <!--<dimen name="sp_30">23sp</dimen>-->
+    <!--<dimen name="sp_12">12sp</dimen>-->
+    <!--<dimen name="sp_14">14sp</dimen>-->
+    <!--<dimen name="sp_16">16sp</dimen>-->
+    <!--<dimen name="sp_18">18sp</dimen>-->
+    <!--<dimen name="sp_20">20sp</dimen>-->
+    <!--<dimen name="sp_24">24sp</dimen>-->
+    <!--<dimen name="sp_26">26sp</dimen>-->
+    <!--<dimen name="sp_28">28sp</dimen>-->
+    <!--<dimen name="sp_30">30sp</dimen>-->
 
-    <!--<dimen name="px_1">1px</dimen>-->
-    <!--<dimen name="px_5">4px</dimen>-->
+    <dimen name="px_1">1px</dimen>
+    <dimen name="px_5">5px</dimen>
 
 
     <dimen name="textsize_noinfo_prompt">14sp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_20">20dp</dimen>
 </resources>
