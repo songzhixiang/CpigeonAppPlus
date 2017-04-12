@@ -498,7 +498,7 @@ public class CallAPI {
             }
 
             private void dealData(String result) {
-                Logger.i(result);
+                Logger.json(result);
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {

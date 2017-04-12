@@ -1,12 +1,18 @@
 package com.cpigeon.app;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ashokvarma.bottomnavigation.BadgeItem;
@@ -23,14 +29,22 @@ import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.StatusBarTool;
+import com.cpigeon.app.utils.customview.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
-public class MainActivity extends BaseActivity implements IHomeView,  BottomNavigationBar.OnTabSelectedListener {
+@RuntimePermissions
+public class MainActivity extends BaseActivity implements IHomeView, BottomNavigationBar.OnTabSelectedListener {
 
 
     @BindView(R.id.viewpager)
@@ -41,7 +55,10 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     LinearLayout activityMain;
     private OnMatchTypeChangeListener onMatchTypeChangeListener;
     private int lastTabIndex = -1;//当前页面索引
-
+    private String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE};
     //主页
     private HomeFragment homeFragment;
     //直播
@@ -56,6 +73,65 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     private BadgeItem numberBadgeItem;
     private int laseSelectedPosition = 0;
     private boolean mHasUpdata = false;
+
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void sysytemAlertWindow() {
+
+    }
+
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void systemAlertWindowOnShowRationale(final PermissionRequest request) {
+        showRequest(request);
+    }
+
+    private void showRequest(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.proceed();
+                    }
+                })
+                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.cancel();
+                    }
+                })
+                .setCancelable(true)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        request.cancel();
+                    }
+                })
+                .setMessage("我们需要一些权限，以便您更好的体验")
+                .show();
+    }
+
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void systemAlertWindowOnPermissionDenied() {
+        showTips("权限被拒绝了",TipType.ToastShort);
+    }
+
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void systemAlertWindowOnNeverAskAgain() {
+        showTips("权限不再提示",TipType.ToastShort);
+    }
+
+
     public void setOnMatchTypeChangeListener(OnMatchTypeChangeListener onMatchTypeChangeListener) {
         this.onMatchTypeChangeListener = onMatchTypeChangeListener;
     }
@@ -71,6 +147,7 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     }
 
     public void initView() {
+        MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
         userCenterFragment = new UserCenterFragment();
@@ -155,15 +232,6 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
                     transaction.show(matchLiveFragment);
                 }
                 break;
-//            case 2:
-//                if (mCpigeonGroupFragment == null)
-//                {
-//                    mCpigeonGroupFragment = new CpigeonGroupFragment();
-//                    transaction.add(R.id.view_pager,mCpigeonGroupFragment);
-//                }else {
-//                    transaction.show(mCpigeonGroupFragment);
-//                }
-//                break;
             case 2:
                 if (footSearchFragment == null) {
                     footSearchFragment = new FootSearchFragment();
@@ -191,9 +259,6 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
         lastTabIndex = index;
         mViewPager.setCurrentItem(index);
         onTabSelected(index);
-        if (index == 0) {
-//            homeFragment.loadMatchinfo();
-        }
     }
 
 
@@ -215,7 +280,6 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
         }
 
         StatusBarTool.setWindowStatusBarColor(this, getResources().getColor(lastTabIndex == 3 ? R.color.user_center_header_top : R.color.colorPrimary));
-//        setAlias();
     }
 
     @Override
@@ -237,6 +301,7 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
     public void hideLoading() {
 
     }
+
     /**
      * 比赛类型切换的监听器
      */
@@ -244,17 +309,9 @@ public class MainActivity extends BaseActivity implements IHomeView,  BottomNavi
         void onChanged(String lastType, String currType);
     }
 
-    // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。
-//    private void setAlias() {
-//
-//        String alias = String.valueOf(CpigeonData.getInstance().getUserId(mContext));
-//        if (TextUtils.isEmpty(alias)) {
-//            return;
-//        }
-//        if (alias.equals(SharedPreferencesTool.Get(mContext, "jpush_alia", ""))) {
-//            return;
-//        }
-//        // 调用 Handler 来异步设置别名
-//        mJpushHandler.sendMessage(mJpushHandler.obtainMessage(MSG_SET_ALIAS, alias));
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+    }
 }

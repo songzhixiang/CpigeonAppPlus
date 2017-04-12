@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,10 @@ public class MatchLiveFragment extends BaseFragment {
         currMatchType = Const.MATCHLIVE_TYPE_XH;
         matchLiveSubFragment_GP = new MatchLiveSubFragment();
         matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);
-
+        matchLiveSubFragment_GP.setOnRefreshListener(onRefreshListener);
         matchLiveSubFragment_XH = new MatchLiveSubFragment();
         matchLiveSubFragment_XH.setMatchType(Const.MATCHLIVE_TYPE_XH);
-
+        matchLiveSubFragment_XH.setOnRefreshListener(onRefreshListener);
         currMatchLiveSubFragment = matchLiveSubFragment_XH;
 
         mContentFragmentAdapter = new ContentFragmentAdapter(getFragmentManager());
@@ -94,23 +95,23 @@ public class MatchLiveFragment extends BaseFragment {
     protected void lazyLoad() {
 
     }
-
-
     private MatchLiveSubFragment.OnRefreshListener onRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
         @Override
         public void onStartRefresh(MatchLiveSubFragment fragment) {
         }
 
         @Override
-        public void onRefreshFinished(MatchLiveSubFragment fragment, int loadCount) {
-            if (fragment.currMatchType.equals(Const.MATCHLIVE_TYPE_XH)) {
+        public void onRefreshFinished(int type, int loadCount) {
+            if (type ==DATA_Type_XH) {
                 tvActionbarMatchtypeXh.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
             }
-            if (fragment.currMatchType.equals(Const.MATCHLIVE_TYPE_GP)) {
+            if (type == DATA_Type_GP) {
                 tvActionbarMatchtypeGp.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
             }
         }
     };
+
+
 
     public String getCurrMatchType() {
         return currMatchType;

@@ -119,7 +119,7 @@
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="background_guide">#c0030303</color>
     <color name="colorBlue">#3e9cfc</color>
-
+    <color name="colorRed">#f5372d</color>
 
 
 </resources>

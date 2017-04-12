@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="permissionsdispatcher-2.3.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.hotchemi/permissionsdispatcher/2.3.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.hotchemi/permissionsdispatcher/2.3.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.hotchemi/permissionsdispatcher/2.3.2/7e02b9fc573cdd7c75073835e0bcd1d21312ec84/permissionsdispatcher-2.3.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

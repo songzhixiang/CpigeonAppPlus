@@ -77,6 +77,8 @@ dependencies {
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     compile 'cn.bingoogolapple:bga-badgeview:1.1.3'
     compile 'cn.pedant.sweetalert:library:1.3'
+    compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
     compile 'com.orhanobut:logger:1.15'
     compile files('libs/commons-codec-1.10.jar')
     compile files('libs/libammsdk.jar')

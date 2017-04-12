@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
+import com.cpigeon.app.utils.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ import butterknife.ButterKnife;
  */
 
 public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView, SwipeRefreshLayout.OnRefreshListener {
+
+
     private boolean isPrepared;
     @BindView(R.id.recyclerview_matchlive)
     RecyclerView mRecyclerView;
@@ -41,6 +45,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private static final int PAGE_SIZE = 6;
     private MatchLiveSubPre pre = new MatchLiveSubPre(this);
     String currMatchType = "";
+    private OnRefreshListener onRefreshListener;
 
     @Override
     protected void initView(View view) {
@@ -51,8 +56,9 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     }
 
 
-
-
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
+    }
 
 
     @Override
@@ -64,8 +70,13 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     protected void lazyLoad() {
         if (isPrepared && isVisible) {
             //做加载数据的网络操作
-            pre.loadGPData(0);
-            pre.loadXHData(0);
+            if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
+                pre.loadGPData(0);
+            } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
+                pre.loadXHData(0);
+            }
+
+
             isPrepared = false;
         }
 
@@ -73,19 +84,23 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
 
     @Override
-    public void showGPData(List<MatchInfo> matchInfoList,int type) {
+    public void showGPData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecyclerView.setAdapter(matchLiveAdapter);
+        if (onRefreshListener != null)
+            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_GP, matchInfoList.size());
     }
 
     @Override
-    public void showXHData(List<MatchInfo> matchInfoList,int type) {
+    public void showXHData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
         matchLiveAdapter = new MatchLiveAdapter(matchInfoList);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecyclerView.setAdapter(matchLiveAdapter);
+        if (onRefreshListener != null)
+            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_XH, matchInfoList.size());
     }
 
     @Override
@@ -109,6 +124,8 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void onRefresh() {
+        if (onRefreshListener != null)
+            onRefreshListener.onStartRefresh(MatchLiveSubFragment.this);
         matchLiveAdapter.setEnableLoadMore(false);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -121,8 +138,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     }
 
     public interface OnRefreshListener {
+        int DATA_Type_GP = 1;
+        int DATA_Type_XH = 2;
+
         void onStartRefresh(MatchLiveSubFragment fragment);
 
-        void onRefreshFinished(MatchLiveSubFragment fragment, int loadCount);
+        void onRefreshFinished(int type, int loadCount);
     }
 }

@@ -1,5 +1,6 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.modular.order.view.activity.OrderActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
@@ -122,6 +124,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.ll_user_center_focus:
                 break;
             case R.id.ll_user_center_order:
+                startActivity(new Intent(getActivity(), OrderActivity.class));
                 break;
             case R.id.ll_user_money:
                 break;

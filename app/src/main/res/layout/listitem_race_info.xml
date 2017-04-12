@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="2dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -33,7 +33,6 @@
                     style="@style/Marquee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:textColor="@color/textColor_light_black"
                     android:textSize="16sp"/>
 

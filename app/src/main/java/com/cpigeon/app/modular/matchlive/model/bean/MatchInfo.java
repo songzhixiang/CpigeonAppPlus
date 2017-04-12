@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 @Table(name = "matchInfo")
-public class MatchInfo implements Serializable,MultiItemEntity {
+public class MatchInfo implements Serializable{
 
     @Column(name = "ssid", isId = true, autoGen = false)
     private String ssid;//比赛ID
@@ -546,8 +546,4 @@ public class MatchInfo implements Serializable,MultiItemEntity {
         return getGcys() > 0 ? getGcys() + "羽" : show ? "0羽" : "";
     }
 
-    @Override
-    public int getItemType() {
-        return 0;
-    }
 }

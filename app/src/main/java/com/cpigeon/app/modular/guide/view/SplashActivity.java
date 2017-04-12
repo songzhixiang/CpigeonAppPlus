@@ -104,7 +104,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
             public void run() {
                 entryApp();
             }
-        }, 1000);
+        }, 500);
     }
 
 

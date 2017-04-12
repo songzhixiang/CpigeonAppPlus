@@ -1,5 +1,7 @@
 package com.cpigeon.app.commonstandard.view.activity;
 
+import android.support.design.widget.Snackbar;
+
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 
 /**
@@ -15,7 +17,9 @@ public interface IView {
         DialogSuccess,
         DialogError,
         ToastLong,
-        ToastShort
+        ToastShort,
+        SnackbarShort,
+        SnackbarLong
     }
 
     void showLoading();

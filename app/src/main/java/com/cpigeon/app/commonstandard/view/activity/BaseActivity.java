@@ -23,6 +23,7 @@ import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
+import com.cpigeon.app.utils.customview.SnackbarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,8 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         setContentView(getLayoutId());
-        // 默认着色状态栏
-        SetTranslanteBar();
         mUnbinder = ButterKnife.bind(this);
         mContext = this;
 
@@ -268,6 +267,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             case ToastShort:
                 Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
                 return true;
+
             default:
                 Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
                 return true;
