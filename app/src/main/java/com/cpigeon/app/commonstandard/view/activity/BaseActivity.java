@@ -25,6 +25,7 @@ import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
+import com.cpigeon.app.utils.ToastUtil;
 import com.cpigeon.app.utils.customview.SnackbarUtil;
 
 import java.util.HashMap;
@@ -277,10 +278,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
                     mLoadingSweetAlertDialog.dismiss();
                 return true;
             case ToastLong:
-                Toast.makeText(this, tip, Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, tip, Toast.LENGTH_LONG).show();
+                ToastUtil.showToast(this, tip, Toast.LENGTH_LONG);
                 return true;
             case ToastShort:
-                Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(this, tip, Toast.LENGTH_SHORT);
                 return true;
 
             default:

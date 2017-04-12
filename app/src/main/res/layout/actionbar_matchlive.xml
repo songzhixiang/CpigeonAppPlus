@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                style="@style/layout_custom_actionbar"
-                android:layout_width="match_parent"
-                android:gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/layout_custom_actionbar"
+    android:layout_width="match_parent"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="协会直播"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <cn.bingoogolapple.badgeview.BGABadgeTextView
             android:id="@+id/tv_actionbar_matchtype_gp"
@@ -31,7 +31,6 @@
             android:gravity="center"
             android:text="公棚直播"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            app:badge_gravity="rightTop"/>
+            android:textSize="18sp" />
     </LinearLayout>
 </RelativeLayout>

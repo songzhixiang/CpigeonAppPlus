@@ -12,4 +12,10 @@ public interface IUserInfoView extends IView {
     void showUserinfo(UserInfo.DataBean userinfo);
 
     boolean hasChangedUserInfo();
+
+    boolean hasChangedUserHeadImage();
+
+    String getChangedUserHeadImageLocalPath();
+
+    UserInfo.DataBean getModifiedUserInfo();
 }

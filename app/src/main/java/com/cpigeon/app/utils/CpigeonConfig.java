@@ -71,7 +71,7 @@ public class CpigeonConfig {
     /**
      * 缓存路径
      */
-    public static final String CACHE_FOLDER = FILE_PATH_ROOT + "/cache";
+    public static final String CACHE_FOLDER = FILE_PATH_ROOT + "/cache/";
 
     static {
     }

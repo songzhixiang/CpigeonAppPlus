@@ -3,6 +3,8 @@ package com.cpigeon.app.modular.usercenter.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -77,6 +79,34 @@ public class EditActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                mIsSaved = true;
+                saveChangedandFinish();
+                break;
+        }
+        return true;
+    }
+
+    /**
+     * 保存修改并关闭当前页
+     */
+    private void saveChangedandFinish() {
+        intent = new Intent();
+        intent.putExtra(INTENT_KEY_NEW_VALUE, mEditText.getText().toString().trim());
+        setResult(RESULT_OK, intent);
+        mIsSaved = true;
+        finish();
+    }
+
+    @Override
     public void finish() {
         if (mIsSaved || mIsCanceled) {
             super.finish();
@@ -93,11 +123,7 @@ public class EditActivity extends BaseActivity {
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    intent = new Intent();
-                    intent.putExtra(INTENT_KEY_NEW_VALUE, mEditText.getText().toString().trim());
-                    setResult(RESULT_OK, intent);
-                    mIsSaved = true;
-                    finish();
+                    saveChangedandFinish();
                 }
             });
             dialog.setCancelText("取消");

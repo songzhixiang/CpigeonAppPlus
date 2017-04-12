@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,8 +26,10 @@ import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserInfoPresenter;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IUserInfoView;
 import com.cpigeon.app.modular.usercenter.view.fragment.MyDialogFragment;
+import com.cpigeon.app.utils.CpigeonConfig;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.PictureCutUtil;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
@@ -78,10 +81,14 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     LinearLayout llChangePwd;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     private Uri imageUri;
     private Intent intent = null;
     UserInfoPresenter mPresenter;
     private UserInfo.DataBean userinfo;
+    private boolean isChangedUserHeadImage = false;
+    private String mUserHeadImageLocalPath;
+
     private SaActionSheetDialog.OnSheetItemClickListener mOnSheetItemClickListener = new SaActionSheetDialog.OnSheetItemClickListener() {
         @Override
         public void onClick(int which) {
@@ -110,7 +117,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 case 1:
                     choseHeadImageFromGallry();//相册
                     break;
-
             }
         }
     };
@@ -205,6 +211,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     protected void onNetworkDisConnected() {
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
@@ -217,33 +224,17 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 break;
             case PHOTO_REQUEST_CUT:
                 Bitmap bitmap = data.getParcelableExtra("data");
-//                String filePath = PictureCutUtil.cutPictureQuality(bitmap, "/img");
-//                file = new File(filePath);
-//                loadingDialog = DialogTool.createLoadingDialog2(mContext, "正在上传头像");
-//                loadingDialog.setCancelable(true);
-//                loadingDialog.setCanceledOnTouchOutside(true);
-//                loadingDialog.show();
-//                CallAPI.updateUserFaceImage(mContext, file, new CallAPI.Callback<String>() {
-//                    @Override
-//                    public void onSuccess(String data) {
-//                        loadingDialog.dismiss();
-//                        if (!"".equals(data)) {
-//                            UserInfo.DataBean userInfo = CpigeonData.getInstance().getUserInfo();
-//                            userInfo.setHeadimg(data);
-//                            CpigeonData.getInstance().setUserInfo(userInfo);
-//                            Picasso.with(mContext).load(data).into(ivUserHeadImg);
-//                        }
-//                        file.delete();
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(int errorType, Object data) {
-//                        loadingDialog.dismiss();
-//                        Toast.makeText(UserInfoActivity.this, errorType == CallAPI.Callback.ERROR_TYPE_NOT_NETWORK ? "没有网络" : "上传头像失败", Toast.LENGTH_SHORT).show();
-//                        file.delete();
-//                    }
-//                });
+                String filePath = PictureCutUtil.cutPictureQuality(bitmap, CpigeonConfig.CACHE_FOLDER);
+                filePath = CpigeonConfig.CACHE_FOLDER + filePath;
+//                Picasso.with(mContext).load(filePath).into(ivUserHeadImg);
+                Logger.d(filePath);
+                mUserHeadImageLocalPath = filePath;
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                Bitmap bm = BitmapFactory.decodeFile(filePath, options);
+
+                ivUserHeadImg.setImageBitmap(bm);
+                isChangedUserHeadImage = true;
                 break;
             case CHANGE_NICKNAME:
                 String nickname = data.getStringExtra(EditActivity.INTENT_KEY_NEW_VALUE);
@@ -257,6 +248,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 break;
         }
     }
+
     private void crop(Uri uri) {
         // 裁剪图片意图
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -360,8 +352,28 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             return true;
         if (CpigeonData.getInstance().getUserInfo().getSigns() != null && !tvUserSign.getText().toString().equals(CpigeonData.getInstance().getUserInfo().getSigns()))
             return true;
-
         return false;
+    }
+
+    @Override
+    public boolean hasChangedUserHeadImage() {
+        return isChangedUserHeadImage;
+    }
+
+    @Override
+    public String getChangedUserHeadImageLocalPath() {
+        return mUserHeadImageLocalPath;
+    }
+
+    @Override
+    public UserInfo.DataBean getModifiedUserInfo() {
+        if (userinfo == null)
+            userinfo = new UserInfo.DataBean();
+        userinfo.setBrithday(tvUserBrithday.getText().toString());
+        userinfo.setNickname(tvNickName.getText().toString());
+        userinfo.setSex(tvUserSex.getText().toString());
+        userinfo.setSigns(tvUserSign.getText().toString());
+        return userinfo;
     }
 
     @Override
@@ -381,7 +393,13 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             tvUserName.setText(TextUtils.isEmpty(data.getUsername()) ? "" : data.getUsername());
             tvUserSex.setText(TextUtils.isEmpty(data.getSex()) ? "" : data.getSex());
             tvUserSign.setText(TextUtils.isEmpty(data.getSigns()) ? "" : data.getSigns());
+            userinfo = data;
         }
+    }
 
+    @Override
+    public void finish() {
+        mPresenter.updateUserInfo();
+        super.finish();
     }
 }

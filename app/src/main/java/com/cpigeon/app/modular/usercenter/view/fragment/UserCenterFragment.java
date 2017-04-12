@@ -126,6 +126,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
                 startActivity(new Intent(getActivity(), FeedBackActivity.class));
                 break;
             case R.id.ll_user_center_focus:
+
                 break;
             case R.id.ll_user_center_order:
                 startActivity(new Intent(getActivity(), OrderActivity.class));
