@@ -5,9 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,21 +19,20 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
+import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
-import com.cpigeon.app.modular.home.model.bean.AD;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.utils.CommonTool;
+import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.StatusBarTool;
-import com.cpigeon.app.utils.customview.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -289,7 +286,7 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
     }
 
     @Override
-    public void showAd(List<AD> adList) {
+    public void showAd(List<HomeAd> homeAdList) {
 
     }
 
@@ -309,5 +306,47 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    public void onHomeItemClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_gpzb:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_GP);
+                onTabReselected(1);
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+            case R.id.layout_xhzb:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_XH);
+                onTabReselected(1);
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+            case R.id.layout_zhcx:
+                onTabReselected(2);
+                setCurrIndex(2);
+                mBottomNavigationBar.selectTab(2);
+                break;
+            case R.id.layout_wdsc:
+//                startActivity(new Intent(HomeActivity.this, CollectionActivity.class));
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (lastTabIndex!=0)
+        {
+            onTabReselected(0);
+            setCurrIndex(0);
+            mBottomNavigationBar.selectTab(0);
+        }else {
+            super.onBackPressed();
+        }
+
+
     }
 }

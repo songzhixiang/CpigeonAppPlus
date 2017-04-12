@@ -1,27 +1,21 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
-import com.cpigeon.app.modular.usercenter.view.activity.UserOrderListActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
@@ -32,14 +26,9 @@ import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
-import org.xutils.common.util.DensityUtil;
-import org.xutils.image.ImageOptions;
-import org.xutils.x;
-
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,7 +38,7 @@ import static com.cpigeon.app.MyApp.mCpigeonData;
  * Created by Administrator on 2017/4/6.
  */
 
-public class UserCenterFragment extends BaseFragment implements IUserCenterView {
+public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCenterView {
 
     @BindView(R.id.fragment_user_center_userLogo)
     CircleImageView fragmentUserCenterUserLogo;
@@ -211,16 +200,6 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             }
 
             if (!TextUtils.isEmpty(userHeadImageURl)) {
-//                ImageOptions options = new ImageOptions.Builder()
-//                        .setSize(DensityUtil.dip2px(50), DensityUtil.dip2px(50))//图片大小
-//                        .setRadius(DensityUtil.dip2px(50))//ImageView圆角半径
-//                        // .setCrop(true)// 如果ImageView的大小不是定义为wrap_content, 不要crop.
-//                        .setImageScaleType(CircleImageView.ScaleType.CENTER_CROP)//缩放
-//                        .setLoadingDrawableId(R.mipmap.head_image_default)//加载中默认显示图片
-//                        .setUseMemCache(true)//设置使用缓存
-//                        .setFailureDrawableId(R.mipmap.head_image_default)//加载失败后默认显示图片
-//                        .build();
-//                x.image().bind(fragmentUserCenterUserLogo, userHeadImageURl, options);
                 Picasso.with(getActivity())
                         .load(userHeadImageURl)
                         .into(fragmentUserCenterUserLogo);

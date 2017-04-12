@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.footsearch.view.activity.FootSearchActivity;
 import com.cpigeon.app.modular.footsearch.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.presenter.FootSearchPre;
@@ -38,7 +39,7 @@ import static com.cpigeon.app.MyApp.mCpigeonData;
  * Created by Administrator on 2017/4/5.
  */
 
-public class FootSearchFragment extends BaseFragment implements IFootSearchView {
+public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSearchView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

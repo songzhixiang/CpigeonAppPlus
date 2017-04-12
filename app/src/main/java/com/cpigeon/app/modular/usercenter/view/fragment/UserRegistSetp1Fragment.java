@@ -73,10 +73,6 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
         return R.layout.fragment_regist_step_1;
     }
 
-    @Override
-    protected void lazyLoad() {
-
-    }
 
     @Override
     public String getPhoneNumber() {

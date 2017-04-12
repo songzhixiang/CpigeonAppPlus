@@ -4,20 +4,20 @@ package com.cpigeon.app.modular.home.model.bean;
  * Created by Administrator on 2016/12/8.
  */
 
-public class AD {
+public class HomeAd {
     private int id;
     private String adImageUrl;
     private String adUrl;
 
-    public AD() {
+    public HomeAd() {
     }
 
-    public AD(String adImageUrl, String adUrl) {
+    public HomeAd(String adImageUrl, String adUrl) {
         this.adImageUrl = adImageUrl;
         this.adUrl = adUrl;
     }
 
-    public AD(int id, String adImageUrl, String adUrl) {
+    public HomeAd(int id, String adImageUrl, String adUrl) {
         this.id = id;
         this.adImageUrl = adImageUrl;
         this.adUrl = adUrl;

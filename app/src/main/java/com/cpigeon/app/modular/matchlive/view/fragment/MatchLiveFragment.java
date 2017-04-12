@@ -13,6 +13,7 @@ import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.customview.SearchEditText;
 
@@ -25,7 +26,7 @@ import cn.bingoogolapple.badgeview.BGABadgeTextView;
  * Created by Administrator on 2017/4/6.
  */
 
-public class MatchLiveFragment extends BaseFragment {
+public class MatchLiveFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.tv_actionbar_matchtype_xh)
     BGABadgeTextView tvActionbarMatchtypeXh;
@@ -155,7 +156,6 @@ public class MatchLiveFragment extends BaseFragment {
         }
         changeRaceTypeViewStarus();
     }
-
 
 }
 

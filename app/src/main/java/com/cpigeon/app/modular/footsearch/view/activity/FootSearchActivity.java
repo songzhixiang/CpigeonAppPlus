@@ -36,7 +36,6 @@ public class FootSearchActivity extends BaseActivity{
 
     @Override
     public void initPresenter() {
-
     }
 
     public void initView() {

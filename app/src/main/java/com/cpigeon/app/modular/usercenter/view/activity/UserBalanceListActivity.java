@@ -1,6 +1,5 @@
 package com.cpigeon.app.modular.usercenter.view.activity;
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,13 +9,12 @@ import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.utils.NetUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/4/10.
  */
 
-public class UserOrderListActivity extends BaseActivity {
+public class UserBalanceListActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rvOrderList)
@@ -24,7 +22,7 @@ public class UserOrderListActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_user_order_list;
+        return R.layout.activity_userbalance_order_list;
     }
 
     @Override

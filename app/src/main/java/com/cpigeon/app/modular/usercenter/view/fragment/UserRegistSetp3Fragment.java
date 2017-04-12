@@ -64,11 +64,6 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
         return R.layout.fragment_regist_step_3;
     }
 
-    @Override
-    protected void lazyLoad() {
-
-    }
-
 
     @Override
     public String getPassword() {

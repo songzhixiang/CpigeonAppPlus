@@ -81,7 +81,7 @@ public class CPigeonApiUrl {
     /**
      * 广告信息Url
      */
-    public static final String AD_URL = API_VERSION + "AD";
+    public static final String AD_URL = API_VERSION + "Ad";
     /**
      * 登录URL
      */

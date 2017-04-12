@@ -32,27 +32,32 @@ import butterknife.ButterKnife;
 public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView, SwipeRefreshLayout.OnRefreshListener {
 
 
-    private boolean isPrepared;
+//    private boolean isPrepared;
     @BindView(R.id.recyclerview_matchlive)
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private MatchLiveAdapter matchLiveAdapter;
-    private View mView;
+//    private View mView;
     private List<MatchInfo> matchInfos;
     private int delayMillis = 1000;
-    private static final int TOTAL_COUNTER = 18;
-    private static final int PAGE_SIZE = 6;
+//    private static final int TOTAL_COUNTER = 18;
+//    private static final int PAGE_SIZE = 6;
     private MatchLiveSubPre pre = new MatchLiveSubPre(this);
     String currMatchType = "";
     private OnRefreshListener onRefreshListener;
 
     @Override
     protected void initView(View view) {
-        isPrepared = true;
+//        isPrepared = true;
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
+            pre.loadGPData(0);
+        } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
+            pre.loadXHData(0);
+        }
     }
 
 
@@ -66,21 +71,26 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         return R.layout.fragment_matchlive_sub;
     }
 
-    @Override
-    protected void lazyLoad() {
-        if (isPrepared && isVisible) {
-            //做加载数据的网络操作
-            if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
-                pre.loadGPData(0);
-            } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
-                pre.loadXHData(0);
-            }
-
-
-            isPrepared = false;
-        }
-
-    }
+//    @Override
+//    public boolean isLazyLoading() {
+//        return false;
+//    }
+//
+//    @Override
+//    protected void lazyLoad() {
+//        if (isPrepared && isVisible) {
+//            //做加载数据的网络操作
+//            if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
+//                pre.loadGPData(0);
+//            } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
+//                pre.loadXHData(0);
+//            }
+//
+//
+//            isPrepared = false;
+//        }
+//
+//    }
 
 
     @Override

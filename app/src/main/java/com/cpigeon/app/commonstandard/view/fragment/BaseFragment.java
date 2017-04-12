@@ -2,6 +2,7 @@ package com.cpigeon.app.commonstandard.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,7 +29,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public abstract class BaseFragment extends Fragment implements IView {
     protected View rootView;
     private Unbinder mUnbinder;
-    protected boolean isVisible;
     /**
      * 加载中--对话框
      */
@@ -47,6 +47,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     protected abstract void initView(View view);
 
     //获取布局文件
+    @LayoutRes
     protected abstract int getLayoutResource();
 
 
@@ -126,33 +127,6 @@ public abstract class BaseFragment extends Fragment implements IView {
         map.put("phone", "");
         return SharedPreferencesTool.Get(getActivity(), map, SharedPreferencesTool.SP_FILE_LOGIN);
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            isVisible = true;
-            onVisible();
-        } else {
-            isVisible = false;
-            onInvisible();
-        }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        lazyLoad();
-    }
-
-    protected void onVisible() {
-        lazyLoad();
-    }
-
-    protected void onInvisible() {
-    }
-
-    protected abstract void lazyLoad();
 
 
     @Override

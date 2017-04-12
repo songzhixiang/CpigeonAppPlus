@@ -76,10 +76,7 @@ public class UserRegistSetp2Fragment extends BaseFragment implements IRegisterVi
         return R.layout.fragment_regist_step_2;
     }
 
-    @Override
-    protected void lazyLoad() {
 
-    }
 
 
     @Override
