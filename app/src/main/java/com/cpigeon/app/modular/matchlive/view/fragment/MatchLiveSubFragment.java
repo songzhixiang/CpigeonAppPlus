@@ -108,16 +108,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
     public void setMatchType(String matchType) {
         currMatchType = matchType;
     }

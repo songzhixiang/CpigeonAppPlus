@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnPermissionDenied() {
-        showTips("权限被拒绝了",TipType.ToastShort);
+        showTips("权限被拒绝了", TipType.ToastShort);
     }
 
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnNeverAskAgain() {
-        showTips("权限不再提示",TipType.ToastShort);
+        showTips("权限不再提示", TipType.ToastShort);
     }
 
 
@@ -190,7 +190,13 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
                     .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
                     .initialise();
         } else {
-
+            mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "首页").setActiveColorResource(R.color.colorPrimary).setBadgeItem(numberBadgeItem))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "直播").setActiveColorResource(R.color.colorPrimary))
+//                    .addItem(new BottomNavigationItem(R.drawable.svg_ic_cpigeon_group, "微鸽圈").setActiveColorResource(R.color.colorPrimary))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "查询").setActiveColorResource(R.color.colorPrimary))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "我的").setActiveColorResource(R.color.colorPrimary))
+                    .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
+                    .initialise();
         }
 
 
@@ -292,16 +298,6 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
 
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
     /**
      * 比赛类型切换的监听器
      */
@@ -312,6 +308,6 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this,requestCode,grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }

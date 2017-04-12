@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -80,6 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     }
 
     //获取布局文件
+    @LayoutRes
     public abstract int getLayoutId();
 
     public abstract void initPresenter();
@@ -112,7 +114,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
      **/
     public void startActivity(Class<?> cls) {
         startActivity(cls, null);
-        overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
     /**
@@ -125,8 +126,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
     }
 
     /**
@@ -149,23 +148,21 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
-        AppManager.getAppManager().finishActivity(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        AppManager.getAppManager().removeActivity(this);
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_right);
     }
 
@@ -180,6 +177,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
+        overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
 

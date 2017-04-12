@@ -73,7 +73,7 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
 
     @Override
     protected void initView(View view) {
-        isPrepared  =true;
+        isPrepared = true;
         initToolbar();
     }
 
@@ -111,10 +111,11 @@ public class FootSearchFragment extends BaseFragment implements IFootSearchView 
     @Override
     public void getFootSearchService(CpigeonUserServiceInfo info) {
         boolean noService = info == null || TextUtils.isEmpty(info.getName());
-        tvPromptTitle.setText(noService ? "未购买套餐,最多显示2条结果" :
-                info.getShowNumber() == 0 ? String.format("您当前使用%s,结果条数不限制", info.getPackageName()) :
-                        String.format("您当前使用%s套餐，当前套餐最多显示%d条结果", info.getPackageName(), info.getShowNumber()));
-        if (!noService) {
+        if (tvPromptTitle != null)
+            tvPromptTitle.setText(noService ? "未购买套餐,最多显示2条结果" :
+                    info.getShowNumber() == 0 ? String.format("您当前使用%s,结果条数不限制", info.getPackageName()) :
+                            String.format("您当前使用%s套餐，当前套餐最多显示%d条结果", info.getPackageName(), info.getShowNumber()));
+        if (!noService && tvPromptRight != null) {
             tvPromptRight.setVisibility(View.VISIBLE);
             tvPromptRight.setText(String.format("套餐剩余查询次数:%s%s", info.getNumbers(), info.getUnitname()));
         }

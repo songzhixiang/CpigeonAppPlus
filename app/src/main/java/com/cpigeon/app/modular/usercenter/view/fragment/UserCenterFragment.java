@@ -17,6 +17,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
+import com.cpigeon.app.modular.order.view.activity.OrderActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
@@ -138,7 +139,7 @@ public class UserCenterFragment extends BaseFragment implements IUserCenterView 
             case R.id.ll_user_center_focus:
                 break;
             case R.id.ll_user_center_order:
-                startActivity(new Intent(getActivity(), UserOrderListActivity.class));
+                startActivity(new Intent(getActivity(), OrderActivity.class));
                 break;
             case R.id.ll_user_money:
                 break;

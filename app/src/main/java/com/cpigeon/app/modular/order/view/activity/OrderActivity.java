@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.R;
@@ -43,7 +44,6 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
     private int mTotalCount = 8;
     private int pi = 1;
     private List<CpigeonOrderInfo> newOrderInfo = new ArrayList<>();
-    ;
 
     @Override
     public int getLayoutId() {
@@ -59,6 +59,13 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
     public void initView() {
         mToolbar.setTitle("我的订单");
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,16 +79,6 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
 
     @Override
     protected void onNetworkDisConnected() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
 
     }
 
