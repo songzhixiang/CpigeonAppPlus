@@ -17,6 +17,7 @@ import com.cpigeon.app.modular.settings.view.activity.SettingsActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.HelpActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
@@ -78,8 +79,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
     LinearLayout llUserCenterAboutus;
     @BindView(R.id.ll_user_center_help)
     LinearLayout llUserCenterHelp;
-    private boolean isPrepared;
-    private View mView;
+
     private UserCenterPre userCenterPre = new UserCenterPre(this);
     CpigeonData.OnDataChangedListener onDataChangedListener = new CpigeonData.OnDataChangedListener() {
         @Override
@@ -90,7 +90,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
 
     @Override
     protected void initView(View view) {
-        isPrepared = true;
         mCpigeonData.addOnDataChangedListener(onDataChangedListener);
     }
 
@@ -101,11 +100,8 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
 
     @Override
     protected void lazyLoad() {
-        if (isPrepared && isVisible) {
-            userCenterPre.loadBalance();
-            userCenterPre.loadSignStatus();
-            isPrepared = false;
-        }
+        userCenterPre.loadBalance();
+        userCenterPre.loadSignStatus();
     }
 
     @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_feedback, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
@@ -136,6 +132,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
             case R.id.ll_user_money:
                 break;
             case R.id.ll_user_jifen:
+                startActivity(new Intent(getActivity(), ScoreActivity.class));
                 break;
             case R.id.ll_user_center_setting:
                 startActivity(new Intent(getActivity(), SettingsActivity.class));

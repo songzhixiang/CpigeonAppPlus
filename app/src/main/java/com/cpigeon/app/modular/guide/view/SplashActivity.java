@@ -1,5 +1,6 @@
 package com.cpigeon.app.modular.guide.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.guide.presenter.SplashPresenter;
 import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
@@ -24,6 +26,7 @@ import com.cpigeon.app.utils.StatusBarSetting;
 import com.cpigeon.app.utils.StatusBarTool;
 import com.squareup.picasso.Picasso;
 
+import java.lang.ref.WeakReference;
 import java.sql.Date;
 
 import butterknife.BindView;
@@ -51,7 +54,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     protected SplashPresenter mPresenter;
     CountDownTimer countDownTimer;
     boolean isEntry = false;
-
+    private WeakReference<Activity> weakReference ;
     //最短显示时间
     private static final long SHOW_TIME_MIN = 3000;
 
@@ -67,6 +70,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     @Override
     public void initView() {
+        weakReference= new WeakReference<Activity>(this);
         StatusBarTool.hideStatusBar(this);
         tvAppVersion.setText("V " + CommonTool.getVersionName(SplashActivity.this));
         tvCopyright.setText("中鸽科技版权所有©Copyright " + (new Date(System.currentTimeMillis()).getYear() + 1900));
@@ -142,5 +146,11 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     public void showAd(String url) {
         Picasso.with(this).load(url).into(ivAdImage);
         rlAd.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().removeActivity(weakReference);
     }
 }

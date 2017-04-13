@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.order.view.activity;
+package com.cpigeon.app.modular.order.view.adapter;
 
 import android.content.Intent;
 import android.graphics.Color;

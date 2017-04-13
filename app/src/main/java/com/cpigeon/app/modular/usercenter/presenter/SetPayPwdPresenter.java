@@ -11,7 +11,6 @@ import com.cpigeon.app.modular.usercenter.model.dao.ISetPayPwdDao;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.SetPayPwdDaoImpl;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ISetPayPwdView;
 import com.cpigeon.app.utils.CallAPI;
-import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.EncryptionTool;
 

@@ -83,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         //开启广播去监听 网络 改变事件
         NetStateReceiver.registerObserver(mNetChangeObserver);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
-        Logger.e("当前Activity上面的栈内存Activity还有"+AppManager.getAppManager().stackSize());
+        Logger.e("当前" + this.getClass().getSimpleName() + "上面的栈内存Activity还有" + AppManager.getAppManager().stackSize());
     }
 
     //获取布局文件

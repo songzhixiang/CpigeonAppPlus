@@ -29,30 +29,28 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
 
     protected boolean isVisible;
 
+    protected boolean isFristLoad = true;
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            isVisible = true;
-            onVisible();
-        } else {
-            isVisible = false;
-            onInvisible();
+        canLoadLazy();
+    }
+
+    private void canLoadLazy() {
+        isVisible = getUserVisibleHint();
+        if (isVisible && isFristLoad) {
+            lazyLoad();
+            isFristLoad = false;
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        lazyLoad();
+        canLoadLazy();
     }
 
-    protected void onVisible() {
-        lazyLoad();
-    }
-
-    protected void onInvisible() {
-    }
 
     protected abstract void lazyLoad();
 }

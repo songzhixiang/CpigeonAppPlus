@@ -93,7 +93,10 @@
             android:name=".modular.usercenter.view.activity.SetPayPwdActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
+        <activity
+            android:name=".modular.usercenter.view.activity.ScoreActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

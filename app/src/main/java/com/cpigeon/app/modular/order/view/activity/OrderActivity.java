@@ -1,7 +1,6 @@
 package com.cpigeon.app.modular.order.view.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +13,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
 import com.cpigeon.app.modular.order.presenter.OrderPre;
+import com.cpigeon.app.modular.order.view.adapter.OrderAdapter;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
 
@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/4/11.
