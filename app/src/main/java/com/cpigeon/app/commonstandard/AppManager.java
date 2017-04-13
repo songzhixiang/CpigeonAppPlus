@@ -3,15 +3,20 @@ package com.cpigeon.app.commonstandard;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Process;
 
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Stack;
+import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2017/4/11.
  */
 
 public class AppManager {
-    private static Stack<Activity> activityStack;
+    private Stack<WeakReference<Activity>> mActivityStack;
     private volatile static AppManager instance;
 
     private AppManager() {
@@ -32,148 +37,188 @@ public class AppManager {
         return instance;
     }
 
+    /***
+     * 栈中Activity的数
+     *
+     * @return Activity的数
+     */
+    public int stackSize() {
+        return mActivityStack.size();
+    }
+
+    /***
+     * 获得Activity栈
+     *
+     * @return Activity栈
+     */
+    public Stack<WeakReference<Activity>> getStack() {
+        return mActivityStack;
+    }
+
     /**
      * 添加Activity到堆栈
      */
-    public void addActivity(Activity activity) {
-        if (activityStack == null) {
-            activityStack = new Stack<Activity>();
+    public void addActivity(WeakReference<Activity> activity) {
+        if (mActivityStack == null) {
+            mActivityStack = new Stack<>();
         }
-        activityStack.add(activity);
+        mActivityStack.add(activity);
     }
 
-    /**
-     * 获取当前Activity（堆栈中最后一个压入的）
-     */
-    public Activity currentActivity() {
-        try {
-            Activity activity = activityStack.lastElement();
-            return activity;
-        } catch (Exception e) {
-//            e.printStackTrace();
-            return null;
+    public void removeActivity(WeakReference<Activity> activity){
+        if(mActivityStack!=null){
+            mActivityStack.remove(activity);
         }
     }
 
-    /**
-     * 获取当前Activity的前一个Activity
+    /***
+     * 获取栈顶Activity（堆栈中最后一个压入的）
+     *
+     * @return Activity
      */
-    public Activity preActivity() {
-        int index = activityStack.size() - 2;
-        if (index < 0) {
-            return null;
-        }
-        Activity activity = activityStack.get(index);
+    public Activity getTopActivity() {
+        Activity activity = mActivityStack.lastElement().get();
         return activity;
     }
 
-    /**
-     * 结束当前Activity（堆栈中最后一个压入的）
+    /***
+     * 通过class 获取栈顶Activity
+     *
+     * @param cls
+     * @return Activity
      */
-    public void finishActivity() {
-        Activity activity = activityStack.lastElement();
-        finishActivity(activity);
-    }
-
-    /**
-     * 结束指定的Activity
-     */
-    public void finishActivity(Activity activity) {
-        if (activity != null) {
-            activityStack.remove(activity);
-            activity.finish();
-            activity = null;
+    public Activity getActivityByClass(Class<?> cls) {
+        Activity return_activity = null;
+        for (WeakReference<Activity> activity : mActivityStack) {
+            if (activity.get().getClass().equals(cls)) {
+                return_activity = activity.get();
+                break;
+            }
         }
+        return return_activity;
     }
 
     /**
-     * 移除指定的Activity
+     * 结束栈顶Activity（堆栈中最后一个压入的）
      */
-    public void removeActivity(Activity activity) {
-        if (activity != null) {
-            activityStack.remove(activity);
-            activity = null;
-        }
-    }
-
-    /**
-     * 结束指定类名的Activity
-     */
-    public void finishActivity(Class<?> cls) {
+    public void killTopActivity() {
         try {
-            for (Activity activity : activityStack) {
-                if (activity.getClass().equals(cls)) {
-                    finishActivity(activity);
+            WeakReference<Activity> activity = mActivityStack.lastElement();
+            killActivity(activity);
+        } catch (Exception e) {
+            com.orhanobut.logger.Logger.e(e.getMessage());
+        }
+    }
+
+    /***
+     * 结束指定的Activity
+     *
+     * @param activity
+     */
+    public void killActivity(WeakReference<Activity> activity) {
+        try {
+            Iterator<WeakReference<Activity>> iterator = mActivityStack.iterator();
+            while (iterator.hasNext()) {
+                WeakReference<Activity> stackActivity = iterator.next();
+                if(stackActivity.get()==null){
+                    iterator.remove();
+                    continue;
+                }
+                if (stackActivity.get().getClass().getName().equals(activity.get().getClass().getName())) {
+                    iterator.remove();
+                    stackActivity.get().finish();
+                    break;
+                }
+            }
+//            if (activity != null) {
+//                mActivityStack.remove(activity);
+//                activity.finish();
+//                activity = null;
+//            }
+        } catch (Exception e) {
+            com.orhanobut.logger.Logger.e(e.getMessage());
+        }
+    }
+
+    public void killAllToLoginActivity(Class<?> cls) {
+        try {
+
+            ListIterator<WeakReference<Activity>> listIterator = mActivityStack.listIterator();
+            while (listIterator.hasNext()) {
+                Activity activity = listIterator.next().get();
+                if (activity != null && cls != activity.getClass()) {
+                    listIterator.remove();
+                    activity.finish();
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            com.orhanobut.logger.Logger.e(e.getMessage());
         }
+    }
 
+    /***
+     * 结束指定类名的Activity
+     *
+     * @param cls
+     */
+    public void killActivity(Class<?> cls) {
+        try {
+
+            ListIterator<WeakReference<Activity>> listIterator = mActivityStack.listIterator();
+            while (listIterator.hasNext()) {
+                Activity activity = listIterator.next().get();
+                if (activity == null) {
+                    listIterator.remove();
+                    continue;
+                }
+//                if (activity.getClass().getName().equals(cls.getName())) {
+                if (activity.getClass() == cls) {
+                    listIterator.remove();
+                    if (activity != null) {
+                        activity.finish();
+                    }
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            com.orhanobut.logger.Logger.e(e.getMessage());
+        }
     }
 
     /**
      * 结束所有Activity
      */
-    public void finishAllActivity() {
-        for (int i = 0, size = activityStack.size(); i < size; i++) {
-            if (null != activityStack.get(i)) {
-                activityStack.get(i).finish();
-            }
-        }
-        activityStack.clear();
-    }
-
-    /**
-     * 返回到指定的activity
-     *
-     * @param cls
-     */
-    public void returnToActivity(Class<?> cls) {
-        while (activityStack.size() != 0)
-            if (activityStack.peek().getClass() == cls) {
-                break;
-            } else {
-                finishActivity(activityStack.peek());
-            }
-    }
-
-
-    /**
-     * 是否已经打开指定的activity
-     * @param cls
-     * @return
-     */
-    public boolean isOpenActivity(Class<?> cls) {
-        if (activityStack!=null){
-            for (int i = 0, size = activityStack.size(); i < size; i++) {
-                if (cls == activityStack.peek().getClass()) {
-                    return true;
+    public void killAllActivity() {
+        try {
+            ListIterator<WeakReference<Activity>> listIterator = mActivityStack.listIterator();
+            while (listIterator.hasNext()) {
+                Activity activity = listIterator.next().get();
+                if (activity != null) {
+                    activity.finish();
                 }
+                listIterator.remove();
             }
+//			for (int i = 0, size = mActivityStack.size(); i < size; i++) {
+//				if (null != mActivityStack.get(i)) {
+//					mActivityStack.get(i).finish();
+//				}
+//			}
+//            mActivityStack.clear();
+        } catch (Exception e) {
+            com.orhanobut.logger.Logger.e(e.getMessage());
         }
-        return false;
     }
 
     /**
      * 退出应用程序
-     *
-     * @param context      上下文
-     * @param isBackground 是否开开启后台运行
      */
-    public void AppExit(Context context, Boolean isBackground) {
+    @SuppressWarnings("deprecation")
+    public void AppExit() {
         try {
-            finishAllActivity();
-            ActivityManager activityMgr = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.restartPackage(context.getPackageName());
+            killAllActivity();
+            Process.killProcess(Process.myPid());
         } catch (Exception e) {
-
-        } finally {
-            // 注意，如果您有后台程序运行，请不要支持此句子
-            if (!isBackground) {
-                System.exit(0);
-            }
+            com.orhanobut.logger.Logger.e(e.getMessage());
         }
     }
 }

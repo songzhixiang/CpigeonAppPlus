@@ -2,6 +2,9 @@ package com.cpigeon.app.modular.usercenter.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -13,14 +16,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ILoginView;
 import com.cpigeon.app.modular.usercenter.presenter.LoginPresenter;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
+import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -33,7 +39,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class LoginActivity extends BaseActivity implements ILoginView {
+    private Handler mHandler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+    private static boolean isExit = false;
     @BindView(R.id.civ_user_head_img)
     CircleImageView civUserHeadImg;
     @BindView(R.id.iv_icon_user)
@@ -71,6 +85,9 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void initView() {
+
+        AppManager.getAppManager().killAllToLoginActivity(LoginActivity.class);
+
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,8 +185,19 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
+
+    public void onBackPressed() {
+
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Then_click_one_exit_procedure),
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            AppManager.getAppManager().AppExit();
+        }
+
+
     }
 }

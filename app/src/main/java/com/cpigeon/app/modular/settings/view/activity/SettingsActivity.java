@@ -18,6 +18,7 @@ import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.kyleduo.switchbutton.SwitchButton;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.btn_logout:
                 if (checkLogin()) {
-                    SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+                    final SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
                     dialog.setCancelable(false);
                     dialog.setTitleText("提示")
                             .setContentText("确定要退出登录？")
@@ -127,15 +128,14 @@ public class SettingsActivity extends BaseActivity {
                                     SharedPreferencesTool.Save(mContext, map, SharedPreferencesTool.SP_FILE_LOGIN);
                                     CpigeonData.getInstance().initialization();
                                     showTips("退出登录成功", TipType.ToastShort);
+                                    dialog.dismiss();
                                     Intent intent = new Intent(mContext, LoginActivity.class);
-                                    intent.putExtra("isExit", true);
                                     startActivity(intent);
 
-                                    AppManager.getAppManager().AppExit(SettingsActivity.this, false);
                                 }
                             })
-                            .setCancelText("取消");
-                    dialog.show();
+                            .setCancelText("取消")
+                            .show();
                 } else {
                     finish();
                 }

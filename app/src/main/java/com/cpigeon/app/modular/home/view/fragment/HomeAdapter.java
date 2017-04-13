@@ -25,7 +25,11 @@ public class HomeAdapter extends BaseQuickAdapter<MatchInfo , BaseViewHolder> {
     public HomeAdapter(List<MatchInfo> data, int loadType) {
         super(R.layout.layout_item_home_raceinfo, data);
         this.loadType = loadType;
-        this.size = data.size();
+        if (data!=null)
+        {
+            this.size = data.size();
+        }
+
     }
 
     @Override

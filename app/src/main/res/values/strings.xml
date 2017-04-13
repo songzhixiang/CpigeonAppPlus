@@ -29,4 +29,5 @@
     <string name="Check_the_new_version">检查新版本</string>
 
     <string name="please_enter_the_phone_received_SMS_verification_code">请输入%1$s收到的短信验证码</string>
+    <string name="Then_click_one_exit_procedure">再按一次退出程序</string>
 </resources>

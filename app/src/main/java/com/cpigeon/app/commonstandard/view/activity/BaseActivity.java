@@ -1,5 +1,6 @@
 package com.cpigeon.app.commonstandard.view.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -27,7 +28,9 @@ import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
 import com.cpigeon.app.utils.ToastUtil;
 import com.cpigeon.app.utils.customview.SnackbarUtil;
+import com.orhanobut.logger.Logger;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     public Context mContext;
     private Unbinder mUnbinder;
     private int count;//记录开启进度条的情况 只能开一个
+    private WeakReference<Activity> weakReference;
     /**
      * 网络观察者
      */
@@ -79,6 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         //开启广播去监听 网络 改变事件
         NetStateReceiver.registerObserver(mNetChangeObserver);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+        Logger.e("当前Activity上面的栈内存Activity还有"+AppManager.getAppManager().stackSize());
     }
 
     //获取布局文件
@@ -121,8 +126,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
      * 设置layout前配置
      */
     private void doBeforeSetcontentView() {
+        weakReference = new WeakReference<Activity>(this);
         // 把actvity放到application栈中管理
-        AppManager.getAppManager().addActivity(this);
+        AppManager.getAppManager().addActivity(weakReference);
         // 无标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置竖屏
@@ -158,13 +164,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     protected void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        AppManager.getAppManager().removeActivity(weakReference);
     }
 
     @Override
     public void finish() {
         super.finish();
-        AppManager.getAppManager().removeActivity(this);
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_right);
+
     }
 
     /**

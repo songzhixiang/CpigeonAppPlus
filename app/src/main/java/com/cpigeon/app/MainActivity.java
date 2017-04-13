@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
@@ -31,6 +32,7 @@ import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.StatusBarTool;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +156,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     public void initView() {
+
         MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
@@ -350,8 +353,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 // 利用handler延迟发送更改状态信息
                 mHandler.sendEmptyMessageDelayed(0, 2000);
             } else {
-                finish();
-                System.exit(0);
+                AppManager.getAppManager().AppExit();
             }
         }
 
