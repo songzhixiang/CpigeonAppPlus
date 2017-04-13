@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_toolbar"></include>
-
-    <ProgressBar
-        android:id="@+id/pb_progressbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_web_progressbar_height" />
-
+    <include layout="@layout/layout_toolbar" />
 
     <ViewStub
         android:id="@+id/vs_tip"
@@ -26,5 +19,4 @@
         android:id="@+id/wvWebview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>

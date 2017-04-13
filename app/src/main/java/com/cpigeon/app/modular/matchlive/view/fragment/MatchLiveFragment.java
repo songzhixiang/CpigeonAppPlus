@@ -74,17 +74,15 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                ((MainActivity) getActivity()).setOnMatchTypeChangeListener(new MainActivity.OnMatchTypeChangeListener() {
-                    @Override
-                    public void onChanged(String lastType, String currType) {
-                        setCurrMatchType(currType);
-                    }
-                });
+
             }
-
-
         });
-
+        ((MainActivity) getActivity()).setOnMatchTypeChangeListener(new MainActivity.OnMatchTypeChangeListener() {
+            @Override
+            public void onChanged(String lastType, String currType) {
+                setCurrMatchType(currType);
+            }
+        });
     }
 
     @Override

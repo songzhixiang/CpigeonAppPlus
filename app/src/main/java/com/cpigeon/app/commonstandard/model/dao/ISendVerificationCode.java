@@ -8,7 +8,7 @@ import com.cpigeon.app.utils.CallAPI;
  */
 
 public interface ISendVerificationCode {
-    void sendYZM(String phoneNumber, int yzmType, OnSendCompleteListener onSendCompleteListener);
+    void sendYZM(String phoneNumber, CallAPI.DATATYPE.YZM yzmType, OnSendCompleteListener onSendCompleteListener);
 
     interface OnSendCompleteListener {
         void onSuccess(String yzmMd5);

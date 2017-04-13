@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_clear_cache"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/clear_cache"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_clear_cache_count"
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="0MB"
+                    android:textSize="@dimen/activity_setting_item_propmt_textsize" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_push_notification"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/sb_push_notification"
+                    style="@style/Setting_Item_CheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/Push_Notifications"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_search_online"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/search_online"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/sb_search_online"
+                    style="@style/Setting_Item_CheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_security"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/Setting_Security"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+
+                <android.support.v7.widget.AppCompatImageView
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:rotation="-90"
+                    app:srcCompat="@drawable/svg_ic_down_stroke_gray2" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_market_score"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/Setting_Application_Score"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+
+                <android.support.v7.widget.AppCompatImageView
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:rotation="-90"
+                    app:srcCompat="@drawable/svg_ic_down_stroke_gray2" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_check_new_version"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/Check_the_new_version"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_check_new_version_versionName"
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="1.0"
+                    android:textSize="@dimen/activity_setting_item_propmt_textsize" />
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_button_logout_height"
+                android:layout_margin="24dp"
+                android:background="@drawable/button_red_bg"
+                android:text="退出登录"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

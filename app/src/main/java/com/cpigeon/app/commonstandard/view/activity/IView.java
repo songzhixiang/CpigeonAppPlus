@@ -39,4 +39,13 @@ public interface IView {
      */
     boolean showTips(String tip, TipType tipType);
 
+    /**
+     * 显示提示(错误、正确、加载中)
+     *
+     * @param tip     提示内容
+     * @param tipType 提示类型
+     * @param tag     标签（识别用）
+     * @return
+     */
+    boolean showTips(String tip, TipType tipType, int tag);
 }

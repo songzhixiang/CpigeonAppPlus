@@ -33,9 +33,11 @@
         <item name="android:textColor">@color/textColor_light_black</item>
         <item name="android:hint">搜索</item>
     </style>
+
     <style name="SingleLine">
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="Marquee" parent="SingleLine">
         <item name="android:ellipsize">marquee</item>
         <item name="android:focusable">false</item>
@@ -124,6 +126,41 @@
         <item name="android:background">@drawable/button_primary_bg</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Setting_Item">
+        <item name="android:background">@drawable/com_background_clickable_layout_transparent</item>
+        <item name="android:paddingLeft">@dimen/sp_20</item>
+        <item name="android:paddingRight">@dimen/dp_20</item>
+    </style>
+
+    <style name="Setting_Item_Split_Line">
+        <item name="android:height">@dimen/dp_1</item>
+        <item name="android:layout_marginLeft">@dimen/sp_20</item>
+        <item name="android:background">@color/colorLayoutSplitLineGray</item>
+
+    </style>
+
+    <style name="Setting_Item_Name">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/sp_20</item>
+    </style>
+
+    <style name="Setting_Item_Explain">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="Setting_Item_CheckBox">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="Select_Serice_Item_CheckBox">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
     </style>
 
 </resources>

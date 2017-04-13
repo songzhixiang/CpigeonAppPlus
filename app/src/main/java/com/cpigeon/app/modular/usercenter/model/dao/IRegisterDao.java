@@ -14,9 +14,4 @@ public interface IRegisterDao extends IBaseDao, ISendVerificationCode {
 
     void findUserPassword(String phoneNumber, String password, String yzm, OnCompleteListener onCompleteListener);
 
-    interface OnCompleteListener {
-        void onSuccess();
-
-        void onFail(String msg);
-    }
 }

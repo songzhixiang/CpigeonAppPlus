@@ -7,5 +7,9 @@ import android.media.SoundPool;
  */
 
 public interface IBaseDao {
+    interface OnCompleteListener<T> {
+        void onSuccess(T data);
 
+        void onFail(String msg);
+    }
 }
