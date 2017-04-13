@@ -3,11 +3,17 @@ package com.cpigeon.app.modular.home.model.daoimpl;
 import com.cpigeon.app.MyApp;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.model.dao.IHomeFragmentDao;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.utils.CpigeonConfig;
+import com.cpigeon.app.utils.DateTool;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,5 +62,42 @@ public class HomeFragmentDaoImpl implements IHomeFragmentDao {
         } catch (JSONException e) {
             onLoadCompleteListener.onLoadFailed(e.getMessage());
         }
+    }
+
+    @Override
+    public void loadMatchInfo(final int loadType, final OnReadCompleteListenr listenr) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DbManager db = x.getDb(CpigeonConfig.getDataDb());
+                try {
+                    if (loadType == 1)
+                    {
+                        final List<MatchInfo> listXH = db.selector(MatchInfo.class)
+                                .where("lx", "=", "xh")
+                                .and("st", ">", DateTool.getDayBeginTimeStr(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * CpigeonConfig.LIVE_DAYS_XH)))
+                                .and("dt", "=", "bs")
+                                .orderBy("dt", true)
+                                .orderBy("st", true)
+                                .findAll();
+                        listenr.onLoadSuccess(listXH);
+                    }else if (loadType == 0)
+                    {
+                        final List<MatchInfo> listGP = db.selector(MatchInfo.class)
+                                .where("lx", "=", "gp")
+                                .and("st", ">", DateTool.getDayBeginTimeStr(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * CpigeonConfig.LIVE_DAYS_GP)))
+                                .and("dt", "=", "bs")
+                                .orderBy("dt", true)
+                                .orderBy("st", true)
+                                .findAll();
+                        listenr.onLoadSuccess(listGP);
+                    }
+
+
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

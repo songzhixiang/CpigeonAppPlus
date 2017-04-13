@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -41,9 +44,9 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements IHomeView, BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-
+    private static boolean isExit = false;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
     @BindView(R.id.bottom_navigation_bar)
@@ -51,7 +54,7 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
     private OnMatchTypeChangeListener onMatchTypeChangeListener;
-    private int lastTabIndex = -1;//当前页面索引
+    private int lastTabIndex = 0;//当前页面索引
     private String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -70,7 +73,14 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
     private BadgeItem numberBadgeItem;
     private int laseSelectedPosition = 0;
     private boolean mHasUpdata = false;
+    private Handler mHandler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -285,15 +295,6 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
         StatusBarTool.setWindowStatusBarColor(this, getResources().getColor(lastTabIndex == 3 ? R.color.user_center_header_top : R.color.colorPrimary));
     }
 
-    @Override
-    public void showAd(List<HomeAd> homeAdList) {
-
-    }
-
-    @Override
-    public void showMatchLiveData(List list) {
-
-    }
 
     /**
      * 比赛类型切换的监听器
@@ -313,14 +314,13 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
             case R.id.layout_gpzb:
                 if (onMatchTypeChangeListener != null)
                     onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_GP);
-                onTabReselected(1);
+
                 setCurrIndex(1);
                 mBottomNavigationBar.selectTab(1);
                 break;
             case R.id.layout_xhzb:
                 if (onMatchTypeChangeListener != null)
                     onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_XH);
-                onTabReselected(1);
                 setCurrIndex(1);
                 mBottomNavigationBar.selectTab(1);
                 break;
@@ -337,14 +337,22 @@ public class MainActivity extends BaseActivity implements IHomeView, BottomNavig
 
     @Override
     public void onBackPressed() {
-
         if (lastTabIndex!=0)
         {
             onTabReselected(0);
             setCurrIndex(0);
             mBottomNavigationBar.selectTab(0);
         }else {
-            super.onBackPressed();
+            if (!isExit) {
+                isExit = true;
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Then_click_one_exit_procedure),
+                        Toast.LENGTH_SHORT).show();
+                // 利用handler延迟发送更改状态信息
+                mHandler.sendEmptyMessageDelayed(0, 2000);
+            } else {
+                finish();
+                System.exit(0);
+            }
         }
 
 

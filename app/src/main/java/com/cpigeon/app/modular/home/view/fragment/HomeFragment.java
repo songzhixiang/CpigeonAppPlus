@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,9 +20,9 @@ import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.ScreenTool;
-import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.cpigeon.app.utils.customview.SearchEditText;
 import com.youth.banner.Banner;
@@ -33,13 +37,14 @@ import org.xutils.x;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/4/6.
  */
 
-public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
+public class HomeFragment extends BaseLazyLoadFragment implements IHomeView {
     @BindView(R.id.search_edittext)
     SearchEditText searchEdittext;
     @BindView(R.id.home_banner)
@@ -52,15 +57,20 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
     LinearLayout layoutZhcx;
     @BindView(R.id.layout_wdsc)
     LinearLayout layoutWdsc;
-    private View mView;
+    @BindView(R.id.recyclerview_home)
+    RecyclerView recyclerviewHome;
+    private HomeAdapter mAdapter;
     private List<HomeAd> homeAdList;
     private HomePresenter presenter = new HomePresenter(this);
+
     @Override
     protected void initView(View view) {
         ViewGroup.LayoutParams lp = homeBanner.getLayoutParams();
         lp.height = ScreenTool.getScreenWidth(getActivity()) / 2;
         homeBanner.setLayoutParams(lp);
         presenter.laodAd();
+        presenter.loadMatchInfo(1);
+        presenter.loadMatchInfo(0);
     }
 
     @Override
@@ -129,7 +139,7 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
                                                 startActivity(intent);
                                             } catch (Exception ex) {
                                                 ex.printStackTrace();
-                                                showTips("拨号失败",TipType.ToastShort);
+                                                showTips("拨号失败", TipType.ToastShort);
                                             }
                                         }
                                     });
@@ -147,7 +157,7 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
                                                 startActivity(intent);
                                             } catch (Exception ex) {
                                                 ex.printStackTrace();
-                                                showTips("打开失败",TipType.ToastShort);
+                                                showTips("打开失败", TipType.ToastShort);
                                             }
                                         }
                                     });
@@ -190,6 +200,13 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
     }
 
     @Override
+    public void showMatchLiveData(List<MatchInfo> list,int type) {
+        mAdapter = new HomeAdapter(list, type);
+        recyclerviewHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerviewHome.setAdapter(mAdapter);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         homeBanner.startAutoPlay();
@@ -201,10 +218,6 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView{
         homeBanner.stopAutoPlay();
     }
 
-    @Override
-    public void showMatchLiveData(List list) {
-
-    }
 
     private class XutilsImageLoader extends ImageLoader {
 

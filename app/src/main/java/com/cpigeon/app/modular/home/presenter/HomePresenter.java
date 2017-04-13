@@ -6,6 +6,7 @@ import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.model.dao.IHomeFragmentDao;
 import com.cpigeon.app.modular.home.model.daoimpl.HomeFragmentDaoImpl;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 
 import java.util.List;
 
@@ -26,12 +27,37 @@ public class HomePresenter {
     {
         iHomeFragmentDao.loadHomeAd(new IHomeFragmentDao.OnLoadCompleteListener() {
             @Override
-            public void onLoadSuccess(List<HomeAd> adList) {
-                iHomeView.showAd(adList);
+            public void onLoadSuccess(final List<HomeAd> adList) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        iHomeView.showAd(adList);
+                    }
+                });
+
             }
 
             @Override
             public void onLoadFailed(String msg) {
+
+            }
+        });
+    }
+    public void loadMatchInfo(final int loadType)
+    {
+        iHomeFragmentDao.loadMatchInfo(loadType, new IHomeFragmentDao.OnReadCompleteListenr() {
+            @Override
+            public void onLoadSuccess(final List<MatchInfo> matchInfos) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        iHomeView.showMatchLiveData(matchInfos,loadType);
+                    }
+                });
+            }
+
+            @Override
+            public void onLoadFailed() {
 
             }
         });
