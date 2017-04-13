@@ -106,6 +106,13 @@ public abstract class BaseFragment extends Fragment implements IView {
     }
 
     @Override
+    public boolean showTips(String tip, TipType tipType, int tag) {
+        if (tag == 0)
+            return showTips(tip, tipType);
+        return false;
+    }
+
+    @Override
     public boolean checkLogin() {
         try {
             boolean res = (boolean) SharedPreferencesTool.Get(getActivity(), "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);

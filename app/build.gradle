@@ -82,4 +82,5 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile files('libs/commons-codec-1.10.jar')
     compile files('libs/libammsdk.jar')
+    compile 'com.kyleduo.switchbutton:library:1.4.5'
 }

@@ -18,7 +18,7 @@ public class RegisterDaoImpl extends SendVerificationCodeImpl implements IRegist
         @Override
         public void onSuccess(Object data) {
             if (onCompleteListener != null)
-                onCompleteListener.onSuccess();
+                onCompleteListener.onSuccess(data);
         }
 
         @Override
@@ -48,7 +48,7 @@ public class RegisterDaoImpl extends SendVerificationCodeImpl implements IRegist
         @Override
         public void onSuccess(Object data) {
             if (onCompleteListener != null)
-                onCompleteListener.onSuccess();
+                onCompleteListener.onSuccess(data);
         }
 
         @Override

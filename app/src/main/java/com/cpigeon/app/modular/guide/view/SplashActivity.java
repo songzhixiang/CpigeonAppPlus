@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     boolean isEntry = false;
 
     //最短显示时间
-    private static final long SHOW_TIME_MIN = 3400;
+    private static final long SHOW_TIME_MIN = 3000;
 
     @Override
     public int getLayoutId() {
@@ -112,7 +112,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (btnAdSpik != null)
-                    btnAdSpik.setText(String.format("跳过(%ds)", millisUntilFinished / 1000));
+                    btnAdSpik.setText(String.format("跳过 %d", millisUntilFinished / 1000));
             }
 
             @Override

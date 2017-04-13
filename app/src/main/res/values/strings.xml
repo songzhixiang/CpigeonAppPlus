@@ -19,5 +19,14 @@
     <string name="user_agreement">用户协议</string>
     <string name="version_number">V1.0</string>
     <string name="submit">提交</string>
-    <string name="Then_click_one_exit_procedure">再按一次退出程序</string>
+    <string name="pay_password">支付密码</string>
+    <string name="login_password">登陆密码</string>
+    <string name="clear_cache">清理缓存</string>
+    <string name="Push_Notifications">推送通知</string>
+    <string name="search_online">在线搜索</string>
+    <string name="Setting_Security">安全设置</string>
+    <string name="Setting_Application_Score">应用评分</string>
+    <string name="Check_the_new_version">检查新版本</string>
+
+    <string name="please_enter_the_phone_received_SMS_verification_code">请输入%1$s收到的短信验证码</string>
 </resources>

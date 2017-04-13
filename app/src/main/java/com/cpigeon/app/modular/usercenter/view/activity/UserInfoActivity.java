@@ -330,8 +330,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 startActivityForResult(intent, CHANGE_SIGN);
                 break;
             case R.id.ll_change_pwd:
-//                Intent intent = new Intent(UserInfoActivity.this, SetUserPwdActivity.class);
-//                startActivity(intent);
+                startActivity(SetUserPwdActivity.class);
                 break;
         }
     }

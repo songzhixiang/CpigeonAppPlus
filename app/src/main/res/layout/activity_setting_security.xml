@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_loginpwd"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/login_password"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:rotation="-90"
+                    app:srcCompat="@drawable/svg_ic_down_stroke_gray2" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+
+            <RelativeLayout
+                android:id="@+id/rl_paypwd"
+                style="@style/Setting_Item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_setting_item_layout_height">
+
+                <TextView
+                    style="@style/Setting_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/pay_password"
+                    android:textSize="@dimen/activity_setting_item_title_textsize" />
+
+
+                <android.support.v7.widget.AppCompatImageView
+                    style="@style/Setting_Item_Explain"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:rotation="-90"
+                    app:srcCompat="@drawable/svg_ic_down_stroke_gray2" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Setting_Item_Split_Line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/split_line_width" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

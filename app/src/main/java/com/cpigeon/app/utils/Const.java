@@ -18,6 +18,7 @@ public class Const {
     public static final String KEY_GUIDE_PIGEONS_LIST_MENU_CLICK = "guide_pigeons_list_menu_click";
     public static final String KEY_GUIDE_RACE_REPORT = "guide_race_report";
     public static final int GUIDE_DELAY = 300;
+    public static final long YZM_WAIT_MILLIS = 1000 * 60 * 3;
 
     private Const() {
     }

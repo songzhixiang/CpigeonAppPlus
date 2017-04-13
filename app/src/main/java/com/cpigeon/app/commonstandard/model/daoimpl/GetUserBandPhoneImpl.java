@@ -19,12 +19,11 @@ public class GetUserBandPhoneImpl implements IGetUserBandPhone {
             @Override
             public void onSuccess(Map<String, Object> data) {
                 String userPhone = (String) data.get("phone");
-                if (onCompleteListener != null)
-                    onCompleteListener.onSuccess(userPhone, (int) data.get("band") == 1);
-
                 if ((int) data.get("band") == 1) {
                     CpigeonData.getInstance().setUserBindPhone(userPhone);
                 }
+                if (onCompleteListener != null)
+                    onCompleteListener.onSuccess(userPhone, (int) data.get("band") == 1);
             }
 
             @Override

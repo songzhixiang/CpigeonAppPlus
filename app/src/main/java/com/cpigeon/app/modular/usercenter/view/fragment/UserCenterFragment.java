@@ -13,8 +13,10 @@ import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
+import com.cpigeon.app.modular.settings.view.activity.SettingsActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.HelpActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
@@ -136,11 +138,13 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
             case R.id.ll_user_jifen:
                 break;
             case R.id.ll_user_center_setting:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
                 break;
             case R.id.ll_user_center_aboutus:
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_user_center_help:
+                startActivity(new Intent(getActivity(), HelpActivity.class));
                 break;
         }
     }
