@@ -38,6 +38,7 @@ public class MyApp extends Application {
             Logger.init(TAG);
         }
         mCpigeonData = CpigeonData.getInstance();
+
     }
 
     /**
