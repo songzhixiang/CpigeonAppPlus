@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ltem_listview_group_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorLayoutGray4"
+                android:paddingBottom="10dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/tv_group_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="名称"
+        android:textColor="#d8504f4f"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_group_title_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="提示"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"/>
+</RelativeLayout>

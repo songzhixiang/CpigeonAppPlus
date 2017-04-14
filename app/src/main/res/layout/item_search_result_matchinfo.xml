@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/listitem_race_info_layout_root_margin"
+              android:layout_marginTop="@dimen/listitem_race_info_layout_root_margin"
+              android:background="@color/colorLayoutGray4"
+              android:minHeight="@dimen/listitem_race_info_layout_root_minheight"
+              android:orientation="vertical"
+              android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/com_background_clickable_layout_white"
+        android:minHeight="@dimen/listitem_race_info_layout_briefly_minheight"
+        android:paddingLeft="@dimen/listitem_race_info_layout_briefly_margin"
+        android:paddingRight="@dimen/listitem_race_info_layout_briefly_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/listitem_race_info_textview_right_text_width">
+
+            <TextView
+                android:id="@+id/race_info_raceOrg"
+                style="@style/Marquee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="山西大同火车头公棚300公里预赛山西大同火车头公棚300公里预赛山西大同火车头公棚300公里预赛山西大同火车头公棚300公里预赛山西大同火车头公棚300公里预赛"
+                android:textColor="@color/textColor_light_black"
+                android:textSize="@dimen/listitem_race_info_textview_raceorg_textsize"/>
+
+            <TextView
+                android:id="@+id/race_info_raceType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/race_info_raceOrg"
+                android:layout_marginRight="@dimen/listitem_race_info_textview_racetype_marginright"
+                android:layout_marginTop="@dimen/listitem_race_info_textview_racetype_margintop"
+                android:background="@drawable/background_text_view_matchtype_x"
+                android:text="训"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/listitem_race_info_textview_racetype_textsize"/>
+
+            <TextView
+                android:id="@+id/race_info_raceName"
+                style="@style/Marquee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/race_info_raceOrg"
+                android:layout_marginTop="@dimen/listitem_race_info_textview_racename_margintop"
+                android:layout_toRightOf="@id/race_info_raceType"
+                android:text="山西大同火车头公棚"
+                android:textColor="@color/textColor_gray"
+                android:textSize="@dimen/listitem_race_info_textview_racename_textsize"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/race_info_race_right_text"
+            android:layout_width="@dimen/listitem_race_info_textview_right_text_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="5254羽"
+            android:textColor="@color/light_red"/>
+
+    </RelativeLayout>
+    <ViewStub
+        android:layout="@layout/item_search_not_result"
+        android:id="@+id/noresult_viewstub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.cpigeon.app.modular.matchlive.view.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
+import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdapter;
 import com.cpigeon.app.utils.Const;
+import com.cpigeon.app.utils.customview.SaActionSheetDialog;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -50,21 +56,45 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         matchLiveAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 Object item = ((MatchLiveExpandAdapter) adapter).getData().get(position);
                 if (item instanceof MatchLiveExpandAdapter.MatchTitleItem) {
+                    if (!"bs".equals(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getDt()))
+                        return;
                     if (((MatchLiveExpandAdapter.MatchTitleItem) item).isExpanded()) {
-                        ((MatchLiveExpandAdapter) adapter).collapse(position);
+                        adapter.collapse(position);
                     } else {
-//                        if (lastExpandItemPosition >= 0) {
-//                            ((MatchLiveExpandAdapter) adapter).collapse(lastExpandItemPosition);
+//                        if (lastExpandItemPosition >= 0 ) {
+//                            adapter.collapse(lastExpandItemPosition);
 //                        }
-                        ((MatchLiveExpandAdapter) adapter).expand(position);
+                        adapter.expand(position);
                         lastExpandItemPosition = position;
+                        Logger.e("当前被展开的项的postion" + lastExpandItemPosition);
                     }
                 }
             }
         });
-
+        mRecyclerView.addOnItemTouchListener(new OnItemLongClickListener() {
+            @Override
+            public void onSimpleItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                Object item = ((MatchLiveExpandAdapter) adapter).getData().get(position);
+                final String s = ((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getMc();
+                new SaActionSheetDialog(getActivity())
+                        .builder()
+                        .addSheetItem(String.format(getString(R.string.search_prompt_has_key), s), new SaActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                                Bundle bundle = new Bundle();                           //创建Bundle对象
+                                bundle.putSerializable(SearchActivity.INTENT_KEY_SEARCHKEY, s);     //装入数据
+                                bundle.putSerializable(SearchActivity.INTENT_KEY_SEARCH_HINT_TEXT, "比赛名称、" + (currMatchType.equals(Const.MATCHLIVE_TYPE_GP) ? "公棚名称" : "协会名称"));     //装入数据
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+            }
+        });
         mRecyclerView.setAdapter(matchLiveAdapter);
         if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
             pre.loadGPData(0);

@@ -1,6 +1,7 @@
 package com.cpigeon.app.modular.home.model.daoimpl;
 
 import com.cpigeon.app.MyApp;
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.model.dao.IHomeFragmentDao;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -25,9 +26,9 @@ import java.util.List;
  */
 
 public class HomeFragmentDaoImpl implements IHomeFragmentDao {
-    @Override
-    public void loadHomeAd(OnLoadCompleteListener onLoadCompleteListener) {
 
+    @Override
+    public void loadHomeAd(OnCompleteListener<List<HomeAd>> listener) {
         String adJsonStr = (String) SharedPreferencesTool.Get(MyApp.getInstance(), "ad", "");
         try {
             JSONArray array = new JSONArray(adJsonStr);
@@ -54,18 +55,18 @@ public class HomeFragmentDaoImpl implements IHomeFragmentDao {
                     }
 
                 }
-                if (onLoadCompleteListener!=null)
+                if (listener!=null)
                 {
-                    onLoadCompleteListener.onLoadSuccess(adList);
+                    listener.onSuccess(adList);
                 }
             }
         } catch (JSONException e) {
-            onLoadCompleteListener.onLoadFailed(e.getMessage());
+            listener.onFail(e.getMessage());
         }
     }
 
     @Override
-    public void loadMatchInfo(final int loadType, final OnReadCompleteListenr listenr) {
+    public void loadMatchInfo(final int loadType, final OnCompleteListener<List<MatchInfo>> listenr) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,7 +81,7 @@ public class HomeFragmentDaoImpl implements IHomeFragmentDao {
                                 .orderBy("dt", true)
                                 .orderBy("st", true)
                                 .findAll();
-                        listenr.onLoadSuccess(listXH);
+                        listenr.onSuccess(listXH);
                     }else if (loadType == 0)
                     {
                         final List<MatchInfo> listGP = db.selector(MatchInfo.class)
@@ -90,7 +91,7 @@ public class HomeFragmentDaoImpl implements IHomeFragmentDao {
                                 .orderBy("dt", true)
                                 .orderBy("st", true)
                                 .findAll();
-                        listenr.onLoadSuccess(listGP);
+                        listenr.onSuccess(listGP);
                     }
 
 

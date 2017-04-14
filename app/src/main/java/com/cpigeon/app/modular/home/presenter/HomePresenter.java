@@ -2,6 +2,8 @@ package com.cpigeon.app.modular.home.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.model.dao.IHomeFragmentDao;
 import com.cpigeon.app.modular.home.model.daoimpl.HomeFragmentDaoImpl;
@@ -14,52 +16,54 @@ import java.util.List;
  * Created by Administrator on 2017/4/6.
  */
 
-public class HomePresenter {
-    private IHomeFragmentDao iHomeFragmentDao;
-    private IHomeView iHomeView;
-    private Handler mHandler = new Handler();
+public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
 
-    public HomePresenter(IHomeView iHomeView) {
-        this.iHomeView = iHomeView;
-        this.iHomeFragmentDao = new HomeFragmentDaoImpl();
+
+    public HomePresenter(IHomeView mView) {
+        super(mView);
     }
+
     public void laodAd()
     {
-        iHomeFragmentDao.loadHomeAd(new IHomeFragmentDao.OnLoadCompleteListener() {
+        mDao.loadHomeAd(new IBaseDao.OnCompleteListener<List<HomeAd>>() {
             @Override
-            public void onLoadSuccess(final List<HomeAd> adList) {
+            public void onSuccess(final List<HomeAd> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iHomeView.showAd(adList);
+                        mView.showAd(data);
                     }
                 });
-
             }
 
             @Override
-            public void onLoadFailed(String msg) {
+            public void onFail(String msg) {
 
             }
         });
     }
     public void loadMatchInfo(final int loadType)
     {
-        iHomeFragmentDao.loadMatchInfo(loadType, new IHomeFragmentDao.OnReadCompleteListenr() {
+        mDao.loadMatchInfo(loadType, new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
-            public void onLoadSuccess(final List<MatchInfo> matchInfos) {
+            public void onSuccess(final List<MatchInfo> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iHomeView.showMatchLiveData(matchInfos,loadType);
+                        mView.showMatchLiveData(data,loadType);
                     }
                 });
             }
 
             @Override
-            public void onLoadFailed() {
+            public void onFail(String msg) {
 
             }
         });
+    }
+
+    @Override
+    protected IHomeFragmentDao initDao() {
+        return new HomeFragmentDaoImpl();
     }
 }

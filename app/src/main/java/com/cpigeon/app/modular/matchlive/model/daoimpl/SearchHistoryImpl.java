@@ -5,8 +5,9 @@ import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
 import com.cpigeon.app.modular.matchlive.model.dao.ISearchHistory;
-import com.cpigeon.app.modular.matchlive.view.activity.SearchResultAdapter;
+import com.cpigeon.app.modular.matchlive.view.adapter.SearchResultAdapter;
 import com.cpigeon.app.utils.CommonTool;
+import com.cpigeon.app.utils.CpigeonConfig;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.DateTool;
 import com.orhanobut.logger.Logger;
@@ -15,6 +16,7 @@ import org.xutils.DbManager;
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,10 +29,17 @@ import java.util.Map;
  */
 
 public class SearchHistoryImpl implements ISearchHistory {
-    private DbManager mDB;
+    private DbManager mDB =x.getDb(CpigeonConfig.getDataDb());
     private List<MatchInfo> data_MatchInfo = null;
+    private Map<String, List<Map<String, Object>>> searchResultTempData = new HashMap<>();//用户零时存储搜索的结果
+
+    /**
+     * 加载搜索历史
+     * @param key
+     * @param listener
+     */
     @Override
-    public void loadSearchHistory(final String key, final IBaseDao.OnCompleteListener listener) {
+    public void loadSearchHistory(final String key, final IBaseDao.OnCompleteListener<List<SearchHistory>> listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +53,8 @@ public class SearchHistoryImpl implements ISearchHistory {
                             .orderBy("searchTime", true);
                     if (!"".equals(key))
                         selector.and("searchKey", "like", "%" + key + "%");
-                    listener.onSuccess(selector.findAll());
+                    final List<SearchHistory> data = selector.findAll();
+                    listener.onSuccess(data);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -53,13 +63,8 @@ public class SearchHistoryImpl implements ISearchHistory {
     }
 
     @Override
-    public void showSearchResult(IBaseDao.OnCompleteListener listener) {
+    public void doSearch(final String key, final IBaseDao.OnCompleteListener<List<Map<String, Object>>> listener) {
 
-    }
-
-    @Override
-    public void doSearch(final String key, IBaseDao.OnCompleteListener listener) {
-        CommonTool.hideIME(MyApp.getInstance());
         //保存搜索记录
         new Thread() {
             @Override
@@ -82,15 +87,14 @@ public class SearchHistoryImpl implements ISearchHistory {
                 }
             }
         }.start();
-
-
-    }
-
-    @Override
-    public void searchLocal(final String key, IBaseDao.OnCompleteListener listener) {
+        if (searchResultTempData.containsKey(key)) {
+            Logger.i("加载内存中数据... skey=" + key);
+            listener.onSuccess(searchResultTempData.get(key));
+            return;
+        }
         new Thread(new Runnable() {
-            @Override
             public void run() {
+                Logger.i("赛事搜索... skey=" + key);
                 try {
                     if (!"".equals(key)) {
                         data_MatchInfo = mDB.selector(MatchInfo.class).where("st", ">", DateTool.dateTimeToStr(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3)))
@@ -117,13 +121,25 @@ public class SearchHistoryImpl implements ISearchHistory {
                             data.add(map);
                         }
                     }
-//                    searchResultTempData.put(sKey, data);
-//                    loadSearchResult(data);
+                    searchResultTempData.put(key, data);
+                    listener.onSuccess(data);
 
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+
     }
+
+    @Override
+    public void deleteHistory() {
+        try {
+            mDB.delete(SearchHistory.class, WhereBuilder.b("searchUserId", "=", CpigeonData.getInstance().getUserId(MyApp.getInstance())));
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

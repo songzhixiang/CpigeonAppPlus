@@ -107,6 +107,11 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".modular.matchlive.view.activity.SearchActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
             android:name=".modular.order.view.activity.OrderPayActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />

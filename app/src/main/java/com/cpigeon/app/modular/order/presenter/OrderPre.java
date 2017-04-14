@@ -2,6 +2,8 @@ package com.cpigeon.app.modular.order.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
 import com.cpigeon.app.modular.order.model.dao.OrderDao;
@@ -14,36 +16,35 @@ import java.util.List;
  * Created by Administrator on 2017/4/11.
  */
 
-public class OrderPre {
-    private IOrderView iOrderView;
-    private OrderDao orderDao;
-    private Handler mHanlder = new Handler();
+public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
 
-    public OrderPre(IOrderView iOrderView) {
-        this.iOrderView = iOrderView;
-        this.orderDao = new OrderDaoImpl();
+
+    public OrderPre(IOrderView mView) {
+        super(mView);
     }
 
     public void loadOrder(final int type) {
-//        iOrderView.showLoading();
-        iOrderView.showTips("", IView.TipType.LoadingShow);
-        orderDao.getUserAllOrder(iOrderView.getPs(), iOrderView.getPi(), iOrderView.getQuery(), new OrderDao.OnLoadCompleteListener() {
+        mView.showTips("", IView.TipType.LoadingShow);
+        mDao.getUserAllOrder(mView.getPs(), mView.getPi(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
             @Override
-            public void loadSuccess(final List<CpigeonOrderInfo> orderInfos) {
-                mHanlder.post(new Runnable() {
+            public void onSuccess(final List<CpigeonOrderInfo> data) {
+                mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-//                        iOrderView.hideLoading();
-                        iOrderView.showTips("", IView.TipType.LoadingHide);
-                        iOrderView.showOrder(orderInfos, type);
+                        mView.showOrder(data,type);
                     }
                 });
             }
 
             @Override
-            public void loadFailed() {
+            public void onFail(String msg) {
 
             }
         });
+    }
+
+    @Override
+    protected OrderDao initDao() {
+        return new OrderDaoImpl();
     }
 }

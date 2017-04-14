@@ -44,17 +44,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/5.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements IView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements IView {
     public Context mContext;
     private Unbinder mUnbinder;
-    private int count;//记录开启进度条的情况 只能开一个
     private WeakReference<Activity> weakReference;
     /**
      * 网络观察者
      */
     protected NetChangeObserver mNetChangeObserver = null;
 
-    protected BasePresenter mPresenter;
+    protected T mPresenter;
     /**
      * 加载中--对话框
      */
@@ -179,8 +178,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
         AppManager.getAppManager().removeActivity(weakReference);
+        if (mUnbinder != null)
+            mUnbinder.unbind();
+        mPresenter = null;
     }
 
     @Override

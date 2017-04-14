@@ -22,12 +22,6 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
     public static final int TYPE_TITLE = 1;
     public static final int TYPE_DETIAL = 2;
 
-    /**
-     * Same as QuickAdapter#QuickAdapter(Context,int) but with
-     * some initialization data.
-     *
-     * @param data A new list is created out of this one to avoid mutable list
-     */
     public MatchLiveExpandAdapter(List<MultiItemEntity> data) {
         super(data);
         addItemType(TYPE_TITLE, R.layout.listitem_race_info);
@@ -79,7 +73,12 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
             case TYPE_DETIAL:
                 final MatchDetialItem detialItem = (MatchDetialItem) item;
                 helper.setText(R.id.tv_sifangdidian, "司放地点:" + detialItem.getSubItem(0).getArea());
-                helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj());
+                helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj()+"KM");
+                helper.setText(R.id.tv_sifangyushu, "司放羽数:" + detialItem.getSubItem(0).compuberSLYS());
+                helper.setText(R.id.tv_weather, "天气:" + detialItem.getSubItem(0).getTq());
+                helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
+                helper.setText(R.id.tv_sifangzuobiao, "司放坐标:" + detialItem.getSubItem(0).computerSFZB());
+                helper.addOnClickListener(R.id.matchlive_details);
                 break;
         }
     }
@@ -118,6 +117,10 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
         @Override
         public int getLevel() {
             return 0;
+        }
+
+        public MatchInfo getMatchInfo() {
+            return matchInfo;
         }
     }
 

@@ -2,6 +2,8 @@ package com.cpigeon.app.modular.matchlive.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.dao.IMatchInfo;
@@ -14,32 +16,28 @@ import java.util.List;
  * Created by Administrator on 2017/4/7.
  */
 
-public class MatchLiveSubPre {
-    private IMatchSubView iMatchSubView;
-    private IMatchInfo iMatchInfo;
-    private Handler mHandler = new Handler();
+public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
 
-    public MatchLiveSubPre(IMatchSubView iMatchSubView) {
-        this.iMatchSubView = iMatchSubView;
-        this.iMatchInfo = new MatchInfoImpl();
+    public MatchLiveSubPre(IMatchSubView mView) {
+        super(mView);
     }
 
     public void loadXHData(final int type) {
         // 0 加载协会数据，显示
         // 1 加载协会数据，不显示
-        iMatchInfo.loadXHDatas(new IMatchInfo.OnLoadCompleteListener() {
+        mDao.loadXHDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
-            public void loadSuccess(final List<MatchInfo> matchInfoList) {
+            public void onSuccess(final List<MatchInfo> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iMatchSubView.showXHData(matchInfoList, type);
+                        mView.showXHData(data,type);
                     }
                 });
             }
 
             @Override
-            public void loadFailed(String msg) {
+            public void onFail(String msg) {
 
             }
         });
@@ -50,19 +48,20 @@ public class MatchLiveSubPre {
     public void loadGPData(final int type) {
         // 0 加载公棚数据，显示
         // 1 加载公棚数据，不显示
-        iMatchInfo.loadGPDatas(new IMatchInfo.OnLoadCompleteListener() {
+        mDao.loadGPDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
-            public void loadSuccess(final List<MatchInfo> matchInfoList) {
+            public void onSuccess(final List<MatchInfo> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iMatchSubView.showGPData(matchInfoList, type);
+                        mView.showGPData(data,type);
                     }
                 });
+
             }
 
             @Override
-            public void loadFailed(String msg) {
+            public void onFail(String msg) {
 
             }
         });
@@ -70,10 +69,8 @@ public class MatchLiveSubPre {
 
     }
 
-    /**
-     * 清除对外部对象的引用，内存泄露。
-     */
-    public void recycle() {
-        this.iMatchSubView = null;
+    @Override
+    protected IMatchInfo initDao() {
+        return new MatchInfoImpl();
     }
 }

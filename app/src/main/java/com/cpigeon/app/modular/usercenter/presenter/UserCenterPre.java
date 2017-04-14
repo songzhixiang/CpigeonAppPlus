@@ -2,6 +2,8 @@ package com.cpigeon.app.modular.usercenter.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.UserCenterDaoImpl;
 import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
@@ -13,71 +15,57 @@ import java.util.Map;
  * Created by Administrator on 2017/4/10.
  */
 
-public class UserCenterPre {
-    private IUserCenterView iUserCenterView;
-    private IUserCenterDao iUserCenterDao;
-    private Handler mHandler = new Handler();
-    public UserCenterPre(IUserCenterView iUserCenterView) {
-        this.iUserCenterView = iUserCenterView;
-        this.iUserCenterDao = new UserCenterDaoImpl();
+public class UserCenterPre extends BasePresenter<IUserCenterView,IUserCenterDao>{
+
+    public UserCenterPre(IUserCenterView mView) {
+        super(mView);
+
     }
+
+    @Override
+    protected IUserCenterDao initDao() {
+        return new UserCenterDaoImpl();
+
+    }
+
     public void loadBalance()
     {
-        iUserCenterView.showTips("", IView.TipType.LoadingShow);
-        iUserCenterDao.loadUserBalance(new IUserCenterDao.OnLoadCompleteListener() {
+
+        mDao.loadUserBalance(new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
-            public void loadSuccess(final Map<String, Object> data) {
+            public void onSuccess(final Map<String, Object> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iUserCenterView.showTips("", IView.TipType.LoadingHide);
-                        iUserCenterView.showUserInfo(data);
+                        mView.showUserInfo(data);
                     }
                 });
 
             }
 
             @Override
-            public void laodFailed() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        iUserCenterView.showTips("", IView.TipType.LoadingHide);
-                        iUserCenterView.showTips("加载失败", IView.TipType.ViewError);
-                    }
-                });
+            public void onFail(String msg) {
+
             }
         });
 
     }
     public void loadSignStatus(){
-        iUserCenterDao.getUserSignStatus(new IUserCenterDao.OnGetCompleteListener() {
+        mDao.getUserSignStatus(new IBaseDao.OnCompleteListener<Boolean>() {
             @Override
-            public void loadSuccess(final Boolean isSign) {
+            public void onSuccess(final Boolean data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iUserCenterView.isSign(isSign);
+                        mView.isSign(data);
                     }
                 });
             }
 
             @Override
-            public void loadFailed() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        iUserCenterView.showTips("获取签到信息失败",IView.TipType.ToastShort);
-                    }
-                });
+            public void onFail(String msg) {
+
             }
         });
     }
-    /**
-     * 清除对外部对象的引用，内存泄露。
-     */
-    public void recycle(){
-        this.iUserCenterView = null;
-    }
-
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ltem_listview_group_title"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/com_background_clickable_layout_white"
+              android:gravity="center_vertical"
+              android:minHeight="20dp"
+              android:orientation="horizontal"
+
+              android:paddingBottom="8dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="20dp"
+              android:paddingTop="8dp">
+
+    <TextView
+        android:id="@+id/tv_search_key"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="名称"
+        android:textColor="#d8504f4f"
+        android:textSize="15sp"/>
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@mipmap/ic_search"/>
+</LinearLayout>

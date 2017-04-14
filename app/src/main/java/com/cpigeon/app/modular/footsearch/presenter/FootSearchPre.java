@@ -2,6 +2,8 @@ package com.cpigeon.app.modular.footsearch.presenter;
 
 import android.os.Handler;
 
+import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.footsearch.view.fragment.IFootSearchView;
 import com.cpigeon.app.modular.footsearch.model.dao.ICpigeonServicesInfo;
@@ -14,72 +16,55 @@ import java.util.Map;
  * Created by Administrator on 2017/4/8.
  */
 
-public class FootSearchPre {
-    private IFootSearchView iFootSearchView;
-    private ICpigeonServicesInfo iCpigeonServicesInfo;
-    private Handler mHandler = new Handler();
+public class FootSearchPre extends BasePresenter<IFootSearchView,ICpigeonServicesInfo>{
 
-    public FootSearchPre(IFootSearchView iFootSearchView) {
-        this.iFootSearchView = iFootSearchView;
-        this.iCpigeonServicesInfo = new CpigeonServicesInfoImpl();
+
+    public FootSearchPre(IFootSearchView mView) {
+        super(mView);
     }
 
     public void loadUserServiceInfo() {
-        iCpigeonServicesInfo.getFootSearchService(iFootSearchView.getQueryService(), new ICpigeonServicesInfo.OnLoadCompleteListener() {
+        mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
             @Override
-            public void loadSuccess(final CpigeonUserServiceInfo serviceInfo) {
+            public void onSuccess(final CpigeonUserServiceInfo data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iFootSearchView.getFootSearchService(serviceInfo);
+                        mView.getFootSearchService(data);
                     }
                 });
             }
 
             @Override
-            public void laodFailed(String msg) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        iFootSearchView.showTips("加载用户套餐失败", IView.TipType.ToastShort);
-                    }
-                });
+            public void onFail(String msg) {
 
             }
         });
     }
 
     public void queryFoot() {
-        iFootSearchView.showTips("搜索中...", IView.TipType.LoadingShow);
-        iCpigeonServicesInfo.queryFoot(iFootSearchView.getQueryKey(), new ICpigeonServicesInfo.OnQueryCompleteListener() {
+        mView.showTips("搜索中...", IView.TipType.LoadingShow);
+        mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
-            public void querySuccess(final Map<String, Object> map) {
+            public void onSuccess(final Map<String, Object> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        iFootSearchView.queryFoot(map);
-                        iFootSearchView.showTips("", IView.TipType.LoadingHide);
+                        mView.queryFoot(data);
                     }
                 });
             }
 
             @Override
-            public void laodFailed(String msg) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        iFootSearchView.showTips("", IView.TipType.LoadingHide);
-                        iFootSearchView.showTips("加载用户套餐失败", IView.TipType.ToastShort);
-                    }
-                });
+            public void onFail(String msg) {
+
             }
         });
     }
 
-    /**
-     * 清除对外部对象的引用，内存泄露。
-     */
-    public void recycle() {
-        this.iFootSearchView = null;
+
+    @Override
+    protected ICpigeonServicesInfo initDao() {
+        return new CpigeonServicesInfoImpl();
     }
 }

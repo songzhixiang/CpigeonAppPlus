@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:id="@+id/matchlive_details"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
     android:padding="16dp">
