@@ -18,6 +18,7 @@ import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.presenter.FootSearchPre;
 import com.cpigeon.app.modular.order.view.activity.OpenServiceActivity;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.customview.SearchEditText;
 
 import org.xutils.common.Callback;
@@ -29,7 +30,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.cpigeon.app.MyApp.mCpigeonData;
 
 /**
  * Created by Administrator on 2017/4/5.
@@ -108,6 +108,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     @Override
     public void getFootSearchService(CpigeonUserServiceInfo info) {
         boolean noService = info == null || TextUtils.isEmpty(info.getName());
+        CpigeonData.getInstance().setUserFootSearchServiceInfo(info);
         if (tvPromptTitle != null)
             tvPromptTitle.setText(noService ? "未购买套餐,最多显示2条结果" :
                     info.getShowNumber() == 0 ? String.format("您当前使用%s,结果条数不限制", info.getPackageName()) :
@@ -126,10 +127,10 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     public void queryFoot(Map<String, Object> map) {
         userQueryTimes = (int) map.get("rest");//设置套餐剩余次数
 
-        CpigeonUserServiceInfo userData = mCpigeonData.getUserFootSearchServiceInfo();
+        CpigeonUserServiceInfo userData =  CpigeonData.getInstance().getUserFootSearchServiceInfo();
         if (userData != null && (int) map.get("resultCount") > 0) {
             userData.setNumbers(userQueryTimes);
-            mCpigeonData.setUserFootSearchServiceInfo(userData);
+            CpigeonData.getInstance().setUserFootSearchServiceInfo(userData);
         }
 
         Intent intent = new Intent(getActivity(), FootSearchActivity.class);
@@ -145,7 +146,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
             @Override
             public void run() {
                 //更新套餐剩余信息
-                CpigeonUserServiceInfo userPackageData = mCpigeonData.getUserFootSearchServiceInfo();
+                CpigeonUserServiceInfo userPackageData =  CpigeonData.getInstance().getUserFootSearchServiceInfo();
                 if (userPackageData == null) {
                     tvPromptRight.setVisibility(View.GONE);
                 } else {

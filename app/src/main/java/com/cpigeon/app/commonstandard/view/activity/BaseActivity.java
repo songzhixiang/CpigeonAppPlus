@@ -185,9 +185,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     @Override
     public void finish() {
+        if (mPresenter != null) mPresenter.dettach();
         super.finish();
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_right);
-
     }
 
     /**

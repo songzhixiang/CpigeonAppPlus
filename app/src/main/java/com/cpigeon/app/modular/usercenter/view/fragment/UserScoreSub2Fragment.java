@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
+import com.cpigeon.app.modular.order.view.adapter.OrderAdapter;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
 import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IScoreView;
@@ -45,17 +46,21 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
 
     @Override
     protected void initView(View view) {
-        mSwipeRefreshLayout.setEnabled(false);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
 
+        ((ScoreActivity) getActivity()).getPresenter().attachScoreSub2View(this);
+        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        initAdapterData();
+    }
+
+    private void initAdapterData() {
         mAdapter = new ScoreAdapter(null);
         mAdapter.setOnLoadMoreListener(this, recyclerview);
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-        mAdapter.setEnableLoadMore(true);
-        ((ScoreActivity) getActivity()).getPresenter().attachScoreSub2View(this);
-        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.setAdapter(mAdapter);
+        mAdapter.setEnableLoadMore(false);
+        pageIndex = 1;
     }
 
     @Override
@@ -93,17 +98,20 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
         if (getPageIndex() > 0) {
             progressBar.setVisibility(View.GONE);
         }
+        mSwipeRefreshLayout.setRefreshing(false);//停止刷新
+        mSwipeRefreshLayout.setEnabled(true);
+
         mAdapter.addData(data);
-        mAdapter.loadMoreComplete();
+        mAdapter.loadMoreComplete();//完成加载
 
         canLoadMore = data != null && data.size() == pageSize;
         Logger.d("canLoadMore=" + canLoadMore);
-        mAdapter.setEnableLoadMore(canLoadMore);
         if (canLoadMore) {
             pageIndex++;
         } else {
-            mAdapter.loadMoreEnd(true);//隐藏"加载更多"视图
+            mAdapter.loadMoreEnd(false);
         }
+        mAdapter.setEnableLoadMore(canLoadMore);
     }
 
     @Override
@@ -114,20 +122,17 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
     @Override
     public void onLoadMoreRequested() {
         if (canLoadMore) {
+            mSwipeRefreshLayout.setEnabled(false);
             loadMore();
+        } else {
+            mAdapter.setEnableLoadMore(false);
         }
     }
 
     @Override
     public void onRefresh() {
-        mAdapter.setEnableLoadMore(false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-                mAdapter.setEnableLoadMore(canLoadMore);
-            }
-        }, 500);
+        initAdapterData();
+        loadMore();
     }
 
 }

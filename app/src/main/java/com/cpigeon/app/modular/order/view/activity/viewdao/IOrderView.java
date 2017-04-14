@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface IOrderView extends IView{
-    void showOrder(List<CpigeonOrderInfo> orderInfos,int type);
+    void showOrder(List<CpigeonOrderInfo> orderInfos);
     int getPs();
     int getPi();
     String getQuery();

@@ -24,18 +24,14 @@ public class OrderPre {
         this.orderDao = new OrderDaoImpl();
     }
 
-    public void loadOrder(final int type) {
-//        iOrderView.showLoading();
-        iOrderView.showTips("", IView.TipType.LoadingShow);
+    public void loadOrder() {
         orderDao.getUserAllOrder(iOrderView.getPs(), iOrderView.getPi(), iOrderView.getQuery(), new OrderDao.OnLoadCompleteListener() {
             @Override
             public void loadSuccess(final List<CpigeonOrderInfo> orderInfos) {
                 mHanlder.post(new Runnable() {
                     @Override
                     public void run() {
-//                        iOrderView.hideLoading();
-                        iOrderView.showTips("", IView.TipType.LoadingHide);
-                        iOrderView.showOrder(orderInfos, type);
+                        iOrderView.showOrder(orderInfos);
                     }
                 });
             }

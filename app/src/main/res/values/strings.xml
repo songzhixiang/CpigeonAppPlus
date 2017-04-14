@@ -30,4 +30,7 @@
 
     <string name="please_enter_the_phone_received_SMS_verification_code">请输入%1$s收到的短信验证码</string>
     <string name="Then_click_one_exit_procedure">再按一次退出程序</string>
+
+    <string name="format_pay_account_balance_tips">余额%1$s元,支付扣除%2$s元</string>
+    <string name="format_pay_account_score_tips">我的积分%1$s,兑换消耗%2$s积分</string>
 </resources>

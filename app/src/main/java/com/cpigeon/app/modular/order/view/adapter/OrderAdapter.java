@@ -17,18 +17,19 @@ import java.util.List;
  * Created by Administrator on 2017/4/11.
  */
 
-public class OrderAdapter extends BaseQuickAdapter<CpigeonOrderInfo,BaseViewHolder>{
+public class OrderAdapter extends BaseQuickAdapter<CpigeonOrderInfo, BaseViewHolder> {
     SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public OrderAdapter(List<CpigeonOrderInfo> data) {
-        super(R.layout.listitem_user_order_item,data);
+        super(R.layout.listitem_user_order_item, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CpigeonOrderInfo item) {
-        helper.setText(R.id.tv_item_time,dateTimeFormat.format(DateTool.strToDateTime(item.getOrderTime())));
-        helper.setText(R.id.tv_item_name,item.getOrderName());
-        helper.setText(R.id.tv_item_order_number,String.format("订单编号：%s", item.getOrderNumber()));
-        helper.setText(R.id.tv_item_order_status,String.format("%s", item.getStatusName()));
+        helper.setText(R.id.tv_item_time, dateTimeFormat.format(DateTool.strToDateTime(item.getOrderTime())));
+        helper.setText(R.id.tv_item_name, item.getOrderName());
+        helper.setText(R.id.tv_item_order_number, String.format("订单编号：%s", item.getOrderNumber()));
+        helper.setText(R.id.tv_item_order_status, item.getStatusName());
         int orderStatusColor = Color.parseColor("#8B8A8A");//默认颜色
         switch (item.getStatusName()) {
             case "交易完成":
@@ -36,14 +37,15 @@ public class OrderAdapter extends BaseQuickAdapter<CpigeonOrderInfo,BaseViewHold
                 break;
             case "待支付":
                 orderStatusColor = mContext.getResources().getColor(R.color.colorRed);
+                helper.setText(R.id.tv_item_order_status, "待支付，去支付");
                 break;
         }
-        helper.setTextColor(R.id.tv_item_order_status,orderStatusColor);
-        helper.setText(R.id.tv_item_order_price,item.getPrice() > 0 && item.getScores() > 0 ?
+        helper.setTextColor(R.id.tv_item_order_status, orderStatusColor);
+        helper.setText(R.id.tv_item_order_price, item.getPrice() > 0 && item.getScores() > 0 ?
                 String.format("%.2f元/%d积分", item.getPrice(), item.getScores()) :
                 item.getPrice() > 0 ? String.format("%.2f元", item.getPrice()) : String.format("%d积分", item.getScores()));
 
-        helper.setText(R.id.tv_item_order_payway,String.format("%s", item.getPayWay()));
+        helper.setText(R.id.tv_item_order_payway, String.format("%s", item.getPayWay()));
         helper.getView(R.id.tv_item_order_payway).setVisibility(item.ispaid() ? View.VISIBLE : View.GONE);
     }
 }

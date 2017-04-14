@@ -38,7 +38,7 @@ public class ServiceListAdapter extends BaseQuickAdapter<CpigeonServicesInfo, Ba
         helper.setText(R.id.tv_service_item_price, String.format("%.2f元/%d积分", item.getPrice(), item.getScores()));
         helper.setText(R.id.tv_service_item_explain, item.getBrief());
         helper.setVisible(R.id.tv_service_item_prompt, currIsUsed);
-        helper.setVisible(R.id.iv_right, currIsUsed);
+        helper.setVisible(R.id.iv_right, !currIsUsed);
         try {
             openTime = DateTool.strToDateTime(item.getOpentime());
             closeTime = DateTool.strToDateTime(item.getExpiretime());

@@ -22,38 +22,19 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  * 微信支付回调Activity
  */
 
-public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 
     //微信开放平台appID
     public static final String APP_ID = "wxc9d120321bd1180a";
     private IWXAPI api;
 
     @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initPresenter() {
-
-    }
-
-    @Override
-    public void initView() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         api = WXAPIFactory.createWXAPI(this, APP_ID);
         api.handleIntent(getIntent(), this);
     }
-
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
+    
     @Override
     public void onReq(BaseReq baseReq) {
 

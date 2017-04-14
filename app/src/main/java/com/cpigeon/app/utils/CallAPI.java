@@ -166,8 +166,8 @@ public class CallAPI {
     }
 
 
-    public static org.xutils.common.Callback.Cancelable getWXPrePayOrder(Context context, long orderid,
-                                                                         @NonNull final Callback<PayReq> callback) {
+    public static org.xutils.common.Callback.Cancelable getWXPrePayOrderForOrder(Context context, long orderid,
+                                                                                 @NonNull final Callback<PayReq> callback) {
         RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.GET_WX_PREPAY_ORDER_URL);
         pretreatmentParams(params);
         params.addParameter("oid", orderid);
@@ -181,9 +181,10 @@ public class CallAPI {
             public void onSuccess(JSONObject result) {
                 Logger.i(result.toString());
                 try {
-                    if (!result.has("status") || result.isNull("data")) {
-                        PayReq req = new PayReq();
+                    if (result.has("status") && result.getBoolean("status")) {
                         try {
+                            PayReq req = new PayReq();
+
                             JSONObject obj = result.getJSONObject("data");
                             req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
                             req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
@@ -192,10 +193,12 @@ public class CallAPI {
                             req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
                             req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
                             req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
+                            callback.onSuccess(req);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        callback.onSuccess(req);
+
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, result.getInt("errorCode"));
                     }
@@ -2275,7 +2278,7 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable getWXPrePayOrderForRecharge(Context context,
-                                                                                    final int did,
+                                                                                    final long did,
                                                                                     @NonNull final Callback<PayReq> callback) {
 
         final int userid = CpigeonData.getInstance().getUserId(context);
@@ -3916,7 +3919,7 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable orderPayByScore(Context context,
-                                                                        final int orderId,
+                                                                        final long orderId,
                                                                         final String payPwd,
                                                                         @NonNull final Callback<Boolean> callback) {
 
@@ -3977,7 +3980,7 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable orderPayByBalance(Context context,
-                                                                          final int orderId,
+                                                                          final long orderId,
                                                                           final String payPwd,
                                                                           @NonNull final Callback<Boolean> callback) {
 
