@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/iv_pay_close"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_5"
+            app:srcCompat="@drawable/svg_ic_close_storke"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="输入支付密码"
+            android:textSize="@dimen/sp_18"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/split_line_width"
+        android:background="@color/colorLayoutSplitLineGray"/>
+
+    <TextView
+        android:id="@+id/tv_yue_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:text="@string/pay_account_balance_tips"
+        android:textSize="@dimen/sp_14"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/background_round_white_5">
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="付款"
+            android:textColor="@color/colorBlue"
+            android:textSize="@dimen/sp_18"/>
+
+        <View
+            android:id="@+id/v_split_line"
+            android:layout_width="@dimen/split_line_width"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toLeftOf="@id/tv_pay"
+            android:background="@color/colorLayoutSplitLineGray"/>
+
+        <EditText
+            android:id="@+id/et_paypwd"
+            style="@style/SingleLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_toLeftOf="@id/v_split_line"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入支付密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:textSize="@dimen/sp_18"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_mean_for_paypwd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="什么是支付密码"
+            android:textColor="@color/colorBlue"
+            android:textSize="@dimen/sp_16"/>
+
+        <TextView
+            android:id="@+id/tv_forget_paypwd"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="忘记密码？"
+            android:textColor="@color/colorBlue"
+            android:textSize="@dimen/sp_16"/>
+    </RelativeLayout>
+</LinearLayout>
