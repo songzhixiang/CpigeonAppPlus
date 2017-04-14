@@ -1,5 +1,6 @@
 package com.cpigeon.app.modular.order.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
 import com.cpigeon.app.modular.order.presenter.OrderPre;
 import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderView;
 import com.cpigeon.app.modular.order.view.adapter.OrderAdapter;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
 
@@ -38,12 +40,36 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
     @BindView(R.id.order_swiperefreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private OrderPre pre;
-    private List<CpigeonOrderInfo> orderInfos;
-    private int delayMillis = 1000;
-    private int mCurrentCounter;
     private int mTotalCount = 8;
     private int pi = 1;
-    private List<CpigeonOrderInfo> newOrderInfo = new ArrayList<>();
+    private boolean canLoadMore = true;
+
+    BaseQuickAdapter.OnItemClickListener onItemClickListener = new BaseQuickAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            CpigeonOrderInfo orderInfo = mAdapter.getData().get(position);
+            if (!orderInfo.ispaid() && "待支付".equals(orderInfo.getStatusName())) {
+                Intent intent = new Intent(mContext, OrderPayActivity.class);
+                intent.putExtra(OrderPayActivity.INTENT_DATA_KEY_ORDERINFO, orderInfo);
+                startActivity(intent);
+            }
+        }
+    };
+    CpigeonData.OnWxPayListener onWxPayListener = new CpigeonData.OnWxPayListener() {
+        @Override
+        public void onPayFinished(int wxPayReturnCode) {
+            if (wxPayReturnCode == ERR_OK)
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        initAdapterData();
+                        pre.loadOrder();
+                    }
+                }, 400);
+            else
+                showTips("支付失败", TipType.ToastShort);
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -60,6 +86,7 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
         mToolbar.setTitle("我的订单");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        CpigeonData.getInstance().addOnWxPayListener(onWxPayListener);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,8 +95,21 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
+        mSwipeRefreshLayout.setEnabled(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        pre.loadOrder(0);
+
+        initAdapterData();
+        pre.loadOrder();
+    }
+
+    private void initAdapterData() {
+        mAdapter = new OrderAdapter(null);
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(onItemClickListener);
+        mAdapter.setEnableLoadMore(false);
+        pi = 1;
     }
 
     @Override
@@ -83,28 +123,22 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
     }
 
     @Override
-    public void showOrder(List<CpigeonOrderInfo> orderInfos, int type) {
+    public void showOrder(List<CpigeonOrderInfo> orderInfos) {
+        mSwipeRefreshLayout.setRefreshing(false);//停止刷新
+        mSwipeRefreshLayout.setEnabled(true);
 
-        this.orderInfos = orderInfos;
-        mCurrentCounter = orderInfos.size();
-        switch (type) {
-            case 1:
-                mAdapter.addData(orderInfos);
-                break;
-            case 0:
-                mAdapter = new OrderAdapter(orderInfos);
-                mCurrentCounter = mAdapter.getData().size();
-                mAdapter.setOnLoadMoreListener(this, mRecyclerView);
-                mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-                mRecyclerView.setAdapter(mAdapter);
-                break;
+        mAdapter.addData(orderInfos);
+        mAdapter.loadMoreComplete();//完成加载
+
+        Logger.e("pi:" + pi);
+        canLoadMore = orderInfos != null && orderInfos.size() == mTotalCount;
+        if (canLoadMore) {
+            pi++;
+        } else {
+            mAdapter.loadMoreEnd(false);
         }
 
-        for (CpigeonOrderInfo cpigeonOrderInfo : orderInfos) {
-            newOrderInfo.add(cpigeonOrderInfo);
-        }
-
-
+        mAdapter.setEnableLoadMore(canLoadMore);
     }
 
     @Override
@@ -124,32 +158,18 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
 
     @Override
     public void onRefresh() {
-        mAdapter.setEnableLoadMore(false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setNewData(orderInfos);
-                mSwipeRefreshLayout.setRefreshing(false);
-                mAdapter.setEnableLoadMore(true);
-            }
-        }, delayMillis);
+        initAdapterData();
+        pre.loadOrder();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        mSwipeRefreshLayout.setEnabled(false);
-        if (mCurrentCounter < mTotalCount) {
-            mAdapter.loadMoreEnd(true);
-
+        if (canLoadMore) {
+            mSwipeRefreshLayout.setEnabled(false);
+            pre.loadOrder();
         } else {
-            pi++;
-            Logger.e("pi:" + pi);
-            mAdapter.loadMoreEnd(false);
-            pre.loadOrder(1);
-            mAdapter.loadMoreComplete();
-
+            mAdapter.setEnableLoadMore(false);
         }
-
     }
 }
 

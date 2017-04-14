@@ -23,15 +23,15 @@ public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
         super(mView);
     }
 
-    public void loadOrder(final int type) {
-        mView.showTips("", IView.TipType.LoadingShow);
+    public void loadOrder() {
         mDao.getUserAllOrder(mView.getPs(), mView.getPi(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
+
             @Override
             public void onSuccess(final List<CpigeonOrderInfo> data) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mView.showOrder(data,type);
+                        mView.showOrder(data);
                     }
                 });
             }

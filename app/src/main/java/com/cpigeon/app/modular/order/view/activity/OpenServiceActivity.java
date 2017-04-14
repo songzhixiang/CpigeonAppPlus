@@ -16,6 +16,7 @@ import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.order.presenter.OpenServicePresenter;
 import com.cpigeon.app.modular.order.view.activity.viewdao.IOpenServiceView;
 import com.cpigeon.app.modular.order.view.adapter.ServiceListAdapter;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.DateTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
@@ -54,7 +55,8 @@ public class OpenServiceActivity extends BaseActivity implements IOpenServiceVie
     @Override
     public void initView() {
         mServiceName = getIntent().getStringExtra(INTENT_DATA_KEY_SERVICENAME);
-        if (TextUtils.isEmpty(mServiceName)) throw new NullPointerException("service name is empty");
+        if (TextUtils.isEmpty(mServiceName))
+            throw new NullPointerException("service name is empty");
         toolbar.setTitle(String.format("开通%s", TextUtils.isEmpty(mServiceName) ? "服务" : mServiceName));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,6 +71,8 @@ public class OpenServiceActivity extends BaseActivity implements IOpenServiceVie
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 final CpigeonServicesInfo cpigeonServicesInfo = (CpigeonServicesInfo) adapter.getData().get(position);
+                if (CpigeonData.getInstance().getUserServicesIds().contains(cpigeonServicesInfo.getId()))
+                    return;
                 if (DateTool.strToDateTime(cpigeonServicesInfo.getOpentime()).getTime() > System.currentTimeMillis()) {
                     showTips(cpigeonServicesInfo.getPackageName() + "尚未上架，请上架后再来购买", TipType.Dialog);
                     return;

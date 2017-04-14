@@ -1,10 +1,11 @@
 package com.cpigeon.app.modular.order.view.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,10 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
+import com.cpigeon.app.modular.order.presenter.OrderPayPresenter;
 import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderPayView;
+import com.cpigeon.app.modular.order.view.fragment.PayPwdInputFragment;
 import com.cpigeon.app.utils.CPigeonApiUrl;
-import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
@@ -29,14 +31,9 @@ import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -48,6 +45,7 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
     public static final String INTENT_DATA_KEY_ORDERINFO = "orderInfo";
     private static final String INTENT_DATA_KEY_ORDERID = "orderID";
     private static final int ACTIVITY_RESULT_CODE = 65465;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_order_number_title)
@@ -78,12 +76,26 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
     private CpigeonOrderInfo mcpigeoCpigeonOrderInfo;
     private IWXAPI mWxApi = null;
     private int mCpigeonOrderId = 0;
+    private String payType;
+    PayReq payReq;
+
     CpigeonData.OnWxPayListener onWxPayListener = new CpigeonData.OnWxPayListener() {
         @Override
         public void onPayFinished(int wxPayReturnCode) {
-            finish();
+            if (wxPayReturnCode == ERR_OK)
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+            else
+                showTips("支付失败", TipType.ToastShort);
         }
     };
+
+    OrderPayPresenter mPresenter;
+    PayPwdInputFragment payFragment;
 
     @Override
     public int getLayoutId() {
@@ -92,7 +104,7 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
 
     @Override
     public void initPresenter() {
-
+        mPresenter = new OrderPayPresenter(this);
     }
 
     @Override
@@ -111,16 +123,17 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
             mWxApi.registerApp(WXPayEntryActivity.APP_ID);
         }
         CpigeonData.getInstance().addOnWxPayListener(onWxPayListener);
+        mPresenter.loadUserScoreAndBalance();
         mcpigeoCpigeonOrderInfo = (CpigeonOrderInfo) getIntent().getSerializableExtra(INTENT_DATA_KEY_ORDERINFO);
         mCpigeonOrderId = getIntent().getIntExtra(INTENT_DATA_KEY_ORDERID, 0);
         if (mCpigeonOrderId != 0) {
             // TODO: 2017/1/7  加载订单信息（后台加载，新开线程）
+            mPresenter.getOrderInfoById(mCpigeonOrderId);
         } else if (mcpigeoCpigeonOrderInfo == null) {
             throw new NullPointerException("intent parameter " + INTENT_DATA_KEY_ORDERINFO + " is null");
         } else {
             showOrderInfo(mcpigeoCpigeonOrderInfo);
         }
-
     }
 
 
@@ -162,6 +175,53 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
         }
     }
 
+    @Override
+    public String getPayType() {
+        return payType;
+    }
+
+    @Override
+    public long getOrderId() {
+        return mcpigeoCpigeonOrderInfo == null ? mCpigeonOrderId : mcpigeoCpigeonOrderInfo.getId();
+    }
+
+    @Override
+    public void showPayResult(Boolean result) {
+        SweetAlertDialog dialog;
+        if (result) {
+            if (payFragment != null) payFragment.dismiss();
+            dialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("支付成功").setConfirmText("确认").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                            finish();
+                        }
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
+        } else {
+            dialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("支付失败").setConfirmText("确认");
+        }
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    @Override
+    public void entryWXPay(PayReq payReq) {
+        this.payReq = payReq;
+        if (mWxApi != null) {
+            mWxApi.sendReq(payReq);
+            Logger.d("发起微信支付");
+        }
+    }
+
+    @Override
+    public PayReq getPayReqCache() {
+        return payReq;
+    }
+
     private void loadPayWay() {
         if (layoutOrderPayWay == null || mcpigeoCpigeonOrderInfo == null)
             return;
@@ -189,7 +249,7 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
                             .setConfirmText("确定")
                             .show();
                 } else {
-//                    loadPayFragment(PAY_TYPE_YUE);
+                    loadPayFragment(PAY_TYPE_YUE);
                 }
             }
         });
@@ -231,9 +291,8 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
                                 })
                                 .setCancelText("关闭")
                                 .show();
-
                     } else {
-//                        loadPayFragment(PAY_TYPE_JIFEN);
+                        loadPayFragment(PAY_TYPE_JIFEN);
                     }
                 }
             });
@@ -252,7 +311,11 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wxPrePay();
+                if (!cbOrderProtocol.isChecked()) {
+                    showTips(getString(R.string.sentence_not_watch_pay_agreement_prompt), TipType.DialogError);
+                    return;
+                }
+                mPresenter.wxPay();
             }
         });
 
@@ -278,78 +341,41 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
     }
 
     /**
-     * 微信支付(获取微信预支付订单)
+     * 加载支付密码输入Fragment
+     *
+     * @param type
      */
-    private void wxPrePay() {
-        if (!cbOrderProtocol.isChecked()) {
-            showTips(getString(R.string.sentence_not_watch_pay_agreement_prompt), TipType.DialogError);
-            return;
+    private void loadPayFragment(String type) {
+        payType = type;
+        payFragment = new PayPwdInputFragment();
+        payFragment.setOnPayListener(new PayPwdInputFragment.OnPayListener() {
+            @Override
+            public void onPay(Dialog dialog, String payPwd) {
+                mPresenter.payOrder(payPwd);
+            }
+        });
+
+        //设置信息提示（余额积分提示）
+        String stringFormat = PAY_TYPE_JIFEN.equals(payType) ? getString(R.string.format_pay_account_score_tips) :
+                PAY_TYPE_YUE.equals(payType) ? getString(R.string.format_pay_account_balance_tips) : "";
+        if (PAY_TYPE_JIFEN.equals(payType)) {
+            payFragment.setPromptInfo(String.format(stringFormat, String.format("%d", CpigeonData.getInstance().getUserScore()),
+                    mcpigeoCpigeonOrderInfo == null ? "（未知）" : String.format("%d", mcpigeoCpigeonOrderInfo.getScores())));
+            payFragment.setOkText("兑换");
+        } else if (PAY_TYPE_YUE.equals(payType)) {
+            payFragment.setPromptInfo(String.format(stringFormat, String.format("%.2f", CpigeonData.getInstance().getUserBalance()),
+                    mcpigeoCpigeonOrderInfo == null ? "（未知）" : String.format("%.2f", mcpigeoCpigeonOrderInfo.getPrice())));
+            payFragment.setOkText("付款");
         }
-
-        if (mcpigeoCpigeonOrderInfo == null) {
-//            CommonTool.toastShort(mContext, "无法识别当前订单，请稍后再试...");
-            return;
-        }
-//        mJumpDialog.show();
-        //获取微信预支付订单
-
-//        RequestParams requestParams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.GET_WX_PREPAY_ORDER_URL);
-//        CallAPI.pretreatmentParams(requestParams);
-//        requestParams.addParameter("oid", mcpigeoCpigeonOrderInfo.getId());
-//        requestParams.addParameter("u", CpigeonData.getInstance().getUserId(mContext));
-//        requestParams.addHeader("u", CommonTool.getUserToken(mContext));
-//        x.http().get(requestParams, new Callback.CommonCallback<JSONObject>() {
-//
-//            @Override
-//            public void onSuccess(JSONObject result) {
-//                Logger.d(result.toString());
-//                if (!result.has("status") || result.isNull("data")) {
-//                    CommonTool.toastShort(mContext, "发起支付失败，请稍后再试...");
-//                    mJumpDialog.dismiss();
-//                    return;
-//                }
-//                PayReq req = new PayReq();
-//                try {
-//                    JSONObject obj = result.getJSONObject("data");
-//                    req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
-//                    req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
-//                    req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
-//                    req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
-//                    req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
-//                    req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
-//                    req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                if (mWxApi != null) {
-//                    mWxApi.sendReq(req);
-//                    Logger.d("发起微信支付");
-//                } else {
-//                    CommonTool.toastShort(mContext, "发起支付失败，请稍后再试...");
-//                }
-//                mJumpDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                CommonTool.toastShort(mContext, "发起支付失败，请稍后再试...");
-//                mJumpDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
-
+        payFragment.show(getFragmentManager(), "payFragment");
     }
 
-    public interface OnPayFinishListener {
-        void onFinish(boolean isSuccess);
+
+    @OnClick(R.id.tv_order_protocol)
+    public void onViewClicked() {
+        Intent intent = new Intent(mContext, WebActivity.class);
+        intent.putExtra(WebActivity.INTENT_DATA_KEY_URL, CPigeonApiUrl.getInstance().getServer() + "/APP/Protocol?type=pay");
+        intent.putExtra(WebActivity.INTENT_DATA_KEY_BACKNAME, "订单支付");
+        startActivity(intent);
     }
 }
