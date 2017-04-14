@@ -14,7 +14,11 @@ import com.cpigeon.app.modular.usercenter.model.daoimpl.LoginDaoImpl;
 public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
     public LoginPresenter(ILoginView mView) {
         super(mView);
-        mModel = new LoginDaoImpl();
+    }
+
+    @Override
+    protected ILoginDao initDao() {
+        return new LoginDaoImpl();
     }
 
     ILoginDao.OnLoginListener onLoadCompleteListener = new ILoginDao.OnLoginListener() {
@@ -89,10 +93,10 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
     };
 
     public void login() {
-        mModel.login(mView.getLoginName(), mView.getLoginPassword(), onLoadCompleteListener);
+        mDao.login(mView.getLoginName(), mView.getLoginPassword(), onLoadCompleteListener);
     }
 
     public void loadUserHeadImgURL() {
-        mModel.loadUserHeadImg(mView.getLoginName(), onLoadUserHeadImageListener);
+        mDao.loadUserHeadImg(mView.getLoginName(), onLoadUserHeadImageListener);
     }
 }

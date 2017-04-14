@@ -12,7 +12,12 @@ import com.cpigeon.app.modular.guide.view.viewdao.ISplashView;
 public class SplashPresenter extends BasePresenter<ISplashView, ISplashDao> {
     public SplashPresenter(ISplashView mView) {
         super(mView);
-        mModel = new SplashDaoImpl();
+
+    }
+
+    @Override
+    protected ISplashDao initDao() {
+        return new SplashDaoImpl();
     }
 
     ISplashDao.OnLoadCompleteListener onLoadCompleteListener = new ISplashDao.OnLoadCompleteListener() {
@@ -28,10 +33,10 @@ public class SplashPresenter extends BasePresenter<ISplashView, ISplashDao> {
     };
 
     public void welcome() {
-        mModel.getSplashADFromServer();
-        mModel.loadSplashAdUrl(onLoadCompleteListener);
+        mDao.getSplashADFromServer();
+        mDao.loadSplashAdUrl(onLoadCompleteListener);
         if (mView.checkLogin())
-            mModel.autoiLogin();
+            mDao.autoiLogin();
         mView.countDown();
     }
 }

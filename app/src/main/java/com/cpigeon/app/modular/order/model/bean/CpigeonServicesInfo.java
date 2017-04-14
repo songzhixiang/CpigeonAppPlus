@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.footsearch.model.bean;
+package com.cpigeon.app.modular.order.model.bean;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.order.view.activity;
+package com.cpigeon.app.modular.order.view.activity.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;

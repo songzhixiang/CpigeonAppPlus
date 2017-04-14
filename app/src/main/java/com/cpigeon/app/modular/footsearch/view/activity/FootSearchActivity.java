@@ -1,14 +1,13 @@
 package com.cpigeon.app.modular.footsearch.view.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.listener.IOnKeyDownForFragment;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchResultCardFragment;
-import com.cpigeon.app.modular.footsearch.model.bean.CpigeonServicesInfo;
+import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.utils.NetUtils;
 

@@ -1,5 +1,6 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ScrollView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
+import com.cpigeon.app.modular.order.view.activity.OpenServiceActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,5 +44,8 @@ public class UserScoreSub1Fragment extends BaseLazyLoadFragment {
 
     @OnClick(R.id.btn_zhcx_dh)
     public void onViewClicked() {
+        Intent intent = new Intent(getActivity(), OpenServiceActivity.class);
+        intent.putExtra(OpenServiceActivity.INTENT_DATA_KEY_SERVICENAME, "足环查询服务");
+        startActivity(intent);
     }
 }

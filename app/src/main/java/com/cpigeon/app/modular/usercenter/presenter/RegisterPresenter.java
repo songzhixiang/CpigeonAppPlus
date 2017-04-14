@@ -29,7 +29,11 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
 
     public RegisterPresenter(IRegisterView mView) {
         super(mView);
-        mModel = new RegisterDaoImpl();
+    }
+
+    @Override
+    protected IRegisterDao initDao() {
+        return new RegisterDaoImpl();
     }
 
     public void attachSetp1View(IRegisterView.IRegisterSetp1View setpView) {
@@ -175,7 +179,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
         if (!checkConfirmPassword()) return;
 
         mView.showTips("注册中...", IView.TipType.LoadingShow);
-        mModel.registUser(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
+        mDao.registUser(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
     }
 
     public void findUserPass() {
@@ -185,7 +189,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
         if (!checkConfirmPassword()) return;
 
         mView.showTips("处理中...", IView.TipType.LoadingShow);
-        mModel.findUserPassword(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
+        mDao.findUserPassword(setp1View.getPhoneNumber(), setp3View.getPassword(), setp2View.getInputYZM(), onCompleteListener);
     }
 
     /**
@@ -198,6 +202,6 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
         }
         this.isInSetpFrist = isInSetpFrist;
 
-        mModel.sendYZM(setp1View.getPhoneNumber(), mView.getRunModel() == RegisterActivity.START_TYPE_REGIST ? CallAPI.DATATYPE.YZM.REGIST : CallAPI.DATATYPE.YZM.FIND_PASSWORD, onSendCompleteListener);
+        mDao.sendYZM(setp1View.getPhoneNumber(), mView.getRunModel() == RegisterActivity.START_TYPE_REGIST ? CallAPI.DATATYPE.YZM.REGIST : CallAPI.DATATYPE.YZM.FIND_PASSWORD, onSendCompleteListener);
     }
 }

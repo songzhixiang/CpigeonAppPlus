@@ -9,7 +9,7 @@ import com.cpigeon.app.modular.cpigeongroup.model.bean.CpigeonGroupUserInfo;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.Message;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.MyFoucs;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.ShieldMessage;
-import com.cpigeon.app.modular.footsearch.model.bean.CpigeonServicesInfo;
+import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -57,9 +57,9 @@ import static com.cpigeon.app.utils.CpigeonConfig.getDataDb;
 public class CallAPI {
 
 
-
     /**
      * 注册用户
+     *
      * @param phoneNumber
      * @param password
      * @param yzm
@@ -68,7 +68,7 @@ public class CallAPI {
      */
     public static org.xutils.common.Callback.Cancelable registUser(String phoneNumber, String password, String yzm,
                                                                    @NonNull final Callback callback) {
-        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer()+ CPigeonApiUrl.REGIST_URL);
+        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.REGIST_URL);
         pretreatmentParams(params);
         params.addParameter("t", phoneNumber);
         params.addParameter("y", yzm);
@@ -113,6 +113,7 @@ public class CallAPI {
 
     /**
      * 找回用户密码
+     *
      * @param phoneNumber
      * @param password
      * @param yzm
@@ -121,7 +122,7 @@ public class CallAPI {
      */
     public static org.xutils.common.Callback.Cancelable findUserPassword(String phoneNumber, String password, String yzm,
                                                                          @NonNull final Callback callback) {
-        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer()+ CPigeonApiUrl.FIND_PASSWORD_URL);
+        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.FIND_PASSWORD_URL);
         pretreatmentParams(params);
         params.addParameter("t", phoneNumber);
         params.addParameter("y", yzm);
@@ -165,6 +166,61 @@ public class CallAPI {
     }
 
 
+    public static org.xutils.common.Callback.Cancelable getWXPrePayOrder(Context context, long orderid,
+                                                                         @NonNull final Callback<PayReq> callback) {
+        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.GET_WX_PREPAY_ORDER_URL);
+        pretreatmentParams(params);
+        params.addParameter("oid", orderid);
+        params.addParameter("u", CpigeonData.getInstance().getUserId(context));
+        params.addHeader("u", CommonTool.getUserToken(context));
+        addApiSign(params);
+        params.setCacheMaxAge(0);
+        return x.http().get(params, new org.xutils.common.Callback.CommonCallback<JSONObject>() {
+
+            @Override
+            public void onSuccess(JSONObject result) {
+                Logger.i(result.toString());
+                try {
+                    if (!result.has("status") || result.isNull("data")) {
+                        PayReq req = new PayReq();
+                        try {
+                            JSONObject obj = result.getJSONObject("data");
+                            req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
+                            req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
+                            req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
+                            req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
+                            req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
+                            req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
+                            req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.onSuccess(req);
+                    } else {
+                        callback.onError(Callback.ERROR_TYPE_API_RETURN, result.getInt("errorCode"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                callback.onError(Callback.ERROR_TYPE_REQUST_EXCEPTION, ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 
 
     /**
@@ -1234,7 +1290,6 @@ public class CallAPI {
                                                                        int czIndex,
                                                                        String sKey,
                                                                        @NonNull final Callback<List> callback) {
-
 
 
         //计算TOKEN
@@ -2763,6 +2818,7 @@ public class CallAPI {
             public void onSuccess(String result) {
                 if (result != null) dealData(result);
             }
+
             private void dealData(String result) {
                 Logger.json(result);
                 try {
@@ -2803,6 +2859,7 @@ public class CallAPI {
 
     /**
      * 删除用户自己发的说说 -- szx
+     *
      * @param context
      * @param mid
      * @param callback
@@ -2811,7 +2868,6 @@ public class CallAPI {
     public static org.xutils.common.Callback.Cancelable delCircleMessage(Context context,
                                                                          final String mid,
                                                                          final Callback<String> callback) {
-
 
 
         int userid = CpigeonData.getInstance().getUserId(context);
@@ -2874,6 +2930,7 @@ public class CallAPI {
 
     /**
      * 点赞 --szx
+     *
      * @param context
      * @param mid
      * @param isp
@@ -2881,10 +2938,9 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable praiseCircleMessage(Context context,
-                                                                         final String mid,
-                                                                         final String isp,
-                                                                         final Callback<Integer> callback) {
-
+                                                                            final String mid,
+                                                                            final String isp,
+                                                                            final Callback<Integer> callback) {
 
 
         int userid = CpigeonData.getInstance().getUserId(context);
@@ -2895,7 +2951,7 @@ public class CallAPI {
         List<KeyValue> postParams = new ArrayList<>();
         postParams.add(new KeyValue("u", String.valueOf(userid)));
         postParams.add(new KeyValue("mid", mid));
-        postParams.add(new KeyValue("isp",isp));
+        postParams.add(new KeyValue("isp", isp));
 
         String sign = getApiSign(urlParams, postParams);
 
@@ -2905,7 +2961,7 @@ public class CallAPI {
         requestParams.addQueryStringParameter("sign", sign);
         requestParams.addBodyParameter("u", String.valueOf(userid));
         requestParams.addBodyParameter("mid", mid);
-        requestParams.addBodyParameter("isp",isp);
+        requestParams.addBodyParameter("isp", isp);
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         requestParams.setMethod(HttpMethod.POST);
         return x.http().post(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
@@ -2949,6 +3005,7 @@ public class CallAPI {
 
     /**
      * 添加评论  --szx
+     *
      * @param context
      * @param mid
      * @param c
@@ -2957,11 +3014,10 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable addCircleMessageComment(Context context,
-                                                                            final int mid,
+                                                                                final int mid,
                                                                                 final String c,
-                                                                            final int topid,
-                                                                            final Callback<Integer> callback) {
-
+                                                                                final int topid,
+                                                                                final Callback<Integer> callback) {
 
 
         int userid = CpigeonData.getInstance().getUserId(context);
@@ -2972,7 +3028,7 @@ public class CallAPI {
         List<KeyValue> postParams = new ArrayList<>();
         postParams.add(new KeyValue("u", String.valueOf(userid)));
         postParams.add(new KeyValue("mid", String.valueOf(mid)));
-        postParams.add(new KeyValue("c",c));
+        postParams.add(new KeyValue("c", c));
         postParams.add(new KeyValue("topid", String.valueOf(topid)));
 
         String sign = getApiSign(urlParams, postParams);
@@ -2983,7 +3039,7 @@ public class CallAPI {
         requestParams.addQueryStringParameter("sign", sign);
         requestParams.addBodyParameter("u", String.valueOf(userid));
         requestParams.addBodyParameter("mid", String.valueOf(mid));
-        requestParams.addBodyParameter("c",c);
+        requestParams.addBodyParameter("c", c);
         requestParams.addBodyParameter("topid", String.valueOf(topid));
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         requestParams.setMethod(HttpMethod.POST);
@@ -3028,13 +3084,13 @@ public class CallAPI {
 
     /**
      * 获取鸽友圈信息  --szx
+     *
      * @param context
      * @param callback
      * @return
      */
     public static org.xutils.common.Callback.Cancelable getUserCircleInfo(Context context,
-                                                                                final Callback<CpigeonGroupUserInfo.DataBean> callback) {
-
+                                                                          final Callback<CpigeonGroupUserInfo.DataBean> callback) {
 
 
         int userid = CpigeonData.getInstance().getUserId(context);
@@ -3099,6 +3155,7 @@ public class CallAPI {
 
     /**
      * 获取关注列表  --szx
+     *
      * @param context
      * @param pi
      * @param ps
@@ -3109,7 +3166,7 @@ public class CallAPI {
                                                                                    final int pi,
                                                                                    final int ps,
                                                                                    final String t,
-                                                                                   final Callback<List<MyFoucs.DataBean>> callback){
+                                                                                   final Callback<List<MyFoucs.DataBean>> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3180,6 +3237,7 @@ public class CallAPI {
 
     /**
      * 关注/取消关注  --szx
+     *
      * @param context
      * @param auid
      * @param isa
@@ -3187,9 +3245,9 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable attentionCircleUser(Context context,
-                                                                                   final String auid,
-                                                                                   final int isa,
-                                                                                   final Callback<String> callback){
+                                                                            final String auid,
+                                                                            final int isa,
+                                                                            final Callback<String> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3256,6 +3314,7 @@ public class CallAPI {
 
     /**
      * 获取黑名单
+     *
      * @param context
      * @param pi
      * @param ps
@@ -3265,7 +3324,7 @@ public class CallAPI {
     public static org.xutils.common.Callback.Cancelable getUserCircleBlackList(Context context,
                                                                                final int pi,
                                                                                final int ps,
-                                                                            final Callback<List<BadGuy.DataBean>> callback){
+                                                                               final Callback<List<BadGuy.DataBean>> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3334,6 +3393,7 @@ public class CallAPI {
 
     /**
      * 拉黑/取消拉黑
+     *
      * @param context
      * @param duid
      * @param isd
@@ -3341,9 +3401,9 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable defriendCircleUser(Context context,
-                                                                               final int duid,
-                                                                               final int isd,
-                                                                               final Callback<Boolean> callback){
+                                                                           final int duid,
+                                                                           final int isd,
+                                                                           final Callback<Boolean> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3409,6 +3469,7 @@ public class CallAPI {
 
     /**
      * 屏蔽某个用户
+     *
      * @param context
      * @param suid
      * @param iss
@@ -3416,9 +3477,9 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable shieldCircleUser(Context context,
-                                                                           final int suid,
-                                                                           final int iss,
-                                                                           final Callback<Boolean> callback){
+                                                                         final int suid,
+                                                                         final int iss,
+                                                                         final Callback<Boolean> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3484,6 +3545,7 @@ public class CallAPI {
 
     /**
      * 屏蔽某一条消息
+     *
      * @param context
      * @param mid
      * @param iss
@@ -3491,9 +3553,9 @@ public class CallAPI {
      * @return
      */
     public static org.xutils.common.Callback.Cancelable shieldCircleMessage(Context context,
-                                                                         final int mid,
-                                                                         final int iss,
-                                                                         final Callback<Boolean> callback){
+                                                                            final int mid,
+                                                                            final int iss,
+                                                                            final Callback<Boolean> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3558,12 +3620,13 @@ public class CallAPI {
 
     /**
      * 清除屏蔽用户
+     *
      * @param context
      * @param callback
      * @return
      */
-    public static org.xutils.common.Callback.Cancelable  clearShieldCircleUser(Context context,
-                                                                               final Callback<Boolean> callback){
+    public static org.xutils.common.Callback.Cancelable clearShieldCircleUser(Context context,
+                                                                              final Callback<Boolean> callback) {
 
         final int userid = CpigeonData.getInstance().getUserId(context);
         RequestParams requestParams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.CLEARSHIELDCIRCLEMESSAGE);
@@ -3617,16 +3680,17 @@ public class CallAPI {
 
     /**
      * 获取屏蔽过的消息列表
+     *
      * @param context
      * @param pi
      * @param ps
      * @param callback
      * @return
      */
-    public static org.xutils.common.Callback.Cancelable  getUserShieldCircleMessageList(Context context,
-                                                                                        final int pi,
-                                                                                        final int ps,
-                                                                               final Callback<List<ShieldMessage.DataBean>> callback){
+    public static org.xutils.common.Callback.Cancelable getUserShieldCircleMessageList(Context context,
+                                                                                       final int pi,
+                                                                                       final int ps,
+                                                                                       final Callback<List<ShieldMessage.DataBean>> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3693,20 +3757,19 @@ public class CallAPI {
     }
 
 
-
-
     /**
      * 获取自己屏蔽了的用户
+     *
      * @param context
      * @param pi
      * @param ps
      * @param callback
      * @return
      */
-    public static org.xutils.common.Callback.Cancelable  getUserShieldCircleUserList(Context context,
-                                                                                        final int pi,
-                                                                                        final int ps,
-                                                                                        final Callback<List<BadGuy.DataBean>> callback){
+    public static org.xutils.common.Callback.Cancelable getUserShieldCircleUserList(Context context,
+                                                                                    final int pi,
+                                                                                    final int ps,
+                                                                                    final Callback<List<BadGuy.DataBean>> callback) {
 
         int userid = CpigeonData.getInstance().getUserId(context);
 
@@ -3774,14 +3837,15 @@ public class CallAPI {
 
     /**
      * 删除已经发布过的消息  -szx
+     *
      * @param context
      * @param cid
      * @param callback
      * @return
      */
-    public static org.xutils.common.Callback.Cancelable  delCircleComment(Context context,
-                                                                                     final int cid,
-                                                                                     final Callback<Boolean> callback){
+    public static org.xutils.common.Callback.Cancelable delCircleComment(Context context,
+                                                                         final int cid,
+                                                                         final Callback<Boolean> callback) {
 
 
         int userid = CpigeonData.getInstance().getUserId(context);
@@ -3840,7 +3904,6 @@ public class CallAPI {
             }
         });
     }
-
 
 
     /**
@@ -4033,7 +4096,6 @@ public class CallAPI {
      * 添加反馈(数据未保存到SQLite)
      *
      * @param context
-     * @param userid
      * @param content
      * @param phoneNum
      * @param callback

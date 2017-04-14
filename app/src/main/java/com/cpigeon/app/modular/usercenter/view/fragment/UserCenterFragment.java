@@ -226,6 +226,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
     @Override
     public void onResume() {
         super.onResume();
+        userCenterPre.loadSignStatus();
         refreshUserInfo();
     }
 

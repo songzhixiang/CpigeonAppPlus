@@ -17,6 +17,7 @@ public interface IScoreView extends IView {
         int getPageSize();
 
         void loadScoreRecord(List<UserScore> data);
+
         void loadScoreRecordError();
     }
 }

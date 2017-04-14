@@ -65,7 +65,6 @@ public class CpigeonData {
         synchronized (this) {
             if (userFootSearchServiceInfo != null)
                 data.add(userFootSearchServiceInfo.getServiceId());
-
         }
         return data;
     }

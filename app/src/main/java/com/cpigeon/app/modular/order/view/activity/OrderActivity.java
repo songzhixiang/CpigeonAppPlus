@@ -13,6 +13,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
 import com.cpigeon.app.modular.order.presenter.OrderPre;
+import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderView;
 import com.cpigeon.app.modular.order.view.adapter.OrderAdapter;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
@@ -94,7 +95,7 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
                 mAdapter = new OrderAdapter(orderInfos);
                 mCurrentCounter = mAdapter.getData().size();
                 mAdapter.setOnLoadMoreListener(this, mRecyclerView);
-                mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+                mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
                 mRecyclerView.setAdapter(mAdapter);
                 break;
         }

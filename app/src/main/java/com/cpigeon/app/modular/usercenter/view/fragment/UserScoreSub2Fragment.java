@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.R;
@@ -37,6 +38,8 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
     RecyclerView recyclerview;
     @BindView(R.id.swiperefreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private ScoreAdapter mAdapter;
     boolean canLoadMore = true;//标记是否还有更多数据
 
@@ -79,6 +82,7 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
         return pageSize;
     }
 
+
     /**
      * 加载数据的回调
      *
@@ -86,6 +90,9 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
      */
     @Override
     public void loadScoreRecord(List<UserScore> data) {
+        if (getPageIndex() > 0) {
+            progressBar.setVisibility(View.GONE);
+        }
         mAdapter.addData(data);
         mAdapter.loadMoreComplete();
 
@@ -122,4 +129,5 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
             }
         }, 500);
     }
+
 }

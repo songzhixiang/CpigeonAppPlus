@@ -5,21 +5,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.footsearch.view.activity.FootSearchActivity;
-import com.cpigeon.app.modular.footsearch.model.bean.CpigeonServicesInfo;
+import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.presenter.FootSearchPre;
+import com.cpigeon.app.modular.order.view.activity.OpenServiceActivity;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.utils.customview.SearchEditText;
 
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -209,7 +205,9 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_openServices:
-
+                Intent intent = new Intent(getActivity(), OpenServiceActivity.class);
+                intent.putExtra(OpenServiceActivity.INTENT_DATA_KEY_SERVICENAME, "足环查询服务");
+                startActivity(intent);
                 break;
             case R.id.tv_search:
                 footSearchRun(searchEdittext.getText().toString().trim());

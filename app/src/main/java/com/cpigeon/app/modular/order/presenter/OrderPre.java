@@ -6,7 +6,7 @@ import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
 import com.cpigeon.app.modular.order.model.dao.OrderDao;
 import com.cpigeon.app.modular.order.model.daoimpl.OrderDaoImpl;
-import com.cpigeon.app.modular.order.view.activity.IOrderView;
+import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderView;
 
 import java.util.List;
 

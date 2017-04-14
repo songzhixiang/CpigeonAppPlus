@@ -21,7 +21,11 @@ import com.cpigeon.app.utils.EncryptionTool;
 public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwdDao> {
     public SetPayPwdPresenter(ISetPayPwdView mView) {
         super(mView);
-        mModel = new SetPayPwdDaoImpl();
+    }
+
+    @Override
+    protected ISetPayPwdDao initDao() {
+        return new SetPayPwdDaoImpl();
     }
 
     String mYzmMD5;
@@ -42,7 +46,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
         @Override
         public void onFail() {
             if (retryTimes < mView.getBandPhoneRetryTimes()) {
-                mModel.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
+                mDao.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
                 return;
             }
             mHandler.postDelayed(new Runnable() {
@@ -68,7 +72,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
                     }
                 }
             }, 100);
-            mModel.sendYZM(CpigeonData.getInstance().getUserBindPhone(), CallAPI.DATATYPE.YZM.RESET_PAY_PWD, onSendCompleteListener);
+            mDao.sendYZM(CpigeonData.getInstance().getUserBindPhone(), CallAPI.DATATYPE.YZM.RESET_PAY_PWD, onSendCompleteListener);
         }
 
         @Override
@@ -111,12 +115,12 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
         if (!TextUtils.isEmpty(CpigeonData.getInstance().getUserBindPhone())) return;
         mView.showTips("获取绑定手机号码中...", IView.TipType.LoadingShow);
         retryTimes = 1;
-        mModel.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
+        mDao.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
     }
 
     private void getUserBandPhone() {
         mView.showTips("获取绑定手机号码中...", IView.TipType.LoadingShow);
-        mModel.getUserBandPhone(onGetUserBandPhoneCompleteListener);
+        mDao.getUserBandPhone(onGetUserBandPhoneCompleteListener);
     }
 
     public void sendYZM() {
@@ -124,7 +128,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
             getUserBandPhone();
             return;
         }
-        mModel.sendYZM(CpigeonData.getInstance().getUserBindPhone(), CallAPI.DATATYPE.YZM.RESET_PAY_PWD, onSendCompleteListener);
+        mDao.sendYZM(CpigeonData.getInstance().getUserBindPhone(), CallAPI.DATATYPE.YZM.RESET_PAY_PWD, onSendCompleteListener);
     }
 
     IBaseDao.OnCompleteListener onCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
@@ -158,6 +162,6 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
             return;
         }
         mView.showTips("设置中...", IView.TipType.LoadingShow);
-        mModel.setUserPayPwd(mView.getInputYZM(), mView.getPayPwd(), CpigeonData.getInstance().getUserBindPhone(), onCompleteListener);
+        mDao.setUserPayPwd(mView.getInputYZM(), mView.getPayPwd(), CpigeonData.getInstance().getUserBindPhone(), onCompleteListener);
     }
 }

@@ -88,22 +88,26 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
 
     public UserInfoPresenter(IUserInfoView mView) {
         super(mView);
-        mModel = new UserInfoDaoImpl();
+    }
+
+    @Override
+    protected IUserInfoDao initDao() {
+        return new UserInfoDaoImpl();
     }
 
     public void loadUserInfo() {
         mView.showTips("加载信息中...", IView.TipType.LoadingShow);
-        mModel.loadUserInfo(onLoadCompleteListener);
+        mDao.loadUserInfo(onLoadCompleteListener);
     }
 
     public void updateUserInfo() {
         if (mView.hasChangedUserHeadImage()) {
             final File file = new File(mView.getChangedUserHeadImageLocalPath());
             if (file.exists())
-                mModel.updateUserFaceImage(file, onUpdateUserFaceImageCompleteListener);
+                mDao.updateUserFaceImage(file, onUpdateUserFaceImageCompleteListener);
         }
         if (mView.hasChangedUserInfo())
-            mModel.modifyUserInfo(mView.getModifiedUserInfo(), onUserinfoMotifyCompleteListener);
+            mDao.modifyUserInfo(mView.getModifiedUserInfo(), onUserinfoMotifyCompleteListener);
 
     }
 }

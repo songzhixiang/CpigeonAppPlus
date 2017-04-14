@@ -40,11 +40,16 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
 
     public FeedBackPresenter(IFeedBackView mView) {
         super(mView);
-        mModel = new FeedBackDaoImpl();
+
+    }
+
+    @Override
+    protected IFeedBackDao initDao() {
+        return new FeedBackDaoImpl();
     }
 
     public void readUserPhoneNumber() {
-        mModel.getUserBandPhone(new IGetUserBandPhone.OnCompleteListener() {
+        mDao.getUserBandPhone(new IGetUserBandPhone.OnCompleteListener() {
             @Override
             public void onSuccess(final String phoneNumber, boolean isBand) {
                 if (isBand)
@@ -77,6 +82,6 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
             return;
         }
         mView.showTips("提交中...", IView.TipType.LoadingShow);
-        mModel.feedback(content, phoneNmuber, onCompleteListener);
+        mDao.feedback(content, phoneNmuber, onCompleteListener);
     }
 }

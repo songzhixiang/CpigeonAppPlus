@@ -39,11 +39,16 @@ public class SetUserPwdPresenter extends BasePresenter<ISetUserPwdView, ISetUser
 
     public SetUserPwdPresenter(ISetUserPwdView mView) {
         super(mView);
-        mModel = new SetUserPwdDaoImpl();
+
+    }
+
+    @Override
+    protected ISetUserPwdDao initDao() {
+        return new SetUserPwdDaoImpl();
     }
 
     public void setUserPwd() {
         mView.showTips("修改中，请稍后...", IView.TipType.LoadingShow);
-        mModel.setUserPwd(mView.getOldPwd(), mView.getNewPwd(), onCompleteListener);
+        mDao.setUserPwd(mView.getOldPwd(), mView.getNewPwd(), onCompleteListener);
     }
 }

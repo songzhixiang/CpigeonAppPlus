@@ -22,7 +22,12 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
 
     public ScorePresenter(IScoreView mView) {
         super(mView);
-        mModel = new ScoreDaoImpl();
+
+    }
+
+    @Override
+    protected IScoreDao initDao() {
+        return new ScoreDaoImpl();
     }
 
     public void attachScoreSub2View(@NonNull IScoreView.IScoreSub2View scoreSub2View) {
@@ -56,6 +61,6 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
     public void loadScoreRecord() {
         if (mScoreSub2View == null) return;
 //        mScoreSub2View.showTips("", IView.TipType.LoadingShow);
-        mModel.loadScoreRecord(mScoreSub2View.getPageIndex(), mScoreSub2View.getPageSize(), onCompleteListener);
+        mDao.loadScoreRecord(mScoreSub2View.getPageIndex(), mScoreSub2View.getPageSize(), onCompleteListener);
     }
 }

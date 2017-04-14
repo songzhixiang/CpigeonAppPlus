@@ -9,18 +9,21 @@ import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
  * Created by Administrator on 2017/4/6.
  */
 
-public abstract class BasePresenter<TView extends IView, TModel extends IBaseDao> {
+public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> {
 
     protected TView mView;
 
-    protected TModel mModel;
+    protected TDao mDao;
 
     protected Handler mHandler;
 
     public BasePresenter(TView mView) {
         this.mView = mView;
         this.mHandler=new Handler();
+        mDao=initDao();
     }
+
+    protected abstract TDao initDao();
 
     public void dettach() {
         this.mView = null;

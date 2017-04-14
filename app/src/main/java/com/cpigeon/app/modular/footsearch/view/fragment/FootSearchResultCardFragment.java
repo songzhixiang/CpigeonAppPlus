@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
-import com.cpigeon.app.modular.footsearch.model.bean.CpigeonServicesInfo;
+import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.utils.CpigeonData;

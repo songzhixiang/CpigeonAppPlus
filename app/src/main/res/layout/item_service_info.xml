@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/com_background_clickable_layout_white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_5">
+
+        <TextView
+            android:id="@+id/tv_service_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIP套餐"
+            android:textColor="@color/textColor_light_black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tv_service_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_service_item_name"
+            android:layout_marginTop="5dp"
+            android:text="25.00元/5000积分"
+            android:textColor="@color/light_red2" />
+
+        <TextView
+            android:id="@+id/tv_service_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_service_item_price"
+            android:layout_marginTop="5dp"
+            android:text="上架时间：2017-01-16"
+            android:textColor="@color/textColor_gray" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_right"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_service_item_price"
+            android:rotation="270"
+            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
+
+        <TextView
+            android:id="@+id/tv_service_item_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_service_item_price"
+            android:text="正在使用"
+            android:textColor="@color/textColor_gray" />
+
+        <TextView
+            android:id="@+id/tv_service_item_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_service_item_time"
+            android:layout_marginTop="5dp"
+
+            android:text="可查询500次,每次显示所有结果,可查询500次,每次显示所有结果,可查询500次,每次显示所有结果,可查询500次,每次显示所有结果,可查询500次,每次显示所有结果,可查询500次,每次显示所有结果,可查询500次,每次显示所有结果"
+            android:textColor="@color/textColor_gray" />
+
+    </RelativeLayout>
+</LinearLayout>
