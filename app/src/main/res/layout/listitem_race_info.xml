@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout

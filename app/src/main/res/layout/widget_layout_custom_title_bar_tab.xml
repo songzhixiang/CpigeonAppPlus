@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:minHeight="50dp">
+
+    <LinearLayout
+        android:id="@+id/widget_title_bar_left"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:minWidth="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/widget_title_bar_left_image"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="-12dp"
+            android:padding="2dp"
+            app:srcCompat="@drawable/svg_ic_left_stroke" />
+
+        <TextView
+            android:id="@+id/widget_title_bar_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="左边"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <com.cpigeon.app.utils.customview.smarttab.SmartTabLayout
+        android:id="@+id/widget_title_bar_title_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:paddingBottom="4dp"
+        app:stl_defaultTabTextColor="@color/colorWhite"
+        app:stl_defaultTabTextSize="18sp"
+        app:stl_distributeEvenly="true"
+        app:stl_dividerColor="@color/colorPrimary"
+        app:stl_indicatorColor="@color/colorWhite"
+        app:stl_indicatorCornerRadius="1dp"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorThickness="3dp"
+        app:stl_underlineColor="@color/float_transparent">
+
+    </com.cpigeon.app.utils.customview.smarttab.SmartTabLayout>
+</merge>

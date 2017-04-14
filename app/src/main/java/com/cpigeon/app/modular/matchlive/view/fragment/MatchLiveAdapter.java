@@ -44,8 +44,6 @@ public class MatchLiveAdapter extends BaseQuickAdapter<MatchInfo, BaseViewHolder
             helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.VISIBLE);
             helper.setTextColor(R.id.race_info_raceName, mContext.getResources().getColor(R.color.textColor_gray));
         } else {
-            //集鸽数据
-//            helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
             helper.setText(R.id.race_info_race_right_text, item.compuberSLYS());
             helper.setTextColor(R.id.race_info_race_right_text, mContext.getResources().getColor(R.color.light_green));
             helper.setTextColor(R.id.race_info_raceName, mContext.getResources().getColor(R.color.light_green));

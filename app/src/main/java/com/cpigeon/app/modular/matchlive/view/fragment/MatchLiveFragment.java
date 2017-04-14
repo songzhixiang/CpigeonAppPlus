@@ -36,7 +36,7 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
     SearchEditText searchEdittext;
     @BindView(R.id.viewpager_matchlive)
     ViewPager mViewPager;
-    private boolean isPrepared;
+
     private String currMatchType = Const.MATCHLIVE_TYPE_XH;
     private MatchLiveSubFragment matchLiveSubFragment_GP;
     private MatchLiveSubFragment matchLiveSubFragment_XH;
@@ -45,7 +45,6 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initView(View view) {
-        isPrepared = true;
         currMatchType = Const.MATCHLIVE_TYPE_XH;
         matchLiveSubFragment_GP = new MatchLiveSubFragment();
         matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);

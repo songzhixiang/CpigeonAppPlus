@@ -11,7 +11,7 @@
     <string name="user_name">用户名</string>
     <string name="please_login">请您登陆</string>
     <string name="spik">跳过</string>
-
+    <string name="search_prompt_has_key">搜索“%s”</string>
     <string name="function_introduction">功能介绍</string>
     <string name="version_information">版本信息</string>
     <string name="version_information_gs">成都市中鸽科技有限公司</string>
