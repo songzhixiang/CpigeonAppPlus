@@ -15,6 +15,7 @@ import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
 import com.cpigeon.app.modular.settings.view.activity.SettingsActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.BalanceActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.HelpActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
@@ -130,6 +131,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
                 startActivity(new Intent(getActivity(), OrderActivity.class));
                 break;
             case R.id.ll_user_money:
+                startActivity(new Intent(getActivity(), BalanceActivity.class));
                 break;
             case R.id.ll_user_jifen:
                 startActivity(new Intent(getActivity(), ScoreActivity.class));

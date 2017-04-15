@@ -84,7 +84,6 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements
 
     private Uri imageUri;
     private Intent intent = null;
-    UserInfoPresenter mPresenter;
     private UserInfo.DataBean userinfo;
     private boolean isChangedUserHeadImage = false;
     private String mUserHeadImageLocalPath;
@@ -183,7 +182,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements
 
     @Override
     public UserInfoPresenter initPresenter() {
-        return new UserInfoPresenter(this);
+       return new UserInfoPresenter(this);
     }
 
     @Override

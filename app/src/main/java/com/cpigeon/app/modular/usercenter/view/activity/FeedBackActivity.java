@@ -27,7 +27,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements IFeedBackView {
-    protected FeedBackPresenter mPresenter;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.et_content)

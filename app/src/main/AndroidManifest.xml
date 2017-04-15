@@ -115,6 +115,14 @@
             android:name=".modular.order.view.activity.OrderPayActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.BalanceActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.usercenter.view.activity.UserBalanceRechargeActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

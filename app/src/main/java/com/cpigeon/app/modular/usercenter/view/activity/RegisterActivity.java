@@ -68,9 +68,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     }
 
     public RegisterPresenter getRegisterPresenter() {
-        return (RegisterPresenter) this.mPresenter;
+        return  this.mPresenter;
     }
-
 
     @Override
     public int getLayoutId() {

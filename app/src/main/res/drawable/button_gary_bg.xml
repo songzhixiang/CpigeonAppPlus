@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <!-- 连框颜色值 -->
+            <item>
+                <shape>
+                    <solid android:color="#b1b1b1" />
+                    <corners android:radius="5dp"></corners>
+                </shape>
+            </item>
+            <!-- 主体背景颜色值 -->
+            <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
+                <shape>
+                    <!-- 填充的颜色 -->
+                    <solid android:color="#eeeeee" />
+                    <corners android:radius="4dp"></corners>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <!-- 连框颜色值 -->
+            <item>
+                <shape>
+                    <solid android:color="#c9c9c9" />
+                    <corners android:radius="5dp"></corners>
+                </shape>
+            </item>
+            <!-- 主体背景颜色值 -->
+            <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
+                <shape>
+                    <!-- 填充的颜色 -->
+                    <solid android:color="#eeeeee" />
+                    <corners android:radius="4dp"></corners>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>
