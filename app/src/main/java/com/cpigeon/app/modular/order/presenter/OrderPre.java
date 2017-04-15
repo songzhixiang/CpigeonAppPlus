@@ -13,11 +13,10 @@ import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderView;
 import java.util.List;
 
 /**
- *
  * Created by Administrator on 2017/4/11.
  */
 
-public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
+public class OrderPre extends BasePresenter<IOrderView, OrderDao> {
 
 
     public OrderPre(IOrderView mView) {
@@ -25,8 +24,9 @@ public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
     }
 
     public void loadOrder() {
+        if (isDettached()) return;
         mView.showRefreshLoading();
-        mDao.getUserAllOrder(mView.getPs(), mView.getPi(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
+        mDao.getUserAllOrder(mView.getPageSize(), mView.getPageIndex(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
 
             @Override
             public void onSuccess(final List<CpigeonOrderInfo> data) {
@@ -34,21 +34,20 @@ public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
                     @Override
                     public void run() {
                         mView.hideRefreshLoading();
-                        if (data == null ||data.size()<=0)
-                        {
-                            mView.showEmptyData();
-                        }else {
-                            mView.showOrder(data);
-                        }
-
-
+                        mView.showMoreData(data);
                     }
                 });
             }
 
             @Override
             public void onFail(String msg) {
-
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.hideRefreshLoading();
+                        mView.showTips("加载失败", IView.TipType.View);
+                    }
+                });
             }
         });
     }

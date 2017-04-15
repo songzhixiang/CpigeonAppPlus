@@ -33,8 +33,8 @@ public class CpigeonServicesInfoImpl implements ICpigeonServicesInfo {
     }
 
     @Override
-    public void queryFoot(String key, final OnCompleteListener<Map<String, Object>> listener) {
-        CallAPI.footQuery(mContext, key, new CallAPI.Callback<Map<String, Object>>() {
+    public org.xutils.common.Callback.Cancelable queryFoot(String key, final OnCompleteListener<Map<String, Object>> listener) {
+       return  CallAPI.footQuery(mContext, key, new CallAPI.Callback<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> data) {
                 listener.onSuccess(data);

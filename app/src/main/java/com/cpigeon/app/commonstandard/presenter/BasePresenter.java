@@ -22,15 +22,35 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
 
     public BasePresenter(TView mView) {
         this.mView = mView;
-        this.mHandler=new WeakHandler();
-        mDao=initDao();
+        this.mHandler = new WeakHandler();
+        mDao = initDao();
     }
 
     protected abstract TDao initDao();
 
+    /**
+     * 是否已绑定视图
+     *
+     * @return
+     */
+    public boolean isAttached() {
+        return mView != null;
+    }
+
+    /**
+     * 是否已释放视图
+     *
+     * @return
+     */
+    public boolean isDettached() {
+        return mView == null;
+    }
+
+    /**
+     * 解除绑定，释放视图的引用
+     */
     public void dettach() {
         this.mView = null;
-
     }
 
 

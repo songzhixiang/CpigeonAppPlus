@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.footsearch.view.activity.FootSearchActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
@@ -35,7 +36,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/5.
  */
 
-public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSearchView {
+public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> implements IFootSearchView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,7 +58,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     private String queryKey;
     private SweetAlertDialog pDialog;
     private boolean isPrepared;
-    private Callback.Cancelable mFoorSearchCancelable;
+    private Callback.Cancelable mFootSearchCancelable;
     private Handler mHandler = new Handler() {
 
         @Override
@@ -66,7 +67,6 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
             doubleClickCloseLoadingDialog = false;
         }
     };
-    private FootSearchPre pre = new FootSearchPre(this);
 
     @Override
     protected void initView(View view) {
@@ -82,7 +82,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     @Override
     protected void lazyLoad() {
         if (isPrepared && isVisible) {
-            pre.loadUserServiceInfo();
+            mPresenter.loadUserServiceInfo();
             isPrepared = false;
         }
     }
@@ -101,7 +101,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
             super.onResume();
             return;
         }
-        pre.loadUserServiceInfo();
+        mPresenter.loadUserServiceInfo();
         super.onResume();
     }
 
@@ -127,7 +127,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     public void queryFoot(Map<String, Object> map) {
         userQueryTimes = (int) map.get("rest");//设置套餐剩余次数
 
-        CpigeonUserServiceInfo userData =  CpigeonData.getInstance().getUserFootSearchServiceInfo();
+        CpigeonUserServiceInfo userData = CpigeonData.getInstance().getUserFootSearchServiceInfo();
         if (userData != null && (int) map.get("resultCount") > 0) {
             userData.setNumbers(userQueryTimes);
             CpigeonData.getInstance().setUserFootSearchServiceInfo(userData);
@@ -146,7 +146,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
             @Override
             public void run() {
                 //更新套餐剩余信息
-                CpigeonUserServiceInfo userPackageData =  CpigeonData.getInstance().getUserFootSearchServiceInfo();
+                CpigeonUserServiceInfo userPackageData = CpigeonData.getInstance().getUserFootSearchServiceInfo();
                 if (userPackageData == null) {
                     tvPromptRight.setVisibility(View.GONE);
                 } else {
@@ -190,13 +190,13 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
             pDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    if (mFoorSearchCancelable != null && !mFoorSearchCancelable.isCancelled()) {
-                        mFoorSearchCancelable.cancel();
+                    if (mFootSearchCancelable != null && !mFootSearchCancelable.isCancelled()) {
+                        mFootSearchCancelable.cancel();
                     }
                 }
             });
             pDialog.show();
-            pre.queryFoot();
+            mFootSearchCancelable = mPresenter.queryFoot();
         }
 
 
@@ -219,4 +219,13 @@ public class FootSearchFragment extends BaseLazyLoadFragment implements IFootSea
     }
 
 
+    @Override
+    protected FootSearchPre initPresenter() {
+        return new FootSearchPre(this);
+    }
+
+    @Override
+    protected boolean isCanDettach() {
+        return true;
+    }
 }

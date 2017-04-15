@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Administrator on 2017/4/8.
  */
 
-public class FootSearchPre extends BasePresenter<IFootSearchView,ICpigeonServicesInfo>{
+public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServicesInfo> {
 
 
     public FootSearchPre(IFootSearchView mView) {
@@ -42,9 +42,9 @@ public class FootSearchPre extends BasePresenter<IFootSearchView,ICpigeonService
         });
     }
 
-    public void queryFoot() {
+    public org.xutils.common.Callback.Cancelable queryFoot() {
         mView.showTips("搜索中...", IView.TipType.LoadingShow);
-        mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
+        return mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
             public void onSuccess(final Map<String, Object> data) {
                 mHandler.post(new Runnable() {

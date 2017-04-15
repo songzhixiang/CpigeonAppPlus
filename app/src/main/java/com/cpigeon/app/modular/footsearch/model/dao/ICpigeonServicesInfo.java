@@ -12,5 +12,5 @@ import java.util.Map;
 public interface ICpigeonServicesInfo extends IBaseDao{
     void getFootSearchService(String query,OnCompleteListener<CpigeonUserServiceInfo> listener);
 
-    void queryFoot(String key,OnCompleteListener<Map<String, Object>> listener);
+    org.xutils.common.Callback.Cancelable queryFoot(String key,OnCompleteListener<Map<String, Object>> listener);
 }

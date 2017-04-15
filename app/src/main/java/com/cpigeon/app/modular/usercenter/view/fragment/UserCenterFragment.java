@@ -1,6 +1,7 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
@@ -42,7 +44,7 @@ import static com.cpigeon.app.MyApp.mCpigeonData;
  * Created by Administrator on 2017/4/6.
  */
 
-public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCenterView {
+public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> implements IUserCenterView {
 
     @BindView(R.id.fragment_user_center_userLogo)
     CircleImageView fragmentUserCenterUserLogo;
@@ -81,7 +83,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
     @BindView(R.id.ll_user_center_help)
     LinearLayout llUserCenterHelp;
 
-    private UserCenterPre userCenterPre = new UserCenterPre(this);
     CpigeonData.OnDataChangedListener onDataChangedListener = new CpigeonData.OnDataChangedListener() {
         @Override
         public void OnDataChanged(CpigeonData cpigeonData) {
@@ -101,8 +102,8 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
 
     @Override
     protected void lazyLoad() {
-        userCenterPre.loadBalance();
-        userCenterPre.loadSignStatus();
+        mPresenter.loadBalance();
+        mPresenter.loadSignStatus();
     }
 
     @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_feedback, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
@@ -228,15 +229,23 @@ public class UserCenterFragment extends BaseLazyLoadFragment implements IUserCen
     @Override
     public void onResume() {
         super.onResume();
-        userCenterPre.loadSignStatus();
+        mPresenter.loadSignStatus();
         refreshUserInfo();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
+    protected UserCenterPre initPresenter() {
+        return new UserCenterPre(this);
     }
 
+    @Override
+    protected boolean isCanDettach() {
+        return true;
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
+    }
 }

@@ -197,7 +197,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         AppManager.getAppManager().removeActivity(weakReference);
         if (mUnbinder != null)
             mUnbinder.unbind();
-        mPresenter = null;
+
     }
 
     @Override
@@ -322,22 +322,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 return true;
             case ToastShort:
                 ToastUtil.showToast(this, tip, Toast.LENGTH_SHORT);
-                return true;
-            case SnackbarShort:
-                final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), tip, Snackbar.LENGTH_SHORT);
-                snackbar.setAction("去设置", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        snackbar.dismiss();
-                        // 跳转到系统的网络设置界面
-                        Intent intent = null;
-
-                        intent = new Intent(Settings.ACTION_WIFI_SETTINGS );
-
-                        startActivity(intent);
-
-                    }
-                }).show();
                 return true;
             default:
                 return false;

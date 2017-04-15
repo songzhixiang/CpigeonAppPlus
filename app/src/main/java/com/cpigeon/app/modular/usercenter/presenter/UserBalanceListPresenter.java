@@ -43,13 +43,14 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
                 @Override
                 public void run() {
                     mView.hideRefreshLoading();
-                    mView.showTips(msg, IView.TipType.ToastShort);
+                    mView.showTips("加载失败", IView.TipType.View);
                 }
             }, 300);
         }
     };
 
     public void loadUserBalancePage() {
+        if (isDettached()) return;
         if (mView.getPageIndex() == 1) mView.showRefreshLoading();
         mDao.getUserBalancePage(mView.getPageIndex(), mView.getPageSize(), onCompleteListener);
 

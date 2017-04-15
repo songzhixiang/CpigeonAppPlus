@@ -30,7 +30,6 @@ public class UserCenterPre extends BasePresenter<IUserCenterView,IUserCenterDao>
 
     public void loadBalance()
     {
-
         mDao.loadUserBalance(new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
             public void onSuccess(final Map<String, Object> data) {

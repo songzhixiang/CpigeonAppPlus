@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
@@ -26,7 +27,7 @@ import cn.bingoogolapple.badgeview.BGABadgeTextView;
  * Created by Administrator on 2017/4/6.
  */
 
-public class MatchLiveFragment extends BaseLazyLoadFragment {
+public class MatchLiveFragment extends BaseFragment {
 
     @BindView(R.id.tv_actionbar_matchtype_xh)
     BGABadgeTextView tvActionbarMatchtypeXh;
@@ -92,10 +93,7 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
         return R.layout.fragment_live;
     }
 
-    @Override
-    protected void lazyLoad() {
 
-    }
     private MatchLiveSubFragment.OnRefreshListener onRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
         @Override
         public void onStartRefresh(MatchLiveSubFragment fragment) {
@@ -103,7 +101,7 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
 
         @Override
         public void onRefreshFinished(int type, int loadCount) {
-            if (type ==DATA_Type_XH) {
+            if (type == DATA_Type_XH) {
                 tvActionbarMatchtypeXh.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
             }
             if (type == DATA_Type_GP) {
@@ -111,7 +109,6 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
             }
         }
     };
-
 
 
     public String getCurrMatchType() {
@@ -156,6 +153,5 @@ public class MatchLiveFragment extends BaseLazyLoadFragment {
         }
         changeRaceTypeViewStarus();
     }
-
 }
 

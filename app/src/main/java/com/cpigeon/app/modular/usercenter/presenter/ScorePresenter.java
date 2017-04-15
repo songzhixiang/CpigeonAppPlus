@@ -26,6 +26,22 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
     }
 
     @Override
+    public boolean isAttached() {
+        return super.isAttached() || mScoreSub2View != null;
+    }
+
+    @Override
+    public boolean isDettached() {
+        return super.isDettached() && mScoreSub2View == null;
+    }
+
+    @Override
+    public void dettach() {
+        super.dettach();
+        mScoreSub2View = null;
+    }
+
+    @Override
     protected IScoreDao initDao() {
         return new ScoreDaoImpl();
     }
@@ -41,7 +57,8 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mScoreSub2View.loadScoreRecord(data);
+                    mScoreSub2View.hideRefreshLoading();
+                    mScoreSub2View.showMoreData(data);
                 }
             }, 500);
         }
@@ -52,7 +69,8 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mScoreSub2View.loadScoreRecordError();
+                    mScoreSub2View.hideRefreshLoading();
+                    mScoreSub2View.showTips("获取积分记录失败", IView.TipType.View);
                 }
             }, 500);
         }

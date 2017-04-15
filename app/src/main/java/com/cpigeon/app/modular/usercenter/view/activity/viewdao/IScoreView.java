@@ -1,5 +1,7 @@
 package com.cpigeon.app.modular.usercenter.view.activity.viewdao;
 
+import com.cpigeon.app.commonstandard.view.activity.IPageTurn;
+import com.cpigeon.app.commonstandard.view.activity.IRefresh;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
 
@@ -11,13 +13,6 @@ import java.util.List;
 
 public interface IScoreView extends IView {
 
-    interface IScoreSub2View extends IView {
-        int getPageIndex();
-
-        int getPageSize();
-
-        void loadScoreRecord(List<UserScore> data);
-
-        void loadScoreRecordError();
+    interface IScoreSub2View extends IView,IPageTurn<UserScore>,IRefresh {
     }
 }

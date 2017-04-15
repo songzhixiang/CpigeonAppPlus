@@ -29,7 +29,7 @@ public class SplashDaoImpl implements ISplashDao {
     public void getSplashADFromServer() {
         RequestParams httpparams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.AD_URL);
         CallAPI.pretreatmentParams(httpparams);
-        httpparams.setMaxRetryCount(CpigeonConfig.CACHE_COMMON_30MIN_TIME);
+        httpparams.setCacheMaxAge(CpigeonConfig.CACHE_COMMON_30MIN_TIME);
         x.http().get(httpparams, new Callback.CommonCallback<String>() {
             String result = "";
 

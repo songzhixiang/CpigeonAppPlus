@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
@@ -44,7 +45,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/4/6.
  */
 
-public class HomeFragment extends BaseLazyLoadFragment implements IHomeView {
+public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements IHomeView {
     @BindView(R.id.search_edittext)
     SearchEditText searchEdittext;
     @BindView(R.id.home_banner)
@@ -61,16 +62,15 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView {
     RecyclerView recyclerviewHome;
     private HomeAdapter mAdapter;
     private List<HomeAd> homeAdList;
-    private HomePresenter presenter = new HomePresenter(this);
 
     @Override
     protected void initView(View view) {
         ViewGroup.LayoutParams lp = homeBanner.getLayoutParams();
         lp.height = ScreenTool.getScreenWidth(getActivity()) / 2;
         homeBanner.setLayoutParams(lp);
-        presenter.laodAd();
-        presenter.loadMatchInfo(1);
-        presenter.loadMatchInfo(0);
+        mPresenter.laodAd();
+        mPresenter.loadMatchInfo(1);
+        mPresenter.loadMatchInfo(0);
     }
 
     @Override
@@ -200,7 +200,7 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView {
     }
 
     @Override
-    public void showMatchLiveData(List<MatchInfo> list,int type) {
+    public void showMatchLiveData(List<MatchInfo> list, int type) {
         mAdapter = new HomeAdapter(list, type);
         recyclerviewHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerviewHome.setAdapter(mAdapter);
@@ -218,6 +218,15 @@ public class HomeFragment extends BaseLazyLoadFragment implements IHomeView {
         homeBanner.stopAutoPlay();
     }
 
+    @Override
+    protected HomePresenter initPresenter() {
+        return new HomePresenter(this);
+    }
+
+    @Override
+    protected boolean isCanDettach() {
+        return true;
+    }
 
     private class XutilsImageLoader extends ImageLoader {
 

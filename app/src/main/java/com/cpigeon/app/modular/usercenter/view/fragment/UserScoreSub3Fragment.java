@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.utils.CPigeonApiUrl;
@@ -23,7 +24,7 @@ import butterknife.Unbinder;
  * Created by chenshuai on 2017/4/13.
  */
 
-public class UserScoreSub3Fragment extends BaseLazyLoadFragment {
+public class UserScoreSub3Fragment extends BaseFragment {
     @BindView(R.id.btn_goto_sign)
     Button btnGotoSign;
     @BindView(R.id.scrollView)
@@ -37,11 +38,6 @@ public class UserScoreSub3Fragment extends BaseLazyLoadFragment {
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_user_score_s3;
-    }
-
-    @Override
-    protected void lazyLoad() {
-
     }
 
     @OnClick(R.id.btn_goto_sign)

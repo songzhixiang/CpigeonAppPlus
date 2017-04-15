@@ -29,6 +29,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public abstract class BaseFragment extends Fragment implements IView {
     protected View rootView;
     private Unbinder mUnbinder;
+    protected String TAG = this.getClass().getSimpleName();
     /**
      * 加载中--对话框
      */

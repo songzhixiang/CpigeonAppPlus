@@ -148,6 +148,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //// TODO: 2017/4/15  需要修改为从网络中获取数据 
                 matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfos));
                 mSwipeRefreshLayout.setRefreshing(false);
                 matchLiveAdapter.setEnableLoadMore(true);
