@@ -30,6 +30,54 @@
 
     <string name="please_enter_the_phone_received_SMS_verification_code">请输入%1$s收到的短信验证码</string>
     <string name="Then_click_one_exit_procedure">再按一次退出程序</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="cage_group">插组制定</string>
+    <string name="pigeons_data">集鸽数据</string>
+    <string name="serach_name_or_footnumber">姓名、足环号码</string>
+    <string name="report_group">插组报道</string>
+    <string name="report_data">报到数据</string>
+    <string name="ranking">名次</string>
+    <string name="name">姓名</string>
+    <string name="foot_number">足环号码</string>
+    <string name="uniform_ranking">统排</string>
+    <string name="pigeon_special_words_race_area" translatable="false">司放地点：</string>
+    <string name="pigeon_special_words_race_ckkj" translatable="false">参考空距：</string>
+    <string name="pigeon_special_words_race_kj" translatable="false">空距：</string>
+    <string name="pigeon_special_words_race_xskj" translatable="false">训赛空距：</string>
+    <string name="pigeon_special_words_race_bskj" translatable="false">比赛空距：</string>
+    <string name="pigeon_special_words_race_sfys" translatable="false">司放羽数：</string>
+    <string name="pigeon_special_words_race_tq" translatable="false">天气：</string>
+    <string name="pigeon_special_words_race_sfsj" translatable="false">司放时间：</string>
+    <string name="pigeon_special_words_race_sfzb" translatable="false">司放坐标：</string>
+    <string name="pigeon_special_words_race_slys" translatable="false">上笼羽数：</string>
+    <string name="pigeon_special_words_race_jgwb" translatable="false">集鸽完毕</string>
+    <string name="pigeon_special_words_race_slwb" translatable="false">上笼完毕</string>
+    <string name="pigeon_special_words_race_detial_area" translatable="false">司放地点:</string>
+    <string name="pigeon_special_words_race_detial_ckkj" translatable="false">参考空距:</string>
+    <string name="pigeon_special_words_race_detial_bskj" translatable="false">比赛空距:</string>
+    <string name="pigeon_special_words_race_detial_hyph" translatable="false">会员棚号:</string>
+    <string name="pigeon_special_words_race_detial_sgys" translatable="false">赛鸽羽色:</string>
+    <string name="pigeon_special_words_race_detial_sgfs" translatable="false">赛鸽分速:</string>
+    <string name="pigeon_special_words_race_detial_kj" translatable="false">空距:</string>
+    <string name="pigeon_special_words_race_detial_xskj" translatable="false">训赛空距:</string>
+    <string name="pigeon_special_words_race_detial_sfys" translatable="false">司放:</string>
+    <string name="pigeon_special_words_race_detial_tq" translatable="false">天气:</string>
+    <string name="pigeon_special_words_race_detial_fl" translatable="false">风力:</string>
+    <string name="pigeon_special_words_race_detial_fx" translatable="false">风向:</string>
+    <string name="pigeon_special_words_race_detial_sfsj" translatable="false">司放时间:</string>
+    <string name="pigeon_special_words_race_detial_sfzb" translatable="false">司放坐标:</string>
+    <string name="pigeon_special_words_race_detial_slys" translatable="false">上笼羽数:</string>
+    <string name="pigeon_special_words_race_detial_jgwb" translatable="false">集鸽完毕</string>
+    <string name="pigeon_special_words_race_detial_slwb" translatable="false">上笼完毕</string>
+    <string name="pigeon_special_words_race_detial_cpz" translatable="false">裁判长:</string>
+    <string name="pigeon_special_words_race_detial_sfz" translatable="false">司放长:</string>
+    <string name="pigeon_special_words_race_detial_cpy" translatable="false">裁判员:</string>
+    <string name="ranking_temp">排名:</string>
 
     <string name="format_pay_account_balance_tips">余额%1$s元,支付扣除%2$s元</string>
     <string name="format_pay_account_score_tips">我的积分%1$s,兑换消耗%2$s积分</string>

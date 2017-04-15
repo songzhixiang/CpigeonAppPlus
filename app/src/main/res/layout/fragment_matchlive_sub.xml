@@ -10,5 +10,10 @@
             android:id="@+id/recyclerview_matchlive"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <ViewStub
+            android:layout="@layout/layout_emptydata"
+            android:id="@+id/viewstub_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

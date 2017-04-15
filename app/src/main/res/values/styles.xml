@@ -77,6 +77,58 @@
         </item>
     </style>
 
+    <style name="raceDetialDataType">
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">@dimen/list_header_race_detial_textview_datatype_textsize
+        </item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_header_race_detial_data_type_default</item>
+    </style>
+
+
+
+    <style name="report_info_detial_title" parent="SingleLine">
+        <item name="android:gravity">fill_horizontal</item>
+        <item name="android:paddingTop">
+            @dimen/list_header_race_detial_textview_detial_title_padding
+        </item>
+        <item name="android:paddingBottom">
+            @dimen/list_header_race_detial_textview_detial_title_padding
+        </item>
+        <item name="android:minWidth">
+            @dimen/list_header_race_detial_textview_detial_title_minwidth
+        </item>
+        <item name="android:textColor">@color/light_black</item>
+        <item name="android:textSize">
+            @dimen/list_header_race_detial_textview_detial_title_textsize
+        </item>
+    </style>
+
+    <style name="report_info_detial_content" parent="Marquee">
+        <item name="android:paddingTop">
+            @dimen/list_header_race_detial_textview_detial_content_padding
+        </item>
+        <item name="android:paddingBottom">
+            @dimen/list_header_race_detial_textview_detial_content_padding
+        </item>
+        <item name="android:textColor">@color/light_black2</item>
+        <item name="android:layout_marginLeft">
+            @dimen/list_header_race_detial_textview_detial_content_marginleft
+        </item>
+        <item name="android:textSize">
+            @dimen/list_header_race_detial_textview_detial_content_textsize
+        </item>
+    </style>
+
+    <style name="report_info_detial_cz" parent="SingleLine">
+        <item name="android:padding">3dp</item>
+        <item name="android:minWidth">35dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/light_black</item>
+    </style>
+
     <style name="foot_search_result_title" parent="SingleLine">
         <item name="android:paddingTop">@dimen/dp_5</item>
         <item name="android:paddingBottom">@dimen/dp_5</item>
@@ -197,4 +249,8 @@
         <item name="android:windowEnterAnimation">@anim/dialog_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_bottom_out</item>
     </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

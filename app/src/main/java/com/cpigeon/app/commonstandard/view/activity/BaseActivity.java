@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -135,6 +139,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      **/
     public void startActivity(Class<?> cls) {
         startActivity(cls, null);
+    }
+
+    public boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
 
     /**
@@ -302,14 +318,27 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                     mLoadingSweetAlertDialog.dismiss();
                 return true;
             case ToastLong:
-//                Toast.makeText(this, tip, Toast.LENGTH_LONG).show();
                 ToastUtil.showToast(this, tip, Toast.LENGTH_LONG);
                 return true;
             case ToastShort:
-//                Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
                 ToastUtil.showToast(this, tip, Toast.LENGTH_SHORT);
                 return true;
+            case SnackbarShort:
+                final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), tip, Snackbar.LENGTH_SHORT);
+                snackbar.setAction("去设置", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                        // 跳转到系统的网络设置界面
+                        Intent intent = null;
 
+                        intent = new Intent(Settings.ACTION_WIFI_SETTINGS );
+
+                        startActivity(intent);
+
+                    }
+                }).show();
+                return true;
             default:
                 return false;
         }

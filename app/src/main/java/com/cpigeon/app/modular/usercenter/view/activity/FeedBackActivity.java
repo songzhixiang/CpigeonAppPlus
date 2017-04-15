@@ -86,6 +86,8 @@ public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements
 
         etPhone.setText(phoneNum);
         mPresenter.readUserPhoneNumber();
+
+
     }
 
     @Override

@@ -23,22 +23,16 @@ import com.cpigeon.app.modular.matchlive.view.adapter.HistroyAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.SearchResultAdapter;
 import com.cpigeon.app.utils.BaseRecyclerViewAdapter;
 import com.cpigeon.app.utils.BaseRecyclerViewViewHolder;
-import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.ScreenTool;
 import com.cpigeon.app.utils.customview.CpigeonListView;
 import com.cpigeon.app.utils.customview.SearchEditText;
 import com.cpigeon.app.utils.customview.SearchTitleBar;
 
-import org.xutils.DbManager;
-import org.xutils.db.sqlite.WhereBuilder;
-import org.xutils.ex.DbException;
-
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

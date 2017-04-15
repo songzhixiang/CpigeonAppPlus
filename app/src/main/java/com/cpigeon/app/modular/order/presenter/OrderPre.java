@@ -13,6 +13,7 @@ import com.cpigeon.app.modular.order.view.activity.viewdao.IOrderView;
 import java.util.List;
 
 /**
+ *
  * Created by Administrator on 2017/4/11.
  */
 
@@ -24,6 +25,7 @@ public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
     }
 
     public void loadOrder() {
+        mView.showRefreshLoading();
         mDao.getUserAllOrder(mView.getPs(), mView.getPi(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
 
             @Override
@@ -31,7 +33,15 @@ public class OrderPre extends BasePresenter<IOrderView,OrderDao>{
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mView.showOrder(data);
+                        mView.hideRefreshLoading();
+                        if (data == null ||data.size()<=0)
+                        {
+                            mView.showEmptyData();
+                        }else {
+                            mView.showOrder(data);
+                        }
+
+
                     }
                 });
             }

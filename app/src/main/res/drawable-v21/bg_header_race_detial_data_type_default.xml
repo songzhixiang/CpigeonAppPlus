@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 连框颜色值 -->
+    <item>
+        <shape>
+            <solid android:color="@color/colorPrimary"/>
+            <corners
+                android:radius="@dimen/dp_5"/>
+        </shape>
+    </item>
+    <!-- 主体背景颜色值 -->
+    <item
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <shape>
+            <!-- 填充的颜色 -->
+            <solid android:color="@color/colorWhite"/>
+
+            <!-- 设置按钮的四个角为弧形 -->
+            <!-- android:radius 弧形的半径 -->
+            <corners android:radius="@dimen/dp_4"/>
+
+        </shape>
+    </item>
+</layer-list>

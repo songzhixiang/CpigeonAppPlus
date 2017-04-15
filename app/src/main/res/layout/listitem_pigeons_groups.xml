@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/list_item_pigeons_groups_layout_root_minheight"
+    android:orientation="vertical"
+    app:layout_collapseParallaxMultiplier="1.0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/pigeons_groups_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
+            android:text="A组"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
+
+        <TextView
+            android:id="@+id/pigeons_groups_group_join_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
+            android:text="参赛：700羽"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
+
+        <TextView
+            android:id="@+id/pigeons_groups_group_homing_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
+            android:text="归巢：500羽"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
+
+        <ImageView
+            android:id="@+id/iv_indicator"
+            android:layout_width="@dimen/list_item_pigeons_groups_imageview_height"
+            android:layout_height="@dimen/list_item_pigeons_groups_imageview_height"
+            android:gravity="right"
+            android:rotation="270"
+            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/split_line_width"
+        android:background="@color/colorLayoutSplitLineGray"></View>
+</LinearLayout>

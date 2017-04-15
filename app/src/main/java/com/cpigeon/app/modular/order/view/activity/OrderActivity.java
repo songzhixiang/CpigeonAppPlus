@@ -2,12 +2,15 @@ package com.cpigeon.app.modular.order.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewStub;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.R;
@@ -20,10 +23,10 @@ import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/4/11.
@@ -33,8 +36,9 @@ public class OrderActivity extends BaseActivity<OrderPre> implements IOrderView,
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.viewstub_empty_order)
+    ViewStub viewstubEmptyOrder;
     private OrderAdapter mAdapter;
-
     @BindView(R.id.order_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.order_swiperefreshlayout)
@@ -114,12 +118,14 @@ public class OrderActivity extends BaseActivity<OrderPre> implements IOrderView,
 
     @Override
     protected void onNetworkConnected(NetUtils.NetType type) {
-
+        if (mAdapter == null ||mAdapter.getData().size()==0){
+            pre.loadOrder();
+        }
     }
 
     @Override
     protected void onNetworkDisConnected() {
-
+        showTips("网络连接断开,请打开网络连接",TipType.SnackbarShort);
     }
 
     @Override
@@ -139,6 +145,36 @@ public class OrderActivity extends BaseActivity<OrderPre> implements IOrderView,
         }
 
         mAdapter.setEnableLoadMore(canLoadMore);
+    }
+
+
+
+
+
+    @Override
+    public void showRefreshLoading() {
+        if (isNetworkConnected(this))
+        {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }else {
+            onNetworkDisConnected();
+        }
+
+    }
+
+    @Override
+    public void hideRefreshLoading() {
+        if (isNetworkConnected(this))
+        {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showEmptyData() {
+        viewstubEmptyOrder.inflate();
+        TextView textView = (TextView) findViewById(R.id.tv_empty_tips);
+        textView.setText("您还没有任何订单哦，快去下单吧!");
     }
 
     @Override
