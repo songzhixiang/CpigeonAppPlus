@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.listener.IOnKeyDownForFragment;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchResultCardFragment;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by Administrator on 2017/4/8.
  */
 
-public class FootSearchActivity extends BaseActivity{
+public class FootSearchActivity extends BaseActivity {
 
     public static final String INTENT_DATA_KEY = "intent_data_key";
     public static final String BUNDLE_FOOT_QUERY_RESULT_LIST = "bundel_search_result_data";
@@ -34,7 +35,8 @@ public class FootSearchActivity extends BaseActivity{
     }
 
     @Override
-    public void initPresenter() {
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     public void initView() {

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.utils.NetUtils;
 
@@ -45,9 +46,10 @@ public class EditActivity extends BaseActivity {
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
+
 
     @Override
     public void initView() {

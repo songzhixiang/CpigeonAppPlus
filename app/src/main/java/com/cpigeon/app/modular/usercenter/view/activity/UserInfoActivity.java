@@ -46,7 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Administrator on 2017/4/10.
  */
 
-public class UserInfoActivity extends BaseActivity implements IUserInfoView {
+public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements IUserInfoView {
     private static final int CHANGE_SIGN = 1;
     private static final int TAKE_PHOTO = 4;
     private static final int CHOOSE_PHPOTO = 2;
@@ -182,8 +182,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new UserInfoPresenter(this);
+    public UserInfoPresenter initPresenter() {
+        return new UserInfoPresenter(this);
     }
 
     @Override

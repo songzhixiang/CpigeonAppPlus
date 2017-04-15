@@ -30,7 +30,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by chenshuai on 2017/4/14.
  */
 
-public class OpenServiceActivity extends BaseActivity implements IOpenServiceView {
+public class OpenServiceActivity extends BaseActivity<OpenServicePresenter> implements IOpenServiceView {
     public static final String INTENT_DATA_KEY_SERVICENAME = "service_name";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,16 +40,14 @@ public class OpenServiceActivity extends BaseActivity implements IOpenServiceVie
     private String mServiceName;
     private ServiceListAdapter mAdapter;
 
-    OpenServicePresenter mPresenter;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_services_open;
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new OpenServicePresenter(this);
+    public OpenServicePresenter initPresenter() {
+        return new OpenServicePresenter(this);
     }
 
     @Override

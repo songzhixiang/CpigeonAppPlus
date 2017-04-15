@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/4/10.
  */
 
-public class ScoreActivity extends BaseActivity implements IScoreView {
+public class ScoreActivity extends BaseActivity<ScorePresenter> implements IScoreView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_user_score_count)
@@ -36,16 +36,14 @@ public class ScoreActivity extends BaseActivity implements IScoreView {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    ScorePresenter mPresenter;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_score;
     }
 
     @Override
-    public void initPresenter() {
-        this.mPresenter = new ScorePresenter(this);
+    public ScorePresenter initPresenter() {
+        return new ScorePresenter(this);
     }
 
     public ScorePresenter getPresenter() {

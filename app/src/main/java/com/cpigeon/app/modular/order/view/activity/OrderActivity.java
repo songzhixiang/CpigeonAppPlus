@@ -29,7 +29,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/4/11.
  */
 
-public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class OrderActivity extends BaseActivity<OrderPre> implements IOrderView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -77,8 +77,8 @@ public class OrderActivity extends BaseActivity implements IOrderView, SwipeRefr
     }
 
     @Override
-    public void initPresenter() {
-        pre = new OrderPre(this);
+    public OrderPre initPresenter() {
+        return pre = new OrderPre(this);
     }
 
     @Override

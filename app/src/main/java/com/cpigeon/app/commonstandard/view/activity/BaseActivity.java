@@ -67,7 +67,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mUnbinder = ButterKnife.bind(this);
         mContext = this;
 
-        this.initPresenter();
+        mPresenter = this.initPresenter();
         this.initView();
         // 网络改变的一个回掉类
         mNetChangeObserver = new NetChangeObserver() {
@@ -91,7 +91,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @LayoutRes
     public abstract int getLayoutId();
 
-    public abstract void initPresenter();
+    public abstract T initPresenter();
 
     public abstract void initView();
 

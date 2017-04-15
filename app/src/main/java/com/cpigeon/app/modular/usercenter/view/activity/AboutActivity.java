@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.utils.CPigeonApiUrl;
@@ -41,9 +42,10 @@ public class AboutActivity extends BaseActivity {
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
+
 
     @Override
     public void initView() {

@@ -32,7 +32,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/5.
  */
 
-public class RegisterActivity extends BaseActivity implements IRegisterView {
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements IRegisterView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -78,8 +78,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new RegisterPresenter(this);
+    public RegisterPresenter initPresenter() {
+        return new RegisterPresenter(this);
     }
 
     @Override
@@ -159,7 +159,6 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
             return true;
         }
     }
-
 
 
     @Override

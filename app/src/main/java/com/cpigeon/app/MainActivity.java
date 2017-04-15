@@ -20,6 +20,7 @@ import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.cpigeon.app.commonstandard.AppManager;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
@@ -83,6 +84,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             isExit = false;
         }
     };
+
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -151,8 +153,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     public void initView() {
@@ -340,12 +342,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Override
     public void onBackPressed() {
-        if (lastTabIndex!=0)
-        {
+        if (lastTabIndex != 0) {
             onTabReselected(0);
             setCurrIndex(0);
             mBottomNavigationBar.selectTab(0);
-        }else {
+        } else {
             if (!isExit) {
                 isExit = true;
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.Then_click_one_exit_procedure),

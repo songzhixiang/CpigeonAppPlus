@@ -18,7 +18,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.utils.CommonTool;
+import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
@@ -70,7 +72,17 @@ public abstract class BaseWebViewActivity extends BaseActivity {
     }
 
     @Override
-    public void initPresenter() {
+    public BasePresenter initPresenter() {
+        return null;
+    }
+
+    @Override
+    protected void onNetworkConnected(NetUtils.NetType type) {
+
+    }
+
+    @Override
+    protected void onNetworkDisConnected() {
 
     }
 

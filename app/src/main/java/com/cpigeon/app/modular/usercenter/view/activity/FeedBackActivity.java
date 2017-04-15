@@ -26,7 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/10.
  */
 
-public class FeedBackActivity extends BaseActivity implements IFeedBackView {
+public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements IFeedBackView {
     protected FeedBackPresenter mPresenter;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -50,8 +50,8 @@ public class FeedBackActivity extends BaseActivity implements IFeedBackView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new FeedBackPresenter(this);
+    public FeedBackPresenter initPresenter() {
+        return new FeedBackPresenter(this);
     }
 
     @Override
@@ -140,6 +140,6 @@ public class FeedBackActivity extends BaseActivity implements IFeedBackView {
 
     @OnClick(R.id.btn_submit)
     public void onViewClicked() {
-         mPresenter.feedback();
+        mPresenter.feedback();
     }
 }

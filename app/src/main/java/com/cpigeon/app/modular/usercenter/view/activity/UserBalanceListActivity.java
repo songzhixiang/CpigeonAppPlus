@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.utils.NetUtils;
 
@@ -26,8 +27,8 @@ public class UserBalanceListActivity extends BaseActivity {
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

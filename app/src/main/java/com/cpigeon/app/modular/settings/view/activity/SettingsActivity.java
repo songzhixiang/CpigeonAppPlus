@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.AppManager;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.utils.CpigeonData;
@@ -65,8 +66,8 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

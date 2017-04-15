@@ -48,6 +48,7 @@ public class UserScoreSub2Fragment extends BaseLazyLoadFragment implements IScor
     protected void initView(View view) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
+        mSwipeRefreshLayout.setEnabled(false);
 
         ((ScoreActivity) getActivity()).getPresenter().attachScoreSub2View(this);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -31,7 +31,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by chenshuai on 2017/4/13.
  */
 
-public class SetPayPwdActivity extends BaseActivity implements ISetPayPwdView {
+public class SetPayPwdActivity extends BaseActivity<SetPayPwdPresenter> implements ISetPayPwdView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_phone_prompt)
@@ -51,7 +51,6 @@ public class SetPayPwdActivity extends BaseActivity implements ISetPayPwdView {
     @BindView(R.id.btn_ok)
     Button btnOk;
 
-    SetPayPwdPresenter mPresenter;
     String payPwd, inputYZM;
     CountDownTimer sendCountDownTimer;
     private TextWatcher mCanResetTextWatcher = new TextWatcher() {
@@ -75,8 +74,8 @@ public class SetPayPwdActivity extends BaseActivity implements ISetPayPwdView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new SetPayPwdPresenter(this);
+    public SetPayPwdPresenter initPresenter() {
+        return new SetPayPwdPresenter(this);
     }
 
     @Override

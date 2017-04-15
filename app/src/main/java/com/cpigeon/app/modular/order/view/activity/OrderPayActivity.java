@@ -40,7 +40,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by chenshuai on 2017/4/14.
  */
 
-public class OrderPayActivity extends BaseActivity implements IOrderPayView {
+public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements IOrderPayView {
 
     public static final String INTENT_DATA_KEY_ORDERINFO = "orderInfo";
     private static final String INTENT_DATA_KEY_ORDERID = "orderID";
@@ -94,7 +94,6 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
         }
     };
 
-    OrderPayPresenter mPresenter;
     PayPwdInputFragment payFragment;
 
     @Override
@@ -103,8 +102,8 @@ public class OrderPayActivity extends BaseActivity implements IOrderPayView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new OrderPayPresenter(this);
+    public OrderPayPresenter initPresenter() {
+        return new OrderPayPresenter(this);
     }
 
     @Override

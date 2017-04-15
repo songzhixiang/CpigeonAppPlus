@@ -25,7 +25,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by chenshuai on 2017/4/13.
  */
 
-public class SetUserPwdActivity extends BaseActivity implements ISetUserPwdView {
+public class SetUserPwdActivity extends BaseActivity<SetUserPwdPresenter> implements ISetUserPwdView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_error_prompt)
@@ -44,7 +44,6 @@ public class SetUserPwdActivity extends BaseActivity implements ISetUserPwdView 
     Button btnOk;
 
     String oldPwd, newPwd;
-    private SetUserPwdPresenter mPresenter;
 
     private TextWatcher canSubmitWatcher = new TextWatcher() {
         @Override
@@ -93,8 +92,8 @@ public class SetUserPwdActivity extends BaseActivity implements ISetUserPwdView 
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new SetUserPwdPresenter(this);
+    public SetUserPwdPresenter initPresenter() {
+        return new SetUserPwdPresenter(this);
     }
 
     @Override

@@ -14,13 +14,5 @@ public class HelpActivity extends BaseWebViewActivity {
         return CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.APP_HELP_URL;
     }
     
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
 
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 }

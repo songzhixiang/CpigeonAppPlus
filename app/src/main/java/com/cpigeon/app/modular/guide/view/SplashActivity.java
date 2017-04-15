@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * Created by chenshuai on 2017/4/10.
  */
 
-public class SplashActivity extends BaseActivity implements ISplashView {
+public class SplashActivity extends BaseActivity<SplashPresenter> implements ISplashView {
 
 
     @BindView(R.id.tv_app_version)
@@ -51,10 +51,9 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     @BindView(R.id.rl_ad)
     RelativeLayout rlAd;
 
-    protected SplashPresenter mPresenter;
     CountDownTimer countDownTimer;
     boolean isEntry = false;
-    private WeakReference<Activity> weakReference ;
+    private WeakReference<Activity> weakReference;
     //最短显示时间
     private static final long SHOW_TIME_MIN = 3000;
 
@@ -64,13 +63,13 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new SplashPresenter(this);
+    public SplashPresenter initPresenter() {
+        return new SplashPresenter(this);
     }
 
     @Override
     public void initView() {
-        weakReference= new WeakReference<Activity>(this);
+        weakReference = new WeakReference<Activity>(this);
         StatusBarTool.hideStatusBar(this);
         tvAppVersion.setText("V " + CommonTool.getVersionName(SplashActivity.this));
         tvCopyright.setText("中鸽科技版权所有©Copyright " + (new Date(System.currentTimeMillis()).getYear() + 1900));

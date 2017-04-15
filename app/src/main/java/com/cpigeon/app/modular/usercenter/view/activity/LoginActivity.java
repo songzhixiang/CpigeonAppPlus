@@ -38,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Administrator on 2017/4/5.
  */
 
-public class LoginActivity extends BaseActivity implements ILoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements ILoginView {
     private Handler mHandler = new Handler() {
 
         @Override
@@ -79,8 +79,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     }
 
     @Override
-    public void initPresenter() {
-        mPresenter = new LoginPresenter(this);
+    public LoginPresenter initPresenter() {
+        return new LoginPresenter(this);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((LoginPresenter) mPresenter).loadUserHeadImgURL();
+                 mPresenter.loadUserHeadImgURL();
             }
         });
         etUsername.setText(SharedPreferencesTool.Get(this, "loginname", "", SharedPreferencesTool.SP_FILE_LOGIN).toString());
@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
                 }
                 break;
             case R.id.btn_login:
-                ((LoginPresenter) mPresenter).login();
+                 mPresenter.login();
                 break;
             case R.id.tv_no_account:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
