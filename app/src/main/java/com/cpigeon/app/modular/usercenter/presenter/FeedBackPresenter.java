@@ -16,7 +16,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
     private IFeedBackDao.OnCompleteListener onCompleteListener = new IFeedBackDao.OnCompleteListener() {
         @Override
         public void onSuccess() {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -28,7 +28,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
 
         @Override
         public void onFail(final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -53,7 +53,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
             @Override
             public void onSuccess(final String phoneNumber, boolean isBand) {
                 if (isBand)
-                    mHandler.postDelayed(new Runnable() {
+                    postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             mView.setFeedbackUserPhone(phoneNumber);

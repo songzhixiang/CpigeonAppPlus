@@ -10,14 +10,6 @@ import java.io.File;
  */
 
 public interface IUserInfoDao extends IBaseDao {
-    interface OnLoadCompleteListener {
-        void onSuccess(UserInfo.DataBean userinfo);
-
-        void onError(String msg);
-    }
-
-    void loadUserInfo(OnLoadCompleteListener onLoadCompleteListener);
-
     interface OnUserinfoMotifyCompleteListener {
         void onSuccess();
 

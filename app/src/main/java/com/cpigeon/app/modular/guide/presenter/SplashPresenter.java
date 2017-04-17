@@ -23,7 +23,7 @@ public class SplashPresenter extends BasePresenter<ISplashView, ISplashDao> {
     ISplashDao.OnLoadCompleteListener onLoadCompleteListener = new ISplashDao.OnLoadCompleteListener() {
         @Override
         public void onLoadComplete(final String url) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showAd(url);

@@ -26,7 +26,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
         @Override
         public void loginPreError(final ILoginDao.OperateCheck operateCheck) {
             if (operateCheck != ILoginDao.OperateCheck.None) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         if (operateCheck.getVal() == ILoginDao.OperateCheck.UsernameIsEmpty.getVal()) {
@@ -39,7 +39,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
                 });
                 return;
             }
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("登录中...", IView.TipType.LoadingShow);
@@ -49,7 +49,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void loginSuccess() {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -60,7 +60,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void loginFailed(final String msg) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -73,7 +73,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
     ILoginDao.OnLoadUserHeadImageListener onLoadUserHeadImageListener = new ILoginDao.OnLoadUserHeadImageListener() {
         @Override
         public void onSuccess(final String url) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showUserHeadImg(url);
@@ -83,7 +83,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void onError(String msg) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showUserHeadImg("");

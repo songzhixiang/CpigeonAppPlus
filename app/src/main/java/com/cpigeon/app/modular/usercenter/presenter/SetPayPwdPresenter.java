@@ -34,7 +34,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IGetUserBandPhone.OnCompleteListener onAutoGetUserBandPhoneCompleteListener = new IGetUserBandPhone.OnCompleteListener() {
         @Override
         public void onSuccess(String phoneNumber, boolean isBand) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -49,7 +49,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
                 mDao.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
                 return;
             }
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -63,7 +63,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IGetUserBandPhone.OnCompleteListener onGetUserBandPhoneCompleteListener = new IGetUserBandPhone.OnCompleteListener() {
         @Override
         public void onSuccess(String phoneNumber, final boolean isBand) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -77,7 +77,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail() {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -91,7 +91,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
         @Override
         public void onSuccess(final String yzmMd5) {
             mYzmMD5 = yzmMd5;
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("验证码已发送，请注意查收", IView.TipType.ToastShort);
@@ -102,7 +102,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail(int errorCode, final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(msg, IView.TipType.DialogError);
@@ -134,7 +134,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IBaseDao.OnCompleteListener onCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(Boolean data) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -145,7 +145,7 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail(final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);

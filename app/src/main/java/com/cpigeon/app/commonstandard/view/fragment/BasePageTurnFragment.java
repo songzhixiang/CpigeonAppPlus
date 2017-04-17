@@ -19,6 +19,7 @@ import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IPageTurn;
 import com.cpigeon.app.commonstandard.view.activity.IRefresh;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.proguard.t;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
     View mEmptyTip;
     TextView mEmptyTipTextView;
 
-    boolean canLoadMore = true;
+    boolean canLoadMore = true, isRefreshing = false, isMoreDateLoading = false;
     int pageindex = 1, pagesize = 10;
 
     protected Adapter mAdapter;
@@ -51,7 +52,6 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
         swiperefreshlayout.setEnabled(false);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         pagesize = getDefaultPageSize();
-
         iniPageAndAdapter();
     }
 
@@ -69,18 +69,45 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     public void onRefresh() {
+        isRefreshing = true;
         iniPageAndAdapter();
         loadDataByPresenter();
+    }
+
+    @Override
+    public boolean isMoreDataLoading() {
+        return this.isMoreDateLoading;
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        return this.isRefreshing;
     }
 
     @Override
     public void onLoadMoreRequested() {
         if (canLoadMore) {
             swiperefreshlayout.setEnabled(false);
+            isMoreDateLoading = true;
             loadDataByPresenter();
         } else {
             mAdapter.setEnableLoadMore(false);
         }
+    }
+
+    @Override
+    public void loadMoreComplete() {
+        isMoreDateLoading = false;
+        mAdapter.loadMoreComplete();//完成加载
+        mAdapter.setEnableLoadMore(true);
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void loadMoreFail() {
+        isMoreDateLoading = false;
+        mAdapter.loadMoreFail();
+        mAdapter.setEnableLoadMore(true);
     }
 
     @Override
@@ -129,8 +156,9 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     public void hideRefreshLoading() {
-        if (swiperefreshlayout == null || !swiperefreshlayout.isRefreshing()) return;
-        swiperefreshlayout.setRefreshing(false);
+        if (swiperefreshlayout != null && swiperefreshlayout.isRefreshing())
+            swiperefreshlayout.setRefreshing(false);
+        swiperefreshlayout.setEnabled(true);
     }
 
     @Override
@@ -188,13 +216,11 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     public void showMoreData(List<DataBean> dataBeen) {
-        swiperefreshlayout.setRefreshing(false);//停止刷新
-        swiperefreshlayout.setEnabled(true);
+        hideRefreshLoading();
         if (getPageIndex() == 1 && (dataBeen == null || dataBeen.size() == 0))
             showEmptyData();
         if (dataBeen != null)
             mAdapter.addData(dataBeen);
-        mAdapter.loadMoreComplete();//完成加载
 
         canLoadMore = dataBeen != null && dataBeen.size() == getPageSize();
         Logger.d("canLoadMore=" + canLoadMore);
@@ -203,7 +229,8 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
         } else {
             mAdapter.loadMoreEnd(false);
         }
-        mAdapter.setEnableLoadMore(canLoadMore);
+//        mAdapter.setEnableLoadMore(canLoadMore);
+        isMoreDateLoading = isRefreshing = false;
     }
 
     @Override

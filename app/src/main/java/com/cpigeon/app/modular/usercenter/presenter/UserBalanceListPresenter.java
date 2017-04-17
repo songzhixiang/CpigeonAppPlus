@@ -8,6 +8,8 @@ import com.cpigeon.app.modular.usercenter.model.dao.IUserBalanceListDao;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.UserBalanceListDaoImpl;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IUserBalanceListView;
 
+import org.xutils.common.Callback;
+
 import java.util.List;
 
 /**
@@ -28,31 +30,36 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
     IBaseDao.OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener = new IBaseDao.OnCompleteListener<List<CpigeonRechargeInfo.DataBean>>() {
         @Override
         public void onSuccess(final List<CpigeonRechargeInfo.DataBean> data) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideRefreshLoading();
-                    mView.showMoreData(data);
+                    if (isAttached()) {
+                        mView.hideRefreshLoading();
+                        mView.showMoreData(data);
+                    }
                 }
             }, 300);
         }
 
         @Override
         public void onFail(final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mView.hideRefreshLoading();
-                    mView.showTips("加载失败", IView.TipType.View);
+                    if (isAttached()) {
+                        mView.hideRefreshLoading();
+                        mView.showTips("加载失败", IView.TipType.View);
+                    }
                 }
             }, 300);
         }
     };
 
     public void loadUserBalancePage() {
-        if (isDettached()) return;
+        if (isDetached()) return;
         if (mView.getPageIndex() == 1) mView.showRefreshLoading();
-        mDao.getUserBalancePage(mView.getPageIndex(), mView.getPageSize(), onCompleteListener);
 
+        Callback.Cancelable cancelable = mDao.getUserBalancePage(mView.getPageIndex(), mView.getPageSize(), onCompleteListener);
+        addCancelableIntoMap("loadUserBalancePage", cancelable);
     }
 }

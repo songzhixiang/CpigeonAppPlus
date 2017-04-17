@@ -41,7 +41,6 @@ public class UserBalanceAdapter extends BaseQuickAdapter<CpigeonRechargeInfo.Dat
         helper.setText(R.id.tv_item_order_status, item.getStatusname());
         helper.setText(R.id.tv_item_order_price, String.format("%.2f元", item.getPrice()));
         helper.setText(R.id.tv_item_order_payway, item.getPayway());
-        helper.setText(R.id.tv_item_order_payway, item.getPayway());
 
         switch (item.getStatusname()) {
             case "充值完成":
@@ -49,7 +48,7 @@ public class UserBalanceAdapter extends BaseQuickAdapter<CpigeonRechargeInfo.Dat
                 break;
             case "待充值":
                 orderStatusColor = mContext.getResources().getColor(R.color.colorRed);
-                helper.setText(R.id.tv_item_order_payway, "待充值，去支付");
+                helper.setText(R.id.tv_item_order_status, "待充值，去支付");
                 break;
         }
         helper.setTextColor(R.id.tv_item_order_status, orderStatusColor);

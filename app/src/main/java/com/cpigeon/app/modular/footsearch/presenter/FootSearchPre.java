@@ -27,7 +27,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
         mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
             @Override
             public void onSuccess(final CpigeonUserServiceInfo data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.getFootSearchService(data);
@@ -47,7 +47,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
         return mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
             public void onSuccess(final Map<String, Object> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.queryFoot(data);

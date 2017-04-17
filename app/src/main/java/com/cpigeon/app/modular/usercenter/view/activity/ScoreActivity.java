@@ -35,6 +35,13 @@ public class ScoreActivity extends BaseActivity<ScorePresenter> implements IScor
     SmartTabLayout viewpagertab;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    private CpigeonData.OnDataChangedListener onDataChangedLisenter = new CpigeonData.OnDataChangedListener() {
+        @Override
+        public void OnDataChanged(CpigeonData cpigeonData) {
+            if (tvUserScoreCount != null)
+                tvUserScoreCount.setText(cpigeonData.getUserScore() + "");
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -70,10 +77,11 @@ public class ScoreActivity extends BaseActivity<ScorePresenter> implements IScor
                 .add("积分记录", UserScoreSub2Fragment.class)
                 .add("获取积分", UserScoreSub3Fragment.class)
                 .create());
-
         viewPager.setAdapter(adapter);
-
         viewpagertab.setViewPager(viewPager);
+
+        CpigeonData.getInstance().addOnDataChangedListener(onDataChangedLisenter);
+        CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
     }
 
     @Override

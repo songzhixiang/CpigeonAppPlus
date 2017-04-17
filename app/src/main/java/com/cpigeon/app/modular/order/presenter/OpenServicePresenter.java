@@ -30,7 +30,7 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
         mDao.loadAllServicesInfo(mView.getOpenServiceName(), new IBaseDao.OnCompleteListener<List<CpigeonServicesInfo>>() {
             @Override
             public void onSuccess(final List<CpigeonServicesInfo> data) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide, mView.TAG_LoadServiceInfo);
@@ -41,7 +41,7 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
 
             @Override
             public void onFail(final String msg) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide, mView.TAG_LoadServiceInfo);
@@ -57,7 +57,7 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
         mDao.createServiceOrder(serviceId, new IBaseDao.OnCompleteListener<CpigeonOrderInfo>() {
             @Override
             public void onSuccess(final CpigeonOrderInfo data) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide);
@@ -68,7 +68,7 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
 
             @Override
             public void onFail(final String msg) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide);

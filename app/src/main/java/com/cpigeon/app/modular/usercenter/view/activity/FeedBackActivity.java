@@ -15,6 +15,7 @@ import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.presenter.FeedBackPresenter;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IFeedBackView;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 
 import butterknife.BindView;
@@ -85,9 +86,20 @@ public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements
         });
 
         etPhone.setText(phoneNum);
-        mPresenter.readUserPhoneNumber();
+//        mPresenter.readUserPhoneNumber();
 
+        CpigeonData.DataHelper.getInstance().updateUserBandPhone(new CpigeonData.DataHelper.OnDataHelperUpdateLisenter<String>() {
+            @Override
+            public void onUpdated(String data) {
+                setFeedbackUserPhone(data);
+            }
 
+            @Override
+            public void onError(int errortype, String msg) {
+                if (errortype == ERR_NOT_NEED_UPDATE)
+                    setFeedbackUserPhone(CpigeonData.getInstance().getUserBindPhone());
+            }
+        });
     }
 
     @Override

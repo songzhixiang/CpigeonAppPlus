@@ -38,4 +38,28 @@ public interface IPageTurn<DataBean> {
      * @return
      */
     boolean canLoadMoreData();
+
+    /**
+     * 是否正在加载更多数据
+     *
+     * @return
+     */
+    boolean isMoreDataLoading();
+
+    /**
+     * 是否正在刷新数据
+     *
+     * @return
+     */
+    boolean isRefreshing();
+
+    /**
+     * 加载更多数据完成
+     */
+    void loadMoreComplete();
+
+    /**
+     * 加载更多数据失败
+     */
+    void loadMoreFail();
 }

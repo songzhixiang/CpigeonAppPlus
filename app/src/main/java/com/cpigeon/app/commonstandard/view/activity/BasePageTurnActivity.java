@@ -44,8 +44,18 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     View mEmptyTip;
     TextView mEmptyTipTextView;
 
-    boolean canLoadMore = true;
+    boolean canLoadMore = true, isRefreshing = false, isMoreDateLoading = false;
     int pageindex = 1, pagesize = 10;
+
+    @Override
+    public boolean isMoreDataLoading() {
+        return isMoreDateLoading;
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        return isRefreshing;
+    }
 
     Adapter mAdapter;
 
@@ -86,7 +96,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     @Override
     protected void onNetworkDisConnected() {
         hideRefreshLoading();
-        showTips("网络连接断开,请打开网络连接", TipType.SnackbarShort);
+        showTips("网络连接断开,请打开网络连接", TipType.SnackbarLong);
     }
 
     @Override
@@ -101,8 +111,10 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
 
     @Override
     public void hideRefreshLoading() {
-        if (swiperefreshlayout == null || !swiperefreshlayout.isRefreshing()) return;
-        swiperefreshlayout.setRefreshing(false);
+        isRefreshing = false;
+        if (swiperefreshlayout != null && swiperefreshlayout.isRefreshing())
+            swiperefreshlayout.setRefreshing(false);
+        swiperefreshlayout.setEnabled(true);
     }
 
     @Override
@@ -171,13 +183,11 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
 
     @Override
     public void showMoreData(List<DataBean> dataBeen) {
-        swiperefreshlayout.setRefreshing(false);//停止刷新
-        swiperefreshlayout.setEnabled(true);
+        hideRefreshLoading();
         if (getPageIndex() == 1 && (dataBeen == null || dataBeen.size() == 0))
             showEmptyData();
         if (dataBeen != null)
             mAdapter.addData(dataBeen);
-        mAdapter.loadMoreComplete();//完成加载
 
         canLoadMore = dataBeen != null && dataBeen.size() == getPageSize();
         Logger.d("canLoadMore=" + canLoadMore);
@@ -186,7 +196,8 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         } else {
             mAdapter.loadMoreEnd(false);
         }
-        mAdapter.setEnableLoadMore(canLoadMore);
+//        mAdapter.setEnableLoadMore(canLoadMore);
+        isMoreDateLoading = isRefreshing = false;
     }
 
     @Override
@@ -195,8 +206,24 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     }
 
     @Override
+    public void loadMoreComplete() {
+        isMoreDateLoading = false;
+        mAdapter.loadMoreComplete();//完成加载
+        mAdapter.setEnableLoadMore(true);
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void loadMoreFail() {
+        isMoreDateLoading = false;
+        mAdapter.loadMoreFail();
+        mAdapter.setEnableLoadMore(true);
+    }
+
+    @Override
     public void onRefresh() {
         iniPageAndAdapter();
+        isRefreshing = true;
         loadDataByPresenter();
     }
 
@@ -205,6 +232,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     public void onLoadMoreRequested() {
         if (canLoadMore) {
             swiperefreshlayout.setEnabled(false);
+            isMoreDateLoading = true;
             loadDataByPresenter();
         } else {
             mAdapter.setEnableLoadMore(false);

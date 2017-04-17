@@ -9,6 +9,8 @@ import com.cpigeon.app.modular.usercenter.model.dao.IUserBalanceListDao;
 import com.cpigeon.app.utils.CallAPI;
 import com.orhanobut.logger.Logger;
 
+import org.xutils.common.Callback;
+
 import java.util.List;
 
 /**
@@ -17,8 +19,8 @@ import java.util.List;
 
 public class UserBalanceListDaoImpl implements IUserBalanceListDao {
     @Override
-    public void getUserBalancePage(int pageIndex, int pageSize, @NonNull final OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener) {
-        CallAPI.getRechargeList(MyApp.getInstance(), pageSize, pageIndex, new CallAPI.Callback<List<CpigeonRechargeInfo.DataBean>>() {
+    public Callback.Cancelable getUserBalancePage(int pageIndex, int pageSize, @NonNull final OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener) {
+        return CallAPI.getRechargeList(MyApp.getInstance(), pageSize, pageIndex, new CallAPI.Callback<List<CpigeonRechargeInfo.DataBean>>() {
             @Override
             public void onSuccess(List<CpigeonRechargeInfo.DataBean> data) {
                 onCompleteListener.onSuccess(data);

@@ -1,7 +1,6 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
 import android.content.Intent;
-import android.os.Looper;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
@@ -22,9 +20,7 @@ import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.HelpActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
-import com.cpigeon.app.modular.usercenter.view.fragment.viewdao.IUserCenterView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
-import com.cpigeon.app.modular.usercenter.presenter.UserCenterPre;
 import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
@@ -44,7 +40,7 @@ import static com.cpigeon.app.MyApp.mCpigeonData;
  * Created by Administrator on 2017/4/6.
  */
 
-public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> implements IUserCenterView {
+public class UserCenterFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.fragment_user_center_userLogo)
     CircleImageView fragmentUserCenterUserLogo;
@@ -102,8 +98,9 @@ public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> impl
 
     @Override
     protected void lazyLoad() {
-        mPresenter.loadBalance();
-        mPresenter.loadSignStatus();
+        CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
+        CpigeonData.DataHelper.getInstance().updateUserSignStatus();
+        CpigeonData.DataHelper.getInstance().updateUserInfo(null);
     }
 
     @OnClick({R.id.fragment_user_center_details, R.id.cv_sign, R.id.ll_user_center_msg, R.id.ll_user_center_feedback, R.id.ll_user_center_focus, R.id.ll_user_center_order, R.id.ll_user_money, R.id.ll_user_jifen, R.id.ll_user_center_setting, R.id.ll_user_center_aboutus, R.id.ll_user_center_help})
@@ -150,29 +147,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> impl
     }
 
     @Override
-    public void showUserInfo(Map<String, Object> data) {
-        if (checkLogin()) {
-            mCpigeonData.setUserBalance((double) data.get("yue"));
-            mCpigeonData.setUserScore((int) data.get("jifen"));
-            refreshUserInfo();
-        }
-    }
-
-    @Override
-    public void isSign(Boolean data) {
-        int userSignStatus = mCpigeonData.getUserSignStatus();
-        if (userSignStatus == CpigeonData.USER_SIGN_STATUS_NONE) {
-            if (data) {
-                CpigeonData.getInstance().setUserSignStatus(data ? CpigeonData.USER_SIGN_STATUS_SIGNED : CpigeonData.USER_SIGN_STATUS_NOT_SIGN);
-                tvSignStatus.setText(data ? "已签到" : "签到");
-            }
-
-        } else {
-            tvSignStatus.setText(userSignStatus == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
-        }
-    }
-
-    @Override
     public boolean showTips(String tip, TipType tipType) {
         if (tipType == TipType.LoadingHide || tipType == TipType.LoadingShow)
             return true;
@@ -207,6 +181,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> impl
             if (!TextUtils.isEmpty(userHeadImageURl)) {
                 Picasso.with(getActivity())
                         .load(userHeadImageURl)
+                        .error(R.mipmap.head_image_default)
                         .into(fragmentUserCenterUserLogo);
             }
             final String name = nickName;
@@ -224,18 +199,20 @@ public class UserCenterFragment extends BaseLazyLoadFragment<UserCenterPre> impl
 
         tvUserJifen.setText(String.format("%d", mCpigeonData.getUserScore()));
 
+        tvSignStatus.setText(mCpigeonData.getUserSignStatus() == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.loadSignStatus();
+        CpigeonData.DataHelper.getInstance().updateUserSignStatus();
         refreshUserInfo();
     }
 
     @Override
-    protected UserCenterPre initPresenter() {
-        return new UserCenterPre(this);
+    protected BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

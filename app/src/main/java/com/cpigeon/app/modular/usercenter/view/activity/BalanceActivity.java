@@ -35,7 +35,7 @@ public class BalanceActivity extends BaseActivity {
     Button btnMoneyDetails;
     @BindView(R.id.tv_question)
     TextView tvQuestion;
-    
+
     private CpigeonData.OnDataChangedListener onDataChangedLisenter = new CpigeonData.OnDataChangedListener() {
         @Override
         public void OnDataChanged(CpigeonData cpigeonData) {
@@ -67,6 +67,7 @@ public class BalanceActivity extends BaseActivity {
         });
         tvUserBalance.setText(String.format("￥%s", String.valueOf(CpigeonData.getInstance().getUserBalance())));
         CpigeonData.getInstance().addOnDataChangedListener(onDataChangedLisenter);
+        CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
     }
 
     @Override

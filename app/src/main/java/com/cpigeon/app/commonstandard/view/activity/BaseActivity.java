@@ -10,10 +10,9 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.Settings;
+import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
 import com.cpigeon.app.utils.ToastUtil;
-import com.cpigeon.app.utils.customview.SnackbarUtil;
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
@@ -43,15 +41,21 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.Utils;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper;
 
 /**
  * Created by Administrator on 2017/4/5.
  */
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements IView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements IView, SwipeBackActivityBase {
     public Context mContext;
     private Unbinder mUnbinder;
     private WeakReference<Activity> weakReference;
+    private SwipeBackActivityHelper mHelper;
+    private SwipeBackLayout mSwipeBackLayout;
     /**
      * 网络观察者
      */
@@ -68,9 +72,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         doBeforeSetcontentView();
         setContentView(getLayoutId());
+
+        if (canSwipeBack()) {
+            mHelper = new SwipeBackActivityHelper(this);
+            mHelper.onActivityCreate();
+            mSwipeBackLayout = getSwipeBackLayout();
+            mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
+        }
         mUnbinder = ButterKnife.bind(this);
         mContext = this;
-
         mPresenter = this.initPresenter();
         this.initView();
         // 网络改变的一个回掉类
@@ -91,6 +101,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         Logger.e("当前" + this.getClass().getSimpleName() + "上面的栈内存Activity还有" + AppManager.getAppManager().stackSize());
     }
 
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        if (canSwipeBack())
+            mHelper.onPostCreate();
+    }
+
     //获取布局文件
     @LayoutRes
     public abstract int getLayoutId();
@@ -98,6 +115,39 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public abstract T initPresenter();
 
     public abstract void initView();
+
+    /**
+     * 是否可以滑动返回
+     *
+     * @return
+     */
+    public boolean canSwipeBack() {
+        return false;
+    }
+
+    @Override
+    public View findViewById(int id) {
+        View v = super.findViewById(id);
+        if (canSwipeBack() && v == null && mHelper != null)
+            return mHelper.findViewById(id);
+        return v;
+    }
+
+    @Override
+    public SwipeBackLayout getSwipeBackLayout() {
+        return mHelper.getSwipeBackLayout();
+    }
+
+    @Override
+    public void setSwipeBackEnable(boolean enable) {
+        getSwipeBackLayout().setEnableGesture(enable);
+    }
+
+    @Override
+    public void scrollToFinishActivity() {
+        Utils.convertActivityToTranslucent(this);
+        getSwipeBackLayout().scrollToFinishActivity();
+    }
 
     /**
      * 着色状态栏（4.4以上系统有效）
@@ -202,7 +252,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void finish() {
-        if (mPresenter != null) mPresenter.dettach();
+        if (mPresenter != null) mPresenter.detach();
         super.finish();
         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_right);
     }

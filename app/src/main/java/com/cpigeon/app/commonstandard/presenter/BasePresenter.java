@@ -1,12 +1,17 @@
 package com.cpigeon.app.commonstandard.presenter;
 
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
+import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.WeakHandler;
 
+import org.xutils.common.Callback;
+
 import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 
 /**
  * Created by Administrator on 2017/4/6.
@@ -18,10 +23,15 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
 
     protected TDao mDao;
 
-    protected WeakHandler mHandler;
+    private WeakHandler mHandler;
+
+    private WeakHashMap<String, Callback.Cancelable> mCancelableWeakHashMap;
 
     public BasePresenter(TView mView) {
+        onAttach();
         this.mView = mView;
+        onAttached();
+        mCancelableWeakHashMap = new WeakHashMap<>();
         this.mHandler = new WeakHandler();
         mDao = initDao();
     }
@@ -42,16 +52,86 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
      *
      * @return
      */
-    public boolean isDettached() {
+    public boolean isDetached() {
         return mView == null;
     }
 
     /**
      * 解除绑定，释放视图的引用
      */
-    public void dettach() {
+    public void detach() {
+        onDetach();
         this.mView = null;
+        this.mHandler = null;
+        if (mCancelableWeakHashMap != null)
+            for (String key : mCancelableWeakHashMap.keySet()) {
+                Callback.Cancelable cancelable = mCancelableWeakHashMap.get(key);
+                if (cancelable != null && !cancelable.isCancelled()) {
+                    cancelable.cancel();
+                }
+            }
+        onDetached();
     }
 
+    /**
+     * 添加需要在解绑视图时取消请求的Cancelable
+     * <p>key若在Map中存在，将会取消Map中的Cancelable，并将新的Cancelable放入Map中</p>
+     *
+     * @param key
+     */
+    public void addCancelableIntoMap(String key, Callback.Cancelable cancelable) {
+        if (mCancelableWeakHashMap.containsKey(key)) {
+            Callback.Cancelable temp = mCancelableWeakHashMap.get(key);
+            if (temp != null && !temp.isCancelled()) {
+                temp.cancel();
+            }
+            mCancelableWeakHashMap.remove(key);
+        }
+        mCancelableWeakHashMap.put(key, cancelable);
+    }
 
+    /**
+     * 绑定视图之前
+     */
+    public void onAttach() {
+    }
+
+    /**
+     * 绑定视图之后
+     */
+    public void onAttached() {
+    }
+
+    /**
+     * 解绑视图之前
+     */
+    public void onDetach() {
+    }
+
+    /**
+     * 解绑视图之后
+     */
+    public void onDetached() {
+    }
+
+    /**
+     * 执行Handler.post
+     *
+     * @param r
+     */
+    public void post(@NonNull Runnable r) {
+        if (mHandler == null || r == null) return;
+        mHandler.post(r);
+    }
+
+    /**
+     * 执行Handler.postDelayed
+     *
+     * @param r
+     * @param delayMillis
+     */
+    public void postDelayed(@NonNull Runnable r, long delayMillis) {
+        if (mHandler == null || r == null) return;
+        mHandler.postDelayed(r, delayMillis);
+    }
 }

@@ -51,7 +51,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
     IRegisterDao.OnCompleteListener onCompleteListener = new IRegisterDao.OnCompleteListener<String>() {
         @Override
         public void onSuccess(String data) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -63,7 +63,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
 
         @Override
         public void onFail(final String msg) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("", IView.TipType.LoadingHide);
@@ -75,7 +75,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
     ISendVerificationCode.OnSendCompleteListener onSendCompleteListener = new ISendVerificationCode.OnSendCompleteListener() {
         @Override
         public void onSuccess(final String yzmMd5) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     if (isInSetpFrist)
@@ -89,7 +89,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
 
         @Override
         public void onFail(final int errorCode, final String msg) {
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     setp2View.sendYZMFail(msg);

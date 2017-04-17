@@ -1,15 +1,24 @@
 package com.cpigeon.app.utils;
 
 import android.content.Context;
+import android.telecom.Call;
+import android.text.TextUtils;
 import android.util.Log;
 
 
+import com.cpigeon.app.MyApp;
+import com.cpigeon.app.commonstandard.model.dao.IGetUserBandPhone;
+import com.cpigeon.app.commonstandard.model.daoimpl.GetUserBandPhoneImpl;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
+import static com.cpigeon.app.MyApp.mCpigeonData;
 
 /**
  * Created by Administrator on 2017/1/13.
@@ -31,6 +40,8 @@ public class CpigeonData {
     // private WeakReference<List<OnWxPayListener>> onWxPayListenerListRef;
 
     private int mSignStatus = USER_SIGN_STATUS_NONE;
+    //标记是否可以调用更新数据回调
+    boolean dataIsChanged = false;
 
     private CpigeonData() {
     }
@@ -51,7 +62,7 @@ public class CpigeonData {
      */
     public void initialization() {
         userScore = 0;
-        userBalance = 0;
+        userBalance = 0d;
         userId = 0;
         userBindPhone = "";
         userFootSearchServiceInfo = null;
@@ -87,6 +98,7 @@ public class CpigeonData {
      */
     public void setUserFootSearchServiceInfo(CpigeonUserServiceInfo userServiceInfo) {
         synchronized (this) {
+            dataIsChanged = this.userFootSearchServiceInfo == null || !this.userFootSearchServiceInfo.equals(userServiceInfo);
             this.userFootSearchServiceInfo = userServiceInfo;
         }
         triggerOnDataChanged();
@@ -123,6 +135,7 @@ public class CpigeonData {
      */
     public void setUserId(int userId) {
         synchronized (this) {
+            dataIsChanged = this.userId != userId;
             this.userId = userId;
         }
         triggerOnDataChanged();
@@ -130,6 +143,7 @@ public class CpigeonData {
 
     public void setUserInfo(UserInfo.DataBean mCurrUserInfo) {
         synchronized (this) {
+            dataIsChanged = this.mCurrUserInfo == null || !this.mCurrUserInfo.equals(mCurrUserInfo);
             this.mCurrUserInfo = mCurrUserInfo;
         }
         triggerOnDataChanged();
@@ -149,6 +163,7 @@ public class CpigeonData {
 
     public void setUserBindPhone(String userBindPhone) {
         synchronized (this) {
+            dataIsChanged = TextUtils.isEmpty(this.userBindPhone) || !this.userBindPhone.equals(userBindPhone);
             this.userBindPhone = userBindPhone;
         }
         triggerOnDataChanged();
@@ -172,6 +187,7 @@ public class CpigeonData {
      */
     public void setUserScore(int userScore) {
         synchronized (this) {
+            dataIsChanged = this.userScore != userScore;
             this.userScore = userScore;
         }
         triggerOnDataChanged();
@@ -195,6 +211,7 @@ public class CpigeonData {
      */
     public void setUserBalance(double userBalance) {
         synchronized (this) {
+            dataIsChanged = this.userBalance != userBalance;
             this.userBalance = userBalance;
         }
         triggerOnDataChanged();
@@ -257,10 +274,11 @@ public class CpigeonData {
      * 触发信息修改回调
      */
     private void triggerOnDataChanged() {
-        if (onDataChangedListenerList == null) return;
+        if (onDataChangedListenerList == null || !dataIsChanged) return;
         for (OnDataChangedListener listener : onDataChangedListenerList) {
             listener.OnDataChanged(this);
         }
+        dataIsChanged = false;
     }
 
     /**
@@ -302,6 +320,7 @@ public class CpigeonData {
 
     /**
      * 获取用户签到状态
+     *
      * @return
      */
     public int getUserSignStatus() {
@@ -310,6 +329,7 @@ public class CpigeonData {
 
     /**
      * 设置用户签到状态
+     *
      * @param signStatus <code>USER_SIGN_STATUS_NONE</code> <code>USER_SIGN_STATUS_NOT_SIGN</code> <code>USER_SIGN_STATUS_SIGNED</code>
      */
     public void setUserSignStatus(int signStatus) {
@@ -320,6 +340,183 @@ public class CpigeonData {
             this.mSignStatus = signStatus;
         }
     }
+
+    /**
+     * 用户数据
+     */
+    public static class DataHelper {
+        WeakHashMap<String, Long> lastUpdateMap = new WeakHashMap<>();
+        static DataHelper mDataHelper;
+        long cacheTime = 1000 * 90;
+
+        private DataHelper() {
+        }
+
+        public static DataHelper getInstance() {
+            if (mDataHelper == null) {
+                synchronized (DataHelper.class) {
+                    if (mDataHelper == null) {
+                        mDataHelper = new DataHelper();
+                    }
+                }
+            }
+            return mDataHelper;
+        }
+
+        /**
+         * 判断是否可以更新数据
+         *
+         * @param key
+         * @return
+         */
+        private boolean canUpdate(String key) {
+            return canUpdate(key, this.cacheTime);
+        }
+
+        /**
+         * 判断是否可以更新数据
+         *
+         * @param key
+         * @param cacheTime 缓存时间
+         * @return
+         */
+        private boolean canUpdate(String key, long cacheTime) {
+            if (lastUpdateMap.containsKey(key)) {
+                long lastupdateTime = lastUpdateMap.get(key);
+                if (System.currentTimeMillis() - lastupdateTime > cacheTime) {
+                    lastUpdateMap.remove(key);
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * 保存更新时间
+         *
+         * @param key
+         */
+        private void saveUpdateTime(String key) {
+            if (lastUpdateMap.containsKey(key)) {
+                lastUpdateMap.remove(key);
+            }
+            lastUpdateMap.put(key, System.currentTimeMillis());
+        }
+
+        /**
+         * 从服务器获取用户余额与积分
+         */
+        public void updateUserBalanceAndScoreFromServer() {
+            if (canUpdate("getUserBalanceAndScoreFromServer"))
+                CallAPI.getUserYuEAndJiFen(MyApp.getInstance(), new CallAPI.Callback<Map<String, Object>>() {
+                    @Override
+                    public void onSuccess(Map<String, Object> data) {
+                        CpigeonData.getInstance().setUserBalance((double) data.get("yue"));
+                        CpigeonData.getInstance().setUserScore((int) data.get("jifen"));
+                        saveUpdateTime("getUserBalanceAndScoreFromServer");
+                    }
+
+                    @Override
+                    public void onError(int errorType, Object data) {
+
+                    }
+                });
+        }
+
+        /**
+         * 更新用户签到状态
+         * <p>当签到状态为USER_SIGN_STATUS_SIGNED时，不会更新</p>
+         */
+        public void updateUserSignStatus() {
+            if (canUpdate("updateUserSignStatus") && USER_SIGN_STATUS_SIGNED != mCpigeonData.getUserSignStatus())
+                CallAPI.getUserSignStatus(MyApp.getInstance(), System.currentTimeMillis() / 1000, new CallAPI.Callback<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean data) {
+                        CpigeonData.getInstance().setUserSignStatus(data ? USER_SIGN_STATUS_SIGNED : USER_SIGN_STATUS_NOT_SIGN);
+                        saveUpdateTime("updateUserSignStatus");
+                    }
+
+                    @Override
+                    public void onError(int errorType, Object data) {
+                        CpigeonData.getInstance().setUserSignStatus(USER_SIGN_STATUS_NONE);
+                    }
+                });
+        }
+
+        /**
+         * @param onDataHelperUpdateLisenter
+         */
+        public void updateUserInfo(final OnDataHelperUpdateLisenter<UserInfo.DataBean> onDataHelperUpdateLisenter) {
+            if (canUpdate("updateUserInfo")) {
+                CallAPI.getBasicUserInfo(MyApp.getInstance(), new CallAPI.Callback<UserInfo.DataBean>() {
+                    @Override
+                    public void onSuccess(UserInfo.DataBean data) {
+                        CpigeonData.getInstance().setUserInfo(data);
+                        saveUpdateTime("updateUserInfo");
+                        if (onDataHelperUpdateLisenter != null)
+                            onDataHelperUpdateLisenter.onUpdated(data);
+                    }
+
+                    @Override
+                    public void onError(int errorType, Object data) {
+                        if (onDataHelperUpdateLisenter != null)
+                            onDataHelperUpdateLisenter.onError(OnDataHelperUpdateLisenter.ERR_REQUST_EXCEPTION, "获取用户信息失败");
+                    }
+                });
+            } else {
+                if (onDataHelperUpdateLisenter != null)
+                    onDataHelperUpdateLisenter.onError(OnDataHelperUpdateLisenter.ERR_NOT_NEED_UPDATE, null);
+            }
+        }
+
+        /**
+         * 更新用户绑定手机号码
+         *
+         * @param onCompleteListener
+         */
+        public void updateUserBandPhone(final OnDataHelperUpdateLisenter<String> onCompleteListener) {
+            if (canUpdate("updateUserBandPhone")) {
+
+                CallAPI.getUserBandPhone(MyApp.getInstance(), new CallAPI.Callback<Map<String, Object>>() {
+                    @Override
+                    public void onSuccess(Map<String, Object> data) {
+                        String userPhone = (String) data.get("phone");
+                        if ((int) data.get("band") == 1) {
+                            CpigeonData.getInstance().setUserBindPhone(userPhone);
+                            saveUpdateTime("updateUserBandPhone");
+                            if (onCompleteListener != null)
+                                onCompleteListener.onUpdated(userPhone);
+                            return;
+                        }
+                        if (onCompleteListener != null)
+                            onCompleteListener.onError(OnDataHelperUpdateLisenter.ERR_REQUST_EXCEPTION, "获取绑定号码失败");
+                    }
+
+                    @Override
+                    public void onError(int errorType, Object data) {
+                        if (onCompleteListener != null)
+                            onCompleteListener.onError(OnDataHelperUpdateLisenter.ERR_REQUST_EXCEPTION, "获取绑定号码失败");
+                    }
+                });
+            } else {
+                if (onCompleteListener != null) {
+                    onCompleteListener.onError(OnDataHelperUpdateLisenter.ERR_NOT_NEED_UPDATE, null);
+                }
+            }
+        }
+
+        public interface OnDataHelperUpdateLisenter<T> {
+
+            int ERR_NOT_NEED_UPDATE = 12;
+            int ERR_REQUST_EXCEPTION = 1221;
+
+            void onUpdated(T data);
+
+            void onError(int errortype, String msg);
+        }
+    }
+
 
     public interface OnDataChangedListener {
         void OnDataChanged(CpigeonData cpigeonData);

@@ -16,7 +16,7 @@ public class SetUserPwdPresenter extends BasePresenter<ISetUserPwdView, ISetUser
     private IBaseDao.OnCompleteListener<Boolean> onCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(Boolean data) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -27,7 +27,7 @@ public class SetUserPwdPresenter extends BasePresenter<ISetUserPwdView, ISetUser
 
         @Override
         public void onFail(final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);

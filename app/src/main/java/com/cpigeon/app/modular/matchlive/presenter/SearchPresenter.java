@@ -30,7 +30,7 @@ public class SearchPresenter extends BasePresenter<ISearchView,ISearchHistory> {
 
             @Override
             public void onSuccess(final List<Map<String, Object>> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showLoadSearchResult(data);
@@ -49,7 +49,7 @@ public class SearchPresenter extends BasePresenter<ISearchView,ISearchHistory> {
         mDao.loadSearchHistory(mView.getSearch(), new IBaseDao.OnCompleteListener<List<SearchHistory>>() {
             @Override
             public void onSuccess(final List<SearchHistory> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showLoadSearchHistory(data);

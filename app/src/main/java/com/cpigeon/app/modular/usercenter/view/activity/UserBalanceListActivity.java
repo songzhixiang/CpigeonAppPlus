@@ -2,6 +2,7 @@ package com.cpigeon.app.modular.usercenter.view.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
@@ -16,6 +17,15 @@ import com.cpigeon.app.modular.usercenter.view.adapter.UserBalanceAdapter;
 
 public class UserBalanceListActivity extends BasePageTurnActivity<UserBalanceListPresenter, UserBalanceAdapter, CpigeonRechargeInfo.DataBean>
         implements IUserBalanceListView {
+    BaseQuickAdapter.OnItemClickListener listener = new BaseQuickAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            CpigeonRechargeInfo.DataBean item = ((UserBalanceAdapter) adapter).getData().get(position);
+            if ("待充值".equals(item.getStatusname())) {
+                showTips("点击了" + item.getNumber(), TipType.ToastShort);
+            }
+        }
+    };
 
     @Override
     public UserBalanceListPresenter initPresenter() {
@@ -41,7 +51,9 @@ public class UserBalanceListActivity extends BasePageTurnActivity<UserBalanceLis
 
     @Override
     public UserBalanceAdapter getNewAdapterWithNoData() {
-        return new UserBalanceAdapter(null);
+        UserBalanceAdapter adapter = new UserBalanceAdapter(null);
+        adapter.setOnItemClickListener(listener);
+        return adapter;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
         mDao.getOrderInfoById(orderId, new IBaseDao.OnCompleteListener<CpigeonOrderInfo>() {
             @Override
             public void onSuccess(final CpigeonOrderInfo data) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide);
@@ -48,7 +48,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
 
             @Override
             public void onFail(String msg) {
-                mHandler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mView.showTips(null, IView.TipType.LoadingHide);
@@ -62,7 +62,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
     IBaseDao.OnCompleteListener<Boolean> onPayCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(final Boolean data) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -73,7 +73,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
 
         @Override
         public void onFail(final String msg) {
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips(null, IView.TipType.LoadingHide);
@@ -119,7 +119,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
         mGetWXPrepayOrder.getWXPrepayOrderForOrder(mView.getOrderId(), new IBaseDao.OnCompleteListener<PayReq>() {
             @Override
             public void onSuccess(final PayReq data) {
-                mHandler.postDelayed(
+                postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {
@@ -131,7 +131,7 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
 
             @Override
             public void onFail(final String msg) {
-                mHandler.postDelayed(
+                postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {

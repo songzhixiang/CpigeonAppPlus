@@ -28,7 +28,7 @@ public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
         mDao.loadHomeAd(new IBaseDao.OnCompleteListener<List<HomeAd>>() {
             @Override
             public void onSuccess(final List<HomeAd> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showAd(data);
@@ -47,7 +47,7 @@ public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
         mDao.loadMatchInfo(loadType, new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
             public void onSuccess(final List<MatchInfo> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showMatchLiveData(data,loadType);

@@ -162,6 +162,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
             return;
         }
         loadPayWay();
+        CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
         //加载信息
         if (tvOrderNumberContent != null)
             tvOrderNumberContent.setText(orderInfo.getOrderNumber());

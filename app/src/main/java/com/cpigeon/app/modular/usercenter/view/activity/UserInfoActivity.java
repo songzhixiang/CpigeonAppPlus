@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.presenter.UserInfoPresenter;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IUserInfoView;
@@ -182,7 +183,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements
 
     @Override
     public UserInfoPresenter initPresenter() {
-       return new UserInfoPresenter(this);
+        return new UserInfoPresenter(this);
     }
 
     @Override
@@ -196,8 +197,22 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements
                 finish();
             }
         });
-        if (CpigeonData.getInstance().getUserInfo() == null)
-            mPresenter.loadUserInfo();
+        if (CpigeonData.getInstance().getUserInfo() == null) {
+            showTips("加载信息中...", IView.TipType.LoadingShow);
+            CpigeonData.DataHelper.getInstance().updateUserInfo(new CpigeonData.DataHelper.OnDataHelperUpdateLisenter<UserInfo.DataBean>() {
+                @Override
+                public void onUpdated(UserInfo.DataBean data) {
+                    showTips("", IView.TipType.LoadingHide);
+                    showUserinfo(data);
+                }
+
+                @Override
+                public void onError(int errortype, String msg) {
+                    showTips("", IView.TipType.LoadingHide);
+                    showTips("加载失败", IView.TipType.DialogError);
+                }
+            });
+        }
         displayUserInfo(CpigeonData.getInstance().getUserInfo());
     }
 

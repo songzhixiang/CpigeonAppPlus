@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonRechargeInfo;
 
+import org.xutils.common.Callback;
+
 import java.util.List;
 
 /**
@@ -13,5 +15,5 @@ import java.util.List;
 
 public interface IUserBalanceListDao extends IBaseDao {
 
-    void getUserBalancePage(int pageIndex, int pageSize, @NonNull OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener);
+    Callback.Cancelable getUserBalancePage(int pageIndex, int pageSize, @NonNull OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener);
 }

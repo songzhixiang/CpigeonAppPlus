@@ -35,7 +35,7 @@ public abstract class BaseMVPFragment<Pre extends BasePresenter> extends BaseFra
     @Override
     public void onDestroy() {
         if (isCanDettach() && mPresenter != null && mPresenter.isAttached())
-            mPresenter.dettach();
+            mPresenter.detach();
         super.onDestroy();
     }
 }

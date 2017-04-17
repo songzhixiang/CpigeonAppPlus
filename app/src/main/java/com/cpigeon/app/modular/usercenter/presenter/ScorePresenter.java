@@ -31,13 +31,13 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
     }
 
     @Override
-    public boolean isDettached() {
-        return super.isDettached() && mScoreSub2View == null;
+    public boolean isDetached() {
+        return super.isDetached() && mScoreSub2View == null;
     }
 
     @Override
-    public void dettach() {
-        super.dettach();
+    public void detach() {
+        super.detach();
         mScoreSub2View = null;
     }
 
@@ -54,31 +54,43 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
         @Override
         public void onSuccess(final List<UserScore> data) {
             if (mScoreSub2View == null) return;
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mScoreSub2View.hideRefreshLoading();
-                    mScoreSub2View.showMoreData(data);
+                    if (isAttached()) {
+                        if (mScoreSub2View.isRefreshing()) {
+                            mScoreSub2View.hideRefreshLoading();
+                        } else if (mScoreSub2View.isMoreDataLoading()) {
+                            mScoreSub2View.loadMoreComplete();
+                        }
+                        mScoreSub2View.showMoreData(data);
+                    }
                 }
-            }, 500);
+            }, 300);
         }
 
         @Override
         public void onFail(String msg) {
             if (mScoreSub2View == null) return;
-            mHandler.postDelayed(new Runnable() {
+            postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mScoreSub2View.hideRefreshLoading();
-                    mScoreSub2View.showTips("获取积分记录失败", IView.TipType.View);
+                    if (isAttached()) {
+                        if (mScoreSub2View.isRefreshing()) {
+                            mScoreSub2View.hideRefreshLoading();
+                            mScoreSub2View.showTips("获取积分记录失败", IView.TipType.View);
+                        } else if (mScoreSub2View.isMoreDataLoading()) {
+                            mScoreSub2View.loadMoreFail();
+                        }
+                    }
                 }
-            }, 500);
+            }, 300);
         }
     };
 
     public void loadScoreRecord() {
-        if (mScoreSub2View == null) return;
-//        mScoreSub2View.showTips("", IView.TipType.LoadingShow);
+        if (isDetached()) return;
+        if (mScoreSub2View.getPageIndex() == 1) mScoreSub2View.showRefreshLoading();
         mDao.loadScoreRecord(mScoreSub2View.getPageIndex(), mScoreSub2View.getPageSize(), onCompleteListener);
     }
 }

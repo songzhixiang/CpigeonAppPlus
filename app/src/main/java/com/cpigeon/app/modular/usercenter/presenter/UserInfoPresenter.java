@@ -15,35 +15,12 @@ import java.io.File;
  */
 
 public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao> {
-    private IUserInfoDao.OnLoadCompleteListener onLoadCompleteListener = new IUserInfoDao.OnLoadCompleteListener() {
-        @Override
-        public void onSuccess(final UserInfo.DataBean userinfo) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mView.showUserinfo(userinfo);
-                    mView.showTips("", IView.TipType.LoadingHide);
-                }
-            });
-        }
 
-        @Override
-        public void onError(String msg) {
-            CpigeonData.getInstance().setUserInfo(null);
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mView.showTips("", IView.TipType.LoadingHide);
-                    mView.showTips("加载失败", IView.TipType.DialogError);
-                }
-            });
-        }
-    };
     private IUserInfoDao.OnUpdateUserFaceImageCompleteListener onUpdateUserFaceImageCompleteListener = new IUserInfoDao.OnUpdateUserFaceImageCompleteListener() {
         @Override
         public void onSuccess(String url) {
             if (mView == null) return;
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("更新成功", IView.TipType.ToastShort);
@@ -54,7 +31,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
         @Override
         public void onError(String msg) {
             if (mView == null) return;
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("更新失败", IView.TipType.ToastShort);
@@ -66,7 +43,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
         @Override
         public void onSuccess() {
             if (mView == null) return;
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("更新成功", IView.TipType.ToastShort);
@@ -77,7 +54,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
         @Override
         public void onError(String msg) {
             if (mView == null) return;
-            mHandler.post(new Runnable() {
+            post(new Runnable() {
                 @Override
                 public void run() {
                     mView.showTips("更新失败", IView.TipType.ToastShort);
@@ -93,11 +70,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
     @Override
     protected IUserInfoDao initDao() {
         return new UserInfoDaoImpl();
-    }
-
-    public void loadUserInfo() {
-        mView.showTips("加载信息中...", IView.TipType.LoadingShow);
-        mDao.loadUserInfo(onLoadCompleteListener);
     }
 
     public void updateUserInfo() {

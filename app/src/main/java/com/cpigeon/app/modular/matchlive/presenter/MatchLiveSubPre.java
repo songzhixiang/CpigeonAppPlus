@@ -28,7 +28,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
         mDao.loadXHDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
             public void onSuccess(final List<MatchInfo> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showXHData(data,type);
@@ -51,7 +51,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
         mDao.loadGPDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
             public void onSuccess(final List<MatchInfo> data) {
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         mView.showGPData(data,type);
