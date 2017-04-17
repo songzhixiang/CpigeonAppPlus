@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.matchlive.view.fragment;
+package com.cpigeon.app.modular.matchlive.view.fragment.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IRefresh;
 import com.cpigeon.app.commonstandard.view.activity.IView;

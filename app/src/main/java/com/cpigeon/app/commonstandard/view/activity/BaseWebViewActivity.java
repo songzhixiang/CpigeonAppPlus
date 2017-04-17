@@ -230,7 +230,7 @@ public abstract class BaseWebViewActivity extends BaseActivity {
         if (vTips == null) {
             vTips = vsTip.inflate();
         }
-        vsTip.setVisibility(isError ? View.VISIBLE : View.GONE);
+        vTips.setVisibility(isError ? View.VISIBLE : View.GONE);
         wvWebview.setVisibility(isError ? View.GONE : View.VISIBLE);
     }
 }

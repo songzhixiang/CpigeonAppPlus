@@ -156,7 +156,7 @@ public class MatchReportXH implements Serializable {
         this.speed = speed;
     }
 
-    public String getArea() {
+    public String  getArea() {
         return area;
     }
 

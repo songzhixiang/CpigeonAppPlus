@@ -8,38 +8,37 @@
     app:layout_collapseParallaxMultiplier="1.0">
 
     <LinearLayout
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/pigeons_groups_group_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
             android:text="A组"
             android:textColor="@color/light_black"
             android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
 
         <TextView
             android:id="@+id/pigeons_groups_group_join_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
             android:text="参赛：700羽"
             android:textColor="@color/light_black"
             android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
 
         <TextView
             android:id="@+id/pigeons_groups_group_homing_count"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:padding="@dimen/list_item_pigeons_groups_textview_padding"
             android:text="归巢：500羽"
             android:textColor="@color/light_black"
             android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />

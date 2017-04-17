@@ -1,7 +1,8 @@
 package com.cpigeon.app.modular.matchlive.view.adapter;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -23,7 +24,9 @@ import static com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdap
 
 public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
     String mathType;
-
+    int mc;
+    String name;
+    String footNumber;
     public RaceReportAdapter(String mathType) {
         super(null);
         this.mathType = mathType;
@@ -36,20 +39,54 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
         Logger.d(item);
         switch (helper.getItemViewType()) {
             case TYPE_TITLE:
+                helper.getView(R.id.report_info_item_mc_img).setVisibility(View.GONE);
+                helper.setVisible(R.id.report_info_item_mc,true);
                 if ("xh".equals(mathType)) {
                     MatchTitleXHItem titleItem = (MatchTitleXHItem) item;
-                    helper.setText(R.id.report_info_item_mc, titleItem.getMatchReportXH().getMc() + "");
-                    helper.setText(R.id.report_info_item_xm, titleItem.getMatchReportXH().getName());
-                    helper.setText(R.id.report_info_item_hh, EncryptionTool.decryptAES(titleItem.getMatchReportXH().getFoot()));
+                    mc = titleItem.getMatchReportXH().getMc();
+                    name = titleItem.getMatchReportXH().getName();
+                    footNumber = EncryptionTool.decryptAES(titleItem.getMatchReportXH().getFoot());
+
                 } else {
                     MatchTitleGPItem titleItem = (MatchTitleGPItem) item;
-                    helper.setText(R.id.report_info_item_mc, titleItem.getMatchReportGP().getMc() + "");
-                    helper.setText(R.id.report_info_item_xm, titleItem.getMatchReportGP().getName());
-                    helper.setText(R.id.report_info_item_hh, EncryptionTool.decryptAES(titleItem.getMatchReportGP().getFoot()));
+                    mc = titleItem.getMatchReportGP().getMc();
+                    name = titleItem.getMatchReportGP().getName();
+                    footNumber = EncryptionTool.decryptAES(titleItem.getMatchReportGP().getFoot());
                 }
+                switch (mc)
+                {
+                    case 1:
+                        helper.setVisible(R.id.report_info_item_mc,false);
+                        helper.getView(R.id.report_info_item_mc_img).setVisibility(View.VISIBLE);
+                        helper.setImageResource(R.id.report_info_item_mc_img, R.drawable.svg_ic_order_frist);
+                        break;
+                    case 2:
+                        helper.setVisible(R.id.report_info_item_mc,false);
+                        helper.getView(R.id.report_info_item_mc_img).setVisibility(View.VISIBLE);
+                        helper.setImageResource(R.id.report_info_item_mc_img, R.drawable.svg_ic_order_second);
+                        break;
+                    case 3:
+                        helper.setVisible(R.id.report_info_item_mc,false);
+                        helper.getView(R.id.report_info_item_mc_img).setVisibility(View.VISIBLE);
+                        helper.setImageResource(R.id.report_info_item_mc_img, R.drawable.svg_ic_order_thrid);
+                        break;
+                    default:
+
+                        helper.setText(R.id.report_info_item_mc,mc+"");
+                        break;
+                }
+                helper.setText(R.id.report_info_item_xm, name);
+                helper.setText(R.id.report_info_item_hh, footNumber);
                 break;
             case TYPE_DETIAL:
-
+                final MatchDetialXHItem detialItem = (MatchDetialXHItem) item;
+                helper.setText(R.id.tv_sifangdidian, "会员棚号:" + detialItem.getSubItem(0).getPn());
+                helper.setText(R.id.tv_sifangdidian, "比赛空距:" +detialItem.getSubItem(0).getSp()+"KM");
+                helper.setText(R.id.tv_sifangdidian, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed()+"M");
+                helper.setText(R.id.tv_sifangdidian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
+                helper.setText(R.id.tv_sifangdidian, "登记坐标:" + detialItem.getSubItem(0).getZx()+"/"+detialItem.getSubItem(0).getZy());
+                helper.setText(R.id.tv_sifangdidian, "扫描坐标:" + detialItem.getSubItem(0).getDczx()+"/"+detialItem.getSubItem(0).getDczy());
+                helper.setText(R.id.tv_sifangdidian, "插组报道:" + detialItem.getSubItem(0).CZtoString());
                 break;
         }
     }

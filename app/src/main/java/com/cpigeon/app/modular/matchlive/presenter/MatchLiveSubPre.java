@@ -1,14 +1,11 @@
 package com.cpigeon.app.modular.matchlive.presenter;
 
-import android.os.Handler;
-
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.dao.IMatchInfo;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.MatchInfoImpl;
-import com.cpigeon.app.modular.matchlive.view.fragment.IMatchSubView;
+import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IMatchSubView;
 
 import java.util.List;
 

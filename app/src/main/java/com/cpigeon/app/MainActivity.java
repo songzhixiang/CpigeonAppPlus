@@ -33,6 +33,7 @@ import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.StatusBarTool;
+import com.cpigeon.app.utils.UpdateManager;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     BottomNavigationBar mBottomNavigationBar;
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
+    private UpdateManager mUpdateManager;
     private OnMatchTypeChangeListener onMatchTypeChangeListener;
     private int lastTabIndex = 0;//当前页面索引
     private String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -157,6 +159,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         return null;
     }
 
+
+    public void checkUpData(){
+        //更新检查
+        mUpdateManager = new UpdateManager(mContext);
+        mUpdateManager.setOnInstallAppListener(new UpdateManager.onInstallAppListener() {
+            @Override
+            public void onInstallApp() {
+                mHasUpdata = true;
+            }
+        });
+        mUpdateManager.checkUpdate();
+    }
+
     public void initView() {
 
         MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
@@ -213,6 +228,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
 
         mBottomNavigationBar.setTabSelectedListener(this);
+        if (!BuildConfig.DEBUG){
+            checkUpData();
+        }
+
     }
 
     @Override
@@ -294,7 +313,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void onResume() {
         super.onResume();
         if (mHasUpdata) {
-            CommonTool.exitApp(this);
+            AppManager.getAppManager().AppExit();
         }
 
         StatusBarTool.setWindowStatusBarColor(this, getResources().getColor(lastTabIndex == 3 ? R.color.user_center_header_top : R.color.colorPrimary));
