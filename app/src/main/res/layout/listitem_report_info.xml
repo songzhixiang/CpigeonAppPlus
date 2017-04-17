@@ -1,63 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingTop="@dimen/listitem_report_info_layout_root_paddingtop">
+    android:id="@+id/report_info_item_layout_jyxx"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/listitem_report_info_layout_jyxx_minheight"
+    android:orientation="horizontal"
+    android:paddingTop="4dp">
 
-    <LinearLayout
-        android:id="@+id/report_info_item_layout_jyxx"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/listitem_report_info_layout_jyxx_minheight"
-        android:orientation="horizontal">
+        android:layout_weight="1.7"
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        android:minHeight="@dimen/listitem_report_info_layout_jyxx_minheight">
+
+        <TextView
+            android:id="@+id/report_info_item_mc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.7"
-
-            android:minHeight="@dimen/listitem_report_info_layout_jyxx_minheight">
-
-            <TextView
-                android:id="@+id/report_info_item_mc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize"/>
-
-            <ImageView
-                android:id="@+id/report_info_item_mc_img"
-                android:layout_width="@dimen/listitem_report_info_imageview_jyxx_width"
-                android:layout_height="@dimen/listitem_report_info_imageview_jyxx_height"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/report_info_item_xm"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_centerVertical="true"
             android:gravity="center"
-            android:singleLine="true"
-            android:text="姓名1"
+            android:text="1"
             android:textColor="@color/light_black"
-            android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize"/>
+            android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize" />
 
-        <TextView
-            android:id="@+id/report_info_item_hh"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="2016-22-1234657"
-            android:textColor="@color/light_black"
-            android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/report_info_item_mc_img"
+            android:layout_width="@dimen/listitem_report_info_imageview_jyxx_width"
+            android:layout_height="@dimen/listitem_report_info_imageview_jyxx_height"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
 
+    <TextView
+        android:id="@+id/report_info_item_xm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="姓名1"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize" />
+
+    <TextView
+        android:id="@+id/report_info_item_hh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="2016-22-1234657"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize" />
 </LinearLayout>
+

@@ -263,10 +263,13 @@ public class WebActivity extends BaseActivity {
     private void updateTips(boolean isError) {
         mHasError = isError;
         if (vTips == null) {
+            if (vsTip == null) return;
             vTips = vsTip.inflate();
         }
-        vsTip.setVisibility(isError ? View.VISIBLE : View.GONE);
-        wvWebview.setVisibility(isError ? View.GONE : View.VISIBLE);
+        if (vTips != null)
+            vTips.setVisibility(isError ? View.VISIBLE : View.GONE);
+        if (wvWebview != null)
+            wvWebview.setVisibility(isError ? View.GONE : View.VISIBLE);
     }
 
     @Override

@@ -223,7 +223,7 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
             mAdapter.addData(dataBeen);
 
         canLoadMore = dataBeen != null && dataBeen.size() == getPageSize();
-        Logger.d("canLoadMore=" + canLoadMore);
+        Logger.d("canLoadMore=" + canLoadMore + ";Size=" + (dataBeen == null ? 0 : dataBeen.size()));
         if (canLoadMore) {
             pageindex++;
         } else {
