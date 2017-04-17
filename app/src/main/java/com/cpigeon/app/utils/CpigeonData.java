@@ -13,7 +13,9 @@ import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -34,9 +36,9 @@ public class CpigeonData {
     private String userBindPhone = "";
     private double userBalance = 0d;
     private CpigeonUserServiceInfo userFootSearchServiceInfo;
-    private List<OnWxPayListener> onWxPayListenerList;
+    private List<WeakReference<OnWxPayListener>> onWxPayListenerList;
     private UserInfo.DataBean mCurrUserInfo;
-    private List<OnDataChangedListener> onDataChangedListenerList;
+    private List<WeakReference<OnDataChangedListener>> onDataChangedListenerList;
     // private WeakReference<List<OnWxPayListener>> onWxPayListenerListRef;
 
     private int mSignStatus = USER_SIGN_STATUS_NONE;
@@ -228,6 +230,13 @@ public class CpigeonData {
                 }
             }
         }
+        //清理为空的引用
+        Iterator<WeakReference<OnWxPayListener>> iterator = onWxPayListenerList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<OnWxPayListener> ref = iterator.next();
+            if (ref.get() == null)
+                iterator.remove();
+        }
     }
 
     /**
@@ -238,7 +247,7 @@ public class CpigeonData {
     public void addOnWxPayListener(OnWxPayListener onWxPayListener) {
         initWxPayListenerListRef();
         synchronized (this) {
-            this.onWxPayListenerList.add(onWxPayListener);
+            this.onWxPayListenerList.add(new WeakReference<OnWxPayListener>(onWxPayListener));
         }
     }
 
@@ -262,8 +271,9 @@ public class CpigeonData {
     public void onWxPay(Context context, int wxPayReturnCode) {
         if (context instanceof IWXAPIEventHandler) {
             if (this.onWxPayListenerList == null || onWxPayListenerList == null) return;
-            for (OnWxPayListener listener : this.onWxPayListenerList) {
-                listener.onPayFinished(wxPayReturnCode);
+            for (WeakReference<OnWxPayListener> ref : this.onWxPayListenerList) {
+                if (ref.get() != null)
+                    ref.get().onPayFinished(wxPayReturnCode);
             }
         } else {
             Log.e("ERROR", "onWxPay called error");
@@ -275,8 +285,9 @@ public class CpigeonData {
      */
     private void triggerOnDataChanged() {
         if (onDataChangedListenerList == null || !dataIsChanged) return;
-        for (OnDataChangedListener listener : onDataChangedListenerList) {
-            listener.OnDataChanged(this);
+        for (WeakReference<OnDataChangedListener> listener : onDataChangedListenerList) {
+            if (listener.get() != null)
+                listener.get().OnDataChanged(this);
         }
         dataIsChanged = false;
     }
@@ -292,6 +303,13 @@ public class CpigeonData {
                 }
             }
         }
+        //清理为空的引用
+        Iterator<WeakReference<OnDataChangedListener>> iterator = onDataChangedListenerList.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<OnDataChangedListener> ref = iterator.next();
+            if (ref.get() == null)
+                iterator.remove();
+        }
     }
 
     /**
@@ -302,7 +320,7 @@ public class CpigeonData {
     public void addOnDataChangedListener(OnDataChangedListener onDataChangedListener) {
         initOnDataChangedListRef();
         synchronized (this) {
-            this.onDataChangedListenerList.add(onDataChangedListener);
+            this.onDataChangedListenerList.add(new WeakReference<OnDataChangedListener>(onDataChangedListener));
         }
     }
 
@@ -311,7 +329,7 @@ public class CpigeonData {
      *
      * @param
      */
-    public void removeOnDataChangedListener(OnDataChangedListener onDataChangedListener) {
+    private void removeOnDataChangedListener(OnDataChangedListener onDataChangedListener) {
         initOnDataChangedListRef();
         synchronized (this) {
             this.onDataChangedListenerList.remove(onDataChangedListener);
@@ -346,21 +364,21 @@ public class CpigeonData {
      */
     public static class DataHelper {
         WeakHashMap<String, Long> lastUpdateMap = new WeakHashMap<>();
-        static DataHelper mDataHelper;
+        static WeakReference<DataHelper> mDataHelperRef;
         long cacheTime = 1000 * 90;
 
         private DataHelper() {
         }
 
         public static DataHelper getInstance() {
-            if (mDataHelper == null) {
+            if (mDataHelperRef == null || mDataHelperRef.get() == null) {
                 synchronized (DataHelper.class) {
-                    if (mDataHelper == null) {
-                        mDataHelper = new DataHelper();
+                    if (mDataHelperRef == null || mDataHelperRef.get() == null) {
+                        mDataHelperRef = new WeakReference(new DataHelper());
                     }
                 }
             }
-            return mDataHelper;
+            return mDataHelperRef.get();
         }
 
         /**

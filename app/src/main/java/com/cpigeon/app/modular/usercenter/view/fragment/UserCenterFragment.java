@@ -223,6 +223,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
+//        mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
     }
 }

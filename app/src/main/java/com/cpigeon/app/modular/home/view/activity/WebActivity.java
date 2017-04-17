@@ -75,7 +75,7 @@ public class WebActivity extends BaseActivity {
     @Override
     public void initView() {
         setSupportActionBar(this.toolbar);
-        toolbar.setTitle("");
+        setToolbarTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,13 +132,15 @@ public class WebActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress == 100) {
-                    pbProgressbar.setVisibility(View.GONE);
-                } else {
-                    if (View.GONE == pbProgressbar.getVisibility()) {
-                        pbProgressbar.setVisibility(View.VISIBLE);
+                if (pbProgressbar != null) {
+                    if (newProgress == 100) {
+                        pbProgressbar.setVisibility(View.GONE);
+                    } else {
+                        if (View.GONE == pbProgressbar.getVisibility()) {
+                            pbProgressbar.setVisibility(View.VISIBLE);
+                        }
+                        pbProgressbar.setProgress(newProgress);
                     }
-                    pbProgressbar.setProgress(newProgress);
                 }
                 super.onProgressChanged(view, newProgress);
             }
@@ -161,7 +163,7 @@ public class WebActivity extends BaseActivity {
                 Logger.i("get start url地址----------：" + url);
                 //这里可以用来判断页面加载前的url地址，等 ，也可以在这里来启动一个progressbar,用来显示正在加载。
 //                ((CommonTitleBar) mTitleBar).setTitleText("加载中");
-                toolbar.setTitle("加载中");
+                setToolbarTitle("加载中");
                 updateTips(false);
                 mIsTimeout = false;
                 if (timeoutCountDownTimer != null) {
@@ -202,15 +204,15 @@ public class WebActivity extends BaseActivity {
 
                 if (mIsTimeout) {
 //                    ((CommonTitleBar) mTitleBar).setTitleText("超时");
-                    toolbar.setTitle("超时");
+                    setToolbarTitle("超时");
                     updateTips(true);
                 } else if (mHasError) {
 //                    ((CommonTitleBar) mTitleBar).setTitleText("出错了");
-                    toolbar.setTitle("出错了");
+                    setToolbarTitle("出错了");
                     updateTips(true);
                 } else {
 //                    ((CommonTitleBar) mTitleBar).setTitleText(view.getTitle());
-                    toolbar.setTitle(view.getTitle());
+                    setToolbarTitle(view.getTitle());
                     updateTips(false);
                 }
                 Logger.i(url);
@@ -250,6 +252,12 @@ public class WebActivity extends BaseActivity {
             }
 
         });
+    }
+
+    //设置toolbar标题
+    public void setToolbarTitle(String title) {
+        if (toolbar == null) return;
+        toolbar.setTitle(title);
     }
 
     private void updateTips(boolean isError) {

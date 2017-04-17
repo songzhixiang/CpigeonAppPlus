@@ -9,20 +9,22 @@ import android.util.Log;
 import com.cpigeon.app.networkstatus.NetChangeObserver;
 import com.cpigeon.app.utils.NetUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- *
  * Created by Administrator on 2017/4/6.
  */
 
 public class NetStateReceiver extends BroadcastReceiver {
-    public static final String CUSTOM_ANDROID_NET_CHANGE_ACTION ="com.andysong.api.netstatus.CONNECTIVITY_CHANGE";
+    public static final String CUSTOM_ANDROID_NET_CHANGE_ACTION = "com.andysong.api.netstatus.CONNECTIVITY_CHANGE";
     private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private final static String TAG = NetStateReceiver.class.getSimpleName();
     private static boolean isNetAvailable = false;
     private static NetUtils.NetType mNetType;
-    private static ArrayList<NetChangeObserver> mNetChangeObservers = new ArrayList<NetChangeObserver>();
+    private static List<WeakReference<NetChangeObserver>> mNetChangeObservers;
     private static BroadcastReceiver mBroadcastReceiver;
 
     private static BroadcastReceiver getReceiver() {
@@ -30,10 +32,23 @@ public class NetStateReceiver extends BroadcastReceiver {
             synchronized (NetStateReceiver.class) {
                 if (null == mBroadcastReceiver) {
                     mBroadcastReceiver = new NetStateReceiver();
+                    initNetChangeObservers();
                 }
             }
         }
         return mBroadcastReceiver;
+    }
+
+    private static void initNetChangeObservers() {
+        if (mNetChangeObservers == null)
+            mNetChangeObservers = new ArrayList<>();
+        //清理为空的引用
+        Iterator<WeakReference<NetChangeObserver>> iterator = mNetChangeObservers.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<NetChangeObserver> ref = iterator.next();
+            if (ref.get() == null)
+                iterator.remove();
+        }
     }
 
     @Override
@@ -51,6 +66,7 @@ public class NetStateReceiver extends BroadcastReceiver {
             notifyObserver();
         }
     }
+
     /**
      * 注册
      *
@@ -102,7 +118,7 @@ public class NetStateReceiver extends BroadcastReceiver {
         if (!mNetChangeObservers.isEmpty()) {
             int size = mNetChangeObservers.size();
             for (int i = 0; i < size; i++) {
-                NetChangeObserver observer = mNetChangeObservers.get(i);
+                NetChangeObserver observer = mNetChangeObservers.get(i).get();
                 if (observer != null) {
                     if (isNetworkAvailable()) {
                         observer.onNetConnected(mNetType);
@@ -120,22 +136,20 @@ public class NetStateReceiver extends BroadcastReceiver {
      * @param observer
      */
     public static void registerObserver(NetChangeObserver observer) {
-        if (mNetChangeObservers == null) {
-            mNetChangeObservers = new ArrayList<NetChangeObserver>();
-        }
-        mNetChangeObservers.add(observer);
+        initNetChangeObservers();
+        mNetChangeObservers.add(new WeakReference<NetChangeObserver>(observer));
     }
 
-    /**
-     * 移除网络监听
-     *
-     * @param observer
-     */
-    public static void removeRegisterObserver(NetChangeObserver observer) {
-        if (mNetChangeObservers != null) {
-            if (mNetChangeObservers.contains(observer)) {
-                mNetChangeObservers.remove(observer);
-            }
-        }
-    }
+//    /**
+//     * 移除网络监听
+//     *
+//     * @param observer
+//     */
+//    public static void removeRegisterObserver(NetChangeObserver observer) {
+//        if (mNetChangeObservers != null) {
+//            if (mNetChangeObservers.contains(observer)) {
+//                mNetChangeObservers.remove(observer);
+//            }
+//        }
+//    }
 }
