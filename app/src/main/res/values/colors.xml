@@ -36,7 +36,7 @@
     <color name="svg_icon_light_gray">#a6aaaf</color>
     <!--图标颜色 end-->
 
-
+    <color name="transparent">#00000000</color>
     <color name="colorButton_secondary_disable">#7dbafa</color>
     <color name="colorButton_secondary_normal">#3e9cfc</color>
     <color name="colorButton_secondary_focus">#1989fc</color>

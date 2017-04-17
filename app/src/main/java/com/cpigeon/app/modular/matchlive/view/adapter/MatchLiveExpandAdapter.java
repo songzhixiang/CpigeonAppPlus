@@ -78,7 +78,6 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 helper.setText(R.id.tv_weather, "天气:" + detialItem.getSubItem(0).getTq());
                 helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
                 helper.setText(R.id.tv_sifangzuobiao, "司放坐标:" + detialItem.getSubItem(0).computerSFZB());
-                helper.addOnClickListener(R.id.matchlive_details);
                 break;
         }
     }

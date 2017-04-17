@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/4/8.
  */
 
-public class FootSearchResultFragment extends Fragment {
+public class FootSearchResultFragment extends BaseFragment {
     private static final String BUNDLE_FOOT_QUERY_RESULT = "result_data";
     @BindView(R.id.tv_card_title_foot)
     TextView tvCardTitleFoot;
@@ -63,27 +64,9 @@ public class FootSearchResultFragment extends Fragment {
 
     private FootQueryResult mFootQueryResult;
 
-    private View mView;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_footsearch_result, container, false);
-        ButterKnife.bind(this, mView);
-        showData();
-        return mView;
-    }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mFootQueryResult = (FootQueryResult) bundle.getSerializable(BUNDLE_FOOT_QUERY_RESULT);
-        }
-    }
-
-    private void showData() {
+    protected void initView(View view) {
         if (mFootQueryResult != null) {
             tvCardContentFoot.setText(mFootQueryResult.getFoot());
             tvCardContentXm.setText(mFootQueryResult.getXmmc());
@@ -98,6 +81,20 @@ public class FootSearchResultFragment extends Fragment {
             } else {
                 layoutName.setVisibility(View.GONE);
             }
+        }
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_footsearch_result;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mFootQueryResult = (FootQueryResult) bundle.getSerializable(BUNDLE_FOOT_QUERY_RESULT);
         }
     }
 

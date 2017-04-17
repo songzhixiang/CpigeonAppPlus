@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.cpigeon.app.utils.customview.SearchEditText
+            android:id="@+id/searchEditText_race_detial"
+            style="@style/searchedittextstyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_margin="8dp"
+            android:hint="@string/serach_name_or_footnumber"
+            app:search_gravity="left"/>
+        <LinearLayout
+            android:id="@+id/layout_list_table_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlue"
+            android:minHeight="@dimen/list_header_race_detial_layout_tableheader_minheight"
+            android:orientation="horizontal">
+
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/list_header_race_detial_table_header_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/ranking_temp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
+
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/list_header_race_detial_table_header_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
+
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/list_header_race_detial_table_header_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/foot_number"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
+        </LinearLayout>
+        <include layout="@layout/layout_com_swiperefreshlayout_recyclerview"/>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

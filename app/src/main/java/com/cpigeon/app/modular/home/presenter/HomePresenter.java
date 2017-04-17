@@ -50,7 +50,16 @@ public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
                 post(new Runnable() {
                     @Override
                     public void run() {
-                        mView.showMatchLiveData(data,loadType);
+
+                        switch (loadType)
+                        {
+                            case 0:
+                                mView.showMatchGPLiveData(data,loadType);
+                                break;
+                            case 1:
+                                mView.showMatchXhLiveData(data,loadType);
+                                break;
+                        }
                     }
                 });
             }

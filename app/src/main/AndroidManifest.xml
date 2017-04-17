@@ -115,6 +115,10 @@
             android:name=".modular.usercenter.view.activity.BalanceActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".modular.matchlive.view.activity.RaceReportActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+
         <activity
             android:name=".modular.usercenter.view.activity.UserBalanceRechargeActivity"
             android:launchMode="singleTask"

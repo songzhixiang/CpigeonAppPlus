@@ -12,5 +12,7 @@ import java.util.List;
 
 public interface IHomeView extends IView{
     void showAd(List<HomeAd> homeAdList);
-    void showMatchLiveData(List<MatchInfo> list,int type);
+    void showMatchGPLiveData(List<MatchInfo> list,int type);
+    void showMatchXhLiveData(List<MatchInfo> list,int type);
+
 }

@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseMVPFragment;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
@@ -45,7 +47,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/4/6.
  */
 
-public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements IHomeView {
+public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHomeView {
     @BindView(R.id.search_edittext)
     SearchEditText searchEdittext;
     @BindView(R.id.home_banner)
@@ -58,10 +60,20 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
     LinearLayout layoutZhcx;
     @BindView(R.id.layout_wdsc)
     LinearLayout layoutWdsc;
-    @BindView(R.id.recyclerview_home)
-    RecyclerView recyclerviewHome;
+    @BindView(R.id.iv_actionbar_logo)
+    ImageView ivActionbarLogo;
+    @BindView(R.id.imageView3)
+    ImageView imageView3;
+    @BindView(R.id.tv_raceinfo_gp_count)
+    TextView tvRaceinfoGpCount;
+    @BindView(R.id.recyclerview_home_gp)
+    RecyclerView recyclerviewHomeGp;
+    @BindView(R.id.tv_raceinfo_xh_count)
+    TextView tvRaceinfoXhCount;
+    @BindView(R.id.recyclerview_home_xh)
+    RecyclerView recyclerviewHomeXh;
+
     private HomeAdapter mAdapter;
-    private List<HomeAd> homeAdList;
 
     @Override
     protected void initView(View view) {
@@ -76,11 +88,6 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_home;
-    }
-
-    @Override
-    protected void lazyLoad() {
-
     }
 
 
@@ -200,11 +207,27 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
     }
 
     @Override
-    public void showMatchLiveData(List<MatchInfo> list, int type) {
-        mAdapter = new HomeAdapter(list, type);
-        recyclerviewHome.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerviewHome.setAdapter(mAdapter);
+    public void showMatchGPLiveData(List<MatchInfo> list, int type) {
+        if (list!=null&&list.size()>0) {
+            tvRaceinfoGpCount.setText(String.format("正在直播%d场", list.size()));
+            mAdapter = new HomeAdapter(list, type);
+            recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerviewHomeGp.setAdapter(mAdapter);
+        }
     }
+
+    @Override
+    public void showMatchXhLiveData(List<MatchInfo> list, int type) {
+        if (list!=null&&list.size()>0){
+            tvRaceinfoXhCount.setText(String.format("正在直播%d场", list.size()));
+            mAdapter = new HomeAdapter(list, type);
+            recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerviewHomeXh.setAdapter(mAdapter);
+
+        }
+
+    }
+
 
     @Override
     public void onStart() {
@@ -227,6 +250,7 @@ public class HomeFragment extends BaseLazyLoadFragment<HomePresenter> implements
     protected boolean isCanDettach() {
         return true;
     }
+
 
     private class XutilsImageLoader extends ImageLoader {
 

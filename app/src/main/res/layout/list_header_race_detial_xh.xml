@@ -1,82 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/colorWhite"
-              android:minHeight="@dimen/list_header_race_detial_layout_root_minheight"
-              android:orientation="vertical">
-
-
-    <com.cpigeon.app.utils.customview.SearchEditText
-        android:id="@+id/searchEditText_race_detial"
-        style="@style/searchedittextstyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/search_edittext_height"
-
-        android:layout_marginLeft="@dimen/search_edittext_marginleft"
-        android:layout_marginRight="@dimen/search_edittext_marginright"
-        android:layout_marginTop="@dimen/search_edittext_margintop"
-        android:hint="@string/serach_name_or_footnumber"
-        app:search_gravity="left"/>
-
-    <LinearLayout
-        android:id="@+id/layout_data_type_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/search_edittext_marginbottom"
-        android:background="@color/colorWhite"
-        android:layout_marginTop="@dimen/search_edittext_margintop"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/list_header_race_detial_layout_datatype_minheight"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/list_header_race_detial_data_1"
-                style="@style/raceDetialDataType"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:text="@string/report_data"
-                />
-
-            <TextView
-                android:id="@+id/list_header_race_detial_data_2"
-                style="@style/raceDetialDataType"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:text="@string/report_group"/>
-
-            <TextView
-                android:id="@+id/list_header_race_detial_data_3"
-                style="@style/raceDetialDataType"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:text="@string/pigeons_data"/>
-
-            <TextView
-                android:id="@+id/list_header_race_detial_data_4"
-                style="@style/raceDetialDataType"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:text="@string/cage_group"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/split_line_width"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorLayoutSplitLineGray"></View>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:minHeight="@dimen/list_header_race_detial_layout_root_minheight"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/race_detial_info_match_name_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_header_race_detial_layout_racename_height">
+        android:layout_height="40dp">
 
         <ImageView
             android:id="@+id/race_detial_info_detial_show"
@@ -84,8 +18,8 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/list_header_race_detial_imageview_racedetialshow_marginright"
-            app:srcCompat="@drawable/svg_ic_down_stroke_gray"/>
+            android:layout_marginRight="8dp"
+            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
             android:id="@+id/race_detial_info_textview_racename"
@@ -97,7 +31,7 @@
             android:gravity="center"
             android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
             android:textColor="@color/light_black"
-            android:textSize="@dimen/list_header_race_detial_textview_racename_textsize"/>
+            android:textSize="@dimen/list_header_race_detial_textview_racename_textsize" />
 
         <View
             android:layout_width="match_parent"
@@ -134,14 +68,14 @@
                     style="@style/report_info_detial_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pigeon_special_words_race_detial_area"/>
+                    android:text="@string/pigeon_special_words_race_detial_area" />
 
                 <TextView
                     android:id="@+id/race_detial_match_info_content_area"
                     style="@style/report_info_detial_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="四川成都"/>
+                    android:text="四川成都" />
             </LinearLayout>
 
             <LinearLayout
@@ -156,14 +90,14 @@
                     style="@style/report_info_detial_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pigeon_special_words_race_detial_ckkj"/>
+                    android:text="@string/pigeon_special_words_race_detial_ckkj" />
 
                 <TextView
                     android:id="@+id/race_detial_match_info_content_kj"
                     style="@style/report_info_detial_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="359.256KM"/>
+                    android:text="359.256KM" />
             </LinearLayout>
         </LinearLayout>
 
@@ -185,14 +119,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/pigeon_special_words_race_detial_sfys"/>
+                    android:text="@string/pigeon_special_words_race_detial_sfys" />
 
                 <TextView
                     android:id="@+id/race_detial_match_info_content_slys"
                     style="@style/report_info_detial_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5868羽"/>
+                    android:text="5868羽" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,14 +141,14 @@
                     style="@style/report_info_detial_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pigeon_special_words_race_detial_tq"/>
+                    android:text="@string/pigeon_special_words_race_detial_tq" />
 
                 <TextView
                     android:id="@+id/race_detial_match_info_content_tq"
                     style="@style/report_info_detial_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="多云转阴"/>
+                    android:text="多云转阴" />
             </LinearLayout>
 
 
@@ -230,14 +164,14 @@
                 style="@style/report_info_detial_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pigeon_special_words_race_detial_sfsj"/>
+                android:text="@string/pigeon_special_words_race_detial_sfsj" />
 
             <TextView
                 android:id="@+id/race_detial_match_info_content_st"
                 style="@style/report_info_detial_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2016-11-25 09:33:33"/>
+                android:text="2016-11-25 09:33:33" />
         </LinearLayout>
 
 
@@ -252,14 +186,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="@string/pigeon_special_words_race_detial_sfzb"/>
+                android:text="@string/pigeon_special_words_race_detial_sfzb" />
 
             <TextView
                 android:id="@+id/race_detial_match_info_content_jwd"
                 style="@style/report_info_detial_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="116.493383/23.340760"/>
+                android:text="116.493383/23.340760" />
 
         </LinearLayout>
 
@@ -289,56 +223,7 @@
             android:minHeight="@dimen/list_header_race_detial_gg_minheight"
             android:text="公告："
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize"/>
+            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_list_table_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlue"
-        android:minHeight="@dimen/list_header_race_detial_layout_tableheader_minheight"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/list_header_race_detial_table_header_1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.7"
-            android:gravity="center"
-            android:text="@string/ranking_temp"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
-
-        <TextView
-            android:id="@+id/list_header_race_detial_table_header_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:text="@string/name"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
-
-        <TextView
-            android:id="@+id/list_header_race_detial_table_header_3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:text="@string/foot_number"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"/>
-
-        <TextView
-            android:id="@+id/list_header_race_detial_table_header_4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.7"
-            android:gravity="center"
-            android:text="@string/uniform_ranking"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize"
-            android:visibility="gone"/>
-    </LinearLayout>
 </LinearLayout>

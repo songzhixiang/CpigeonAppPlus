@@ -50,6 +50,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
                 post(new Runnable() {
                     @Override
                     public void run() {
+                        mView.showTips(null, IView.TipType.LoadingHide);
                         mView.queryFoot(data);
                     }
                 });

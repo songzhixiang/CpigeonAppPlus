@@ -18,11 +18,14 @@ import java.util.List;
 
 public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
 
+
+
     public MatchLiveSubPre(IMatchSubView mView) {
         super(mView);
     }
 
     public void loadXHData(final int type) {
+        mView.showRefreshLoading();
         // 0 加载协会数据，显示
         // 1 加载协会数据，不显示
         mDao.loadXHDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
@@ -31,6 +34,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
                 post(new Runnable() {
                     @Override
                     public void run() {
+                        mView.hideRefreshLoading();
                         mView.showXHData(data,type);
                     }
                 });
@@ -46,6 +50,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
     }
 
     public void loadGPData(final int type) {
+        mView.showRefreshLoading();
         // 0 加载公棚数据，显示
         // 1 加载公棚数据，不显示
         mDao.loadGPDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
@@ -54,6 +59,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
                 post(new Runnable() {
                     @Override
                     public void run() {
+                        mView.hideRefreshLoading();
                         mView.showGPData(data,type);
                     }
                 });
