@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.cpigeon.app.utils.customview.SearchEditText
-        android:id="@+id/searchEditText_race_detial"
-        style="@style/searchedittextstyle"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_margin="8dp"
-        android:hint="@string/serach_name_or_footnumber"
-        app:search_gravity="left" />
-
     <LinearLayout
         android:id="@+id/layout_list_table_header"
         android:layout_width="match_parent"

@@ -32,9 +32,9 @@ import butterknife.BindView;
 
 public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter extends BaseQuickAdapter<DataBean, BaseViewHolder>, DataBean> extends BaseLazyLoadFragment<Pre> implements IPageTurn<DataBean>, IRefresh, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+   protected RecyclerView recyclerview;
     @BindView(R.id.swiperefreshlayout)
-    SwipeRefreshLayout swiperefreshlayout;
+   protected SwipeRefreshLayout swiperefreshlayout;
     @BindView(R.id.viewstub_empty)
     ViewStub viewstubEmpty;
     View mEmptyTip;

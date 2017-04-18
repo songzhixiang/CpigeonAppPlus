@@ -2,67 +2,62 @@ package com.cpigeon.app.modular.matchlive.presenter;
 
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.activity.IView;
-import com.cpigeon.app.modular.matchlive.model.dao.IRaceReportDao;
-import com.cpigeon.app.modular.matchlive.model.daoimpl.RaceReportDaoImpl;
-import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
-import com.cpigeon.app.modular.matchlive.view.fragment.IReportData;
+import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
+import com.cpigeon.app.modular.matchlive.model.dao.IRaceReport;
+import com.cpigeon.app.modular.matchlive.model.daoimpl.IRaceReportImpl;
+import com.cpigeon.app.modular.matchlive.view.activity.IRaceReportView;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/4/17.
+ * Created by Administrator on 2017/4/18.
  */
 
-public class RaceReportPre extends BasePresenter<IReportData, IRaceReportDao> {
-    public RaceReportPre(IReportData mView) {
+public class RaceReportPre extends BasePresenter<IRaceReportView,IRaceReport> {
+    public RaceReportPre(IRaceReportView mView) {
         super(mView);
     }
 
-    @Override
-    protected IRaceReportDao initDao() {
-        return new RaceReportDaoImpl();
+
+    public void showBulletin()
+    {
+        if (isAttached())
+        {
+            mDao.updateBulletin(mView.getLx(), mView.getSsid(), new IBaseDao.OnCompleteListener<List<Bulletin>>() {
+                @Override
+                public void onSuccess(List<Bulletin> data) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isAttached())
+
+                                mDao.queryBulletin(mView.getSsid(), new IBaseDao.OnCompleteListener<Bulletin>() {
+                                @Override
+                                public void onSuccess(Bulletin data) {
+                                    mView.showBulletin(data);
+                                }
+
+                                @Override
+                                public void onFail(String msg) {
+
+                                }
+                            });
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onFail(String msg) {
+
+                }
+            });
+        }
     }
 
-    public void loadRaceData() {
-        mDao.showReprotData(mView.getMatchType(), mView.getSsid(), mView.getFoot(), mView.getName(),
-                mView.hascz(), mView.getPageIndex(), mView.getPageSize(), mView.czIndex(), mView.sKey(), new IBaseDao.OnCompleteListener<List>() {
-                    @Override
-                    public void onSuccess(final List data) {
-                        if (isAttached()) {
-                            final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? RaceReportAdapter.getXH(data) : RaceReportAdapter.getGP(data);
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isRefreshing())
-                                            mView.hideRefreshLoading();
-                                        else if (mView.isMoreDataLoading())
-                                            mView.loadMoreComplete();
-                                        mView.showMoreData(d);
-                                    }
-                                }
-                            }, 300);
-                        }
-                    }
-
-                    @Override
-                    public void onFail(String msg) {
-                        if (isAttached())
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isRefreshing()) {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("加载失败", IView.TipType.View);
-                                        } else if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreFail();
-                                        }
-                                    }
-                                }
-                            }, 300);
-                    }
-                });
+    @Override
+    protected IRaceReport initDao() {
+        return new IRaceReportImpl();
     }
 }

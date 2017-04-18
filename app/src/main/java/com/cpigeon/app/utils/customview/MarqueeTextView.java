@@ -1,6 +1,7 @@
 package com.cpigeon.app.utils.customview;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -8,7 +9,7 @@ import android.widget.TextView;
  * Created by Administrator on 2016/11/21.
  */
 
-public class MarqueeTextView extends TextView {
+public class MarqueeTextView extends AppCompatTextView {
 
     public MarqueeTextView(Context context) {
         super(context);

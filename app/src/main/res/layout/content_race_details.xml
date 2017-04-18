@@ -20,6 +20,28 @@
         app:stl_indicatorInterpolation="smart"
         app:stl_indicatorThickness="3dp"
         app:stl_underlineColor="@color/transparent"/>
+    <LinearLayout
+        android:id="@+id/layout_gg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_layout_gg"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/list_header_race_detial_layout_gg_paddingbottom"
+        android:paddingLeft="@dimen/list_header_race_detial_layout_gg_paddingleft"
+        android:paddingRight="@dimen/list_header_race_detial_layout_gg_paddingright"
+        android:paddingTop="@dimen/list_header_race_detial_layout_gg_paddingtop">
+
+        <com.cpigeon.app.utils.customview.MarqueeTextView
+            android:id="@+id/list_header_race_detial_gg"
+            style="@style/Marquee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/list_header_race_detial_gg_minheight"
+            android:text="公告："
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize"/>
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/race_report_viewpager"

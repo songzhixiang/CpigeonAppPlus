@@ -25,50 +25,70 @@ public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
 
     public void laodAd()
     {
-        mDao.loadHomeAd(new IBaseDao.OnCompleteListener<List<HomeAd>>() {
-            @Override
-            public void onSuccess(final List<HomeAd> data) {
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.showAd(data);
-                    }
-                });
-            }
+        if (isAttached())
+        {
+            mDao.loadHomeAd(new IBaseDao.OnCompleteListener<List<HomeAd>>() {
+                @Override
+                public void onSuccess(final List<HomeAd> data) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isAttached())
+                            {
+                                mView.showAd(data);
+                            }
 
-            @Override
-            public void onFail(String msg) {
+                        }
+                    });
+                }
 
-            }
-        });
+                @Override
+                public void onFail(String msg) {
+
+                }
+            });
+        }
+
     }
     public void loadMatchInfo(final int loadType)
     {
-        mDao.loadMatchInfo(loadType, new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
-            @Override
-            public void onSuccess(final List<MatchInfo> data) {
-                post(new Runnable() {
-                    @Override
-                    public void run() {
+        if (isAttached())
+        {
+            mDao.loadMatchInfo(loadType, new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
+                @Override
+                public void onSuccess(final List<MatchInfo> data) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        switch (loadType)
-                        {
-                            case 0:
-                                mView.showMatchGPLiveData(data,loadType);
-                                break;
-                            case 1:
-                                mView.showMatchXhLiveData(data,loadType);
-                                break;
+                            switch (loadType)
+                            {
+                                case 0:
+                                    if (isAttached())
+                                    {
+                                        mView.showMatchGPLiveData(data,loadType);
+                                    }
+
+                                    break;
+                                case 1:
+                                    if (isAttached())
+                                    {
+                                        mView.showMatchXhLiveData(data,loadType);
+                                    }
+
+                                    break;
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-            @Override
-            public void onFail(String msg) {
+                @Override
+                public void onFail(String msg) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
     @Override

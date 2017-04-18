@@ -24,25 +24,36 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
     }
 
     public void loadUserServiceInfo() {
-        mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
-            @Override
-            public void onSuccess(final CpigeonUserServiceInfo data) {
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.getFootSearchService(data);
-                    }
-                });
-            }
+        if (isAttached())
+        {
+            mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
+                @Override
+                public void onSuccess(final CpigeonUserServiceInfo data) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isAttached())
+                            {
+                                mView.getFootSearchService(data);
+                            }
 
-            @Override
-            public void onFail(String msg) {
+                        }
+                    });
+                }
 
-            }
-        });
+                @Override
+                public void onFail(String msg) {
+
+                }
+            });
+        }
+
     }
 
     public org.xutils.common.Callback.Cancelable queryFoot() {
+        if (isDetached()) {
+            return null;
+        }
         mView.showTips("搜索中...", IView.TipType.LoadingShow);
         return mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
@@ -50,8 +61,12 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
                 post(new Runnable() {
                     @Override
                     public void run() {
-                        mView.showTips(null, IView.TipType.LoadingHide);
-                        mView.queryFoot(data);
+                        if (isAttached())
+                        {
+                            mView.showTips(null, IView.TipType.LoadingHide);
+                            mView.queryFoot(data);
+                        }
+
                     }
                 });
             }
@@ -61,6 +76,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
 
             }
         });
+
     }
 
 

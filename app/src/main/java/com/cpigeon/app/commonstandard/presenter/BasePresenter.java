@@ -120,7 +120,7 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
      * @param r
      */
     public void post(@NonNull Runnable r) {
-        if (mHandler == null || r == null) return;
+        if (mHandler == null || r == null || isDetached()) return;
         mHandler.post(r);
     }
 
@@ -131,7 +131,7 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
      * @param delayMillis
      */
     public void postDelayed(@NonNull Runnable r, long delayMillis) {
-        if (mHandler == null || r == null) return;
+        if (mHandler == null || r == null || isDetached()) return;
         mHandler.postDelayed(r, delayMillis);
     }
 }

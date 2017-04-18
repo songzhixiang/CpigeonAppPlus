@@ -196,34 +196,7 @@
                 android:text="116.493383/23.340760" />
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/split_line_width"
-            android:background="@color/colorLayoutSplitLineGray"></View>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_gg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_layout_gg"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/list_header_race_detial_layout_gg_paddingbottom"
-        android:paddingLeft="@dimen/list_header_race_detial_layout_gg_paddingleft"
-        android:paddingRight="@dimen/list_header_race_detial_layout_gg_paddingright"
-        android:paddingTop="@dimen/list_header_race_detial_layout_gg_paddingtop">
-
-        <com.cpigeon.app.utils.customview.MarqueeTextView
-            android:id="@+id/list_header_race_detial_gg"
-            style="@style/Marquee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/list_header_race_detial_gg_minheight"
-            android:text="公告："
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize" />
-    </LinearLayout>
 
 </LinearLayout>

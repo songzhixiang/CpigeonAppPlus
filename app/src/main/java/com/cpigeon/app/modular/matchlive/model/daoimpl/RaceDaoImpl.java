@@ -3,13 +3,12 @@ package com.cpigeon.app.modular.matchlive.model.daoimpl;
 import android.content.Context;
 
 import com.cpigeon.app.MyApp;
-import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsXH;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
-import com.cpigeon.app.modular.matchlive.model.dao.IRaceReportDao;
+import com.cpigeon.app.modular.matchlive.model.dao.IRaceDao;
 import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.CpigeonConfig;
 import com.orhanobut.logger.Logger;
@@ -19,17 +18,14 @@ import org.xutils.db.Selector;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * Created by Administrator on 2017/4/15.
  */
 
-public class RaceReportDaoImpl implements IRaceReportDao{
+public class RaceDaoImpl implements IRaceDao {
     private final static int DATA_TYPE_BDSJ = 1;//数据类型-报道数据
     private int CURRENT_DATA_TYPE;//当前数据类型
     private List<HashMap<String, Object>> data_BDSJ = null;//显示数据缓存-报道数据

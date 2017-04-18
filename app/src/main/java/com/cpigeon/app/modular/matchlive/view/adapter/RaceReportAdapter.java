@@ -80,13 +80,13 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
                 break;
             case TYPE_DETIAL:
                 final MatchDetialXHItem detialItem = (MatchDetialXHItem) item;
-                helper.setText(R.id.tv_sifangdidian, "会员棚号:" + detialItem.getSubItem(0).getPn());
-                helper.setText(R.id.tv_sifangdidian, "比赛空距:" +detialItem.getSubItem(0).getSp()+"KM");
-                helper.setText(R.id.tv_sifangdidian, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed()+"M");
-                helper.setText(R.id.tv_sifangdidian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
-                helper.setText(R.id.tv_sifangdidian, "登记坐标:" + detialItem.getSubItem(0).getZx()+"/"+detialItem.getSubItem(0).getZy());
-                helper.setText(R.id.tv_sifangdidian, "扫描坐标:" + detialItem.getSubItem(0).getDczx()+"/"+detialItem.getSubItem(0).getDczy());
-                helper.setText(R.id.tv_sifangdidian, "插组报道:" + detialItem.getSubItem(0).CZtoString());
+                helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn());
+                helper.setText(R.id.tv_bisaikongju, "比赛空距:" +detialItem.getSubItem(0).getSp()+"KM");
+                helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed()+"M");
+                helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
+                helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx()+"/"+detialItem.getSubItem(0).getZy());
+                helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx()+"/"+detialItem.getSubItem(0).getDczy());
+                helper.setText(R.id.tv_chazubaodao, "插组报道:" + detialItem.getSubItem(0).CZtoString());
                 break;
         }
     }

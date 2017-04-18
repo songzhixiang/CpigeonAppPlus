@@ -38,10 +38,15 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null)
+        if (rootView == null) {
             rootView = inflater.inflate(getLayoutResource(), container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        initView(rootView);
+            mUnbinder = ButterKnife.bind(this, rootView);
+            initView(rootView);
+        }
+        ViewGroup parent = (ViewGroup) rootView.getParent();
+        if (parent != null) {
+            parent.removeView(rootView);
+        }
         return rootView;
     }
 
@@ -140,7 +145,8 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+
+
     }
 
 }

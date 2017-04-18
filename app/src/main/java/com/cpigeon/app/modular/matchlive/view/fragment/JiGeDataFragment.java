@@ -27,8 +27,7 @@ import butterknife.Unbinder;
 
 public class JiGeDataFragment extends BaseLazyLoadFragment {
 
-    @BindView(R.id.searchEditText_race_detial)
-    SearchEditText searchEditTextRaceDetial;
+
     @BindView(R.id.list_header_race_detial_table_header_1)
     TextView listHeaderRaceDetialTableHeader1;
     @BindView(R.id.list_header_race_detial_table_header_2)
@@ -71,7 +70,5 @@ public class JiGeDataFragment extends BaseLazyLoadFragment {
     }
 
 
-    @OnClick(R.id.searchEditText_race_detial)
-    public void onViewClicked() {
-    }
+
 }
