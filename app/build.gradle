@@ -16,11 +16,42 @@ android {
         applicationId "com.cpigeon.app"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode getCustomVersionCode()
+        versionName getCustomVersionName()
+        signingConfig signingConfigs.release //默认签名配置
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "SERVER", "\"http://www.cpigeon.com:818\"" //默认服务器地址配置
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "1040749beca7f03dc6211519", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+    }
+    //修改生成的apk名字
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def oldFile = output.outputFile
+            def newName = '';
+            if (variant.buildType.name.equals('release')) {
+//                println(variant.productFlavors[0].name)
+                //def releaseApkName = 'app-release-v' + getCustomVersionName() + '-' + variant.productFlavors[0].name + '-' + getCustomVersionCode() + '.apk'
+                newName = oldFile.name.replace(".apk", "-v" + getCustomVersionName() + "-" + getCustomVersionCode() + ".apk")
+                output.outputFile = new File(oldFile.parent, newName)
+            }
+            if (variant.buildType.name.equals('beta')) {
+                newName = oldFile.name.replace(".apk", "-v" + getCustomVersionName() + "-beta" + getDate() + ".apk")
+                output.outputFile = new File(oldFile.parent, newName)
+            }
+            if (variant.buildType.name.equals('debug')) {
+            }
+        }
     }
     buildTypes {
         release {
@@ -36,6 +67,14 @@ android {
             buildConfigField "String", "SERVER", "\"http://192.168.0.52:8888\"" //配置BuildConfig字段
             signingConfig signingConfigs.release
         }
+    }
+    productFlavors {
+        cpigeon {
+            //中鸽官网
+        }
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
     }
 }
 
@@ -87,4 +126,71 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     // 可滑动结束Activity的布局
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    // 此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.0.3'
+    // 此处以JCore 1.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.1'
+}
+
+int getCustomVersionCode() {
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        return versionProps['VERSION_CODE'].toInteger()
+    }
+}
+
+def getCustomVersionName() {
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def name = versionProps['VERSION_NAME']
+        return name
+    }
+}
+
+def updateVersionConfig() {
+    //如果version.properties文件可读则执行操作
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()) {
+        //载入version.properties
+        Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def buildTime = new Date()
+        //上次次数重置时间与当前时间作对比
+        Date lastResetBuildTime = new Date(versionProps['BUILD_TIMES_RESET_TIME'].toLong())
+//        println lastResetBuildTime.year + "/" + lastResetBuildTime.month + "/" + lastResetBuildTime.day
+//        println buildTime.year + "/" + buildTime.month + "/" + buildTime.day
+        if (lastResetBuildTime.year != buildTime.year || lastResetBuildTime.month != buildTime.month || lastResetBuildTime.day != buildTime.day) {
+            //如果重置时间不是当天的日期，则重置次数
+            println '重置发布次数'
+            versionProps['BUILD_TIMES'] = 0.toString()
+            versionProps['BUILD_TIMES_RESET_TIME'] = buildTime.time.toString()
+        }
+        //写入编译时间
+        versionProps['BUILD_LAST_TIME'] = buildTime.time.toString()
+        //写入版本代码
+        versionProps['VERSION_CODE'] = new Date().format("yyyyMMdd") + versionProps['BUILD_TIMES'].toString()
+
+        println(versionProps)
+        versionProps.store(versionPropsFile.newWriter(), null)
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+}
+
+//获取时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+
+//从androidManifest.xml中获取版本号
+def getVersionNameFromManifest() {
+    def manifestParser = new com.android.builder.core.DefaultManifestParser()
+    return manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
 }

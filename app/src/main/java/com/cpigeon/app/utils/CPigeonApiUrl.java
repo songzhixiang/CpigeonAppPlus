@@ -75,6 +75,10 @@ public class CPigeonApiUrl {
      */
     public static final String UPDATE_CHECK_URL = API_VERSION + "version";
     /**
+     * 单点登录检查url
+     */
+    public static final String SINGLE_LOGIN_CHECK_URL = API_VERSION + "SingleLoginCheck";
+    /**
      * 检查是否是可用版本
      */
     public static final String IS_AVAILABLE_VERSION_URL = API_VERSION + "IsAvailableVersion";
@@ -234,49 +238,49 @@ public class CPigeonApiUrl {
     /**
      * 获取签到信息 --szx
      */
-    public static final String GETUSERSIGNSTATUS = API_VERSION +"GetUserSignStatus";
+    public static final String GETUSERSIGNSTATUS = API_VERSION + "GetUserSignStatus";
 
     /**
      * 获取用户个人信息  --szx
      */
-    public static final String GETBASICUSERINFO = API_VERSION +"GetBasicUserInfo";
+    public static final String GETBASICUSERINFO = API_VERSION + "GetBasicUserInfo";
 
     /**
      * 修改用户信息 --szx
      */
-    public static final String MOTIFYBASICUSERINFO = API_VERSION +"MotifyBasicUserInfo";
+    public static final String MOTIFYBASICUSERINFO = API_VERSION + "MotifyBasicUserInfo";
 
     //获取所有人的动态 -szx
-    public static final String GETCIRCLEMESSAGELIST = API_VERSION +"GetCircleMessageList";
+    public static final String GETCIRCLEMESSAGELIST = API_VERSION + "GetCircleMessageList";
 
     //删除自己发的动态 -szx
-    public static final String DELCIRCLEMESSAGE = API_VERSION +"DelCircleMessage";
+    public static final String DELCIRCLEMESSAGE = API_VERSION + "DelCircleMessage";
 
 
     //点赞/取消点赞 -szx
-    public static final String PRAISECIRCLEMESSAGE = API_VERSION +"PraiseCircleMessage";
+    public static final String PRAISECIRCLEMESSAGE = API_VERSION + "PraiseCircleMessage";
 
 
     //  添加评论
-    public static final String ADDCIRCLEMESSAGECOMMENT = API_VERSION +"AddCircleMessageComment";
+    public static final String ADDCIRCLEMESSAGECOMMENT = API_VERSION + "AddCircleMessageComment";
 
 
     //获取鸽友圈用户信息 -szx
-    public static final String GETUSERCIRCLEINFO = API_VERSION +"GetUserCircleInfo";
+    public static final String GETUSERCIRCLEINFO = API_VERSION + "GetUserCircleInfo";
 
     //获取鸽友圈关注列表 -szx
-    public static final String GETATTENTIONCIRCLEUSERLIST = API_VERSION +"GetAttentionCircleUserList";
+    public static final String GETATTENTIONCIRCLEUSERLIST = API_VERSION + "GetAttentionCircleUserList";
 
 
     //关注/取消关注 -szx
-    public static final String ATTENTIONCIRCLEUSER = API_VERSION +"AttentionCircleUser";
+    public static final String ATTENTIONCIRCLEUSER = API_VERSION + "AttentionCircleUser";
 
 
     //获取黑名单列表 -szx
-    public static final String GETUSERCIRCLEBLACKLIST = API_VERSION +"GetUserCircleBlackList";
+    public static final String GETUSERCIRCLEBLACKLIST = API_VERSION + "GetUserCircleBlackList";
 
     //取消拉黑 -szx
-    public static final String DEFRIENDCIRCLEUSER = API_VERSION +"DefriendCircleUser";
+    public static final String DEFRIENDCIRCLEUSER = API_VERSION + "DefriendCircleUser";
 
 
     //屏蔽用户/取消屏蔽用户
@@ -292,14 +296,6 @@ public class CPigeonApiUrl {
     public static final String GETUSERSHIELDCIRCLEMESSAGELIST = API_VERSION + "GetUserShieldCircleMessageList";
     //删除已发布的评论
     public static final String DELCIRCLECOMMENT = API_VERSION + "DelCircleComment";
-
-
-
-
-
-
-
-
 
 
     /**

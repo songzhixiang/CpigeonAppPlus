@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_guide_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/guide_end" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_entry"
+        android:layout_width="@dimen/fragment_guide_end_button_entry_width"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/fragment_guide_end_button_entry_marginbotom"
+        android:background="@drawable/button_round_10_2_appintro_end"
+        android:text="@string/immediate_experience"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fragment_guide_end_button_entry_textsize" />
+</FrameLayout>

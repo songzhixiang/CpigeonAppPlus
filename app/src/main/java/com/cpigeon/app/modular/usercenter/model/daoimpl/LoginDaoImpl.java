@@ -4,10 +4,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.cpigeon.app.BuildConfig;
 import com.cpigeon.app.MyApp;
 import com.cpigeon.app.modular.usercenter.model.dao.ILoginDao;
 import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CallAPI;
+import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.SharedPreferencesTool;
@@ -82,11 +84,20 @@ public class LoginDaoImpl implements ILoginDao {
         }
 
         this.onLoginListener = onLoginListener;
+        String devid = CommonTool.getCombinedDeviceID(MyApp.getInstance());
+        String dev = "android";
+        String ver = String.valueOf(CommonTool.getVersionCode(MyApp.getInstance()));
+        String appid = BuildConfig.APPLICATION_ID;
+
         RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.LOGIN_URL);
         CallAPI.pretreatmentParams(params);
         params.addBodyParameter("u", username);
-        params.addBodyParameter("t", "1");
         params.addBodyParameter("p", EncryptionTool.encryptAES(password));
+        params.addQueryStringParameter("devid", devid);
+        params.addQueryStringParameter("dev", dev);
+        params.addQueryStringParameter("ver", ver);
+        params.addQueryStringParameter("appid", appid);
+        params.addQueryStringParameter("t", "1");
         CallAPI.addApiSign(params);
         params.setCacheMaxAge(0);
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -105,6 +116,7 @@ public class LoginDaoImpl implements ILoginDao {
                         map.put("nicheng", data.getString("nicheng"));
                         map.put("logined", true);
                         map.put("userid", Integer.valueOf(EncryptionTool.decryptAES(data.getString("token")).split("\\|")[0]));
+                        map.put("sltoken", data.getString("sltoken"));
                         CpigeonData.getInstance().setUserId((int) map.get("userid"));
                         SharedPreferencesTool.Save(MyApp.getInstance(), map, SharedPreferencesTool.SP_FILE_LOGIN);
 //                        Intent intent = new Intent(mContext, HomeActivity.class);

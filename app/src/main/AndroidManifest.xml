@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cpigeon.app">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,6 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <!--APP 渠道配置-->
+        <meta-data
+            android:name="APP_CHANNEL"
+            android:value="${CHANNEL_VALUE}" />
+
+        <service
+            android:name=".service.MainActivityService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="MainService"
+            android:priority="1000"
+            android:stopWithTask="false" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -47,6 +61,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".modular.guide.view.AppIntroActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".modular.home.view.activity.WebActivity"
             android:launchMode="singleTask"
@@ -115,9 +134,10 @@
             android:name=".modular.usercenter.view.activity.BalanceActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".modular.matchlive.view.activity.RaceReportActivity"
+        <activity
+            android:name=".modular.matchlive.view.activity.RaceReportActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name=".modular.usercenter.view.activity.UserBalanceRechargeActivity"
@@ -133,7 +153,20 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <receiver
+            android:name=".broadcastreceiver.JPushBroadcastReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
 
+                <category android:name="com.cpigeon.app" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

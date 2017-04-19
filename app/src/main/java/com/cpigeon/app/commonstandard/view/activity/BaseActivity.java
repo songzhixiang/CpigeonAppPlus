@@ -27,6 +27,7 @@ import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
 import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.networkstatus.NetChangeObserver;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
@@ -385,6 +386,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return false;
     }
 
+    /**
+     * 检查是否登录
+     *
+     * @return
+     */
     @Override
     public boolean checkLogin() {
         try {
@@ -397,6 +403,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
+    /**
+     * 获取用户登录信息
+     *
+     * @return
+     */
     public Map<String, Object> getLoginUserInfo() {
         Map<String, Object> map = new HashMap<>();
         map.put("username", getString(R.string.user_name));
@@ -406,5 +417,21 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         map.put("userid", 0);
         map.put("phone", "");
         return SharedPreferencesTool.Get(this, map, SharedPreferencesTool.SP_FILE_LOGIN);
+    }
+
+    /**
+     * 清除用户登录信息
+     */
+    protected void clearLoginInfo() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("username", "");
+        map.put("token", "");
+        map.put("touxiang", "");
+        map.put("touxiangurl", "");
+        map.put("nicheng", "");
+        map.put("logined", false);
+        map.put("sltoken", "");
+        SharedPreferencesTool.Save(mContext, map, SharedPreferencesTool.SP_FILE_LOGIN);
+        CpigeonData.getInstance().initialization();
     }
 }

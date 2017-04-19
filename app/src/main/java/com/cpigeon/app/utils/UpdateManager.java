@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import com.cpigeon.app.MyApp;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import org.xutils.x;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.List;
 
 //import com.cpigeon.common.AppManager;
 
@@ -34,114 +36,82 @@ public class UpdateManager {
     private static final String DOWNLOAD_STATE_CANCEL = "cancel";
     private static final String DOWNLOAD_STATE_FINISHED = "finished";
 
-    private onInstallAppListener onInstallAppListener;
+    private OnInstallAppListener onInstallAppListener;
+    private OnCheckUpdateInfoListener onCheckUpdateInfoListener;
     private Context mContext;
-    //    NotificationManager mNotifyManager;
-//    NotificationCompat.Builder mBuilder;
     private ProgressDialog mProgressDialog;
 
 
     public UpdateManager(Context context) {
         mContext = context;
-//        File file = new File(CpigeonConfig.UPDATE_SAVE_PATH);
-//        if (file.exists())
-//            file.delete();
     }
 
-    public UpdateManager setOnInstallAppListener(UpdateManager.onInstallAppListener onInstallAppListener) {
+    public void setOnCheckUpdateInfoListener(OnCheckUpdateInfoListener onCheckUpdateInfoListener) {
+        this.onCheckUpdateInfoListener = onCheckUpdateInfoListener;
+    }
+
+    public UpdateManager setOnInstallAppListener(UpdateManager.OnInstallAppListener onInstallAppListener) {
         this.onInstallAppListener = onInstallAppListener;
         return this;
     }
 
     /**
-     * 检查App更新
+     * 检查App更新(从服务器拉取数据)
      */
     public void checkUpdate() {
+        if (onCheckUpdateInfoListener != null)
+            onCheckUpdateInfoListener.onGetUpdateInfoStart();
         //从服务器获取更新信息
-        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.UPDATE_CHECK_URL);
-        CallAPI.pretreatmentParams(params);
-        params.setCacheMaxAge(CpigeonConfig.CACHE_UPDATE_INFO_TIME);//设置缓存时间
-        x.http().get(params, new Callback.CommonCallback<String>() {
+        CallAPI.getUpdateInfo(new CallAPI.Callback<List<UpdateInfo>>() {
             @Override
-            public void onSuccess(String result) {
-                Logger.i(result);
-                try {
-                    JSONArray array = new JSONArray(result);
-                    if (array.length() > 0) {
-                        JSONObject obj;
-                        for (int i = 0; i < array.length(); i++) {
-                            obj = array.getJSONObject(i);
-                            if (obj.getString("packageName").equals(mContext.getPackageName())) {
-                                if (obj.getInt("verCode") > CommonTool.getVersionCode(mContext)) {
-                                    updateReady(obj.getInt("verCode"),
-                                            obj.getString("packageName"),
-                                            obj.getString("verName"),
-                                            obj.getString("url"),
-                                            obj.getString("updateExplain"),
-                                            obj.getString("updateTime"),
-                                            obj.has("force") ? obj.getBoolean("force") : false);
-                                }
-                                return;
-                            }
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onSuccess(List<UpdateInfo> data) {
+                if (onCheckUpdateInfoListener != null) {
+                    if (!onCheckUpdateInfoListener.onGetUpdateInfoEnd(data))
+                        checkUpdate(data);
+                } else {
+                    checkUpdate(data);
                 }
-
             }
 
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
+            public void onError(int errorType, Object data) {
+                if (onCheckUpdateInfoListener != null)
+                    onCheckUpdateInfoListener.onGetUpdateInfoEnd(null);
             }
         });
+    }
 
+    /**
+     * 检查App更新
+     */
+
+    private void checkUpdate(List<UpdateInfo> updateInfos) {
+        if (updateInfos == null || updateInfos.size() == 0) return;
+        for (UpdateInfo updateInfo : updateInfos) {
+            if (updateInfo.getPackageName().equals(mContext.getPackageName())) {
+                if (updateInfo.getVerCode() > CommonTool.getVersionCode(mContext)) {
+                    updateReady(updateInfo);
+                    return;
+                }
+            }
+        }
     }
 
     /**
      * 下载准备
-     *
-     * @param varCode     版本号
-     * @param packageName
-     * @param verName     版本名称
-     * @param url         下载url (绝对路径)
-     * @param explain     更新说明
-     * @param updateTime  更新时间
      */
-    public void updateReady(final int varCode, final String packageName, String verName, String url, String explain, String updateTime) {
-        updateReady(varCode, packageName, verName, url, explain, updateTime, false);
-    }
 
-
-    /**
-     * @param varCode     版本号
-     * @param packageName
-     * @param verName     版本名称
-     * @param url         下载url (绝对路径)
-     * @param explain     更新说明
-     * @param updateTime  更新时间
-     * @param force       是否强制下载，不下载则退出程序
-     */
-    public void updateReady(final int varCode, final String packageName, String verName, String url, String explain, String updateTime, final boolean force) {
-        final String _url = url;
+    private void updateReady(final UpdateInfo updateInfo) {
+        if (onCheckUpdateInfoListener != null)
+            onCheckUpdateInfoListener.onHasUpdate(updateInfo);
+        final String _url = updateInfo.getUrl();
         //Logger.i("下载");
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("当前版本:" + CommonTool.getVersionName(mContext)
-                + "\n更新时间：" + updateTime
-                + "\n更新说明：\n" + explain
+                + "\n更新时间：" + updateInfo.getUpdateTime()
+                + "\n更新说明：\n" + updateInfo.getUpdateExplain()
         );
-        builder.setTitle("发现新版本:" + verName);
+        builder.setTitle("发现新版本:" + updateInfo.getVerName());
         builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
 
             @Override
@@ -153,7 +123,7 @@ public class UpdateManager {
                     PackageManager pm = mContext.getPackageManager();
                     PackageInfo info = pm.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES);
                     //判断是否是最新版本的APK文件
-                    if (info != null && info.versionCode == varCode && info.applicationInfo.packageName.equals(packageName)) {
+                    if (info != null && info.versionCode == updateInfo.getVerCode() && info.applicationInfo.packageName.equals(updateInfo.getPackageName())) {
                         install(path);
                         return;
                     }
@@ -163,12 +133,12 @@ public class UpdateManager {
 
             }
         });
-        builder.setNegativeButton(force ? "退出程序" : "取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(updateInfo.isForce() ? "退出程序" : "取消", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SharedPreferencesTool.Save(mContext, "download", UpdateManager.DOWNLOAD_STATE_NO, SharedPreferencesTool.SP_FILE_APPUPDATE);
-                if (force)
+                if (updateInfo.isForce())
                     System.exit(0);
             }
         });
@@ -183,18 +153,10 @@ public class UpdateManager {
      * @param path 保存路径
      */
     private void DownLoad(String url, final String path) {
-
-
         Logger.i(path);
-//        mNotifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//        mBuilder = new NotificationCompat.Builder(context);
-//        mBuilder.setContentTitle("版本更新")
-//                .setContentText("正在下载......")
-//                .setContentInfo("0%")
-//                .setSmallIcon(R.mipmap.logo);
-
+        if (onCheckUpdateInfoListener != null)
+            onCheckUpdateInfoListener.onDownloadStart();
         mProgressDialog = new ProgressDialog(mContext);
-//        dialog.setTitle(title);
         mProgressDialog.setMessage("准备下载");
         mProgressDialog.setCancelable(false);// 设置点击空白处也不能关闭该对话框
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -220,16 +182,12 @@ public class UpdateManager {
             @Override
             public void onStarted() {
                 mProgressDialog.setMessage("开始下载");
-                //Toast.makeText(x.app(), "开始下载", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onLoading(long total, long current, boolean isDownloading) {
                 BigDecimal b = new BigDecimal((float) current / (float) total);
                 float f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-//                mBuilder.setProgress(100, (int) (f1*100), false);
-//                mBuilder.setContentInfo((int) (f1*100) + "%");
-//                mNotifyManager.notify(1, mBuilder.build());
                 if (mProgressDialog.getMax() == 100)
                     mProgressDialog.setMax((int) (total / 1024));
                 mProgressDialog.setMessage("正在下载...");
@@ -238,30 +196,22 @@ public class UpdateManager {
 
             @Override
             public void onSuccess(File result) {
-//                mBuilder.setContentText("正在下载...")
-//                        // Removes the progress bar
-//                        .setProgress(0, 0, false);
-//                mNotifyManager.notify(1, mBuilder.build());
-//                mNotifyManager.cancel(1);
 
-                //Toast.makeText(x.app(), "下载成功", Toast.LENGTH_LONG).show();
                 mProgressDialog.setMessage("下载完成");
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                //删除登录信息
-                // SharedPreferencesTool.Save(mContext, "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);
-
                 SharedPreferencesTool.Save(mContext, "download", UpdateManager.DOWNLOAD_STATE_FINISHED, SharedPreferencesTool.SP_FILE_APPUPDATE);
                 install(path);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                ex.printStackTrace();
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                Toast.makeText(x.app(), "下载失败", Toast.LENGTH_LONG).show();
+                ToastUtil.showToast(MyApp.getInstance(), "下载失败", Toast.LENGTH_LONG);
                 SharedPreferencesTool.Save(mContext, "download", UpdateManager.DOWNLOAD_STATE_ERROR, SharedPreferencesTool.SP_FILE_APPUPDATE);
                 closeAndExit();
             }
@@ -285,18 +235,126 @@ public class UpdateManager {
 
     private void install(String path) {
         CommonTool.installApp(mContext, path);
-        if(onInstallAppListener!=null)
+        if (onInstallAppListener != null)
             onInstallAppListener.onInstallApp();
     }
 
-    public void closeAndExit(){
+    private void closeAndExit() {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
         startMain.addCategory(Intent.CATEGORY_HOME);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(startMain);
         System.exit(0);
     }
-    public  interface  onInstallAppListener{
+
+    public interface OnCheckUpdateInfoListener {
+        void onGetUpdateInfoStart();
+
+        boolean onGetUpdateInfoEnd(List<UpdateInfo> updateInfos);
+
+        void onHasUpdate(UpdateInfo updateInfo);
+
+        void onDownloadStart();
+    }
+
+    public interface OnInstallAppListener {
         void onInstallApp();
     }
+
+    /**
+     * Created by chenshuai on 2017/4/18.
+     * 应用更新信息类
+     */
+
+    public static class UpdateInfo {
+
+        /**
+         * appName : 中鸽网
+         * packageName : com.cpigeon.app
+         * url : http://192.168.0.52:8888/Apk/201703100-release.apk
+         * verName : 1.1.1
+         * verCode : 201703110
+         * updateTime : 2017/3/10
+         * updateExplain : 1.新增用户个人信息中心，可进行个人信息的设置
+         * 2.新增用户签到
+         * 3.新增余额充值入口，余额充值更方便
+         * 4.新增余额充值记录，充值记录更直观
+         * 5.优化界面,修复BUG
+         * force : true
+         */
+
+        private String appName;//应用名称
+        private String packageName;//应用包名
+        private String url;//下载url (绝对路径)
+        private String verName;//版本名称
+        private int verCode;//版本号
+        private String updateTime;//更新时间
+        private String updateExplain;//更新说明
+        private boolean force;//是否强制下载，不下载则退出程序
+
+        public String getAppName() {
+            return appName;
+        }
+
+        public void setAppName(String appName) {
+            this.appName = appName;
+        }
+
+        public String getPackageName() {
+            return packageName;
+        }
+
+        public void setPackageName(String packageName) {
+            this.packageName = packageName;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getVerName() {
+            return verName;
+        }
+
+        public void setVerName(String verName) {
+            this.verName = verName;
+        }
+
+        public int getVerCode() {
+            return verCode;
+        }
+
+        public void setVerCode(int verCode) {
+            this.verCode = verCode;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public String getUpdateExplain() {
+            return updateExplain;
+        }
+
+        public void setUpdateExplain(String updateExplain) {
+            this.updateExplain = updateExplain;
+        }
+
+        public boolean isForce() {
+            return force;
+        }
+
+        public void setForce(boolean force) {
+            this.force = force;
+        }
+    }
+
 }

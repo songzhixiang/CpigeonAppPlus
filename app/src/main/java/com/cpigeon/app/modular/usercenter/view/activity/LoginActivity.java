@@ -24,10 +24,14 @@ import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ILoginView;
 import com.cpigeon.app.modular.usercenter.presenter.LoginPresenter;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,9 +89,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
     @Override
     public void initView() {
-
+        clearLoginInfo();
         AppManager.getAppManager().killAllToLoginActivity(LoginActivity.class);
-
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,7 +104,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
             @Override
             public void afterTextChanged(Editable s) {
-                 mPresenter.loadUserHeadImgURL();
+                mPresenter.loadUserHeadImgURL();
             }
         });
         etUsername.setText(SharedPreferencesTool.Get(this, "loginname", "", SharedPreferencesTool.SP_FILE_LOGIN).toString());
@@ -172,7 +175,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
                 }
                 break;
             case R.id.btn_login:
-                 mPresenter.login();
+                mPresenter.login();
                 break;
             case R.id.tv_no_account:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

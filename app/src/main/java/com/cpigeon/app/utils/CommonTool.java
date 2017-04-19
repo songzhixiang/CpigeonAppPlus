@@ -1,12 +1,19 @@
 package com.cpigeon.app.utils;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
 import com.orhanobut.logger.Logger;
@@ -45,6 +52,7 @@ public class CommonTool {
             + "(:[0-9]{1,4})?"                                                     // 端口- :80
             + "((/?)|"
             + "(/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+    private static String DeviceID;
 
     /**
      * 获得当前应用的版本号名称
@@ -99,10 +107,20 @@ public class CommonTool {
      * @param filePath 文件路径
      */
     public static void installApp(Context context, String filePath) {
+        Logger.d(filePath);
         File _file = new File(filePath);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.fromFile(_file),
+
+        Uri fileUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", _file);
+        } else {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            fileUri = Uri.fromFile(_file);
+        }
+        Logger.d(fileUri);
+        intent.setDataAndType(fileUri,
                 "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
@@ -161,4 +179,48 @@ public class CommonTool {
         return m.matches();
     }
 
+    /**
+     * 结合多种方式计算设备唯一码
+     *
+     * @param context
+     * @return
+     */
+    public static String getCombinedDeviceID(Context context) {
+        if (!TextUtils.isEmpty(DeviceID)) return DeviceID;
+        //IMEI
+        TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String m_szImei = TelephonyMgr.getDeviceId();
+
+        //Pseudo-Unique ID
+        String m_szDevIDShort = "35" + //we make this look like a valid IMEI
+                Build.BOARD.length() % 10 +
+                Build.BRAND.length() % 10 +
+                Build.CPU_ABI.length() % 10 +
+                Build.DEVICE.length() % 10 +
+                Build.DISPLAY.length() % 10 +
+                Build.HOST.length() % 10 +
+                Build.ID.length() % 10 +
+                Build.MANUFACTURER.length() % 10 +
+                Build.MODEL.length() % 10 +
+                Build.PRODUCT.length() % 10 +
+                Build.TAGS.length() % 10 +
+                Build.TYPE.length() % 10 +
+                Build.USER.length() % 10; //13 digits
+
+        //Android ID
+        String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        //WIFI MAC Address string
+        WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+
+        //BT MAC Address string
+        String m_szBTMAC = BluetoothAdapter.getDefaultAdapter().getAddress();
+
+        String m_szLongID = m_szImei + m_szDevIDShort
+                + m_szAndroidID + m_szWLANMAC + m_szBTMAC;
+        //compute md5
+        DeviceID = EncryptionTool.MD5(m_szLongID).toLowerCase();
+        return DeviceID;
+    }
 }

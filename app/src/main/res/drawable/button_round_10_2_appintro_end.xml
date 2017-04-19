@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item
+                android:bottom="@dimen/dp_1"
+                android:left="@dimen/dp_1"
+                android:right="@dimen/dp_1"
+                android:top="@dimen/dp_1">
+                <shape
+                    android:shape="rectangle">
+                    <!-- 填充的颜色 -->
+                    <solid android:color="#58C1F0"/>
+                    <!-- 设置按钮的四个角为弧形 -->
+                    <!-- android:radius 弧形的半径 -->
+                    <corners android:radius="@dimen/dp_10"/>
+
+                    <!-- padding：Button里面的文字与Button边界的间隔 -->
+                    <padding
+                        android:bottom="5dp"
+                        android:left="15dp"
+                        android:right="15dp"
+                        android:top="5dp"
+                        />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+
+            <item
+                android:bottom="@dimen/dp_1"
+                android:left="@dimen/dp_1"
+                android:right="@dimen/dp_1"
+                android:top="@dimen/dp_1">
+                <shape
+
+                    android:shape="rectangle">
+                    <!-- 填充的颜色 -->
+                    <solid android:color="#20b7fa"/>
+
+                    <!-- 设置按钮的四个角为弧形 -->
+                    <!-- android:radius 弧形的半径 -->
+                    <corners android:radius="@dimen/dp_10"/>
+
+                    <!-- padding：Button里面的文字与Button边界的间隔 -->
+                    <padding
+                        android:bottom="5dp"
+                        android:left="15dp"
+                        android:right="15dp"
+                        android:top="5dp"
+                        />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>
+

@@ -154,6 +154,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     }
 
     private void refreshUserInfo() {
+        if (!isVisible) return;
         if (checkLogin()) {
             UserInfo.DataBean userInfo = mCpigeonData.getUserInfo();
             String userHeadImageURl = "", nickName = "";

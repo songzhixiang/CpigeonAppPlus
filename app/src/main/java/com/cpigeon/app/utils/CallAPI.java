@@ -9,7 +9,6 @@ import com.cpigeon.app.modular.cpigeongroup.model.bean.CpigeonGroupUserInfo;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.Message;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.MyFoucs;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.ShieldMessage;
-import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -18,11 +17,13 @@ import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsXH;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
+import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
+import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonRechargeInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
-import com.cpigeon.app.modular.order.model.bean.CpigeonOrderInfo;
+import com.cpigeon.app.service.MainActivityService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
@@ -55,7 +56,116 @@ import static com.cpigeon.app.utils.CpigeonConfig.getDataDb;
  */
 
 public class CallAPI {
+    /**
+     * 单点登录检查
+     *
+     * @param devid
+     * @param dev
+     * @param ver
+     * @param appid
+     * @param sltoken
+     * @param callback
+     * @return
+     */
+    public static org.xutils.common.Callback.Cancelable singleLoginCheck(Context context,
+                                                                         String devid,
+                                                                         String dev,
+                                                                         String ver,
+                                                                         String appid,
+                                                                         String sltoken, @NonNull final Callback callback) {
+        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.SINGLE_LOGIN_CHECK_URL);
+        pretreatmentParams(params);
+        params.addQueryStringParameter("devid", devid);
+        params.addQueryStringParameter("dev", dev);
+        params.addQueryStringParameter("ver", ver);
+        params.addQueryStringParameter("appid", appid);
+        params.addQueryStringParameter("sltoken", sltoken);
+        params.addQueryStringParameter("t", "1");
+        params.addQueryStringParameter("u", CpigeonData.getInstance().getUserId(context) + "");
+        params.addHeader("u", CommonTool.getUserToken(context));
+        addApiSign(params);
+        return x.http().get(params, new org.xutils.common.Callback.CommonCallback<String>() {
 
+            @Override
+            public void onSuccess(String result) {
+                Logger.i(result);
+                try {
+                    Gson gson = new Gson();
+                    ApiResponse apiResponse = gson.fromJson(result, new TypeToken<ApiResponse>() {
+                    }.getType());
+                    if (apiResponse.isStatus()) {
+                        callback.onSuccess(apiResponse.getData());
+                    } else {
+                        ApiResponse<MainActivityService.UseDevInfo> apiResponse1 = gson.fromJson(result,
+                                new TypeToken<ApiResponse<MainActivityService.UseDevInfo>>() {
+                                }.getType());
+                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                callback.onError(Callback.ERROR_TYPE_REQUST_EXCEPTION, ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    /**
+     * 获取更新信息
+     *
+     * @param callback
+     * @return
+     */
+    public static org.xutils.common.Callback.Cancelable getUpdateInfo(@NonNull final Callback<List<UpdateManager.UpdateInfo>> callback) {
+        RequestParams params = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.UPDATE_CHECK_URL);
+        pretreatmentParams(params);
+        params.setCacheMaxAge(CpigeonConfig.CACHE_UPDATE_INFO_TIME);
+        return x.http().get(params, new org.xutils.common.Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Logger.i(result);
+                try {
+                    Gson gson = new Gson();
+                    List<UpdateManager.UpdateInfo> updateInfos = gson.fromJson(result, new TypeToken<List<UpdateManager.UpdateInfo>>() {
+                    }.getType());
+                    callback.onSuccess(updateInfos);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                callback.onError(Callback.ERROR_TYPE_REQUST_EXCEPTION, ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 
     /**
      * 注册用户
@@ -814,9 +924,10 @@ public class CallAPI {
                                                                      int days,
                                                                      @NonNull final Callback<List<MatchInfo>> callback) {
 
-        Date currDate = new Date();
-        currDate = new Date(currDate.getTime() - 1000 * 60 * 60 * 24 * days);
-        long beginTime = DateTool.strToDateTime(String.format("%04d-%02d-%02d 00:00:00", currDate.getYear() + 1900, currDate.getMonth() + 1, currDate.getDate())).getTime() / 1000;
+//        Date currDate = new Date();
+//        currDate = new Date(currDate.getTime() - 1000 * 60 * 60 * 24 * days);
+//        long beginTime = DateTool.strToDateTime(String.format("%04d-%02d-%02d 00:00:00", currDate.getYear() + 1900, currDate.getMonth() + 1, currDate.getDate())).getTime() / 1000;
+        long beginTime = System.currentTimeMillis() / 1000 - 60 * 60 * 24 * days;
         return getMatchInfo(context, matchType, beginTime, 0, callback);
     }
 
@@ -4247,6 +4358,53 @@ public class CallAPI {
         return result;
     }
 
+
+    public static class ApiResponse<T> {
+
+        /**
+         * status : false
+         * errorCode : 20002
+         * msg :
+         * data : null
+         */
+
+        private boolean status;
+        private int errorCode;
+        private String msg;
+        private T data;
+
+        public boolean isStatus() {
+            return status;
+        }
+
+        public void setStatus(boolean status) {
+            this.status = status;
+        }
+
+        public int getErrorCode() {
+            return errorCode;
+        }
+
+        public void setErrorCode(int errorCode) {
+            this.errorCode = errorCode;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+    }
 
     public interface Callback<E> {
         int NO_ERROR = -1;

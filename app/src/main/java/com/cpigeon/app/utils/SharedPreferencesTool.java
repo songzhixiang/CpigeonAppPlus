@@ -2,6 +2,7 @@ package com.cpigeon.app.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 
@@ -29,8 +30,8 @@ public class SharedPreferencesTool {
      * 保存数据到SharedPreferences
      *
      * @param context
-     * @param key      节点名
-     * @param data     值
+     * @param key     节点名
+     * @param data    值
      */
     public static void Save(Context context, String key, Object data) {
         SharedPreferencesTool.Save(context, key, data, "");
@@ -75,7 +76,7 @@ public class SharedPreferencesTool {
      * @param key_data 数据键值对
      */
     private static void Save(Context context, Map<String, Object> key_data) {
-        SharedPreferencesTool.Save(context, key_data,"");
+        SharedPreferencesTool.Save(context, key_data, null);
     }
 
     /**
@@ -86,7 +87,7 @@ public class SharedPreferencesTool {
      * @param filename SharedPreferences文件名
      */
     public static void Save(Context context, Map<String, Object> key_data, String filename) {
-        if (filename.equals("")) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
+        if (TextUtils.isEmpty(filename)) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 filename, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -120,8 +121,8 @@ public class SharedPreferencesTool {
      * @param defValue 默认值(没有值将使用此值)
      * @return 获取的值
      */
-    public static Object Get(Context context, String key, Object defValue) {
-        return Get(context, key, defValue, "");
+    public static <T> T Get(Context context, String key, T defValue) {
+        return Get(context, key, defValue, null);
     }
 
     /**
@@ -133,8 +134,8 @@ public class SharedPreferencesTool {
      * @param filename 文件名（不带后缀）
      * @return 获取的值
      */
-    public static Object Get(Context context, String key, Object defValue, String filename) {
-        if (filename.equals("")) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
+    public static <T> T Get(Context context, String key, T defValue, String filename) {
+        if (TextUtils.isEmpty(filename)) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
         Object result = null;
         String type = defValue.getClass().getSimpleName();
         SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -152,7 +153,7 @@ public class SharedPreferencesTool {
         } else if ("Long".equals(type)) {
             result = sharedPreferences.getLong(key, (Long) defValue);
         }
-        return result;
+        return (T) result;
     }
 
     /**
@@ -163,7 +164,7 @@ public class SharedPreferencesTool {
      * @return
      */
     public static Map<String, Object> Get(Context context, Map<String, Object> key_defValue) {
-        return SharedPreferencesTool.Get(context, key_defValue, "");
+        return SharedPreferencesTool.Get(context, key_defValue, null);
     }
 
     /**
@@ -175,7 +176,7 @@ public class SharedPreferencesTool {
      * @return
      */
     public static Map<String, Object> Get(Context context, Map<String, Object> key_defValue, String filename) {
-        if (filename.equals("")) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
+        if (TextUtils.isEmpty(filename)) filename = SharedPreferencesTool.SP_FILE_DEFAULT;
         Map<String, Object> resultMap = new HashMap<String, Object>();
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 filename, Context.MODE_PRIVATE);

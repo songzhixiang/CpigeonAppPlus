@@ -55,11 +55,11 @@ public class CpigeonConfig {
     /**
      * 直播时间天数,公棚
      */
-    public static final int LIVE_DAYS_GP = 6;
+    public static final int LIVE_DAYS_GP = 7;
     /**
      * 直播时间天数,协会
      */
-    public static final int LIVE_DAYS_XH = 1;
+    public static final int LIVE_DAYS_XH = 3;
     /**
      * 外部文件存储跟路径
      */

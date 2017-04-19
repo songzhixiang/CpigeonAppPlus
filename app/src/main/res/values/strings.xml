@@ -81,4 +81,6 @@
 
     <string name="format_pay_account_balance_tips">余额%1$s元,支付扣除%2$s元</string>
     <string name="format_pay_account_score_tips">我的积分%1$s,兑换消耗%2$s积分</string>
+    <string name="no_cache">暂无缓存</string>
+    <string name="immediate_experience">立即体验</string>
 </resources>

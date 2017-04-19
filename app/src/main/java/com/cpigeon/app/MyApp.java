@@ -11,6 +11,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import org.xutils.x;
 
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/4/5.
@@ -19,10 +20,13 @@ import butterknife.ButterKnife;
 public class MyApp extends Application {
     private static MyApp instance;
     private static String TAG = "AndySong";
-    public static MyApp getInstance(){
+
+    public static MyApp getInstance() {
         return instance;
     }
+
     public static CpigeonData mCpigeonData;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,14 +35,16 @@ public class MyApp extends Application {
         instance = this;
         //开启网络广播监听
         NetStateReceiver.registerNetworkStateReceiver(this);
-        if (!BuildConfig.DEBUG)
-        {
+        if (!BuildConfig.DEBUG) {
+            //bugly
             CrashReport.initCrashReport(getApplicationContext(), "f7c8c8f49a", BuildConfig.DEBUG);
-        }else {
+        } else {
             Logger.init(TAG);
         }
         mCpigeonData = CpigeonData.getInstance();
-
+        //极光推送
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);
+        JPushInterface.init(this);
     }
 
     /**

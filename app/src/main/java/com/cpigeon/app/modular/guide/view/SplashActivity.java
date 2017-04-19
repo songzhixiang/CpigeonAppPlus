@@ -22,6 +22,7 @@ import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.modular.guide.view.viewdao.ISplashView;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
 import com.cpigeon.app.utils.StatusBarTool;
 import com.squareup.picasso.Picasso;
@@ -132,10 +133,15 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements ISp
     public void entryApp() {
         if (isEntry) return;
         Intent intent;
-        if (checkLogin())
+        String guide_version = SharedPreferencesTool.Get(this, "guide_version", "");
+        String version = CommonTool.getVersionName(this);
+        if (!guide_version.equals(version)) {
+            intent = new Intent(SplashActivity.this, AppIntroActivity.class);
+        } else if (checkLogin())
             intent = new Intent(SplashActivity.this, MainActivity.class);
         else
             intent = new Intent(SplashActivity.this, LoginActivity.class);
+
         startActivity(intent);
         isEntry = true;
         finish();

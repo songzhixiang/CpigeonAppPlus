@@ -2,17 +2,25 @@ package com.cpigeon.app;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,22 +32,26 @@ import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
-import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
-import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
+import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
-import com.cpigeon.app.utils.CommonTool;
+import com.cpigeon.app.service.MainActivityService;
 import com.cpigeon.app.utils.Const;
+import com.cpigeon.app.utils.DateTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.StatusBarTool;
 import com.cpigeon.app.utils.UpdateManager;
+import com.cpigeon.app.utils.app.ControlManager;
 import com.orhanobut.logger.Logger;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -58,6 +70,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
     private UpdateManager mUpdateManager;
+    private ControlManager mControlManager;
     private OnMatchTypeChangeListener onMatchTypeChangeListener;
     private int lastTabIndex = 0;//当前页面索引
     private String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -84,6 +97,57 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             isExit = false;
+        }
+    };
+    MainActivityService mainActivityService;
+    MainActivityService.OnDeviceLoginCheckListener onDeviceLoginCheckListener = new MainActivityService.OnDeviceLoginCheckListener() {
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+        @Override
+        public boolean onOtherDeviceLogin(final MainActivityService.UseDevInfo useDevInfo) {
+            if (useDevInfo == null) return false;
+
+            Logger.d(useDevInfo.getString());
+            Date time = DateTool.strToDateTime(useDevInfo.getTime());
+            StringBuilder builder = new StringBuilder();
+            builder.append("您的账号于")
+                    .append(dateTimeFormat.format(time))
+                    .append("在另一台")
+                    .append(useDevInfo.getType())
+                    .append(TextUtils.isEmpty(useDevInfo.getDevinfo()) ? "" : "(" + useDevInfo.getDevinfo() + ")")
+                    .append("设备登录。如非本人操作，则密码可能已泄漏，建议尽快修改密码。");
+            SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE);
+//                    dialog.getWindow().setType(WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW);
+            dialog.setTitleText("下线通知")
+                    .setContentText(builder.toString())
+                    .setConfirmText("确定")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
+            clearLoginInfo();
+            return true;
+        }
+    };
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Logger.d(name);
+            Logger.d(service);
+            mainActivityService = ((MainActivityService.ThisBinder) service).getService();
+            mainActivityService.setOnDeviceLoginCheckListener(onDeviceLoginCheckListener);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Logger.d(name);
+            mainActivityService = null;
         }
     };
 
@@ -160,10 +224,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
 
-    public void checkUpData(){
+    public void checkUpData() {
         //更新检查
         mUpdateManager = new UpdateManager(mContext);
-        mUpdateManager.setOnInstallAppListener(new UpdateManager.onInstallAppListener() {
+        mUpdateManager.setOnInstallAppListener(new UpdateManager.OnInstallAppListener() {
             @Override
             public void onInstallApp() {
                 mHasUpdata = true;
@@ -172,8 +236,46 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         mUpdateManager.checkUpdate();
     }
 
-    public void initView() {
+    /**
+     * 检查当前版本是否可用
+     */
+    public void checkAvailableVersion() {
+        mControlManager = new ControlManager(mContext);
+        mControlManager.checkIsAvailableVersion(new ControlManager.OnCheckedListener() {
+            @Override
+            public void onChecked(boolean isAvailableVersion) {
+                if (!isAvailableVersion) {
+                    SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("提示")
+                            .setContentText("当前版本已停止服务\n请您到中鸽网下载最新版本.")
+                            .setConfirmText("去中鸽网下载")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse(Const.URL_APP_DOWNLOAD + "?autostart=false"));
+                                    startActivity(intent);
 
+                                    sweetAlertDialog.dismiss();
+                                    AppManager.getAppManager().AppExit();
+                                }
+                            })
+                            .setCancelText("退出程序")
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismiss();
+                                    AppManager.getAppManager().AppExit();
+                                }
+                            });
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+            }
+        });
+    }
+
+    public void initView() {
         MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
@@ -228,10 +330,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
 
         mBottomNavigationBar.setTabSelectedListener(this);
-        if (!BuildConfig.DEBUG){
+        if (!BuildConfig.DEBUG) {
             checkUpData();
         }
-
+        checkAvailableVersion();
+        // startService(new Intent(mContext.getApplicationContext(), CoreService.class));
+        bindService(new Intent(mContext.getApplicationContext(), MainActivityService.class), conn, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -315,7 +419,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (mHasUpdata) {
             AppManager.getAppManager().AppExit();
         }
-
         StatusBarTool.setWindowStatusBarColor(this, getResources().getColor(lastTabIndex == 3 ? R.color.user_center_header_top : R.color.colorPrimary));
     }
 
@@ -357,6 +460,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 //                startActivity(new Intent(HomeActivity.this, CollectionActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(conn);
     }
 
     @Override
