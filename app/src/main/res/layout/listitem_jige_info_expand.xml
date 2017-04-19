@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchlive_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_layout_race_info_detial"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:id="@+id/tv_jige_huiyuanpenghao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="会员棚号:null"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_jige_saigeshijian"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
+        android:text="集鸽时间:null"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_jige_dengjizuobiao"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
+        android:text="登记坐标:null"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_margin="8dp"
+        android:id="@+id/tv_jige_chazubaodao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="插组报道:"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

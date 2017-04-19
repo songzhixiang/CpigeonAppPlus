@@ -80,11 +80,6 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     }
 
     @Override
-    public void showChaZuZhiDingView() {
-
-    }
-
-    @Override
     public String getLx() {
         return matchInfo.getLx();
     }

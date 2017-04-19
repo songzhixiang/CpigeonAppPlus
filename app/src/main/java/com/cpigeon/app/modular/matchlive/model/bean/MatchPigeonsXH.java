@@ -4,6 +4,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 /**
+ * 集鸽数据
  * Created by Administrator on 2016/11/24.
  */
 @Table(name = "matchpigeons_xh")

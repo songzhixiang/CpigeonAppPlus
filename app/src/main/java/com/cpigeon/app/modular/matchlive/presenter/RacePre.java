@@ -6,7 +6,7 @@ import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.dao.IRaceDao;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.RaceDaoImpl;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
-import com.cpigeon.app.modular.matchlive.view.fragment.IReportData;
+import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 
 import java.util.List;
 

@@ -53,10 +53,7 @@ public class IRaceReportImpl implements IRaceReport {
     public void queryBulletin(String ssid, IBaseDao.OnCompleteListener<Bulletin> onCompleteListener) {
         try {
             bull = db.selector(Bulletin.class).where("ssid", "=", ssid).findFirst();
-            db.close();
         } catch (DbException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         onCompleteListener.onSuccess(bull);

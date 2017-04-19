@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface IChaZuReport extends IView {
     void showChaZuBaoDaoView(List list);
-    void showChaZuZhiDingView();
     String getLx();
     String getSsid();
 

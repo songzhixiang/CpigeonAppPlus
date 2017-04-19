@@ -15,6 +15,7 @@ import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.presenter.RacePre;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
+import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;

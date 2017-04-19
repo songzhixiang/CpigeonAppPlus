@@ -6,6 +6,7 @@ import org.xutils.db.annotation.Table;
 import java.io.Serializable;
 
 /**
+ * 协会报道数据
  * Created by Administrator on 2016/11/7.
  */
 @Table(name = "matchreport_xh")

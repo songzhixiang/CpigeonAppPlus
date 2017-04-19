@@ -5,6 +5,7 @@ import org.xutils.db.annotation.Column;
 import java.io.Serializable;
 
 /**
+ * 集鸽数据，上笼清单的抽象类
  * Created by Administrator on 2016/11/24.
  */
 
