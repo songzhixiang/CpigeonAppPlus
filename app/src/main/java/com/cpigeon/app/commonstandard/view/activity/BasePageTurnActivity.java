@@ -113,9 +113,11 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     @Override
     public void hideRefreshLoading() {
         isRefreshing = false;
-        if (swiperefreshlayout != null && swiperefreshlayout.isRefreshing())
-            swiperefreshlayout.setRefreshing(false);
-        swiperefreshlayout.setEnabled(true);
+        if (swiperefreshlayout != null) {
+            if (swiperefreshlayout.isRefreshing())
+                swiperefreshlayout.setRefreshing(false);
+            swiperefreshlayout.setEnabled(true);
+        }
     }
 
     @Override
