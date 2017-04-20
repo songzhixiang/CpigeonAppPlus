@@ -24,8 +24,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
     }
 
     public void loadUserServiceInfo() {
-        if (isAttached())
-        {
+        if (isAttached()) {
             mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
                 @Override
                 public void onSuccess(final CpigeonUserServiceInfo data) {
@@ -33,17 +32,16 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
                         @Override
                         public void run() {
                             if (isAttached())
-                            {
                                 mView.getFootSearchService(data);
-                            }
-
                         }
                     });
                 }
 
                 @Override
                 public void onFail(String msg) {
-
+                    if (isAttached()) {
+                        mView.getFootSearchService(null);
+                    }
                 }
             });
         }
@@ -61,8 +59,7 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
                 post(new Runnable() {
                     @Override
                     public void run() {
-                        if (isAttached())
-                        {
+                        if (isAttached()) {
                             mView.showTips(null, IView.TipType.LoadingHide);
                             mView.queryFoot(data);
                         }

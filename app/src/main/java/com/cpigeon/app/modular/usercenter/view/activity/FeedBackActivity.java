@@ -75,16 +75,6 @@ public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements
             }
         });
 
-        toolbar.setTitle("意见反馈");
-        setSupportActionBar(this.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         etPhone.setText(phoneNum);
 //        mPresenter.readUserPhoneNumber();
 

@@ -85,7 +85,7 @@ public class LoginDaoImpl implements ILoginDao {
 
         this.onLoginListener = onLoginListener;
         String devid = CommonTool.getCombinedDeviceID(MyApp.getInstance());
-        String dev = "android";
+        String dev = android.os.Build.MODEL;
         String ver = String.valueOf(CommonTool.getVersionCode(MyApp.getInstance()));
         String appid = BuildConfig.APPLICATION_ID;
 

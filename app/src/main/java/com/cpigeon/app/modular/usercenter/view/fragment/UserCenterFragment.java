@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
+import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
@@ -18,6 +19,8 @@ import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.BalanceActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.HelpActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.MessageActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.MyFollowActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
@@ -32,6 +35,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.cpigeon.app.MyApp.mCpigeonData;
@@ -107,6 +111,13 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_user_center_details:
+                if (!isNetworkConnected()) {
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("无法连接网络")
+                            .setConfirmText("知道了")
+                            .show();
+                    return;
+                }
                 if (checkLogin()) {
                     startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 }
@@ -118,12 +129,13 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 startActivity(intent);
                 break;
             case R.id.ll_user_center_msg:
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.ll_user_center_feedback:
                 startActivity(new Intent(getActivity(), FeedBackActivity.class));
                 break;
             case R.id.ll_user_center_focus:
-
+                startActivity(new Intent(getActivity(), MyFollowActivity.class));
                 break;
             case R.id.ll_user_center_order:
                 startActivity(new Intent(getActivity(), OrderActivity.class));
@@ -158,18 +170,18 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         if (checkLogin()) {
             UserInfo.DataBean userInfo = mCpigeonData.getUserInfo();
             String userHeadImageURl = "", nickName = "";
-            if (userInfo == null) {
-                Map<String, Object> map = getLoginUserInfo();
-                if (map.get("touxiang") != null && (!map.get("touxiang").equals("null") || !map.get("touxiang").equals(""))) {
-                    userHeadImageURl = (String) map.get("touxiangurl");
-                }
-                Logger.d(String.format("%s  %s", map.get("nicheng"), map.get("username")));
-                if (map.get("nicheng") != null && (!TextUtils.isEmpty(map.get("nicheng").toString()))) {
-                    nickName = map.get("nicheng").toString();
-                } else {
-                    nickName = map.get("username").toString();
-                }
+
+            Map<String, Object> map = getLoginUserInfo();
+            if (map.get("touxiang") != null && (!map.get("touxiang").equals("null") || !map.get("touxiang").equals(""))) {
+                userHeadImageURl = (String) map.get("touxiangurl");
+            }
+            Logger.d(String.format("%s  %s", map.get("nicheng"), map.get("username")));
+            if (map.get("nicheng") != null && (!TextUtils.isEmpty(map.get("nicheng").toString()))) {
+                nickName = map.get("nicheng").toString();
             } else {
+                nickName = map.get("username").toString();
+            }
+            if (userInfo != null) {
                 userHeadImageURl = userInfo.getHeadimg();
                 nickName = TextUtils.isEmpty(userInfo.getNickname()) ? userInfo.getUsername() : userInfo.getNickname();
 //              更新用户缓存数据
@@ -178,13 +190,11 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 if (userInfo.getNickname() != null)
                     SharedPreferencesTool.Save(getActivity(), "nicheng", userInfo.getNickname(), SharedPreferencesTool.SP_FILE_LOGIN);
             }
+            Picasso.with(getActivity())
+                    .load(userHeadImageURl)
+                    .error(R.mipmap.head_image_default)
+                    .into(fragmentUserCenterUserLogo);
 
-            if (!TextUtils.isEmpty(userHeadImageURl)) {
-                Picasso.with(getActivity())
-                        .load(userHeadImageURl)
-                        .error(R.mipmap.head_image_default)
-                        .into(fragmentUserCenterUserLogo);
-            }
             final String name = nickName;
             fragmentUserCenterUserName.setText(name);
         } else {
@@ -221,9 +231,4 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         return true;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        mCpigeonData.removeOnDataChangedListener(onDataChangedListener);
-    }
 }

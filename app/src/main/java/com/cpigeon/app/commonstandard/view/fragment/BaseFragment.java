@@ -1,6 +1,9 @@
 package com.cpigeon.app.commonstandard.view.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -56,6 +59,15 @@ public abstract class BaseFragment extends Fragment implements IView {
     @LayoutRes
     protected abstract int getLayoutResource();
 
+    public boolean isNetworkConnected() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            return mNetworkInfo.isAvailable();
+        }
+        return false;
+    }
 
     @Override
     public boolean showTips(String tip, TipType tipType) {

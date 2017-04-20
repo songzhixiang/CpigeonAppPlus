@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
+import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.footsearch.view.activity.FootSearchActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
@@ -117,9 +118,6 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
             tvPromptRight.setVisibility(View.VISIBLE);
             tvPromptRight.setText(String.format("套餐剩余查询次数:%s%s", info.getNumbers(), info.getUnitname()));
         }
-        if (noService) {
-            info = null;
-        }
         userQueryTimes = noService ? -1 : info.getNumbers();
     }
 
@@ -182,6 +180,11 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
                     .setConfirmText("知道了")
                     .show();
 
+        } else if (!isNetworkConnected()) {
+            new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("无法连接网络")
+                    .setConfirmText("知道了")
+                    .show();
         } else {
             pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
             pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));

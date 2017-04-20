@@ -5,13 +5,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
@@ -26,6 +33,8 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/4/7.
@@ -38,6 +47,12 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.viewstub_empty)
+    ViewStub viewstubEmpty;
+
+    View mEmptyTip;
+    TextView mEmptyTipTextView;
+
     private MatchLiveExpandAdapter matchLiveAdapter;
     private List<MatchInfo> matchInfos;
     private int delayMillis = 1000;
@@ -67,9 +82,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                     if (((MatchLiveExpandAdapter.MatchTitleItem) item).isExpanded()) {
                         adapter.collapse(position);
                     } else {
-//                        if (lastExpandItemPosition >= 0 ) {
-//                            adapter.collapse(lastExpandItemPosition);
-//                        }
                         adapter.expand(position);
                         lastExpandItemPosition = position;
                         Logger.e("当前被展开的项的postion" + lastExpandItemPosition);
@@ -78,7 +90,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                     MatchInfo mi = ((MatchLiveExpandAdapter.MatchDetialItem) item).getSubItem(0);
                     if (mi != null && !"jg".equals(mi.getDt())) {
                         Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-                        Bundle bundle = new Bundle();                           //创建Bundle对象
+                        Bundle bundle = new Bundle();                //创建Bundle对象
                         bundle.putSerializable("matchinfo", mi);     //装入数据
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -111,11 +123,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
             }
         });
         mRecyclerView.setAdapter(matchLiveAdapter);
-        if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
-            pre.loadGPData(0);
-        } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
-            pre.loadXHData(0);
-        }
+        onRefresh();
     }
 
 
@@ -133,10 +141,9 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     @Override
     public void showGPData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
-        if (type == 1)
-        {
-            matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfos));
-        }
+//        if (type == 1) {
+//            matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfos));
+//        }
 
         matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfoList));
         if (onRefreshListener != null)
@@ -146,10 +153,9 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     @Override
     public void showXHData(List<MatchInfo> matchInfoList, int type) {
         this.matchInfos = matchInfoList;
-        if (type == 1)
-        {
-            matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfos));
-        }
+//        if (type == 1) {
+//            matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfos));
+//        }
         matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfoList));
         if (onRefreshListener != null)
             onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_XH, matchInfoList.size());
@@ -158,6 +164,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     @Override
     public void setLoadType(int type) {
 
+    }
+
+    @Override
+    public boolean hasDataList() {
+        return matchLiveAdapter == null ? false : matchLiveAdapter.getData() != null && matchLiveAdapter.getData().size() > 0;
     }
 
     public void setMatchType(String matchType) {
@@ -172,17 +183,18 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
+                if (!isNetworkConnected()) {
+                    showTips("网络无法连接", TipType.View);
+                } else if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
                     pre.loadGPData(0);
                 } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
                     pre.loadXHData(0);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
+//                mSwipeRefreshLayout.setRefreshing(false);
                 matchLiveAdapter.setEnableLoadMore(true);
             }
         }, delayMillis);
     }
-
 
 
     @Override
@@ -192,12 +204,27 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void hideRefreshLoading() {
+        if (mEmptyTip != null)
+            mEmptyTip.setVisibility(View.GONE);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showEmptyData() {
+        showTips("暂无比赛", TipType.View);
+    }
 
+    @Override
+    public boolean showTips(String tip, TipType tipType) {
+        if (tipType == TipType.View) {
+            if (mEmptyTip == null) mEmptyTip = viewstubEmpty.inflate();
+            mEmptyTip.setVisibility(View.VISIBLE);
+            if (mEmptyTipTextView == null)
+                mEmptyTipTextView = (TextView) mEmptyTip.findViewById(R.id.tv_empty_tips);
+            mEmptyTipTextView.setText(TextUtils.isEmpty(tip) ? "非常抱歉，发生了未知错误" : tip);
+            return true;
+        }
+        return super.showTips(tip, tipType);
     }
 
     public interface OnRefreshListener {

@@ -11,8 +11,6 @@ import java.util.List;
  * Created by chenshuai on 2017/4/13.
  */
 
-public interface IScoreView extends IView {
+public interface IScoreView extends IView,IPageTurn<UserScore>,IRefresh {
 
-    interface IScoreSub2View extends IView,IPageTurn<UserScore>,IRefresh {
-    }
 }

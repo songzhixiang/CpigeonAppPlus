@@ -15,4 +15,5 @@ public interface IMatchSubView  extends IView,IRefresh{
     void showXHData(List<MatchInfo> matchInfoList,int type);
     void setLoadType(int type);
 
+    boolean hasDataList();
 }

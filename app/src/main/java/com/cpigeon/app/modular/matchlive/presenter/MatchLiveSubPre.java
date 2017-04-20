@@ -1,7 +1,10 @@
 package com.cpigeon.app.modular.matchlive.presenter;
 
+import android.widget.Toast;
+
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.dao.IMatchInfo;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.MatchInfoImpl;
@@ -13,8 +16,7 @@ import java.util.List;
  * Created by Administrator on 2017/4/7.
  */
 
-public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
-
+public class MatchLiveSubPre extends BasePresenter<IMatchSubView, IMatchInfo> {
 
 
     public MatchLiveSubPre(IMatchSubView mView) {
@@ -31,15 +33,23 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
                 post(new Runnable() {
                     @Override
                     public void run() {
+                        if (isDetached()) return;
                         mView.hideRefreshLoading();
-                        mView.showXHData(data,type);
+                        mView.showXHData(data, type);
                     }
                 });
             }
 
             @Override
             public void onFail(String msg) {
-
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isDetached()) return;
+                        mView.hideRefreshLoading();
+                        mView.showTips("获取比赛列表失败", mView.hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
+                    }
+                });
             }
         });
 
@@ -56,8 +66,9 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
                 post(new Runnable() {
                     @Override
                     public void run() {
+                        if (isDetached()) return;
                         mView.hideRefreshLoading();
-                        mView.showGPData(data,type);
+                        mView.showGPData(data, type);
                     }
                 });
 
@@ -65,7 +76,14 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView,IMatchInfo>{
 
             @Override
             public void onFail(String msg) {
-
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isDetached()) return;
+                        mView.hideRefreshLoading();
+                        mView.showTips("获取比赛列表失败", mView.hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
+                    }
+                });
             }
         });
 

@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
+import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.activity.IPageTurn;
 import com.cpigeon.app.commonstandard.view.activity.IRefresh;
 import com.orhanobut.logger.Logger;
@@ -32,9 +33,9 @@ import butterknife.BindView;
 
 public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter extends BaseQuickAdapter<DataBean, BaseViewHolder>, DataBean> extends BaseLazyLoadFragment<Pre> implements IPageTurn<DataBean>, IRefresh, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.recyclerview)
-   protected RecyclerView recyclerview;
+    protected RecyclerView recyclerview;
     @BindView(R.id.swiperefreshlayout)
-   protected SwipeRefreshLayout swiperefreshlayout;
+    protected SwipeRefreshLayout swiperefreshlayout;
     @BindView(R.id.viewstub_empty)
     ViewStub viewstubEmpty;
     View mEmptyTip;
@@ -63,7 +64,10 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     protected void lazyLoad() {
-        loadDataByPresenter();
+        if (isNetworkConnected())
+            loadDataByPresenter();
+        else
+            showTips("网络连接已断开", TipType.View);
     }
 
 
