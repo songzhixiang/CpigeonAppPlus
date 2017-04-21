@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.matchlive.view.activity;
+package com.cpigeon.app.modular.matchlive.view.activity.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;

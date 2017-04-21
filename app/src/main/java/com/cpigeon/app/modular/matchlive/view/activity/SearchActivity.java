@@ -19,6 +19,7 @@ import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
 import com.cpigeon.app.modular.matchlive.presenter.SearchPresenter;
+import com.cpigeon.app.modular.matchlive.view.activity.viewdao.ISearchView;
 import com.cpigeon.app.modular.matchlive.view.adapter.HistroyAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.SearchResultAdapter;
 import com.cpigeon.app.utils.BaseRecyclerViewAdapter;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/4/14.
  */
 
-public class SearchActivity extends BaseActivity<SearchPresenter> implements ISearchView{
+public class SearchActivity extends BaseActivity<SearchPresenter> implements ISearchView {
     private String sKey = "";
     public static final String INTENT_KEY_SEARCHKEY = "search_key";//传递过来的搜索关键字
     public static final String INTENT_KEY_SEARCH_HINT_TEXT = "search_hint_text";//输入框提示

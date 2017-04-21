@@ -5,8 +5,7 @@ import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.dao.IRaceReport;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.IRaceReportImpl;
-import com.cpigeon.app.modular.matchlive.view.activity.IRaceReportView;
-import com.orhanobut.logger.Logger;
+import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRaceReportView;
 
 import java.util.List;
 

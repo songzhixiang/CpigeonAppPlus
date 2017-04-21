@@ -21,6 +21,7 @@ import com.cpigeon.app.commonstandard.view.adapter.fragmentpager.FragmentPagerIt
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.RaceReportPre;
+import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRaceReportView;
 import com.cpigeon.app.modular.matchlive.view.fragment.ChaZuBaoDaoFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.ChaZuZhiDingFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.JiGeDataFragment;
@@ -32,7 +33,6 @@ import com.cpigeon.app.utils.customview.smarttab.SmartTabLayout;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -40,7 +40,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/10.
  */
 
-public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView,RaceDetailsFragment.DialogFragmentDataImpl {
+public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl {
 
     ///////////////////////////////////////////////////////////////////////////
     // 视图
@@ -67,6 +67,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     private Intent intent;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Bulletin bulletin;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_race_details;
@@ -77,6 +78,15 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         return new RaceReportPre(this);
     }
 
+    public interface onLoadComplete {
+        void onSuccess(Bulletin bulletin);
+    }
+
+    public void setOnLoadComplete(RaceReportActivity.onLoadComplete onLoadComplete) {
+        this.onLoadComplete = onLoadComplete;
+    }
+
+    onLoadComplete onLoadComplete;
 
     @Override
     public void initView() {
@@ -96,7 +106,6 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
             mViewPager.setAdapter(mFragmentPagerAdapter);
             mSmartTabLayout.setViewPager(mViewPager);
         }
-
         if (mToolbar != null) {
             mToolbar.setTitle("");
             raceDetailsMarqueetv.setText(matchInfo.getMc());
@@ -127,6 +136,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     }
 
+
     @Override
     public MatchInfo getMatchInfo() {
         return matchInfo;
@@ -145,6 +155,9 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     @Override
     public void showBulletin(Bulletin bulletin) {
         this.bulletin = bulletin;
+
+        if (this.onLoadComplete != null)
+            onLoadComplete.onSuccess(bulletin);
         if (bulletin != null && !TextUtils.isEmpty(bulletin.getContent().trim())) {
             layoutGg.setVisibility(View.VISIBLE);
             listHeaderRaceDetialGg.setText("公告:" + bulletin.getContent());
@@ -189,13 +202,17 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_gg:
-                SweetAlertDialog dialog = new SweetAlertDialog(this,SweetAlertDialog.NORMAL_TYPE);
+                if ("".equals(bulletin.getContent())) {
+                    return;
+                }
+                SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
                 dialog.setTitleText("公告");
                 dialog.setContentText(bulletin.getContent());
                 dialog.setCancelable(true);
                 dialog.show();
                 break;
             case R.id.fab:
+
                 break;
         }
     }
@@ -205,16 +222,14 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     }
 
-    public void showDialogFragment()
-    {
+    public void showDialogFragment() {
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("dialogFragment");
-        if (fragment !=null)
-        {
+        if (fragment != null) {
             mFragmentTransaction.remove(fragment);
         }
         RaceDetailsFragment detailsFragment = RaceDetailsFragment.newInstance("这是信息");
-        detailsFragment.show(mFragmentTransaction,"dialogFragment");
+        detailsFragment.show(mFragmentTransaction, "dialogFragment");
     }
 
 }

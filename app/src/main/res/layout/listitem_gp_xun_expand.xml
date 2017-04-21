@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:id="@+id/matchlive_details"
+    android:background="@drawable/background_layout_race_info_detial"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_sifangshijian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="司放时间:null"
+            android:textStyle="bold" />
+        <TextView
+            android:textColor="@color/light_red3"
+            android:gravity="right"
+            android:id="@+id/tv_watchnow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击观看 >>"
+            android:textStyle="bold" />
+
+
+
+
+</LinearLayout>

@@ -63,6 +63,16 @@ public class MatchInfo implements Serializable{
     private String lx;//赛事类型
     @Column(name = "dt")
     private String dt;//数据类型
+    @Column(name = "ruid")
+    private int ruid;
+
+    public int getRuid() {
+        return ruid;
+    }
+
+    public void setRuid(int ruid) {
+        this.ruid = ruid;
+    }
 
     public MatchInfo() {
     }

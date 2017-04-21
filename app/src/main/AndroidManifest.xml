@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cpigeon.app">
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -138,7 +138,10 @@
             android:name=".modular.matchlive.view.activity.RaceReportActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
+        <activity
+            android:name=".modular.matchlive.view.activity.RacePigeonsActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".modular.usercenter.view.activity.UserBalanceRechargeActivity"
             android:launchMode="singleTask"

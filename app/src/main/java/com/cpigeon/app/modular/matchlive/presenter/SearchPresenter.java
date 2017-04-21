@@ -5,7 +5,7 @@ import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
 import com.cpigeon.app.modular.matchlive.model.dao.ISearchHistory;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.SearchHistoryImpl;
-import com.cpigeon.app.modular.matchlive.view.activity.ISearchView;
+import com.cpigeon.app.modular.matchlive.view.activity.viewdao.ISearchView;
 
 import java.util.List;
 import java.util.Map;

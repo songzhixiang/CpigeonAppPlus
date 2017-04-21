@@ -27,4 +27,34 @@ public class IChaZuDaoImpl implements IChaZuDao {
             }
         });
     }
+
+    /**
+     * 获取插组数据的详情
+     * @param matchType
+     * @param ssid
+     * @param foot
+     * @param name
+     * @param hascz
+     * @param pager
+     * @param pagesize
+     * @param czIndex
+     * @param sKey
+     * @param onCompleteListener
+     */
+    @Override
+    public void loadChaZuBaoDaoDetails(String matchType, String ssid, String foot, String name, boolean hascz, int pager, int pagesize, int czIndex, String sKey, final OnCompleteListener<List> onCompleteListener) {
+        CallAPI.getReportData(MyApp.getInstance(), matchType, ssid, foot, name, hascz, pager, pagesize, czIndex, sKey, new CallAPI.Callback<List>() {
+            @Override
+            public void onSuccess(List data) {
+                onCompleteListener.onSuccess(data);
+            }
+
+            @Override
+            public void onError(int errorType, Object data) {
+                onCompleteListener.onFail(errorType+"");
+            }
+        });
+    }
+
+
 }

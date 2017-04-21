@@ -21,11 +21,19 @@ import java.util.List;
 public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
     public static final int TYPE_TITLE = 1;
     public static final int TYPE_DETIAL = 2;
-
-    public MatchLiveExpandAdapter(List<MultiItemEntity> data) {
+    private int expandType;
+    public MatchLiveExpandAdapter(List<MultiItemEntity> data,int expandType) {
         super(data);
+        this.expandType = expandType;
         addItemType(TYPE_TITLE, R.layout.listitem_race_info);
-        addItemType(TYPE_DETIAL, R.layout.listitem_race_info_details);
+        if (expandType == 0) {//代表的是协会直播中红色的部分，和协会直播中比赛的部分
+            addItemType(TYPE_DETIAL, R.layout.listitem_race_info_details);
+        }else if (expandType == 1)//协会直播的训放
+        {
+            addItemType(TYPE_DETIAL, R.layout.listitem_gp_xun_expand);
+        }
+
+
     }
 
     @Override
@@ -72,12 +80,19 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 break;
             case TYPE_DETIAL:
                 final MatchDetialItem detialItem = (MatchDetialItem) item;
-                helper.setText(R.id.tv_sifangdidian, "司放地点:" + detialItem.getSubItem(0).getArea());
-                helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj()+"KM");
-                helper.setText(R.id.tv_sifangyushu, "司放羽数:" + detialItem.getSubItem(0).compuberSLYS());
-                helper.setText(R.id.tv_weather, "天气:" + detialItem.getSubItem(0).getTq());
-                helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
-                helper.setText(R.id.tv_sifangzuobiao, "司放坐标:" + detialItem.getSubItem(0).computerSFZB());
+                if (expandType == 0){
+                    helper.setText(R.id.tv_sifangdidian, "司放地点:" + detialItem.getSubItem(0).getArea());
+                    helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj()+"KM");
+                    helper.setText(R.id.tv_sifangyushu, "司放羽数:" + detialItem.getSubItem(0).compuberSLYS());
+                    helper.setText(R.id.tv_weather, "天气:" + detialItem.getSubItem(0).getTq());
+                    helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
+                    helper.setText(R.id.tv_sifangzuobiao, "司放坐标:" + detialItem.getSubItem(0).computerSFZB());
+                }else if (expandType == 1)
+                {
+                    helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
+                }
+
+
                 break;
         }
     }

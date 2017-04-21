@@ -5,21 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:minHeight="@dimen/list_header_race_detial_layout_root_minheight"
+    android:padding="16dp"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/race_detial_info_match_name_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <ImageView
-            android:id="@+id/race_detial_info_detial_show"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
             android:id="@+id/race_detial_info_textview_racename"
@@ -27,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_header_race_detial_textview_racename_height"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/race_detial_info_detial_show"
             android:gravity="center"
             android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
             android:textColor="@color/light_black"
@@ -38,7 +25,7 @@
             android:layout_height="@dimen/split_line_width"
             android:layout_alignParentBottom="true"
             android:background="@color/colorLayoutSplitLineGray"></View>
-    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/layout_report_info_detial"

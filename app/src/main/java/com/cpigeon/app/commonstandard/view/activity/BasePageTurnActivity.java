@@ -83,6 +83,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         pagesize = getDefaultPageSize();
         iniPageAndAdapter();
         loadDataByPresenter();
+
     }
 
 

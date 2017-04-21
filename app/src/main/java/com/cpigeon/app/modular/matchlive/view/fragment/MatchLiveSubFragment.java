@@ -47,13 +47,12 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private OnRefreshListener onRefreshListener;
 
     private int lastExpandItemPosition = -1;
-
     @Override
     protected void initView(View view) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null));
+        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null),1);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         matchLiveAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

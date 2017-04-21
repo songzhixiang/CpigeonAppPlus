@@ -1056,6 +1056,7 @@ public class CallAPI {
                                     matchInfo.setXmbt(jo.has("xmbt") ? jo.getString("xmbt") : "");
                                     matchInfo.setLx(jo.has("lx") ? jo.getString("lx") : "");
                                     matchInfo.setDt(jo.has("dt") ? jo.getString("dt") : "bs");
+                                    matchInfo.setRuid(jo.has("ruid") ? jo.getInt("ruid") : 0);
                                     list.add(matchInfo);
                                 }
                                 builder.deleteCharAt(builder.length() - 1);
@@ -1226,6 +1227,7 @@ public class CallAPI {
                     @Override
                     public void onSuccess(String result) {
                         if (result != null) dealData(result);
+                        Logger.json(result);
                     }
 
                     private void dealData(final String result) {

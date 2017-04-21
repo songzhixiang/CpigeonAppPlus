@@ -18,6 +18,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.IPageTurn;
 import com.cpigeon.app.commonstandard.view.activity.IRefresh;
+import com.cpigeon.app.utils.MyItemDecoration;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.proguard.t;
 

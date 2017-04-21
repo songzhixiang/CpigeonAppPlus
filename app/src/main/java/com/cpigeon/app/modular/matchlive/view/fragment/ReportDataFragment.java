@@ -44,22 +44,6 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     }
 
     @Override
-    protected void initView(View view) {
-        super.initView(view);
-
-        recyclerview.addOnItemTouchListener(new OnItemLongClickListener() {
-            @Override
-            public void onSimpleItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                Object item = ((RaceReportAdapter) adapter).getData().get(position);
-                if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
-//                    final String s = ((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getMc();
-
-                }
-            }
-        });
-    }
-
-    @Override
     protected int getLayoutResource() {
         return R.layout.fragment_race_data;
     }

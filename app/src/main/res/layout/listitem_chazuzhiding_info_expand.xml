@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchlive_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_layout_race_info_detial"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/tv_huiyuanpenghao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:text="会员棚号:null"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_shanglongshijian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="上笼时间:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_dengjizuobiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="登记坐标:"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_chazuzhiding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="插组指定:"
+        android:textStyle="bold" />
+</LinearLayout>

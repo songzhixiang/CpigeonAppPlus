@@ -319,11 +319,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
                     .initialise();
         } else {
-            mBottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "首页").setActiveColorResource(R.color.colorPrimary).setBadgeItem(numberBadgeItem))
-                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "直播").setActiveColorResource(R.color.colorPrimary))
-//                    .addItem(new BottomNavigationItem(R.drawable.svg_ic_cpigeon_group, "微鸽圈").setActiveColorResource(R.color.colorPrimary))
-                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "查询").setActiveColorResource(R.color.colorPrimary))
-                    .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "我的").setActiveColorResource(R.color.colorPrimary))
+            mBottomNavigationBar
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_home_selected, "首页").setBadgeItem(numberBadgeItem))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_matchlive_selected, "直播"))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_search_selected, "查询"))
+                    .addItem(new BottomNavigationItem(R.mipmap.ic_user_selected, "我的"))
                     .setFirstSelectedPosition(laseSelectedPosition > 4 ? 4 : laseSelectedPosition)
                     .initialise();
         }
