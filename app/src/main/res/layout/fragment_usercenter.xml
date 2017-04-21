@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:fitsSystemWindows="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
 
     <RelativeLayout
-        android:fitsSystemWindows="true"
         android:id="@+id/fragment_user_center_userInfo_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fragment_user_center_layout_userinfo_height"
-        android:background="@drawable/background_user_center_header">
+        android:background="@drawable/background_user_center_header"
+        android:fitsSystemWindows="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fragment_user_center_userLogo"
@@ -23,7 +22,8 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/fragment_user_center_imageview_headimg_marginleft"
-            android:layout_marginTop="@dimen/fragment_user_center_imageview_headimg_margintop" />
+            android:layout_marginTop="@dimen/fragment_user_center_imageview_headimg_margintop"
+            android:src="@mipmap/head_image_default" />
 
         <TextView
             android:id="@+id/fragment_user_center_userName"
@@ -38,7 +38,8 @@
             android:text="用户名"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/fragment_user_center_textview_username_textsize"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/fragment_user_center_details"
             android:layout_width="wrap_content"
@@ -52,37 +53,40 @@
             android:singleLine="true"
             android:text="个人信息"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/fragment_user_center_textview_userinfo_textsize"/>
+            android:textSize="@dimen/fragment_user_center_textview_userinfo_textsize" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_sign"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="10dp"
-            android:layout_margin="16dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            app:cardBackgroundColor="@color/colorSign"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="@color/colorSign"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
             <LinearLayout
-                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
                 <ImageView
-                    android:layout_marginRight="2dp"
-                    android:src="@mipmap/ic_sign"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:src="@mipmap/ic_sign" />
+
                 <TextView
                     android:id="@+id/tv_sign_status"
-                    android:textColor="@color/colorWhite"
-                    android:text="签到"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="签到"
+                    android:textColor="@color/colorWhite" />
             </LinearLayout>
 
 
@@ -102,25 +106,26 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_user_center_person"
             android:padding="@dimen/dp_10"
-            android:text="个人中心"/>
+            android:text="个人中心" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <LinearLayout
+            android:id="@+id/ll_user_center_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:id="@+id/ll_user_center_msg"
-            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -131,27 +136,29 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_msg"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="消息通知"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_center_feedback"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -162,29 +169,31 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_feedback"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
+                android:id="@+id/marqueeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="意见反馈"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"
-                android:id="@+id/marqueeTextView" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_center_focus"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -195,36 +204,39 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_coll"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="我的关注"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
     </LinearLayout>
+
     <View
-        android:background="@color/colorLayoutGray4"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/colorLayoutGray4" />
+
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/ll_user_center_order"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -235,29 +247,31 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_orders"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="我的订单"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_money"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -268,14 +282,14 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_balance"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
+
             <TextView
                 android:id="@+id/tv_user_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123"
                 android:textColor="@color/textColor_gray"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
@@ -284,18 +298,20 @@
                 android:layout_gravity="center_horizontal"
                 android:text="账户余额"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_jifen"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -306,14 +322,14 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_score"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
+
             <TextView
                 android:id="@+id/tv_user_jifen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123"
                 android:textColor="@color/textColor_gray"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"
@@ -321,26 +337,28 @@
                 android:layout_gravity="center_horizontal"
                 android:text="我的积分"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/colorLayoutGray4"/>
+        android:background="@color/colorLayoutGray4" />
 
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/ll_user_center_setting"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -351,29 +369,31 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_setting"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="设置"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_center_aboutus"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -384,28 +404,30 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_about"
-                app:badge_gravity="rightTop"/>
+                app:badge_gravity="rightTop" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="关于我们"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4"/>
+            android:background="@color/colorLayoutGray4" />
+
         <LinearLayout
             android:id="@+id/ll_user_center_help"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -416,16 +438,17 @@
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
                 android:src="@mipmap/ic_usercenter_help"
-                app:badge_gravity="rightTop"/>
-            <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:layout_marginTop="16dp"
+                app:badge_gravity="rightTop" />
 
+            <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="帮助"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
     </LinearLayout>

@@ -623,12 +623,12 @@ public class CallAPI {
 
             @Override
             public void onCancelled(CancelledException cex) {
-
+                Logger.i("");
             }
 
             @Override
             public void onFinished() {
-
+                Logger.i("");
             }
 
         });
@@ -4282,7 +4282,7 @@ public class CallAPI {
      * @return
      */
     public static void pretreatmentParams(RequestParams requestParams) {
-        requestParams.setConnectTimeout(12000);
+        requestParams.setConnectTimeout(8000);
         requestParams.setMaxRetryCount(1);
     }
 

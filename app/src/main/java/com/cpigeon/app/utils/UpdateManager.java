@@ -41,6 +41,7 @@ public class UpdateManager {
     private Context mContext;
     private ProgressDialog mProgressDialog;
 
+    private long loadingTime = 1;
 
     public UpdateManager(Context context) {
         mContext = context;

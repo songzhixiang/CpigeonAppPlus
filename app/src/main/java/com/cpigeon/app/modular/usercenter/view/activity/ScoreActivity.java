@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.fragmentpager.FragmentPagerItemAdapter;
 import com.cpigeon.app.commonstandard.view.adapter.fragmentpager.FragmentPagerItems;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/4/10.
  */
 
-public class ScoreActivity extends BaseActivity<ScorePresenter> implements IScoreView {
+public class ScoreActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_user_score_count)
@@ -49,13 +50,10 @@ public class ScoreActivity extends BaseActivity<ScorePresenter> implements IScor
     }
 
     @Override
-    public ScorePresenter initPresenter() {
-        return new ScorePresenter(this);
+    public BasePresenter initPresenter() {
+        return null;
     }
 
-    public ScorePresenter getPresenter() {
-        return this.mPresenter;
-    }
 
     @Override
     public void initView() {

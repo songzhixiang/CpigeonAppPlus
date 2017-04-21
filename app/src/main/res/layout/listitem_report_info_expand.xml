@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="会员棚号:null"
-            android:textStyle="bold" />
+           />
 
         <TextView
             android:id="@+id/tv_bisaikongju"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="比赛空距:null"
-            android:textStyle="bold" />
+           />
     </LinearLayout>
 
 
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="赛鸽分数:null"
-        android:textStyle="bold" />
+       />
 
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="归巢时间:null"
-        android:textStyle="bold" />
+       />
     <TextView
         android:id="@+id/tv_dengjizuobiao"
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="登记坐标:null"
-        android:textStyle="bold" />
+       />
     <TextView
         android:id="@+id/tv_saomiaozuobiao"
         android:layout_width="match_parent"
@@ -64,13 +64,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="扫描坐标:null"
-        android:textStyle="bold" />
+       />
     <TextView
         android:id="@+id/tv_chazubaodao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="插组报道:"
-        android:textStyle="bold" />
+       />
 
 
 </LinearLayout>
