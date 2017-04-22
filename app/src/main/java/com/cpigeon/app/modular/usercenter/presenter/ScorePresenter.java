@@ -55,7 +55,7 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
                     if (isAttached()) {
                         if (mView.isRefreshing()) {
                             mView.hideRefreshLoading();
-                            mView.showTips("获取积分记录失败", IView.TipType.View);
+                            mView.showTips("获取鸽币记录失败", IView.TipType.View);
                         } else if (mView.isMoreDataLoading()) {
                             mView.loadMoreFail();
                         }

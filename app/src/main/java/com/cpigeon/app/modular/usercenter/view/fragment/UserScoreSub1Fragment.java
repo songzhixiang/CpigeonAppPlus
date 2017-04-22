@@ -25,8 +25,6 @@ import butterknife.Unbinder;
 public class UserScoreSub1Fragment extends BaseFragment {
     @BindView(R.id.btn_zhcx_dh)
     Button btnZhcxDh;
-    @BindView(R.id.scrollView)
-    ScrollView scrollView;
 
     @Override
     protected void initView(View view) {

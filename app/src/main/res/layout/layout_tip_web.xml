@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/piv_tip_img"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:src="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ic_svg_weep_face" />
 
     <TextView
         android:id="@+id/tv_error_tip"
@@ -20,6 +20,7 @@
         android:layout_below="@id/piv_tip_img"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:textColor="#9e9e9e"
         android:text="您的页面找不到回家的路了"
         android:textSize="@dimen/dp_20" />
 </RelativeLayout>

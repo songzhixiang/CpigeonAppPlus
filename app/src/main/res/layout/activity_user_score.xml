@@ -1,69 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLayoutGray4"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_toolbar" />
-
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@color/colorWhite">
+        android:fitsSystemWindows="true">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_centerInParent="true"
-            android:src="#65d7b5"
-            app:civ_border_color="#b9edd8"
-            app:civ_border_width="15dp" />
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_user_score_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500000"
-                android:textColor="@color/colorWhite"
-                android:textSize="26sp" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/colorPrimary"
+                android:fitsSystemWindows="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_user_score_count"
-                android:layout_centerHorizontal="true"
-                android:text="鸽币"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_16"
-                android:visibility="gone" />
-        </LinearLayout>
-    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fitsSystemWindows="true">
 
-    <com.cpigeon.app.utils.customview.smarttab.SmartTabLayout
-        android:id="@+id/viewpagertab"
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cv_score_bg"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerInParent="true"
+                        android:fitsSystemWindows="true"
+                        app:cardBackgroundColor="@color/colorWhite"
+                        app:cardCornerRadius="60dp"
+                        app:cardElevation="8dp"
+                        app:cardMaxElevation="16dp"></android.support.v7.widget.CardView>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ_score_bg"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerInParent="true"
+                        android:fitsSystemWindows="true"
+                        android:src="@color/colorWhite"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:fitsSystemWindows="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_score_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="500000"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_user_score_count"
+                        android:layout_centerHorizontal="true"
+                        android:text="鸽币"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/sp_16" />
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:stl_defaultTabTextColor="#6D6D6D"
-        app:stl_defaultTabTextSize="16dp"
-        app:stl_distributeEvenly="true"
-        app:stl_indicatorColor="@color/colorPrimary"
-        app:stl_indicatorCornerRadius="1.5dp"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="3dp"
-        app:stl_underlineColor="@android:color/transparent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.cpigeon.app.utils.customview.smarttab.SmartTabLayout
+            android:id="@+id/viewpagertab"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:stl_defaultTabTextColor="#6D6D6D"
+            app:stl_defaultTabTextSize="16dp"
+            app:stl_distributeEvenly="true"
+            app:stl_indicatorColor="@color/colorPrimary"
+            app:stl_indicatorCornerRadius="1.5dp"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorThickness="3dp"
+            app:stl_underlineColor="@android:color/transparent" />
 
-</LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

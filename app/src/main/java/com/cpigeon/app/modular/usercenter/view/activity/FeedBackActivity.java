@@ -56,6 +56,15 @@ public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements
 
     @Override
     public void initView() {
+        toolbar.setTitle("意见反馈");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

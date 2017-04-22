@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+
+    <style name="AppTheme.TransparentStatusBar"></style>
     <!--自定义ActionBar样式-->
     <style name="layout_custom_actionbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
@@ -87,7 +89,6 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/bg_header_race_detial_data_type_default</item>
     </style>
-
 
 
     <style name="report_info_detial_title" parent="SingleLine">
@@ -250,6 +251,7 @@
         <item name="android:windowEnterAnimation">@anim/dialog_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_bottom_out</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

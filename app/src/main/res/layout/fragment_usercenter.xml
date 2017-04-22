@@ -73,6 +73,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -130,13 +131,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_msg"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_msg" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"
@@ -144,41 +145,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:text="消息通知"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_18" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorLayoutGray4" />
-
-        <LinearLayout
-            android:id="@+id/ll_user_center_feedback"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_feedback"
-                app:badge_gravity="rightTop" />
-
-
-            <com.cpigeon.app.utils.customview.MarqueeTextView
-                android:id="@+id/marqueeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:text="意见反馈"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
@@ -198,13 +164,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_coll"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_star" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
@@ -217,6 +183,42 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLayoutGray4" />
+
+        <LinearLayout
+            android:id="@+id/ll_user_center_feedback"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp_40"
+                android:padding="@dimen/dp_8"
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_pen" />
+
+
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:id="@+id/marqueeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="意见反馈"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -231,8 +233,9 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
+
         <LinearLayout
-            android:id="@+id/ll_user_center_order"
+            android:id="@+id/ll_user_jifen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -240,23 +243,26 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_orders"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_score" />
 
+            <TextView
+                android:id="@+id/tv_user_jifen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor_gray"
+                android:textSize="14sp" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:text="我的订单"
+                android:text="我的鸽币"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
@@ -276,13 +282,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_balance"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_money" />
 
             <TextView
                 android:id="@+id/tv_user_money"
@@ -307,7 +313,7 @@
             android:background="@color/colorLayoutGray4" />
 
         <LinearLayout
-            android:id="@+id/ll_user_jifen"
+            android:id="@+id/ll_user_center_order"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -316,29 +322,26 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_score"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_list" />
 
-            <TextView
-                android:id="@+id/tv_user_jifen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor_gray"
-                android:textSize="14sp" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="我的积分"
+                android:layout_marginTop="16dp"
+                android:text="我的订单"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -363,13 +366,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_setting"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_setting" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
@@ -398,13 +401,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_about"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_about" />
 
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
@@ -432,13 +435,13 @@
             android:orientation="vertical">
 
 
-            <cn.bingoogolapple.badgeview.BGABadgeImageView
+            <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="@dimen/dp_40"
                 android:padding="@dimen/dp_8"
-                android:src="@mipmap/ic_usercenter_help"
-                app:badge_gravity="rightTop" />
+                app:badge_gravity="rightTop"
+                app:srcCompat="@drawable/ic_svg_help" />
 
             <com.cpigeon.app.utils.customview.MarqueeTextView
                 android:layout_width="wrap_content"

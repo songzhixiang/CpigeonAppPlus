@@ -12,10 +12,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
-import com.cpigeon.app.modular.footsearch.view.activity.FootSearchActivity;
+import com.cpigeon.app.modular.footsearch.view.activity.FootSearchResultActivity;
 import com.cpigeon.app.modular.order.model.bean.CpigeonServicesInfo;
 import com.cpigeon.app.modular.footsearch.presenter.FootSearchPre;
 import com.cpigeon.app.modular.order.view.activity.OpenServiceActivity;
@@ -73,6 +71,15 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
     protected void initView(View view) {
         isPrepared = true;
         initToolbar();
+        if (searchEdittext != null) {
+            searchEdittext.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
+                @Override
+                public void onSearchClick(View view, String keyword) {
+                    footSearchRun(keyword.trim());
+                }
+            });
+
+        }
     }
 
     @Override
@@ -131,14 +138,14 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
             CpigeonData.getInstance().setUserFootSearchServiceInfo(userData);
         }
 
-        Intent intent = new Intent(getActivity(), FootSearchActivity.class);
+        Intent intent = new Intent(getActivity(), FootSearchResultActivity.class);
         Bundle b = new Bundle();
-        b.putSerializable(FootSearchActivity.BUNDLE_FOOT_QUERY_RESULT_LIST, (ArrayList<FootSearchActivity>) map.get("data"));
-        b.putString(FootSearchActivity.BUNDLE_KEY_SEARCH_KEY, getQueryKey());
-        b.putSerializable(FootSearchActivity.BUNDLE_KEY_ALL_SERVICES_INFO, allServicesInfo);
-        b.putSerializable(FootSearchActivity.BUNDLE_KEY_SEARCH_MAX_SHOW_COUNT, (int) map.get("rest") == -1 ? 0 : (int) map.get("maxShowCount"));
-        b.putInt(FootSearchActivity.BUNDLE_KEY_SEARCH_ALL_COUNT, (int) map.get("rest") == -1 ? 0 : (int) map.get("resultCount"));
-        intent.putExtra(FootSearchActivity.INTENT_DATA_KEY, b);
+        b.putSerializable(FootSearchResultActivity.BUNDLE_FOOT_QUERY_RESULT_LIST, (ArrayList<FootSearchResultActivity>) map.get("data"));
+        b.putString(FootSearchResultActivity.BUNDLE_KEY_SEARCH_KEY, getQueryKey());
+        b.putSerializable(FootSearchResultActivity.BUNDLE_KEY_ALL_SERVICES_INFO, allServicesInfo);
+        b.putSerializable(FootSearchResultActivity.BUNDLE_KEY_SEARCH_MAX_SHOW_COUNT, (int) map.get("rest") == -1 ? 0 : (int) map.get("maxShowCount"));
+        b.putInt(FootSearchResultActivity.BUNDLE_KEY_SEARCH_ALL_COUNT, (int) map.get("rest") == -1 ? 0 : (int) map.get("resultCount"));
+        intent.putExtra(FootSearchResultActivity.INTENT_DATA_KEY, b);
         startActivity(intent);
         mHandler.post(new Runnable() {
             @Override

@@ -172,7 +172,7 @@ public class CpigeonData {
     }
 
     /**
-     * 获取用户积分
+     * 获取用户鸽币
      *
      * @return
      */
@@ -183,7 +183,7 @@ public class CpigeonData {
     }
 
     /**
-     * 设置用户积分
+     * 设置用户鸽币
      *
      * @param userScore
      */
@@ -423,7 +423,7 @@ public class CpigeonData {
         }
 
         /**
-         * 从服务器获取用户余额与积分
+         * 从服务器获取用户余额与鸽币
          */
         public void updateUserBalanceAndScoreFromServer() {
             if (canUpdate("getUserBalanceAndScoreFromServer"))

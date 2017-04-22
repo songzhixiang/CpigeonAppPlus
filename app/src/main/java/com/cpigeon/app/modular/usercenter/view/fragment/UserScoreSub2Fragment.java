@@ -30,7 +30,7 @@ public class UserScoreSub2Fragment extends BasePageTurnFragment<ScorePresenter, 
 
     @Override
     protected String getEmptyDataTips() {
-        return "还没有积分";
+        return "还没有鸽币";
     }
 
     @Override

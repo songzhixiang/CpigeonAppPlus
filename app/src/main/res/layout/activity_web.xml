@@ -19,7 +19,7 @@
         android:id="@+id/vs_tip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/layout_tip"
+        android:layout="@layout/layout_tip_web"
         android:visibility="gone"></ViewStub>
 
     <WebView

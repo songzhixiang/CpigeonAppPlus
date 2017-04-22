@@ -71,13 +71,13 @@ public class OrderPayDaoImpl extends GetUserScoreAndBalanceImpl implements IOrde
                                 msg = "订单状态异常";
                                 break;
                             case 20004:
-                                msg = "订单不能使用积分支付";
+                                msg = "订单不能使用鸽币支付";
                                 break;
                             case 20005:
                                 msg = "订单已过期,请重新下订单";
                                 break;
                             case 20006:
-                                msg = "积分不足";
+                                msg = "鸽币不足";
                                 break;
                             case 20007:
                                 msg = "未设置支付密码";

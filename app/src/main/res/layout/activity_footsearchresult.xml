@@ -4,72 +4,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLayoutGray4"
-    android:paddingBottom="30dp">
+    android:paddingBottom="24dp">
+
     <include
         android:id="@+id/include_toolbar"
-        layout="@layout/layout_toolbar"/>
+        layout="@layout/layout_toolbar" />
 
-    <ScrollView
-        android:id="@+id/sv_result"
+
+    <LinearLayout
+        android:id="@+id/layout_result_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/include_toolbar"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="56dp"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_result_pager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorWhite"
+            android:minHeight="80dp"
+            android:padding="15dp">
 
-            <RelativeLayout
+            <com.cpigeon.app.utils.customview.MarqueeTextView
+                android:id="@+id/mtv_foot_search_key"
+                style="@style/Marquee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorWhite"
-                android:minHeight="80dp"
-                android:padding="15dp">
-
-                <com.cpigeon.app.utils.customview.MarqueeTextView
-                    android:id="@+id/mtv_foot_search_key"
-                    style="@style/Marquee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="123"
-                    android:textColor="@color/light_red2"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_foot_search_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/mtv_foot_search_key"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    android:text="共找到100条记录"
-                    android:textSize="@dimen/sp_16" />
-            </RelativeLayout>
+                android:gravity="center_horizontal"
+                android:text="123"
+                android:textColor="@color/light_red2"
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_prompt_open_service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/dp_10"
-                android:text="开通查询套餐，查看更多记录"
-                android:textColor="@color/light_red2" />
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+                android:id="@+id/tv_foot_search_result"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:background="@color/colorLayoutGray4"></android.support.v4.view.ViewPager>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mtv_foot_search_key"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="共找到100条记录"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_prompt_open_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp_10"
+            android:text="开通查询套餐，查看更多记录"
+            android:textColor="@color/light_red2" />
 
-    </ScrollView>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+
+    </LinearLayout>
 
 
     <RelativeLayout
@@ -77,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorLayoutGray4"
         android:padding="8dp">
 
         <TextView

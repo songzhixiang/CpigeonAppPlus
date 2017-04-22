@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_service_item_name"
             android:layout_marginTop="5dp"
-            android:text="25.00元/5000积分"
+            android:text="25.00元/5000鸽币"
             android:textColor="@color/light_red2" />
 
         <TextView

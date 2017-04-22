@@ -21,20 +21,25 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.modular.matchlive.model.bean.comparable.MatchInfoTypeComparator;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IMatchSubView;
 import com.cpigeon.app.utils.Const;
+import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Administrator on 2017/4/7.
@@ -62,12 +67,13 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private OnRefreshListener onRefreshListener;
 
     private int lastExpandItemPosition = -1;
+
     @Override
     protected void initView(View view) {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null),1);
+        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null), 1);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         matchLiveAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -76,8 +82,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                 Object item = ((MatchLiveExpandAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
                 if (item instanceof MatchLiveExpandAdapter.MatchTitleItem) {
-                    if (!"bs".equals(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getDt()))
+                    if (!"bs".equals(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getDt())) {
+                        if (checkArrearage(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo()))
+                            return;
                         return;
+                    }
                     if (((MatchLiveExpandAdapter.MatchTitleItem) item).isExpanded()) {
                         adapter.collapse(position);
                     } else {
@@ -87,6 +96,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                     }
                 } else if (item instanceof MatchLiveExpandAdapter.MatchDetialItem) {
                     MatchInfo mi = ((MatchLiveExpandAdapter.MatchDetialItem) item).getSubItem(0);
+                    if (checkArrearage(mi)) return;
                     if (mi != null && !"jg".equals(mi.getDt())) {
                         Intent intent = new Intent(getActivity(), RaceReportActivity.class);
                         Bundle bundle = new Bundle();                //创建Bundle对象
@@ -131,6 +141,13 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         this.onRefreshListener = onRefreshListener;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint() && mEmptyTip != null && mEmptyTip.getVisibility() == View.VISIBLE) {
+            onRefresh();
+        }
+    }
 
     @Override
     protected int getLayoutResource() {
@@ -175,6 +192,37 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         currMatchType = matchType;
     }
 
+    /**
+     * 检查是否是欠费平台的直播
+     *
+     * @param matchInfo
+     * @return
+     */
+    private boolean checkArrearage(MatchInfo matchInfo) {
+        if (matchInfo != null && matchInfo.getRuid() != 0) {
+            SweetAlertDialog dialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
+            dialog.setTitleText("提示");
+            if (matchInfo.getRuid() == CpigeonData.getInstance().getUserId(getActivity())) {
+                dialog.setContentText("您的直播平台已欠费\n请前往中鸽网充值缴费.");
+                dialog.setCancelText("关闭");
+                dialog.setConfirmText("去充值");
+                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                });
+            } else {
+                dialog.setConfirmText("关闭");
+                dialog.setContentText("该直播平台已欠费.");
+            }
+            dialog.setCancelable(false);
+            dialog.show();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onRefresh() {
         if (onRefreshListener != null)
@@ -184,7 +232,8 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
             @Override
             public void run() {
                 if (!isNetworkConnected()) {
-                    showTips("网络无法连接", TipType.View);
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    showTips("网络无法连接", hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
                 } else if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
                     pre.loadGPData(0);
                 } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {

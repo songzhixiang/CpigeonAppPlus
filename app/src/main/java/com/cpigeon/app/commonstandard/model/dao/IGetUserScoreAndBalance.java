@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * Created by chenshuai on 2017/4/14.
- * 获取用户积分余额信息yue,jifen
+ * 获取用户鸽币余额信息yue,jifen
  */
 
 public interface IGetUserScoreAndBalance {

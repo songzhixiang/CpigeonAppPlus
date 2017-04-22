@@ -35,7 +35,7 @@ public class ServiceListAdapter extends BaseQuickAdapter<CpigeonServicesInfo, Ba
         List<Integer> userSIDS = CpigeonData.getInstance().getUserServicesIds();
         boolean currIsUsed = userSIDS.contains(item.getId());
         helper.setText(R.id.tv_service_item_name, item.getPackageName());
-        helper.setText(R.id.tv_service_item_price, String.format("%.2f元/%d积分", item.getPrice(), item.getScores()));
+        helper.setText(R.id.tv_service_item_price, String.format("%.2f元/%d鸽币", item.getPrice(), item.getScores()));
         helper.setText(R.id.tv_service_item_explain, item.getBrief());
         helper.setVisible(R.id.tv_service_item_prompt, currIsUsed);
         helper.setVisible(R.id.iv_right, !currIsUsed);

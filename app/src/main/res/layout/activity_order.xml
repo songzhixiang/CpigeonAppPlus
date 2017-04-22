@@ -21,7 +21,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
     <ViewStub
         android:id="@+id/viewstub_empty_order"
-        android:layout="@layout/layout_emptydata"
+        android:layout="@layout/layout_tip_emptydata"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.cpigeon.app.BuildConfig;
 import com.cpigeon.app.MyApp;
 import com.cpigeon.app.modular.matchlive.model.bean.Collection;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 
 import org.xutils.DbManager;
 import org.xutils.db.table.TableEntity;
@@ -84,11 +85,12 @@ public class CpigeonConfig {
     public static DbManager.DaoConfig getDataDb() {
         DbManager.DaoConfig daoConfig = new DbManager.DaoConfig();
         daoConfig.setDbName("data.db");
-        daoConfig.setDbVersion(4);
+        daoConfig.setDbVersion(5);
         daoConfig.setDbUpgradeListener(new DbManager.DbUpgradeListener() {
             @Override
             public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
                 try {
+                    db.dropTable(MatchInfo.class);
                     db.dropTable(Collection.class);
                 } catch (DbException e) {
                     e.printStackTrace();

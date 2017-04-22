@@ -42,10 +42,10 @@ public class OrderAdapter extends BaseQuickAdapter<CpigeonOrderInfo, BaseViewHol
         }
         helper.setTextColor(R.id.tv_item_order_status, orderStatusColor);
         helper.setText(R.id.tv_item_order_price, item.getPrice() > 0 && item.getScores() > 0 ?
-                String.format("%.2f元/%d积分", item.getPrice(), item.getScores()) :
-                item.getPrice() > 0 ? String.format("%.2f元", item.getPrice()) : String.format("%d积分", item.getScores()));
+                String.format("%.2f元/%d鸽币", item.getPrice(), item.getScores()) :
+                item.getPrice() > 0 ? String.format("%.2f元", item.getPrice()) : String.format("%d鸽币", item.getScores()));
 
-        helper.setText(R.id.tv_item_order_payway, String.format("%s", item.getPayWay()));
+        helper.setText(R.id.tv_item_order_payway, String.format("%s", item.getPayWay().replace("积分","鸽币")));
         helper.getView(R.id.tv_item_order_payway).setVisibility(item.ispaid() ? View.VISIBLE : View.GONE);
     }
 }

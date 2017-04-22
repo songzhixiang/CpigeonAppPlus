@@ -431,7 +431,7 @@ public class CallAPI {
     }
 
     /**
-     * 获取用户余额、积分信息
+     * 获取用户余额、鸽币信息
      *
      * @param context
      * @param callback
@@ -455,7 +455,7 @@ public class CallAPI {
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
-                        Logger.i("用户余额积分信息获取完成");
+                        Logger.i("用户余额鸽币信息获取完成");
                         Map<String, Object> map = null;
                         if (!obj.isNull("data")) {
                             obj = obj.getJSONObject("data");
@@ -492,7 +492,7 @@ public class CallAPI {
     }
 
     /**
-     * 获取用户余额、积分信息
+     * 获取用户余额、鸽币信息
      *
      * @param context
      * @param callback
@@ -553,7 +553,7 @@ public class CallAPI {
     }
 
     /**
-     * 获取用户积分记录
+     * 获取用户鸽币记录
      *
      * @param context
      * @param pageSize
@@ -588,7 +588,7 @@ public class CallAPI {
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
-                        Logger.i("用户积分记录信息获取完成");
+                        Logger.i("用户鸽币记录信息获取完成");
                         List<UserScore> data = new ArrayList<UserScore>();
                         UserScore userScore;
                         if (!obj.isNull("data")) {
@@ -4023,7 +4023,7 @@ public class CallAPI {
 
 
     /**
-     * 积分支付
+     * 鸽币支付
      *
      * @param context
      * @param orderId

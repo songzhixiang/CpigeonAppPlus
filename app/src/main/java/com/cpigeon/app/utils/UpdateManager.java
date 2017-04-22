@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.cpigeon.app.MyApp;
@@ -65,10 +66,18 @@ public class UpdateManager {
         //从服务器获取更新信息
         CallAPI.getUpdateInfo(new CallAPI.Callback<List<UpdateInfo>>() {
             @Override
-            public void onSuccess(List<UpdateInfo> data) {
+            public void onSuccess(final List<UpdateInfo> data) {
                 if (onCheckUpdateInfoListener != null) {
-                    if (!onCheckUpdateInfoListener.onGetUpdateInfoEnd(data))
-                        checkUpdate(data);
+                    new Handler()
+                            .postDelayed(new Runnable() {
+                                             @Override
+                                             public void run() {
+                                                 if (!onCheckUpdateInfoListener.onGetUpdateInfoEnd(data))
+                                                     checkUpdate(data);
+                                             }
+                                         }
+                                    , 500);
+
                 } else {
                     checkUpdate(data);
                 }
@@ -96,6 +105,8 @@ public class UpdateManager {
                 }
             }
         }
+        if (onCheckUpdateInfoListener != null)
+            onCheckUpdateInfoListener.onNotFoundUpdate();
     }
 
     /**
@@ -249,12 +260,34 @@ public class UpdateManager {
     }
 
     public interface OnCheckUpdateInfoListener {
+        /**
+         * 开始获取更新信息
+         */
         void onGetUpdateInfoStart();
 
+        /**
+         * 获取更新信息完成
+         *
+         * @param updateInfos
+         * @return
+         */
         boolean onGetUpdateInfoEnd(List<UpdateInfo> updateInfos);
 
+        /**
+         * 没有更新
+         */
+        void onNotFoundUpdate();
+
+        /**
+         * 有更新
+         *
+         * @param updateInfo
+         */
         void onHasUpdate(UpdateInfo updateInfo);
 
+        /**
+         * 开始下载更新包
+         */
         void onDownloadStart();
     }
 

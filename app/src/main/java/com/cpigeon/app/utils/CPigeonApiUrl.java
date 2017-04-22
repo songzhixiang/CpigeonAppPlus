@@ -121,7 +121,7 @@ public class CPigeonApiUrl {
     public static final String SET_USER_PAYPWD_URL = API_VERSION + "SetUserPayPwd";
 
     /**
-     * 用户余额积分信息URL
+     * 用户余额鸽币信息URL
      */
     public static final String USER_YUE_JIFEN_INFO_URL = API_VERSION + "GetUserYEJF";
 
@@ -132,7 +132,7 @@ public class CPigeonApiUrl {
     public static final String GET_USER_BANDPHONE_URL = API_VERSION + "GetUserBandPhone";
 
     /**
-     * 获取用户积分记录URL
+     * 获取用户鸽币记录URL
      */
     public static final String GET_USER_SCORE_RECORD_URL = API_VERSION + "GetScoreRecord";
 
@@ -204,7 +204,7 @@ public class CPigeonApiUrl {
      */
     public static final String CREATE_SERVICE_ORDER_URL = API_VERSION + "CreateServiceOrder";
     /**
-     * 订单支付（积分兑换）URL
+     * 订单支付（鸽币兑换）URL
      */
     public static final String ORDER_PAY_BY_SCORE_URL = API_VERSION + "OrderPayByScore";
     /**

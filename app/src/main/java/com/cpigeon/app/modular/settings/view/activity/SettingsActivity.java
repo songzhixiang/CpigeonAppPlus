@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -95,6 +96,18 @@ public class SettingsActivity extends BaseActivity {
                 finish();
             }
         });
+        sbPushNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferencesTool.Save(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, isChecked, SharedPreferencesTool.SP_FILE_APPSETTING);
+            }
+        });
+        sbSearchOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferencesTool.Save(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, isChecked, SharedPreferencesTool.SP_FILE_APPSETTING);
+            }
+        });
     }
 
     @Override
@@ -106,9 +119,8 @@ public class SettingsActivity extends BaseActivity {
     protected void initData() {
         if (mEntryInstall)
             AppManager.getAppManager().AppExit();
-
-        sbPushNotification.setChecked((Boolean) SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, true, SharedPreferencesTool.SP_FILE_APPSETTING));
-        sbSearchOnline.setChecked((Boolean) SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, true, SharedPreferencesTool.SP_FILE_APPSETTING));
+        sbPushNotification.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, true, SharedPreferencesTool.SP_FILE_APPSETTING));
+        sbSearchOnline.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, true, SharedPreferencesTool.SP_FILE_APPSETTING));
         tvCheckNewVersionVersionName.setText(CommonTool.getVersionName(this));
         String cacheCount = FileTool.getFileOrFilesSize(CpigeonConfig.CACHE_FOLDER);
         tvClearCacheCount.setText(cacheCount.equals("0B") ? getString(R.string.no_cache) : cacheCount);
@@ -232,6 +244,11 @@ public class SettingsActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onNotFoundUpdate() {
+                    showTips("暂无更新", TipType.ToastShort);
+                }
+
+                @Override
                 public void onHasUpdate(UpdateManager.UpdateInfo updateInfo) {
 
                 }
@@ -243,5 +260,12 @@ public class SettingsActivity extends BaseActivity {
             });
         }
         mUpdateManager.checkUpdate();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
     }
 }

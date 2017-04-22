@@ -106,7 +106,7 @@
                     style="@style/order_info_item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="价格/积分" />
+                    android:text="价格/鸽币" />
 
                 <TextView
                     android:id="@+id/tv_order_price_content"
@@ -124,7 +124,7 @@
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="@dimen/dp_5"
-                android:text="*若有与订单服务内容同类的服务套餐，当前使用的套餐将会被清零"
+                android:text="*若正在使用与订单服务内容同类的服务套餐，当前使用的套餐将会被清零"
                 android:textColor="@color/light_red2"
                 android:textSize="@dimen/sp_14" />
 

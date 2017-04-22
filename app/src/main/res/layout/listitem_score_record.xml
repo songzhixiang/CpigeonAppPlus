@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_item_name"
         android:layout_marginTop="5dp"
-        android:text="消费积分：3积分"
+        android:text="消费鸽币：3鸽币"
         android:textColor="#8B8A8A"/>
 
 </RelativeLayout>

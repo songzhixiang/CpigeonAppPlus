@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cpigeon.app">
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -51,7 +52,7 @@
             android:name=".modular.usercenter.view.activity.RegisterActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".modular.footsearch.view.activity.FootSearchActivity"
+            android:name=".modular.footsearch.view.activity.FootSearchResultActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".modular.guide.view.SplashActivity"
@@ -131,6 +132,7 @@
         <activity
             android:name=".modular.usercenter.view.activity.ScoreActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.TransparentStatusBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".modular.order.view.activity.OpenServiceActivity"

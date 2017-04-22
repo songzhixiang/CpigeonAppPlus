@@ -171,7 +171,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
         if (tvOrderTimeContent != null)
             tvOrderTimeContent.setText(orderInfo.getOrderTime());
         if (tvOrderPriceContent != null) {
-            tvOrderPriceContent.setText(String.format("%.2f元/%d积分", orderInfo.getPrice(), orderInfo.getScores()));
+            tvOrderPriceContent.setText(String.format("%.2f元/%d鸽币", orderInfo.getPrice(), orderInfo.getScores()));
         }
     }
 
@@ -254,7 +254,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
             }
         });
 
-        //判断是否可以用积分兑换
+        //判断是否可以用鸽币兑换
         if (mcpigeoCpigeonOrderInfo.getScores() != 0) {
             //分割线
             splitLine = new View(mContext);
@@ -263,7 +263,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
             layoutOrderPayWay.addView(splitLine);
 
             v = LayoutInflater.from(mContext).inflate(R.layout.layout_item_pay_way, null);
-            ((TextView) v.findViewById(R.id.tv_pay_way_name)).setText("积分兑换");
+            ((TextView) v.findViewById(R.id.tv_pay_way_name)).setText("鸽币兑换");
             ((ImageView) v.findViewById(R.id.iv_pay_icon)).setImageResource(R.drawable.svg_ic_pay_score);
             layoutOrderPayWay.addView(v);
             v.setOnClickListener(new View.OnClickListener() {
@@ -276,9 +276,9 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
                     if (CpigeonData.getInstance().getUserScore() < mcpigeoCpigeonOrderInfo.getScores()) {
                         SweetAlertDialog dialogPrompt = new SweetAlertDialog(mContext, SweetAlertDialog.NORMAL_TYPE);
                         dialogPrompt.setCancelable(false);
-                        dialogPrompt.setTitleText("积分不足")
-                                .setContentText(String.format("您的当前积分：%d", CpigeonData.getInstance().getUserScore()))
-                                .setConfirmText("如何获取积分")
+                        dialogPrompt.setTitleText("鸽币不足")
+                                .setContentText(String.format("您的当前鸽币：%d", CpigeonData.getInstance().getUserScore()))
+                                .setConfirmText("如何获取鸽币")
                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
                                     public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -355,7 +355,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
             }
         });
 
-        //设置信息提示（余额积分提示）
+        //设置信息提示（余额鸽币提示）
         String stringFormat = PAY_TYPE_JIFEN.equals(payType) ? getString(R.string.format_pay_account_score_tips) :
                 PAY_TYPE_YUE.equals(payType) ? getString(R.string.format_pay_account_balance_tips) : "";
         if (PAY_TYPE_JIFEN.equals(payType)) {

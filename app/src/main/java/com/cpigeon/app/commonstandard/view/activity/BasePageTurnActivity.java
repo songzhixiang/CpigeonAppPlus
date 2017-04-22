@@ -34,11 +34,11 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         extends BaseActivity<Pre>
         implements IPageTurn<DataBean>, IRefresh, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    protected Toolbar toolbar;
     @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    protected RecyclerView recyclerview;
     @BindView(R.id.swiperefreshlayout)
-    SwipeRefreshLayout swiperefreshlayout;
+    protected SwipeRefreshLayout swiperefreshlayout;
     @BindView(R.id.viewstub_empty)
     ViewStub viewstubEmpty;
     View mEmptyTip;

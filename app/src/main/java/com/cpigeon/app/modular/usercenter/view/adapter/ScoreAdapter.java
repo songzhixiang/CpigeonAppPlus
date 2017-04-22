@@ -26,9 +26,9 @@ public class ScoreAdapter extends BaseQuickAdapter<UserScore, BaseViewHolder> {
         if (item == null) {
             return;
         }
-        helper.setText(R.id.tv_item_name, item.getItem());
+        helper.setText(R.id.tv_item_name, item.getItem().replace("积分","鸽币"));
         helper.setText(R.id.tv_item_time, dateTimeFormat.format(DateTool.strToDate(item.getTime())));
-        String str = String.format(item.getScore() > 0 ? "获得积分：%d" : "消费积分：%d", Math.abs(item.getScore()));
+        String str = String.format(item.getScore() > 0 ? "获得鸽币：%d" : "消费鸽币：%d", Math.abs(item.getScore()));
         helper.setText(R.id.tv_item_explain, str);
     }
 }
