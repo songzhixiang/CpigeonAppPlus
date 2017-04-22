@@ -91,6 +91,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                         Intent intent = new Intent(getActivity(), RaceReportActivity.class);
                         Bundle bundle = new Bundle();                //创建Bundle对象
                         bundle.putSerializable("matchinfo", mi);     //装入数据
+                        bundle.putString("loadType",currMatchType);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         return;

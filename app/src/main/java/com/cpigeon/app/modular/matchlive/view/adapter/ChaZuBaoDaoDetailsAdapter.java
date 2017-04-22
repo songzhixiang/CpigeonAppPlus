@@ -20,6 +20,7 @@ import static com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdap
 import static com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdapter.TYPE_TITLE;
 
 /**
+ * 插组报道的详情数据（包含xh和gp）
  * Created by Administrator on 2017/4/19.
  */
 
@@ -28,18 +29,16 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
     private int ranking;
     private String name;
     private String footNumber;
-    private int loadType;//加载的插组类型，1-插组报道，2-插组指定
-    public ChaZuBaoDaoDetailsAdapter(String mathType,int loadType) {
+    public ChaZuBaoDaoDetailsAdapter(String mathType) {
         super(null);
         this.mathType = mathType;
-        this.loadType = loadType;
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
-        if (loadType == 1)
+        if ("xh".equals(mathType))
         {
-            addItemType(TYPE_DETIAL, R.layout.listitem_chazubaodao_info_expand);
-        }else if (loadType == 2)
+            addItemType(TYPE_DETIAL, R.layout.listitem_chazubaodao_xh_info_expand);
+        }else if ("gp".equals(mathType))
         {
-            addItemType(TYPE_DETIAL,R.layout.listitem_chazuzhiding_info_expand);
+            addItemType(TYPE_DETIAL, R.layout.listitem_chazubaodao_gp_info_expand);
         }
 
     }
@@ -50,16 +49,9 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
         int xuhao = helper.getLayoutPosition() + 1;
         switch (helper.getItemViewType()) {
             case TYPE_TITLE:
-                helper.setVisible(R.id.report_info_item_mc_img, false);//名次图片，默认不显示
+                helper.setVisible(R.id.report_info_item_mc_img, false);
                 helper.setVisible(R.id.report_info_item_mc, true);
-                if (loadType == 1)//当数据类型为插组报道的时候，名次1-3有图标，有统排
-                {
-                    helper.setVisible(R.id.report_info_item_rank, true);
-                }else {
-                    helper.setVisible(R.id.report_info_item_rank, false);
-                }
-
-
+                helper.setVisible(R.id.report_info_item_rank, true);
                 if ("xh".equals(mathType)) {
                     ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem titleItem = (ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) item;
                     ranking = titleItem.getMatchReportXH().getMc();
@@ -92,19 +84,32 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
                         helper.setText(R.id.report_info_item_mc, xuhao + "");
                         break;
                 }
-
+                helper.setText(R.id.report_info_item_rank, ranking + "");
+                Logger.e("Ranking "+ ranking);
                 helper.setText(R.id.report_info_item_xm, name);
                 helper.setText(R.id.report_info_item_hh, footNumber);
                 break;
             case TYPE_DETIAL:
-                final ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem detialItem = (ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) item;
-                helper.setText(R.id.tv_kongju, "空距:" + detialItem.getSubItem(0).getSp() + "KM");
-                helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn()+"");
-                helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed() + "M");
-                helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
-                helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx() + "/" + detialItem.getSubItem(0).getZy());
-                helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx() + "/" + detialItem.getSubItem(0).getDczy());
-                helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                if ("xh".equals(mathType))
+                {
+                    final ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem detialItem = (ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) item;
+                    helper.setText(R.id.tv_kongju, "空距:" + detialItem.getSubItem(0).getSp() + "KM");
+                    helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn()+"");
+                    helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed() + "M");
+                    helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
+                    helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx() + "/" + detialItem.getSubItem(0).getZy());
+                    helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx() + "/" + detialItem.getSubItem(0).getDczy());
+                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                }else if ("gp".equals(mathType)){
+                    final ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem detialItem = (ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) item;
+                    helper.setText(R.id.tv_saigecolor, "赛鸽羽色:" + detialItem.getSubItem(0).getColor()+"");
+                    helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed() + "M");
+                    helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
+                    helper.setText(R.id.tv_suoshuarea, "所属地区:" + detialItem.getSubItem(0).getArea());
+                    helper.setText(R.id.tv_dianzihuanhao, "电子环号:" + detialItem.getSubItem(0).getRing());
+                    helper.setText(R.id.tv_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
+                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                }
                 break;
 
         }
@@ -182,7 +187,6 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
             return 1;
         }
     }
-
 
     public static class MatchTitleGPItem extends AbstractExpandableItem<MatchDetialGPItem> implements MultiItemEntity {
 

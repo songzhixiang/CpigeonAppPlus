@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.presenter.ChaZuBaoDaoDetailsPre;
 import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRacePigeonsView;
@@ -37,14 +38,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
- * 插组信息
+ * 插组报到----详情信息
  * Created by Administrator on 2017/4/10.
  */
 
-public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuBaoDaoDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
-    public final static int DATA_TYPE_PIGEONS = 1;//数据类型-集鸽数据
-    public final static int DATA_TYPE_REPORT = 2;//数据类型-报道数据
-    private int CURRENT_DATA_TYPE;//当前数据类型
+public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuBaoDaoDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.race_detial_info_detial_show)
@@ -137,7 +135,6 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
         bundle = intent.getExtras();
         loadType = bundle.getString("loadType");
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
-        CURRENT_DATA_TYPE = bundle.getInt("datatype");
         Annotation = bundle.getString("bulletin");
         czIndex = bundle.getInt("czindex") + 1;
 
@@ -175,7 +172,7 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
 
     @Override
     public String getMatchType() {
-        return "xh";
+        return loadType;
     }
 
     @Override
@@ -219,16 +216,18 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
 
                 Object item = ((ChaZuBaoDaoDetailsAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
-                if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) {
+                if ("xh".equals(getMatchType()))
+                {
+                    if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) {
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
-                    if (((ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) item).isExpanded()) {
-                        adapter.collapse(position);
-                    } else {
-                        adapter.expand(position);
-                    }
-                } else if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) {
-                    MatchReportXH mi = ((ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) item).getSubItem(0);
+                        if (((ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) {
+                        MatchReportXH mi = ((ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) item).getSubItem(0);
 //                    if (mi != null && !"jg".equals(mi.getDt())) {
 //                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
 //                        Bundle bundle = new Bundle();                           //创建Bundle对象
@@ -237,7 +236,30 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
 //                        startActivity(intent);
 //                        return;
 //                    }
+                    }
+                }else if ("gp".equals(getMatchType()))
+                {
+                    if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleGPItem) {
+//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
+//                        return;
+                        if (((ChaZuBaoDaoDetailsAdapter.MatchTitleGPItem) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) {
+                        MatchReportGP mi = ((ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) item).getSubItem(0);
+//                    if (mi != null && !"jg".equals(mi.getDt())) {
+//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
+//                        Bundle bundle = new Bundle();                           //创建Bundle对象
+//                        bundle.putSerializable("matchinfo", mi);     //装入数据
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                        return;
+//                    }
+                    }
                 }
+
             }
         });
         return mAdapter;
@@ -269,8 +291,8 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
                 final Map<String, Object> map = getData_CZTJ().get(group);
 
                 mSelectGroupMenuDialog.addSheetItem(String.format("%s组%s(%d羽)", map.get("group"),
-                        CURRENT_DATA_TYPE == DATA_TYPE_REPORT ? "报到" : "指定",
-                        CURRENT_DATA_TYPE == DATA_TYPE_REPORT ? map.get("gcys") : map.get("sfys")), new SaActionSheetDialog.OnSheetItemClickListener() {
+                        "报到",
+                         map.get("gcys")), new SaActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
                         if (czIndex == which) return;
@@ -279,8 +301,8 @@ public class RacePigeonsActivity extends BasePageTurnActivity<ChaZuBaoDaoDetails
 
                         raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s(%d羽))", matchInfo.computerBSMC(),
                                 map.get("group"),
-                                CURRENT_DATA_TYPE == DATA_TYPE_REPORT ? "报到" : "指定",
-                                CURRENT_DATA_TYPE == DATA_TYPE_REPORT ? map.get("gcys") : map.get("sfys")));
+                                "报到",
+                                map.get("gcys")));
                         onRefresh();
                     }
                 });

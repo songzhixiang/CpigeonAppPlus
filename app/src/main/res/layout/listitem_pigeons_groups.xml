@@ -34,6 +34,7 @@
             android:textSize="@dimen/list_item_pigeons_groups_textview_textsize" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/pigeons_groups_group_homing_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

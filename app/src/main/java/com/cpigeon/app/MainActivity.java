@@ -59,7 +59,6 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
-@RuntimePermissions
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private static boolean isExit = false;
@@ -73,10 +72,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ControlManager mControlManager;
     private OnMatchTypeChangeListener onMatchTypeChangeListener;
     private int lastTabIndex = 0;//当前页面索引
-    private String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE};
+
     //主页
     private HomeFragment homeFragment;
     //直播
@@ -151,63 +147,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
     };
 
-    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void sysytemAlertWindow() {
-
-    }
-
-    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void systemAlertWindowOnShowRationale(final PermissionRequest request) {
-        showRequest(request);
-    }
-
-    private void showRequest(final PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setPositiveButton("允许", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        request.proceed();
-                    }
-                })
-                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        request.cancel();
-                    }
-                })
-                .setCancelable(true)
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        request.cancel();
-                    }
-                })
-                .setMessage("我们需要一些权限，以便您更好的体验")
-                .show();
-    }
-
-    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void systemAlertWindowOnPermissionDenied() {
-        showTips("权限被拒绝了", TipType.ToastShort);
-    }
-
-    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void systemAlertWindowOnNeverAskAgain() {
-        showTips("权限不再提示", TipType.ToastShort);
-    }
-
 
     public void setOnMatchTypeChangeListener(OnMatchTypeChangeListener onMatchTypeChangeListener) {
         this.onMatchTypeChangeListener = onMatchTypeChangeListener;
@@ -276,7 +215,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     public void initView() {
-        MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
+
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
         userCenterFragment = new UserCenterFragment();
@@ -430,11 +369,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         void onChanged(String lastType, String currType);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
+
 
     public void onHomeItemClick(View v) {
         switch (v.getId()) {

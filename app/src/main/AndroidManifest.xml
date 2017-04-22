@@ -4,6 +4,7 @@
     package="com.cpigeon.app">
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MyApp"
@@ -72,6 +74,10 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".modular.usercenter.view.activity.AboutActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".modular.matchlive.view.activity.RaceChaZuZhiDingActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
@@ -147,7 +153,7 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".modular.matchlive.view.activity.RacePigeonsActivity"
+            android:name=".modular.matchlive.view.activity.RaceChaZuBaoDaoActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity

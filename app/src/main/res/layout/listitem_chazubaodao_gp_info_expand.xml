@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchlive_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_layout_race_info_detial"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/tv_saigefenshu"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
+        android:text="赛鸽分速:null"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_margin="8dp"
+        android:id="@+id/tv_saigecolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="赛鸽羽色:null"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_guichaoshijian"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="归巢时间:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_suoshuarea"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="所属地区:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_dianzihuanhao"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="电子环号:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_suoshutuandui"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="所属团队:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_margin="8dp"
+        android:id="@+id/tv_chazubaodao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="插组报道:"
+        android:textStyle="bold" />
+</LinearLayout>

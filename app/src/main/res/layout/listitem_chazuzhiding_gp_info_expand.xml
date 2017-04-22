@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchlive_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_layout_race_info_detial"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/tv_saigecolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:text="赛鸽羽色:null"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_suoshuarea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="所属地区:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_shanglongshijian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="上笼时间:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_shangchuanshijian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="上传时间:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_dianzihuanhao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="电子环号:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_suoshutuandui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="所属团队:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_chazuzhiding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="插组指定:"
+        android:textStyle="bold" />
+</LinearLayout>

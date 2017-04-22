@@ -15,6 +15,6 @@
             android:id="@+id/toolbar"/>
 
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_racepigeons"/>
+    <include layout="@layout/content_chazuzhiding_racepigeons"/>
 
 </android.support.design.widget.CoordinatorLayout>

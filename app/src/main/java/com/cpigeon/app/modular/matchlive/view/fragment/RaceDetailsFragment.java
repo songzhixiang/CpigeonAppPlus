@@ -26,6 +26,7 @@ import butterknife.Unbinder;
  */
 
 public class RaceDetailsFragment extends DialogFragment {
+    Unbinder unbinder;
     @BindView(R.id.race_detial_info_textview_racename)
     MarqueeTextView raceDetialInfoTextviewRacename;
     @BindView(R.id.race_detial_match_info_title_area)
@@ -40,6 +41,26 @@ public class RaceDetailsFragment extends DialogFragment {
     TextView raceDetialMatchInfoContentKj;
     @BindView(R.id.layout_kj)
     LinearLayout layoutKj;
+    @BindView(R.id.race_detial_match_info_title_caipanzhang)
+    TextView raceDetialMatchInfoTitleCaipanzhang;
+    @BindView(R.id.race_detial_match_info_content_caipanzhang)
+    TextView raceDetialMatchInfoContentCaipanzhang;
+    @BindView(R.id.layout_caipanzhang)
+    LinearLayout layoutCaipanzhang;
+    @BindView(R.id.race_detial_match_info_title_sifangzhang)
+    TextView raceDetialMatchInfoTitleSifangzhang;
+    @BindView(R.id.race_detial_match_info_content_sifangzhang)
+    TextView raceDetialMatchInfoContentSifangzhang;
+    @BindView(R.id.layout_sifangzhang)
+    LinearLayout layoutSifangzhang;
+    @BindView(R.id.layout_captain)
+    LinearLayout layoutCaptain;
+    @BindView(R.id.race_detial_match_info_title_caipanyuan)
+    TextView raceDetialMatchInfoTitleCaipanyuan;
+    @BindView(R.id.race_detial_match_info_content_caipanyuan)
+    TextView raceDetialMatchInfoContentCaipanyuan;
+    @BindView(R.id.layout_caipanyuan)
+    LinearLayout layoutCaipanyuan;
     @BindView(R.id.race_detial_match_info_title_slys)
     TextView raceDetialMatchInfoTitleSlys;
     @BindView(R.id.race_detial_match_info_content_slys)
@@ -62,21 +83,14 @@ public class RaceDetailsFragment extends DialogFragment {
     TextView raceDetialMatchInfoContentJwd;
     @BindView(R.id.layout_report_info_detial)
     LinearLayout layoutReportInfoDetial;
-    Unbinder unbinder;
     private MatchInfo matchInfo;
+    private String loadType;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
-    }
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+        this.loadType = ((RaceReportActivity) context).getLoadType();
     }
 
     public interface DialogFragmentDataImpl {
@@ -96,7 +110,7 @@ public class RaceDetailsFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View customView = LayoutInflater.from(getActivity()).inflate(
-                R.layout.list_header_race_detial_xh, null);
+                R.layout.list_header_race_detial, null);
         unbinder = ButterKnife.bind(this, customView);
         initView();
         return new AlertDialog.Builder(getActivity()).setView(customView)
@@ -105,30 +119,35 @@ public class RaceDetailsFragment extends DialogFragment {
     }
 
     private void initView() {
-        if (!"".equals(matchInfo.getMc()))
-        {
+        layoutCaipanyuan.setVisibility(View.GONE);
+        layoutCaptain.setVisibility(View.GONE);
+        if (!"".equals(matchInfo.getMc())) {
             raceDetialInfoTextviewRacename.setText(matchInfo.getBsmc());
         }
-        if (!"".equals(matchInfo.getArea()))
-        {
+        if (!"".equals(matchInfo.getArea())) {
             raceDetialMatchInfoContentArea.setText(matchInfo.getArea());
         }
 
-        raceDetialMatchInfoContentKj.setText(matchInfo.getBskj()+"KM");
+        raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "KM");
 
-        raceDetialMatchInfoContentSlys.setText(matchInfo.getCsys()+"羽");
+        raceDetialMatchInfoContentSlys.setText(matchInfo.getCsys() + "羽");
 
-        if (!"".equals(matchInfo.getTq()))
-        {
+        if (!"".equals(matchInfo.getTq())) {
             raceDetialMatchInfoContentTq.setText(matchInfo.getTq());
         }
-        if (!"".equals(matchInfo.getMc()))
-        {
+        if (!"".equals(matchInfo.getMc())) {
             raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
         }
-        if (!"".equals(matchInfo.getMc()))
-        {
+        if (!"".equals(matchInfo.getMc())) {
             raceDetialMatchInfoContentJwd.setText(matchInfo.computerSFZB());
+        }
+        if ("gp".equals(loadType))
+        {
+            layoutCaipanyuan.setVisibility(View.VISIBLE);
+            layoutCaptain.setVisibility(View.VISIBLE);
+            raceDetialMatchInfoContentCaipanyuan.setText(matchInfo.getCpy());
+            raceDetialMatchInfoContentCaipanzhang.setText(matchInfo.getCpz());
+            raceDetialMatchInfoContentSifangzhang.setText(matchInfo.getSfz());
         }
 
     }

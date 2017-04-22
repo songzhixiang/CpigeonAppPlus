@@ -19,6 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -211,16 +214,42 @@ public class CommonTool {
         String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //WIFI MAC Address string
-        WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
 
+//        WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+        String m_szWLANMAC = getMacAddr();
         //BT MAC Address string
-        String m_szBTMAC = BluetoothAdapter.getDefaultAdapter().getAddress();
+        String m_szBTMAC = android.provider.Settings.Secure.getString(context.getContentResolver(), "bluetooth_address");
 
         String m_szLongID = m_szImei + m_szDevIDShort
                 + m_szAndroidID + m_szWLANMAC + m_szBTMAC;
         //compute md5
         DeviceID = EncryptionTool.MD5(m_szLongID).toLowerCase();
         return DeviceID;
+    }
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:",b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "02:00:00:00:00:00";
     }
 }

@@ -66,8 +66,14 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     private Bundle bundle;
     private Intent intent;
     private FragmentPagerAdapter mFragmentPagerAdapter;
-    private Bulletin bulletin;
 
+    public Bulletin getBulletin() {
+        return bulletin;
+    }
+
+    private Bulletin bulletin;
+    private String loadType;
+    private String tablayout_seconde_name;
     @Override
     public int getLayoutId() {
         return R.layout.activity_race_details;
@@ -78,21 +84,20 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         return new RaceReportPre(this);
     }
 
-    public interface onLoadComplete {
-        void onSuccess(Bulletin bulletin);
-    }
-
-    public void setOnLoadComplete(RaceReportActivity.onLoadComplete onLoadComplete) {
-        this.onLoadComplete = onLoadComplete;
-    }
-
-    onLoadComplete onLoadComplete;
-
     @Override
     public void initView() {
         intent = this.getIntent();
         bundle = intent.getExtras();
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
+        loadType = bundle.getString("loadType");
+        Logger.e("当前页面加载的数据是："+loadType+"类型的数据");
+        if ("xh".equals(loadType))
+        {
+            tablayout_seconde_name = "集鸽数据";
+        }else if ("gp".equals(loadType))
+        {
+            tablayout_seconde_name = "上笼数据";
+        }
         mPresenter.showBulletin();
         if (matchInfo != null) {
             Logger.e("matchinfo" + matchInfo.getBsmc());
@@ -100,7 +105,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
                     getSupportFragmentManager(), FragmentPagerItems.with(this)
                     .add("报道数据", ReportDataFragment.class)
                     .add("插组报道", ChaZuBaoDaoFragment.class)
-                    .add("集鸽数据", JiGeDataFragment.class)
+                    .add(tablayout_seconde_name, JiGeDataFragment.class)
                     .add("插组指定", ChaZuZhiDingFragment.class)
                     .create());
             mViewPager.setAdapter(mFragmentPagerAdapter);
@@ -136,6 +141,9 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     }
 
+    public String getLoadType() {
+        return loadType;
+    }
 
     @Override
     public MatchInfo getMatchInfo() {
@@ -156,8 +164,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     public void showBulletin(Bulletin bulletin) {
         this.bulletin = bulletin;
 
-        if (this.onLoadComplete != null)
-            onLoadComplete.onSuccess(bulletin);
+
         if (bulletin != null && !TextUtils.isEmpty(bulletin.getContent().trim())) {
             layoutGg.setVisibility(View.VISIBLE);
             listHeaderRaceDetialGg.setText("公告:" + bulletin.getContent());
@@ -182,11 +189,15 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
                 break;
             case R.id.action_details:
-                showDialogFragment();
+                 showDialogFragment();
+
+
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @Override
     protected void onNetworkConnected(NetUtils.NetType type) {
@@ -228,7 +239,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         if (fragment != null) {
             mFragmentTransaction.remove(fragment);
         }
-        RaceDetailsFragment detailsFragment = RaceDetailsFragment.newInstance("这是信息");
+        RaceDetailsFragment detailsFragment = RaceDetailsFragment.newInstance("直播数据");
         detailsFragment.show(mFragmentTransaction, "dialogFragment");
     }
 
