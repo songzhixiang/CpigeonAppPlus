@@ -24,6 +24,7 @@ import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
 import com.cpigeon.app.service.MainActivityService;
+import com.cpigeon.app.utils.cache.CacheManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
@@ -981,10 +982,17 @@ public class CallAPI {
         requestParams.addHeader("u", userToken);
         requestParams.setCacheMaxAge(CACHE_MATCH_INFO_TIME);
 
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_ITEM_INFO_URL, requestParams);
+        List<MatchInfo> data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
 
         requestParams.addParameter("bt", beginTime);
         if (endTime != 0)
             requestParams.addParameter("et", endTime);
+
         addApiSign(requestParams);
         return x.http().get
                 (requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
@@ -1015,6 +1023,7 @@ public class CallAPI {
                     }
 
                     private void dealData(String result) {
+
                         Logger.json(result);
                         try {
                             JSONObject obj = new JSONObject(result);
@@ -1073,7 +1082,7 @@ public class CallAPI {
                                     }
                                 }
                                 try {
-
+                                    CacheManager.put(cacheKey, list);
                                     db.saveOrUpdate(list);
                                     Logger.i(String.format("list.size=%s\n%s",
                                             list.size(),
@@ -1343,6 +1352,31 @@ public class CallAPI {
                                                     matchReport.setC22(jo.getInt("c22") == 1);
                                                     matchReport.setC23(jo.getInt("c23") == 1);
                                                     matchReport.setC24(jo.getInt("c24") == 1);
+
+                                                    matchReport.setCr1(jo.getInt("cr1"));
+                                                    matchReport.setCr2(jo.getInt("cr2"));
+                                                    matchReport.setCr3(jo.getInt("cr3"));
+                                                    matchReport.setCr4(jo.getInt("cr4"));
+                                                    matchReport.setCr5(jo.getInt("cr5"));
+                                                    matchReport.setCr6(jo.getInt("cr6"));
+                                                    matchReport.setCr7(jo.getInt("cr7"));
+                                                    matchReport.setCr8(jo.getInt("cr8"));
+                                                    matchReport.setCr9(jo.getInt("cr9"));
+                                                    matchReport.setCr10(jo.getInt("cr10"));
+                                                    matchReport.setCr11(jo.getInt("cr11"));
+                                                    matchReport.setCr12(jo.getInt("cr12"));
+                                                    matchReport.setCr13(jo.getInt("cr13"));
+                                                    matchReport.setCr14(jo.getInt("cr14"));
+                                                    matchReport.setCr15(jo.getInt("cr15"));
+                                                    matchReport.setCr16(jo.getInt("cr16"));
+                                                    matchReport.setCr17(jo.getInt("cr17"));
+                                                    matchReport.setCr18(jo.getInt("cr18"));
+                                                    matchReport.setCr19(jo.getInt("cr19"));
+                                                    matchReport.setCr20(jo.getInt("cr20"));
+                                                    matchReport.setCr21(jo.getInt("cr21"));
+                                                    matchReport.setCr22(jo.getInt("cr22"));
+                                                    matchReport.setCr23(jo.getInt("cr23"));
+                                                    matchReport.setCr24(jo.getInt("cr24"));
                                                 }
                                                 list.add(matchReport);
                                             }
@@ -4358,6 +4392,19 @@ public class CallAPI {
         Logger.d(result);
         result = EncryptionTool.MD5(result);
         return result;
+    }
+
+    public static String getCacheKey(String apiName, RequestParams requestParams) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(apiName);
+        for (KeyValue para : requestParams.getQueryStringParams()) {
+            builder.append(String.format("&get_%s=%s", para.key, para.value.toString()));
+        }
+        for (KeyValue para : requestParams.getBodyParams()) {
+            builder.append(String.format("&post_%s=%s", para.key, para.value.toString()));
+        }
+        Logger.d(builder.toString());
+        return builder.toString();
     }
 
 

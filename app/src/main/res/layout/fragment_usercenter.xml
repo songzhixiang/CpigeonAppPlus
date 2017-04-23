@@ -132,10 +132,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_msg" />
 
@@ -165,10 +162,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_star" />
 
@@ -200,10 +194,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_pen" />
 
@@ -244,10 +235,7 @@
             android:orientation="vertical">
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+               style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_score" />
 
@@ -283,10 +271,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_money" />
 
@@ -323,10 +308,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_list" />
 
@@ -367,10 +349,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_setting" />
 
@@ -402,10 +381,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_about" />
 
@@ -436,10 +412,7 @@
 
 
             <com.cpigeon.app.utils.customview.bgabadge.BGABadgeAppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp_40"
-                android:padding="@dimen/dp_8"
+                style="@style/UserCenterItemIcon"
                 app:badge_gravity="rightTop"
                 app:srcCompat="@drawable/ic_svg_help" />
 

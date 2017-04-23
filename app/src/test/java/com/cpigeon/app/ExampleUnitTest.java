@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        long beginTime = System.currentTimeMillis() / 1000 - 60 * 60 * 24 * 3;
+        System.out.println(beginTime + "");
     }
 }

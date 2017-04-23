@@ -1,12 +1,10 @@
 <component name="libraryTable">
   <library name="library-1.4.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/ad9fa6a35eda143b889020c9bf1019b642e94d1a/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/ad9fa6a35eda143b889020c9bf1019b642e94d1a/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/7c3f29ae20cb3ea7a854fd95e3a0e10a00138b5e/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/7c3f29ae20cb3ea7a854fd95e3a0e10a00138b5e/output/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kyleduo.switchbutton/library/1.4.5/8aadd1ba2389f3f8d7c21fdd0cd5dce052e2a555/library-1.4.5-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
 import com.cpigeon.app.utils.CpigeonData;
+import com.cpigeon.app.utils.cache.CacheManager;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Cache;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.x;
@@ -45,6 +47,11 @@ public class MyApp extends Application {
         //极光推送
         JPushInterface.setDebugMode(BuildConfig.DEBUG);
         JPushInterface.init(this);
+
+        CacheManager.setCacheModel(CacheManager.ALL_ALLOW);
+        CacheManager.setMemaryCacheTime(30 * 1000);
+        CacheManager.setDiskCacheTime(3 * 60 * 1000);
+        CacheManager.init(this);
     }
 
     /**

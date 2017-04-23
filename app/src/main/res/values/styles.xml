@@ -256,4 +256,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="UserCenterItemIcon">
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+
+    </style>
+
 </resources>

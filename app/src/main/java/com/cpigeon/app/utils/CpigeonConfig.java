@@ -85,17 +85,15 @@ public class CpigeonConfig {
     public static DbManager.DaoConfig getDataDb() {
         DbManager.DaoConfig daoConfig = new DbManager.DaoConfig();
         daoConfig.setDbName("data.db");
-        daoConfig.setDbVersion(5);
+        daoConfig.setDbVersion(4);
         daoConfig.setDbUpgradeListener(new DbManager.DbUpgradeListener() {
             @Override
             public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
                 try {
-                    db.dropTable(MatchInfo.class);
-                    db.dropTable(Collection.class);
+                   db.dropDb();
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-
             }
         });
         daoConfig.setDbOpenListener(new DbManager.DbOpenListener() {

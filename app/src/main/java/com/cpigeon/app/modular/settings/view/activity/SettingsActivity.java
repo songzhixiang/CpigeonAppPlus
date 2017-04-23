@@ -212,6 +212,7 @@ public class SettingsActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                         showTips(null, TipType.LoadingHide);
+                        showTips("清理完成", TipType.DialogSuccess);
                     }
                 }).setCancelText("取消");
         dialog.setCancelable(false);
