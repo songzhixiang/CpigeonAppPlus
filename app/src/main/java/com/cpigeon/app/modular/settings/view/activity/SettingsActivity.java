@@ -24,6 +24,7 @@ import com.cpigeon.app.utils.FileTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.UpdateManager;
+import com.cpigeon.app.utils.cache.CacheManager;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import org.xutils.DbManager;
@@ -202,6 +203,7 @@ public class SettingsActivity extends BaseActivity {
                         sweetAlertDialog.dismiss();
                         showTips("清理中...", TipType.LoadingShow);
                         FileTool.DeleteFolder(CpigeonConfig.CACHE_FOLDER, false);
+                        CacheManager.delete();
                         try {
                             DbManager db = x.getDb(CpigeonConfig.getDataDb());
                             db.delete(MatchInfo.class, WhereBuilder.b()
@@ -213,6 +215,7 @@ public class SettingsActivity extends BaseActivity {
                         }
                         showTips(null, TipType.LoadingHide);
                         showTips("清理完成", TipType.DialogSuccess);
+                        initData();
                     }
                 }).setCancelText("取消");
         dialog.setCancelable(false);

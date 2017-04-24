@@ -74,6 +74,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     private Bulletin bulletin;
     private String loadType;
     private String tablayout_seconde_name;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_race_details;
@@ -90,15 +91,14 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         bundle = intent.getExtras();
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
         loadType = bundle.getString("loadType");
-        Logger.e("当前页面加载的数据是："+loadType+"类型的数据");
-        if ("xh".equals(loadType))
-        {
+        Logger.e("当前页面加载的数据是：" + loadType + "类型的数据");
+        if ("xh".equals(loadType)) {
             tablayout_seconde_name = "集鸽数据";
-        }else if ("gp".equals(loadType))
-        {
+        } else if ("gp".equals(loadType)) {
             tablayout_seconde_name = "上笼数据";
         }
         mPresenter.showBulletin();
+        mPresenter.addRaceClickCount();
         if (matchInfo != null) {
             Logger.e("matchinfo" + matchInfo.getBsmc());
             mFragmentPagerAdapter = new FragmentPagerItemAdapter(
@@ -189,14 +189,13 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
                 break;
             case R.id.action_details:
-                 showDialogFragment();
+                showDialogFragment();
 
 
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

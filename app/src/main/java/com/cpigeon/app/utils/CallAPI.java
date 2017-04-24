@@ -28,6 +28,7 @@ import com.cpigeon.app.utils.cache.CacheManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Cache;
 import com.tencent.mm.sdk.modelpay.PayReq;
 
 import org.json.JSONArray;
@@ -1032,10 +1033,10 @@ public class CallAPI {
                                 List<MatchInfo> list = new ArrayList<MatchInfo>();
                                 MatchInfo matchInfo;
                                 JSONObject jo;
-//                                Logger.i("赛事共计：" + array.length());
+//                                Logger.i("赛事共计：" + array.length());`
                                 StringBuilder builder = new StringBuilder();
                                 builder.append("DELETE FROM matchInfo WHERE dt='jg' OR( st>'");
-                                builder.append(DateTool.getDayBeginTimeStr(new Date(System.currentTimeMillis() - 1000 * 24 * 60 * 60 * 3)) + "' AND ssid NOT IN (");
+                                builder.append(DateTool.dateToStr(new Date(System.currentTimeMillis() - 1000 * 24 * 60 * 60 * (matchType == DATATYPE.MATCH.GP ? CpigeonConfig.LIVE_DAYS_GP : matchType == DATATYPE.MATCH.XH ? CpigeonConfig.LIVE_DAYS_XH : 0))) + "' AND ssid NOT IN (");
 
                                 for (int i = 0; i < array.length(); i++) {
                                     jo = array.getJSONObject(i);
@@ -1081,8 +1082,8 @@ public class CallAPI {
                                         e.printStackTrace();
                                     }
                                 }
+                                CacheManager.put(cacheKey, list);
                                 try {
-                                    CacheManager.put(cacheKey, list);
                                     db.saveOrUpdate(list);
                                     Logger.i(String.format("list.size=%s\n%s",
                                             list.size(),
@@ -1223,10 +1224,19 @@ public class CallAPI {
         if (!"".equals(sKey))
             requestParams.addParameter("s", sKey);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_MATCH_REPORT_INFO_TIME);
+
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_REPORT_INFO_URL, requestParams);
+        List data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
 //        requestParams.setConnectTimeout(CpigeonConfig.CONNECT_TIMEOUT);
         addApiSign(requestParams);
         return x.http().get
                 (requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
+                    boolean hasError = true;
+
                     @Override
                     public boolean onCache(String result) {
                         if (result != null) dealData(result);
@@ -1240,6 +1250,7 @@ public class CallAPI {
                     }
 
                     private void dealData(final String result) {
+                        hasError = false;
                         new Thread() {
                             @Override
                             public void run() {
@@ -1382,6 +1393,7 @@ public class CallAPI {
                                             }
                                         }
                                         db.saveOrUpdate(list);
+                                        CacheManager.put(cacheKey, list);
                                         // db.close();
                                         callback.onSuccess(list);
 
@@ -1409,7 +1421,8 @@ public class CallAPI {
 
                     @Override
                     public void onFinished() {
-
+                        if (hasError)
+                            callback.onError(Callback.ERROR_TYPE_OTHER, null);
                     }
                 });
     }
@@ -1461,6 +1474,13 @@ public class CallAPI {
         if (!"".equals(sKey))
             requestParams.addParameter("s", sKey);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_MATCH_REPORT_INFO_TIME);
+
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_PIGEONS_INFO_URL, requestParams);
+        List data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
 //        requestParams.setConnectTimeout(CpigeonConfig.CONNECT_TIMEOUT);
         addApiSign(requestParams);
         return x.http().get
@@ -1587,6 +1607,7 @@ public class CallAPI {
                                         }
 
                                         db.saveOrUpdate(list);
+                                        CacheManager.put(cacheKey, list, 60 * 1000, 1000 * 60 * 60 * 24);
                                         //db.close();
                                         callback.onSuccess(list);
 
@@ -1638,6 +1659,13 @@ public class CallAPI {
         requestParams.addParameter("t", "gp".equals(matchType) ? 1 : "xh".equals(matchType) ? 2 : 3);
         requestParams.addParameter("bi", ssid);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_BULLETIN_INFO_TIME);
+
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_BULLETIN_URL, requestParams);
+        List<Bulletin> data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
 //        requestParams.setConnectTimeout(CpigeonConfig.CONNECT_TIMEOUT);
         return x.http().get(requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
 
@@ -1676,6 +1704,7 @@ public class CallAPI {
                                 }
                             }
                         }
+                        CacheManager.put(cacheKey, listData, 1000 * 60, 1000 * 60 * 60 * 2);
                         callback.onSuccess(listData);
                     } else if (obj.getBoolean("status")) {
                         Logger.i("没有公告");
@@ -1727,6 +1756,13 @@ public class CallAPI {
         requestParams.addParameter("bi", ssid);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_RACE_GROUPS_COUNT_TIME);
 //        requestParams.setConnectTimeout(CpigeonConfig.CONNECT_TIMEOUT);
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_GROUPS_COUNT_URL, requestParams);
+        List<HashMap<String, Object>> data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
+//
         addApiSign(requestParams);
         return x.http().get(requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
 
@@ -1795,6 +1831,7 @@ public class CallAPI {
                                 listData.add(map);
                             }
                         }
+                        CacheManager.put(cacheKey, listData);
                         callback.onSuccess(listData);
                     } else if (obj.getBoolean("status")) {
                         Logger.i("没有插组统计数据");
@@ -2055,11 +2092,19 @@ public class CallAPI {
                                                                                 @NonNull final Callback<Boolean> callback) {
 
 
-        RequestParams requestParams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.IS_AVAILABLE_VERSION_URL);
+        final RequestParams requestParams = new RequestParams(CPigeonApiUrl.getInstance().getServer() + CPigeonApiUrl.IS_AVAILABLE_VERSION_URL);
         pretreatmentParams(requestParams);
         requestParams.addParameter("vc", CommonTool.getVersionCode(context));
         requestParams.addParameter("t", "android");
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_COMMON_30MIN_TIME);
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_GROUPS_COUNT_URL, requestParams);
+        Boolean data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
+//
+
         return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
 
             @Override
@@ -2073,10 +2118,11 @@ public class CallAPI {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
                         Logger.i("获取可用版本信息完成");
-                        if (!obj.isNull("data")) {
-                            callback.onSuccess(obj.getBoolean("data"));
-                        } else
-                            callback.onSuccess(false);
+
+                        boolean res = !obj.isNull("data") ? obj.getBoolean("data") : false;
+                        CacheManager.put(cacheKey, res, 1000 * 60, 1000 * 60 * 60 * 12);
+                        callback.onSuccess(res);
+
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
                     }
@@ -2139,6 +2185,12 @@ public class CallAPI {
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_SERVICES_INFO_LIST);//设置缓存时间，一个小时
         Logger.d("缓存时间：" + CpigeonConfig.CACHE_SERVICES_INFO_LIST);
+        final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_GROUPS_COUNT_URL, requestParams);
+        List<CpigeonServicesInfo> data = CacheManager.getCache(cacheKey);
+        if (data != null) {
+            callback.onSuccess(data);
+            return null;
+        }
         return x.http().get(requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
 
             @Override
@@ -2182,6 +2234,7 @@ public class CallAPI {
                             info.setScores(obj.has("scores") ? obj.getInt("scores") : 0);
                             data.add(info);
                         }
+                        CacheManager.put(cacheKey, data, 1000 * 60, 1000 * 60 * 60 * 3);
                         callback.onSuccess(data);
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));

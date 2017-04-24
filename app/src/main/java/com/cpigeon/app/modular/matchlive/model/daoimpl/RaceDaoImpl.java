@@ -57,7 +57,7 @@ public class RaceDaoImpl implements IRaceDao {
 
             @Override
             public void onError(int errorType, Object data) {
-
+                onCompleteListener.onFail("加载失败");
             }
         });
     }
@@ -85,7 +85,7 @@ public class RaceDaoImpl implements IRaceDao {
 
             @Override
             public void onError(int errorType, Object data) {
-
+                onCompleteListener.onFail("加载失败");
             }
         });
     }

@@ -236,7 +236,7 @@ public class CacheManager {
                         //如果硬盘缓存内容存在，内存缓存不存在。则在获取硬盘缓存后，将内容写入内存缓存
                         val = diskLruCacheManager.getDiskCache(key);
                         if (val != null)
-                            lruCacheManager.getCache(key);
+                            lruCacheManager.putCache(key, val);
                     }
                 }
                 break;

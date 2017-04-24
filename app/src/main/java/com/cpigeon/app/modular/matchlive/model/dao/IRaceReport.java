@@ -12,4 +12,5 @@ import java.util.List;
 public interface IRaceReport extends IBaseDao{
     void updateBulletin(String lx, String ssid, IBaseDao.OnCompleteListener<List<Bulletin>> listOnCompleteListener);
     void queryBulletin(String ssid, IBaseDao.OnCompleteListener<Bulletin> onCompleteListener);
+    void addRaceClickCount(String lx,String ssid);
 }
