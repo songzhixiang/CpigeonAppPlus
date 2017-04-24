@@ -27,8 +27,7 @@ public class IRaceReportImpl implements IRaceReport {
         CallAPI.getBulletin(MyApp.getInstance(), lx, ssid, new CallAPI.Callback<List<Bulletin>>() {
             @Override
             public void onSuccess(List<Bulletin> data) {
-                if (data !=null && data.size() > 0)
-                {
+                if (data != null && data.size() > 0) {
                     bull = data.get(0);
                     try {
                         db.saveOrUpdate(bull);
@@ -64,5 +63,20 @@ public class IRaceReportImpl implements IRaceReport {
         }
         onCompleteListener.onSuccess(bull);
 
+    }
+
+    @Override
+    public void addRaceClickCount(String lx, String ssid) {
+        CallAPI.addRaceClickCount(MyApp.getInstance(), "xh".equals(lx) ? CallAPI.DATATYPE.MATCH.XH : CallAPI.DATATYPE.MATCH.GP, ssid, new CallAPI.Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+
+            }
+
+            @Override
+            public void onError(int errorType, Object data) {
+
+            }
+        });
     }
 }

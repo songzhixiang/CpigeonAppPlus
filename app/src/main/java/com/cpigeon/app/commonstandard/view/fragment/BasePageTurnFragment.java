@@ -65,10 +65,11 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     protected void lazyLoad() {
-        if (isNetworkConnected())
-            loadDataByPresenter();
-        else
-            showTips("网络连接已断开", TipType.View);
+//        if (isNetworkConnected())
+        showRefreshLoading();
+        loadDataByPresenter();
+//        else
+//            showTips("网络连接已断开", TipType.View);
     }
 
 

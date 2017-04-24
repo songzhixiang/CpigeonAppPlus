@@ -3,13 +3,15 @@ package com.cpigeon.app.modular.matchlive.model.bean;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.io.Serializable;
+
 /**
  * 公告类
  * Created by Administrator on 2016/11/16.
  */
 
 @Table(name = "bulletin")
-public class Bulletin {
+public class Bulletin implements Serializable {
 
 
     @Column(name = "ssid",isId = true,property = "NOT NULL CONSTRAINT fk_bulletin_ssid REFERENCES matchInfo(\"ssid\") ON DELETE CASCADE ON UPDATE CASCADE")

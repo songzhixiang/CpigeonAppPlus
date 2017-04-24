@@ -13,16 +13,14 @@ import java.util.List;
  * Created by Administrator on 2017/4/18.
  */
 
-public class RaceReportPre extends BasePresenter<IRaceReportView,IRaceReport> {
+public class RaceReportPre extends BasePresenter<IRaceReportView, IRaceReport> {
     public RaceReportPre(IRaceReportView mView) {
         super(mView);
     }
 
 
-    public void showBulletin()
-    {
-        if (isAttached())
-        {
+    public void showBulletin() {
+        if (isAttached()) {
             mDao.updateBulletin(mView.getLx(), mView.getSsid(), new IBaseDao.OnCompleteListener<List<Bulletin>>() {
                 @Override
                 public void onSuccess(List<Bulletin> data) {
@@ -32,16 +30,16 @@ public class RaceReportPre extends BasePresenter<IRaceReportView,IRaceReport> {
                             if (isAttached())
 
                                 mDao.queryBulletin(mView.getSsid(), new IBaseDao.OnCompleteListener<Bulletin>() {
-                                @Override
-                                public void onSuccess(Bulletin data) {
-                                    mView.showBulletin(data);
-                                }
+                                    @Override
+                                    public void onSuccess(Bulletin data) {
+                                        mView.showBulletin(data);
+                                    }
 
-                                @Override
-                                public void onFail(String msg) {
+                                    @Override
+                                    public void onFail(String msg) {
 
-                                }
-                            });
+                                    }
+                                });
                         }
                     });
 
@@ -53,6 +51,11 @@ public class RaceReportPre extends BasePresenter<IRaceReportView,IRaceReport> {
                 }
             });
         }
+    }
+
+
+    public void addRaceClickCount() {
+        mDao.addRaceClickCount(mView.getLx(), mView.getSsid());
     }
 
     @Override

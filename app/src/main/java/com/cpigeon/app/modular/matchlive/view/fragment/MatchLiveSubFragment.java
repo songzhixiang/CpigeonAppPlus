@@ -108,7 +108,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                         }
                         Bundle bundle = new Bundle();                //创建Bundle对象
                         bundle.putSerializable("matchinfo", mi);     //装入数据
-                        bundle.putString("loadType",currMatchType);
+                        bundle.putString("loadType", currMatchType);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         return;
@@ -240,10 +240,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!isNetworkConnected()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    showTips("网络无法连接", hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
-                } else if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
+//                if (!isNetworkConnected()) {
+//                    mSwipeRefreshLayout.setRefreshing(false);
+//                    showTips("网络无法连接", hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
+//                } else
+                if (Const.MATCHLIVE_TYPE_GP.equals(currMatchType)) {
                     pre.loadGPData(0);
                 } else if (Const.MATCHLIVE_TYPE_XH.equals(currMatchType)) {
                     pre.loadXHData(0);
