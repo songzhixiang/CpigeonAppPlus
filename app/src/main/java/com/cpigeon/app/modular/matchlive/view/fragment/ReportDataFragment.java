@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BasePageTurnFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.presenter.RacePre;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
@@ -106,7 +107,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     public RaceReportAdapter getNewAdapterWithNoData() {
-        RaceReportAdapter adapter=  new RaceReportAdapter(getMatchType());
+        RaceReportAdapter adapter = new RaceReportAdapter(getMatchType());
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -114,16 +115,17 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
                 Object item = ((RaceReportAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
-                if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
+                if ("xh".equals(getMatchType())) {
+                    if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
-                    if (((RaceReportAdapter.MatchTitleXHItem) item).isExpanded()) {
-                        adapter.collapse(position);
-                    } else {
-                        adapter.expand(position);
-                    }
-                } else if (item instanceof RaceReportAdapter.MatchDetialXHItem) {
-                    MatchReportXH mi = ((RaceReportAdapter.MatchDetialXHItem) item).getSubItem(0);
+                        if (((RaceReportAdapter.MatchTitleXHItem) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof RaceReportAdapter.MatchDetialXHItem) {
+                        MatchReportXH mi = ((RaceReportAdapter.MatchDetialXHItem) item).getSubItem(0);
 //                    if (mi != null && !"jg".equals(mi.getDt())) {
 //                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
 //                        Bundle bundle = new Bundle();                           //创建Bundle对象
@@ -132,7 +134,29 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 //                        startActivity(intent);
 //                        return;
 //                    }
+                    }
+                } else if ("gp".equals(getMatchType())) {
+                    if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
+//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
+//                        return;
+                        if (((RaceReportAdapter.MatchTitleGPItem) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof RaceReportAdapter.MatchDetialGPItem) {
+                        MatchReportGP mi = ((RaceReportAdapter.MatchDetialGPItem) item).getSubItem(0);
+//                    if (mi != null && !"jg".equals(mi.getDt())) {
+//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
+//                        Bundle bundle = new Bundle();                           //创建Bundle对象
+//                        bundle.putSerializable("matchinfo", mi);     //装入数据
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                        return;
+//                    }
+                    }
                 }
+
             }
         });
         return adapter;
@@ -140,6 +164,6 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     protected void loadDataByPresenter() {
-        mPresenter.loadRaceData();
+        mPresenter.loadRaceData(0);
     }
 }

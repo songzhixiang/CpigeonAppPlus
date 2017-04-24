@@ -238,12 +238,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
                     view.setTag(false);
                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     etPassword.setSelection(etPassword.getText().toString().length());//将光标移至文字末尾
-                    ((AppCompatImageView) view).setImageResource(R.drawable.svg_ic_eye_enable);
+                    ((AppCompatImageView) view).setImageResource(R.drawable.ic_visibility_black);
                 } else {
                     view.setTag(true);
                     etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     etPassword.setSelection(etPassword.getText().toString().length());//将光标移至文字末尾
-                    ((AppCompatImageView) view).setImageResource(R.drawable.svg_ic_eye_disable);
+                    ((AppCompatImageView) view).setImageResource(R.drawable.ic_visibility_off_black);
                 }
                 break;
             case R.id.btn_login:

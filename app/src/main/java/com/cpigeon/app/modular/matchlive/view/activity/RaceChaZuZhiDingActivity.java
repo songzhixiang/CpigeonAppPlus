@@ -3,15 +3,11 @@ package com.cpigeon.app.modular.matchlive.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -46,11 +43,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuZhiDingDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.race_detial_info_detial_show)
-    ImageView raceDetialInfoDetialShow;
+    AppCompatImageView raceDetialInfoDetialShow;
     @BindView(R.id.race_detial_info_textview_racename)
     MarqueeTextView raceDetialInfoTextviewRacename;
     @BindView(R.id.race_detial_info_match_name_layout)
@@ -113,12 +107,6 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.swiperefreshlayout)
-    SwipeRefreshLayout swiperefreshlayout;
-    @BindView(R.id.viewstub_empty)
-    ViewStub viewstubEmpty;
     private Bundle bundle;
     private Intent intent;
     private ChaZuZhiDingDetailsAdapter mAdapter;
@@ -138,6 +126,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     public ChaZuBaoDaoDetailsPre initPresenter() {
         return new ChaZuBaoDaoDetailsPre(this);
     }
+
 
     @Override
     public void initView() {
@@ -173,10 +162,22 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
         raceDetialMatchInfoContentSlys.setText(matchInfo.compuberSLYS());
         raceDetialMatchInfoContentTq.setText(matchInfo.getTq());
         raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "KM");
-        raceDetialMatchInfoContentSifangzhang.setText(matchInfo.getSfz());
-        raceDetialMatchInfoContentCaipanyuan.setText(matchInfo.getCpy());
-        raceDetialMatchInfoContentCaipanzhang.setText(matchInfo.getCpz());
         toolbar.setTitle(matchInfo.getMc());
+        if ("xh".equals(loadType))
+        {
+            layoutCaipanzhang.setVisibility(View.GONE);
+            layoutCaipanyuan.setVisibility(View.GONE);
+            layoutSifangzhang.setVisibility(View.GONE);
+        }else if ("gp".equals(loadType))
+        {
+            layoutCaipanzhang.setVisibility(View.VISIBLE);
+            layoutCaipanyuan.setVisibility(View.VISIBLE);
+            layoutSifangzhang.setVisibility(View.VISIBLE);
+            raceDetialMatchInfoContentCaipanyuan.setText(matchInfo.getCpy());
+            raceDetialMatchInfoContentCaipanzhang.setText(matchInfo.getCpz());
+            raceDetialMatchInfoContentSifangzhang.setText(matchInfo.getSfz());
+        }
+
     }
 
     /**
@@ -219,7 +220,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     @NonNull
     @Override
     public String getTitleName() {
-        return null;
+        return matchInfo.getMc();
     }
 
     @Override
@@ -243,8 +244,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
                 Logger.d(item.getClass().getName());
                 if ("xh".equals(getMatchType())) {
                     if (item instanceof ChaZuZhiDingDetailsAdapter.MatchTitleXHItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
+
                         if (((ChaZuZhiDingDetailsAdapter.MatchTitleXHItem) item).isExpanded()) {
                             adapter.collapse(position);
                         } else {
@@ -252,19 +252,10 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
                         }
                     } else if (item instanceof ChaZuZhiDingDetailsAdapter.MatchDetialXHItem) {
                         MatchPigeonsXH mi = ((ChaZuZhiDingDetailsAdapter.MatchDetialXHItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
+
                     }
                 } else if ("gp".equals(getMatchType())) {
                     if (item instanceof ChaZuZhiDingDetailsAdapter.MatchTitleGPItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
                         if (((ChaZuZhiDingDetailsAdapter.MatchTitleGPItem) item).isExpanded()) {
                             adapter.collapse(position);
                         } else {
@@ -272,14 +263,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
                         }
                     } else if (item instanceof ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) {
                         MatchPigeonsGP mi = ((ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
+
                     }
                 }
 
@@ -290,7 +274,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
 
     @Override
     protected void loadDataByPresenter() {
-        mPresenter.loadChaZuBaoDaoDetails();
+        mPresenter.loadChaZuZhiding();
     }
 
 

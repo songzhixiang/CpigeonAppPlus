@@ -4,18 +4,15 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -31,20 +28,23 @@ import com.cpigeon.app.utils.ViewExpandAnimation;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * 插组报到----详情信息
  * Created by Administrator on 2017/4/10.
  */
 
 public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuBaoDaoDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
     @BindView(R.id.race_detial_info_detial_show)
     ImageView raceDetialInfoDetialShow;
     @BindView(R.id.race_detial_info_textview_racename)
@@ -91,12 +91,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.swiperefreshlayout)
-    SwipeRefreshLayout swiperefreshlayout;
-    @BindView(R.id.viewstub_empty)
-    ViewStub viewstubEmpty;
     private Bundle bundle;
     private Intent intent;
     private ChaZuBaoDaoDetailsAdapter mAdapter;
@@ -107,6 +101,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     private Map<String, Object> currGroupData = null;
     private int czIndex = 0;//当前插组索引(1-24)
     private String loadType;//该页面需要加载的数据类型
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_racepigeons;
@@ -141,6 +136,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     }
 
     private void initDetails() {
+        toolbar.setTitle(getTitleName());
         layoutReportInfoDetial.setVisibility(View.GONE);
         listHeaderRaceDetialGg.setText(Annotation);
         currGroupData = getData_CZTJ().get(getCzIndex() - 1);
@@ -194,7 +190,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     @NonNull
     @Override
     public String getTitleName() {
-        return null;
+        return matchInfo.getMc();
     }
 
     @Override
@@ -216,8 +212,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 
                 Object item = ((ChaZuBaoDaoDetailsAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
-                if ("xh".equals(getMatchType()))
-                {
+                if ("xh".equals(getMatchType())) {
                     if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) {
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
@@ -237,8 +232,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 //                        return;
 //                    }
                     }
-                }else if ("gp".equals(getMatchType()))
-                {
+                } else if ("gp".equals(getMatchType())) {
                     if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleGPItem) {
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
@@ -292,7 +286,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 
                 mSelectGroupMenuDialog.addSheetItem(String.format("%s组%s(%d羽)", map.get("group"),
                         "报到",
-                         map.get("gcys")), new SaActionSheetDialog.OnSheetItemClickListener() {
+                        map.get("gcys")), new SaActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
                         if (czIndex == which) return;
@@ -352,14 +346,13 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_czbd_details,menu);
+        inflater.inflate(R.menu.menu_czbd_details, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.action_change_group:
                 showMenuGroup();
                 return true;

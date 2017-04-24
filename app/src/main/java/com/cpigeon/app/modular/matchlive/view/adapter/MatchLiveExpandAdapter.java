@@ -22,16 +22,12 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
     public static final int TYPE_TITLE = 1;
     public static final int TYPE_DETIAL = 2;
     private int expandType;
-    public MatchLiveExpandAdapter(List<MultiItemEntity> data,int expandType) {
+
+    public MatchLiveExpandAdapter(List<MultiItemEntity> data, int expandType) {
         super(data);
         this.expandType = expandType;
         addItemType(TYPE_TITLE, R.layout.listitem_race_info);
-        if (expandType == 0) {//代表的是协会直播中红色的部分，和协会直播中比赛的部分
-            addItemType(TYPE_DETIAL, R.layout.listitem_race_info_details);
-        }else if (expandType == 1)//协会直播的训放
-        {
-            addItemType(TYPE_DETIAL, R.layout.listitem_gp_xun_expand);
-        }
+        addItemType(TYPE_DETIAL, R.layout.listitem_race_info_details);
 
 
     }
@@ -79,21 +75,54 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 }
                 break;
             case TYPE_DETIAL:
+
                 final MatchDetialItem detialItem = (MatchDetialItem) item;
-                if (expandType == 0){
-                    helper.setText(R.id.tv_sifangdidian, "司放地点:" + detialItem.getSubItem(0).getArea());
-                    helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj()+"KM");
+                helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
+                if (detialItem.getSubItem(0).isMatch())
+                {
+                    helper.setVisible(R.id.tv_sifangdidian, true);
+                    helper.setVisible(R.id.tv_sifangyushu, true);
+                    helper.setVisible(R.id.tv_cankaokongju, true);
+                    helper.setVisible(R.id.tv_weather, true);
+                    helper.setVisible(R.id.tv_sifangzuobiao, true);
+                    if ("".equals(detialItem.getSubItem(0).getArea()))
+                    {
+                        helper.setText(R.id.tv_sifangdidian, "司放地点:" +"无");
+
+                    }else {
+                        helper.setText(R.id.tv_sifangdidian, "司放地点:" +detialItem.getSubItem(0).getArea());
+
+                    }
+                    helper.setText(R.id.tv_cankaokongju, "参考空距:" + detialItem.getSubItem(0).getBskj() + "KM");
                     helper.setText(R.id.tv_sifangyushu, "司放羽数:" + detialItem.getSubItem(0).compuberSLYS());
                     helper.setText(R.id.tv_weather, "天气:" + detialItem.getSubItem(0).getTq());
-                    helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
                     helper.setText(R.id.tv_sifangzuobiao, "司放坐标:" + detialItem.getSubItem(0).computerSFZB());
-                }else if (expandType == 1)
-                {
-                    helper.setText(R.id.tv_sifangshijian, "司放时间:" + detialItem.getSubItem(0).getSt());
+                }else {
+                    if (detialItem.getSubItem(0).getBskj() > 0) {//训放
+                        helper.setVisible(R.id.tv_xunsaikongju, true);
+                        helper.setText(R.id.tv_xunsaikongju, "训赛空距:" + detialItem.getSubItem(0).getBskj() + "KM");
+                        helper.setVisible(R.id.tv_sifangdidian, false);
+                        helper.setVisible(R.id.tv_sifangyushu, false);
+                        helper.setVisible(R.id.tv_cankaokongju, false);
+                        helper.setVisible(R.id.tv_weather, false);
+                        helper.setVisible(R.id.tv_sifangzuobiao, false);
+                    } else if (detialItem.getSubItem(0).getBskj() == 0) {//家飞
+                        helper.setVisible(R.id.tv_sifangdidian, false);
+                        helper.setVisible(R.id.tv_sifangyushu, false);
+                        helper.setVisible(R.id.tv_cankaokongju, false);
+                        helper.setVisible(R.id.tv_weather, false);
+                        helper.setVisible(R.id.tv_sifangzuobiao, false);
+                        helper.setVisible(R.id.tv_xunsaikongju, false);
+                    }
                 }
 
 
+
+
                 break;
+
+
+
         }
     }
 

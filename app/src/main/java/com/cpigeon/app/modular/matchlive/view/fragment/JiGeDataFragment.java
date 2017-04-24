@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BasePageTurnFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsGP;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsXH;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.model.dao.IRaceReport;
@@ -72,12 +73,13 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     protected int getDefaultPageSize() {
-        return 100;
+        return 50;
     }
+
 
     @Override
     protected String getEmptyDataTips() {
-        return "1";
+        return "对不起，暂时无法获取数据，请您稍后再试";
     }
 
     @Override
@@ -86,28 +88,37 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                 Object item = ((JiGeDataAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
-                if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
-                    if (((JiGeDataAdapter.JiGeTitleItem_XH) item).isExpanded()) {
-                        adapter.collapse(position);
-                    } else {
-                        adapter.expand(position);
+                if ("xh".equals(getMatchType()))
+                {
+                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
+
+                        if (((JiGeDataAdapter.JiGeTitleItem_XH) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof JiGeDataAdapter.JiGeDetialItem_XH) {
+                        MatchPigeonsXH mi = ((JiGeDataAdapter.JiGeDetialItem_XH) item).getSubItem(0);
+
                     }
-                } else if (item instanceof JiGeDataAdapter.JiGeDetialItem_XH) {
-                    MatchPigeonsXH mi = ((JiGeDataAdapter.JiGeDetialItem_XH) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
+                }else if ("gp".equals(getMatchType()))
+                {
+                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
+
+                        if (((JiGeDataAdapter.JiGeTitleItem_GP) item).isExpanded()) {
+                            adapter.collapse(position);
+                        } else {
+                            adapter.expand(position);
+                        }
+                    } else if (item instanceof JiGeDataAdapter.JiGeDetialItem_GP) {
+                        MatchPigeonsGP mi = ((JiGeDataAdapter.JiGeDetialItem_GP) item).getSubItem(0);
+
+                    }
                 }
+
+
             }
         });
         return adapter;
@@ -121,7 +132,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     public String getMatchType() {
-        return "xh";
+        return matchInfo.getLx();
     }
 
     @Override

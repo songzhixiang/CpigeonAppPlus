@@ -42,4 +42,16 @@ public interface IChaZuDao extends IBaseDao{
                                 String sKey,
                                 OnCompleteListener<List> onCompleteListener);
 
+
+    void loadChaZhiDingDaoDetails(String matchType,
+                                String ssid,
+                                String foot,
+                                String name,
+                                boolean hascz,
+                                int pager,
+                                int pagesize,
+                                int czIndex,
+                                String sKey,
+                                OnCompleteListener<List> onCompleteListener);
+
 }

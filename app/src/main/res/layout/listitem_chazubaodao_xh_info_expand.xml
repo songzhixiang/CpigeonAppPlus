@@ -21,8 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="空距:null"
-            android:textStyle="bold" />
+            android:text="空距:null"/>
 
         <TextView
             android:id="@+id/tv_huiyuanpenghao"
@@ -30,8 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="会员棚号:null"
-            android:textStyle="bold" />
+            android:text="会员棚号:null" />
     </LinearLayout>
 
     <TextView
@@ -40,36 +38,31 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="8dp"
         android:layout_height="wrap_content"
-        android:text="赛鸽分速:null"
-        android:textStyle="bold" />
+        android:text="赛鸽分速:null"/>
     <TextView
         android:id="@+id/tv_guichaoshijian"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="归巢时间:"
-        android:textStyle="bold" />
+        android:text="归巢时间:"/>
 
     <TextView
         android:id="@+id/tv_dengjizuobiao"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="登记坐标:"
-        android:textStyle="bold" />
+        android:text="登记坐标:"/>
     <TextView
         android:id="@+id/tv_saomiaozuobiao"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="扫描坐标:"
-        android:textStyle="bold" />
+        android:text="扫描坐标:"/>
 
     <TextView
         android:layout_margin="8dp"
         android:id="@+id/tv_chazubaodao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="插组报道:"
-        android:textStyle="bold" />
+        android:text="插组报道:"/>
 </LinearLayout>

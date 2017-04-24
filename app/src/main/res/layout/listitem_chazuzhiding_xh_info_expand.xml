@@ -15,24 +15,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="1"
-        android:text="会员棚号:null"
-        android:textStyle="bold" />
+        android:text="会员棚号:null" />
 
     <TextView
         android:id="@+id/tv_shanglongshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="上笼时间:"
-        android:textStyle="bold" />
+        android:text="上笼时间:" />
 
     <TextView
         android:id="@+id/tv_dengjizuobiao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="登记坐标:"
-        android:textStyle="bold" />
+        android:text="登记坐标:"/>
 
 
     <TextView
@@ -40,6 +37,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="插组指定:"
-        android:textStyle="bold" />
+        android:text="插组指定:" />
 </LinearLayout>

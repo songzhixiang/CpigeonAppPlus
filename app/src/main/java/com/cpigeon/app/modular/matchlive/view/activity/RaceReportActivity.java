@@ -101,13 +101,23 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         mPresenter.showBulletin();
         if (matchInfo != null) {
             Logger.e("matchinfo" + matchInfo.getBsmc());
-            mFragmentPagerAdapter = new FragmentPagerItemAdapter(
-                    getSupportFragmentManager(), FragmentPagerItems.with(this)
-                    .add("报道数据", ReportDataFragment.class)
-                    .add("插组报道", ChaZuBaoDaoFragment.class)
-                    .add(tablayout_seconde_name, JiGeDataFragment.class)
-                    .add("插组指定", ChaZuZhiDingFragment.class)
-                    .create());
+            if (bundle.getString("jigesuccess")!=null)
+            {
+                mFragmentPagerAdapter = new FragmentPagerItemAdapter(
+                        getSupportFragmentManager(), FragmentPagerItems.with(this)
+                        .add(tablayout_seconde_name, JiGeDataFragment.class)
+                        .add("插组指定", ChaZuZhiDingFragment.class)
+                        .create());
+            }else {
+                mFragmentPagerAdapter = new FragmentPagerItemAdapter(
+                        getSupportFragmentManager(), FragmentPagerItems.with(this)
+                        .add("报道数据", ReportDataFragment.class)
+                        .add("插组报道", ChaZuBaoDaoFragment.class)
+                        .add(tablayout_seconde_name, JiGeDataFragment.class)
+                        .add("插组指定", ChaZuZhiDingFragment.class)
+                        .create());
+            }
+
             mViewPager.setAdapter(mFragmentPagerAdapter);
             mSmartTabLayout.setViewPager(mViewPager);
         }

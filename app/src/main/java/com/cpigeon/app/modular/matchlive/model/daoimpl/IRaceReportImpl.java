@@ -52,7 +52,13 @@ public class IRaceReportImpl implements IRaceReport {
     @Override
     public void queryBulletin(String ssid, IBaseDao.OnCompleteListener<Bulletin> onCompleteListener) {
         try {
-            bull = db.selector(Bulletin.class).where("ssid", "=", ssid).findFirst();
+            if (db == null)
+            {
+                db = x.getDb(CpigeonConfig.getDataDb());
+            }else {
+                bull = db.selector(Bulletin.class).where("ssid", "=", ssid).findFirst();
+            }
+
         } catch (DbException e) {
             e.printStackTrace();
         }

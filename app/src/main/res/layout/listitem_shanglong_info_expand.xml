@@ -3,58 +3,66 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
     android:padding="8dp">
 
 
     <TextView
-        android:id="@+id/tv_saigecolor"
+        android:id="@+id/tv_shanglong_saigeyuse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
-        android:text="赛鸽羽色:null"/>
+        android:layout_marginLeft="8dp"
+        android:text="赛鸽羽色:null" />
+
 
     <TextView
-        android:id="@+id/tv_suoshuarea"
+        android:id="@+id/tv_shanglong_suoshuarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="所属地区:" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="所属地区:null" />
 
     <TextView
-        android:id="@+id/tv_shanglongshijian"
+        android:id="@+id/tv_shanglong_shanglongshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="上笼时间:" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="上笼时间:null" />
 
     <TextView
-        android:id="@+id/tv_shangchuanshijian"
+        android:id="@+id/tv_shanglong_shangchuanshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="上传时间:"
-        android:visibility="gone" />
-    <TextView
-        android:id="@+id/tv_dianzihuanhao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="电子环号:"/>
-    <TextView
-        android:id="@+id/tv_suoshutuandui"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="所属团队:"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="上传时间:" />
 
     <TextView
-        android:id="@+id/tv_chazuzhiding"
+        android:id="@+id/tv_shanglong_dianzihuanhao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="电子环号:" />
+
+    <TextView
+        android:id="@+id/tv_shanglong_suoshutuandui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="所属团队:" />
+
+    <TextView
+        android:id="@+id/tv_shanglong_chazuzhiding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="插组指定:" />
+
+
 </LinearLayout>

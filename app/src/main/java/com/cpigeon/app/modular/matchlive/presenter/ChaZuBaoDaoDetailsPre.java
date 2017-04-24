@@ -6,15 +6,18 @@ import com.cpigeon.app.modular.matchlive.model.dao.IChaZuDao;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.IChaZuDaoImpl;
 import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRacePigeonsView;
 import com.cpigeon.app.modular.matchlive.view.adapter.ChaZuBaoDaoDetailsAdapter;
+import com.cpigeon.app.modular.matchlive.view.adapter.ChaZuZhiDingDetailsAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/19.
  */
 
-public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView,IChaZuDao> {
+public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZuDao> {
     public ChaZuBaoDaoDetailsPre(IRacePigeonsView mView) {
         super(mView);
     }
@@ -24,10 +27,8 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView,IChaZu
         return new IChaZuDaoImpl();
     }
 
-    public void loadChaZuBaoDaoDetails()
-    {
-        if (isAttached())
-        {
+    public void loadChaZuBaoDaoDetails() {
+        if (isAttached()) {
             mDao.loadChaZuBaoDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
                     mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
                     mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {
@@ -53,12 +54,42 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView,IChaZu
                             post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (isAttached())
-                                    {
+                                    if (isAttached()) {
                                         //TODO 显示错误界面
                                     }
                                 }
                             });
+                        }
+                    });
+        }
+    }
+
+    public void loadChaZuZhiding() {
+        if (isAttached()) {
+            mDao.loadChaZhiDingDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
+                    mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
+                    mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {
+                        @Override
+                        public void onSuccess(List data) {
+                            Logger.e(data.size() + "");
+                            final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? ChaZuZhiDingDetailsAdapter.getXH(data) : ChaZuZhiDingDetailsAdapter.getGP(data);
+                            post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (isAttached()) {
+                                        if (mView.isRefreshing())
+                                            mView.hideRefreshLoading();
+                                        else if (mView.isMoreDataLoading())
+                                            mView.loadMoreComplete();
+                                        mView.showMoreData(d);
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFail(String msg) {
+
                         }
                     });
         }

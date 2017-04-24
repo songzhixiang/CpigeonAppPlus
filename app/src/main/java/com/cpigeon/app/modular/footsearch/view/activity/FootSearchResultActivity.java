@@ -94,6 +94,10 @@ public class FootSearchResultActivity extends BaseActivity {
     }
 
     public void initView() {
+
+        Logger.e("当前Activity的Context"+this);
+        Logger.e("当前Activity的ApplicationContext"+getApplicationContext());
+        Logger.e("当前Activity的Application"+getApplication());
 //        //setActionbarTitleText("查询结果");
 //        mFootSearchFragment = new FootSearchResultCardFragment();
         toolbar.setTitle("查询结果");

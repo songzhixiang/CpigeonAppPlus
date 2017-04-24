@@ -27,7 +27,7 @@
             android:layout_height="@dimen/activity_login_input_left_icon_height"
             android:layout_centerVertical="true"
             android:padding="@dimen/activity_login_input_left_icon_padding"
-            app:srcCompat="@drawable/svg_ic_login_user"/>
+            app:srcCompat="@drawable/ic_person_black"/>
 
         <EditText
             android:id="@+id/et_username"
@@ -82,7 +82,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/activity_login_input_left_icon_padding"
-            app:srcCompat="@drawable/svg_ic_eye_disable"/>
+            app:srcCompat="@drawable/ic_visibility_off_black"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_pass"

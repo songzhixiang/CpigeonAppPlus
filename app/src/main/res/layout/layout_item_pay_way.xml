@@ -33,7 +33,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_10"
         android:rotation="-90"
-        app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
+        app:srcCompat="@drawable/ic_arrow_downward_black" />
 
     <TextView
         android:id="@+id/tv_pay_way_explain"

@@ -50,7 +50,7 @@
             android:layout_height="@dimen/list_item_pigeons_groups_imageview_height"
             android:gravity="right"
             android:rotation="270"
-            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
+            app:srcCompat="@drawable/ic_arrow_downward_black" />
     </LinearLayout>
 
     <View

@@ -6,6 +6,7 @@ import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.dao.IRaceDao;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.RaceDaoImpl;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
+import com.cpigeon.app.modular.matchlive.view.adapter.RaceXunFangAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 
 import java.util.List;
@@ -24,26 +25,44 @@ public class RacePre extends BasePresenter<IReportData, IRaceDao> {
         return new RaceDaoImpl();
     }
 
-    public void loadRaceData() {
+    public void loadRaceData(final int loadType) {
 
         mDao.showReprotData(mView.getMatchType(), mView.getSsid(), mView.getFoot(), mView.getName(),
                 mView.hascz(), mView.getPageIndex(), mView.getPageSize(), mView.czIndex(), mView.sKey(), new IBaseDao.OnCompleteListener<List>() {
                     @Override
                     public void onSuccess(final List data) {
                         if (isAttached()) {
-                            final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? RaceReportAdapter.getXH(data) : RaceReportAdapter.getGP(data);
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isRefreshing())
-                                            mView.hideRefreshLoading();
-                                        else if (mView.isMoreDataLoading())
-                                            mView.loadMoreComplete();
-                                        mView.showMoreData(d);
+                            if (loadType == 0)
+                            {
+                                final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? RaceReportAdapter.getXH(data) : RaceReportAdapter.getGP(data);
+                                postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (isAttached()) {
+                                            if (mView.isRefreshing())
+                                                mView.hideRefreshLoading();
+                                            else if (mView.isMoreDataLoading())
+                                                mView.loadMoreComplete();
+                                            mView.showMoreData(d);
+                                        }
                                     }
-                                }
-                            }, 300);
+                                }, 300);
+                            }else {
+                                final List d = isDetached() ? null : RaceXunFangAdapter.getGP(data);
+                                postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (isAttached()) {
+                                            if (mView.isRefreshing())
+                                                mView.hideRefreshLoading();
+                                            else if (mView.isMoreDataLoading())
+                                                mView.loadMoreComplete();
+                                            mView.showMoreData(d);
+                                        }
+                                    }
+                                }, 300);
+                            }
+
                         }
                     }
 

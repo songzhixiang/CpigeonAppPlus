@@ -5,13 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.TextView;
 
@@ -21,8 +18,8 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.model.bean.comparable.MatchInfoTypeComparator;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
+import com.cpigeon.app.modular.matchlive.view.activity.RaceXunFangActivity;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdapter;
@@ -32,13 +29,9 @@ import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -65,7 +58,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
     private MatchLiveSubPre pre = new MatchLiveSubPre(this);
     String currMatchType = "";
     private OnRefreshListener onRefreshListener;
-
+    private Intent intent;
     private int lastExpandItemPosition = -1;
 
     @Override
@@ -73,7 +66,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null), 1);
+        matchLiveAdapter = new MatchLiveExpandAdapter(MatchLiveExpandAdapter.get(null), 0);
         matchLiveAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         matchLiveAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -85,6 +78,14 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                     if (!"bs".equals(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getDt())) {
                         if (checkArrearage(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo()))
                             return;
+                        intent = new Intent(getActivity(), RaceReportActivity.class);
+                        MatchInfo mi = ((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo();
+                        Bundle bundle = new Bundle();                //创建Bundle对象
+                        bundle.putSerializable("matchinfo", mi);     //装入数据
+                        bundle.putString("loadType",currMatchType);
+                        bundle.putString("jigesuccess","jigesuccess");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         return;
                     }
                     if (((MatchLiveExpandAdapter.MatchTitleItem) item).isExpanded()) {
@@ -98,13 +99,21 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                     MatchInfo mi = ((MatchLiveExpandAdapter.MatchDetialItem) item).getSubItem(0);
                     if (checkArrearage(mi)) return;
                     if (mi != null && !"jg".equals(mi.getDt())) {
-                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
+                        if (mi.isMatch())
+                        {
+                            intent = new Intent(getActivity(), RaceReportActivity.class);
+
+                        }else {
+                            intent = new Intent(getActivity(), RaceXunFangActivity.class);
+                        }
                         Bundle bundle = new Bundle();                //创建Bundle对象
                         bundle.putSerializable("matchinfo", mi);     //装入数据
                         bundle.putString("loadType",currMatchType);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         return;
+
+
                     }
                 }
             }

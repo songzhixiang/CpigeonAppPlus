@@ -56,5 +56,20 @@ public class IChaZuDaoImpl implements IChaZuDao {
         });
     }
 
+    @Override
+    public void loadChaZhiDingDaoDetails(String matchType, String ssid, String foot, String name, boolean hascz, int pager, int pagesize, int czIndex, String sKey, final OnCompleteListener<List> onCompleteListener) {
+        CallAPI.getPigeonsData(MyApp.getInstance(), matchType, ssid, foot, name, hascz, pager, pagesize, czIndex, sKey, new CallAPI.Callback<List>() {
+            @Override
+            public void onSuccess(List data) {
+                onCompleteListener.onSuccess(data);
+            }
+
+            @Override
+            public void onError(int errorType, Object data) {
+                onCompleteListener.onFail(errorType+"");
+            }
+        });
+    }
+
 
 }

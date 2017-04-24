@@ -11,6 +11,8 @@ import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.footsearch.model.bean.FootQueryResult;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 
+import java.util.logging.Logger;
+
 import butterknife.BindView;
 
 /**
@@ -92,6 +94,7 @@ public class FootSearchResultCardFragment extends BaseFragment {
         if (bundle != null) {
             mFootQueryResult = (FootQueryResult) bundle.getSerializable(BUNDLE_FOOT_QUERY_RESULT);
         }
+        com.orhanobut.logger.Logger.e("Fragment中的Context："+getActivity());
     }
 
     public static FootSearchResultCardFragment newInstance(FootQueryResult footQueryResult) {

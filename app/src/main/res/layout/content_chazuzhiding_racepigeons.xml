@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_header_race_detial_layout_racename_height">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/race_detial_info_detial_show"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/list_header_race_detial_imageview_racedetialshow_marginright"
-            app:srcCompat="@drawable/svg_ic_down_stroke_gray" />
+            app:srcCompat="@drawable/ic_arrow_downward_black" />
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
             android:padding="8dp"

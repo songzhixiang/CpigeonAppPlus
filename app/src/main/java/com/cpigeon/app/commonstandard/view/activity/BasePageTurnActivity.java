@@ -75,7 +75,6 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
                 finish();
             }
         });
-
         swiperefreshlayout.setOnRefreshListener(this);
         swiperefreshlayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         swiperefreshlayout.setEnabled(false);

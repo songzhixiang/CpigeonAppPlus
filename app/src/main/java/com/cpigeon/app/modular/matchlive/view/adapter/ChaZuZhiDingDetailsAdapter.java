@@ -31,13 +31,14 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
     public ChaZuZhiDingDetailsAdapter(String mathType) {
         super(null);
         this.mathType = mathType;
+        Logger.e("mathtype"+mathType.toString());
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
         if ("xh".equals(mathType))
         {
             addItemType(TYPE_DETIAL, R.layout.listitem_chazuzhiding_xh_info_expand);
         }else if ("gp".equals(mathType))
         {
-            addItemType(TYPE_DETIAL, R.layout.listitem_chazubaodao_gp_info_expand);
+            addItemType(TYPE_DETIAL, R.layout.listitem_chazuzhiding_gp_info_expand);
         }
     }
 
@@ -71,7 +72,7 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
                     helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn()+"");
                     helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime()+"");
                     helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx() + "/" + detialItem.getSubItem(0).getZy());
-                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组指定:无":"插组指定 :"+detialItem.getSubItem(0).CZtoString());
                 }else if ("gp".equals(mathType)){
                     final ChaZuZhiDingDetailsAdapter.MatchDetialGPItem detialItem = (ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) item;
                     helper.setText(R.id.tv_saigecolor, "赛鸽羽色:" + detialItem.getSubItem(0).getColor()+"");
@@ -80,7 +81,7 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
                     helper.setText(R.id.tv_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
                     helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime());
                     helper.setText(R.id.tv_shangchuanshijian, "上传时间:" + detialItem.getSubItem(0).getUptime());
-                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
                 }
                 break;
 

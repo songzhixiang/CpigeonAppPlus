@@ -36,7 +36,15 @@ public class JiGeDataAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, 
         super(null);
         this.matchType = matchType;
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
-        addItemType(TYPE_DETIAL, R.layout.listitem_jige_info_expand);
+        if ("xh".equals(matchType))
+        {
+            addItemType(TYPE_DETIAL, R.layout.listitem_jige_info_expand);
+        }else if ("gp".equals(matchType))
+        {
+            addItemType(TYPE_DETIAL, R.layout.listitem_shanglong_info_expand);
+        }
+
+
 
     }
 
@@ -74,6 +82,13 @@ public class JiGeDataAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, 
                     break;
                 } else {
                     final JiGeDetialItem_GP detialItem = (JiGeDetialItem_GP) item;
+                    helper.setText(R.id.tv_shanglong_saigeyuse, "赛鸽羽色:" + detialItem.getSubItem(0).getColor());
+                    helper.setText(R.id.tv_shanglong_suoshuarea, "所属地区:" + detialItem.getSubItem(0).getArea());
+                    helper.setText(R.id.tv_shanglong_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime());
+                    helper.setText(R.id.tv_shanglong_shangchuanshijian, "上传时间:" + detialItem.getSubItem(0).getUptime());
+                    helper.setText(R.id.tv_shanglong_dianzihuanhao, "电子环号:" + detialItem.getSubItem(0).getRing());
+                    helper.setText(R.id.tv_shanglong_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
+                    helper.setText(R.id.tv_shanglong_chazuzhiding, "插组指定:" + detialItem.getSubItem(0).CZtoString());
                 }
 
 

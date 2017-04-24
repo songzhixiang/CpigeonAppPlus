@@ -32,7 +32,15 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
         super(null);
         this.mathType = mathType;
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
-        addItemType(TYPE_DETIAL, R.layout.listitem_report_info_expand);
+        if ("xh".equals(mathType))
+        {
+            addItemType(TYPE_DETIAL, R.layout.listitem_report_info_expand);
+        }else if ("gp".equals(mathType))
+        {
+            addItemType(TYPE_DETIAL,R.layout.listitem_race_gp_info_expand);
+        }
+
+
     }
 
     @Override
@@ -80,14 +88,29 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
                 helper.setText(R.id.report_info_item_hh, footNumber);
                 break;
             case TYPE_DETIAL:
-                final MatchDetialXHItem detialItem = (MatchDetialXHItem) item;
-                helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn());
-                helper.setText(R.id.tv_bisaikongju, "比赛空距:" +detialItem.getSubItem(0).getSp()+"KM");
-                helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed()+"M");
-                helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
-                helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx()+"/"+detialItem.getSubItem(0).getZy());
-                helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx()+"/"+detialItem.getSubItem(0).getDczy());
-                helper.setText(R.id.tv_chazubaodao, "插组报道:" + detialItem.getSubItem(0).CZtoString());
+                if ("xh".equals(mathType))
+                {
+                    final MatchDetialXHItem detialItem = (MatchDetialXHItem) item;
+                    helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn());
+                    helper.setText(R.id.tv_bisaikongju, "比赛空距:" +detialItem.getSubItem(0).getSp()+"KM");
+                    helper.setText(R.id.tv_saigefenshu, "赛鸽分速:" + detialItem.getSubItem(0).getSpeed()+"M");
+                    helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
+                    helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx()+"/"+detialItem.getSubItem(0).getZy());
+                    helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx()+"/"+detialItem.getSubItem(0).getDczy());
+                    helper.setText(R.id.tv_chazubaodao, "插组报道:" + detialItem.getSubItem(0).CZtoString());
+                }else if ("gp".equals(mathType))
+                {
+                    final MatchDetialGPItem detialItem = (MatchDetialGPItem) item;
+                    helper.setText(R.id.tv_saigefenshu,"赛鸽分速:"+detialItem.getSubItem(0).getSpeed()+"M");
+                    helper.setText(R.id.tv_saigecolor,"赛鸽羽色:"+detialItem.getSubItem(0).getColor());
+                    helper.setText(R.id.tv_guichaoshijian,"归巢时间:"+detialItem.getSubItem(0).getArrive());
+                    helper.setText(R.id.tv_suoshuarea,"所属地区:"+detialItem.getSubItem(0).getArea());
+                    helper.setText(R.id.tv_dianzihuanhao,"电子环号:"+detialItem.getSubItem(0).getRing());
+                    helper.setText(R.id.tv_suoshutuandui,"所属团队:"+detialItem.getSubItem(0).getTtzb());
+                    helper.setText(R.id.tv_chazubaodao,"插组报道:"+detialItem.getSubItem(0).CZtoString());
+                }
+
+
                 break;
         }
     }
