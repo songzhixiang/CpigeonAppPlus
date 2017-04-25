@@ -1,26 +1,24 @@
 package com.cpigeon.app.modular.matchlive.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
-import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
+import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.customview.SearchEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.bingoogolapple.badgeview.BGABadgeTextView;
 
 /**
@@ -152,6 +150,11 @@ public class MatchLiveFragment extends BaseFragment {
                 break;
         }
         changeRaceTypeViewStarus();
+    }
+
+    @OnClick(R.id.search_edittext)
+    public void onViewClicked() {
+        startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 }
 

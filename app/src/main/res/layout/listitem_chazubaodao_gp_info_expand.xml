@@ -3,7 +3,7 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
     android:padding="8dp">
@@ -11,47 +11,62 @@
 
     <TextView
         android:id="@+id/tv_saigefenshu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
         android:layout_marginLeft="8dp"
-        android:layout_height="wrap_content"
         android:text="赛鸽分速:null" />
+
     <TextView
-        android:layout_margin="8dp"
         android:id="@+id/tv_saigecolor"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="赛鸽羽色:null"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="赛鸽羽色:null" />
+
     <TextView
         android:id="@+id/tv_guichaoshijian"
-        android:layout_margin="8dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="归巢时间:"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="归巢时间:" />
 
     <TextView
         android:id="@+id/tv_suoshuarea"
-        android:layout_margin="8dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="所属地区:"/>
-    <TextView
-        android:id="@+id/tv_dianzihuanhao"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="电子环号:"/>
-    <TextView
-        android:id="@+id/tv_suoshutuandui"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="所属团队:"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="所属地区:" />
 
     <TextView
-        android:layout_margin="8dp"
+        android:id="@+id/tv_dianzihuanhao"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="电子环号:" />
+
+    <TextView
+        android:id="@+id/tv_suoshutuandui"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="所属团队:" />
+
+    <TextView
         android:id="@+id/tv_chazubaodao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="插组报道:" />
 </LinearLayout>

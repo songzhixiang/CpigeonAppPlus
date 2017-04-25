@@ -130,6 +130,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnPermissionDenied() {
         showTips("权限被拒绝了", TipType.ToastShort);
+        AppManager.getAppManager().AppExit();
     }
 
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -139,6 +140,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnNeverAskAgain() {
         showTips("权限不再提示", TipType.ToastShort);
+        AppManager.getAppManager().AppExit();
     }
 
     @Override

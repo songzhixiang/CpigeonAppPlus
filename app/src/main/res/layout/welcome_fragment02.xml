@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/welcome_fragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:clipChildren="false"
+    android:layout_weight="6"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorGuide"
+    android:paddingTop="48dp">
+
+    <RelativeLayout
+        android:id="@+id/images"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:clipChildren="false">
+        <ImageView
+            android:id="@+id/welcome_02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/guide_006"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_marginTop="36dp"
+            android:layout_marginLeft="48dp"
+            android:src="@mipmap/guide_003"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+
+            android:src="@mipmap/guide_004"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:layout_marginBottom="39dp" />
+        <ImageView
+            android:src="@mipmap/guide_005"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="21dp" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="一键查询赛鸽赛绩"
+        android:textAppearance="@style/WelcomeHeadingAppearance" />
+
+    <TextView
+        android:id="@+id/content"
+        android:text="输入赛鸽足环号  查询历史赛绩"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="top|center_horizontal"
+        android:minHeight="@dimen/welcome_content_min_height"
+        android:textAppearance="@style/WelcomeContentAppearance" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

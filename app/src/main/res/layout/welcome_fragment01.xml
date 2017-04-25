@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/welcome_fragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="6"
+    android:background="@color/colorGuide"
+    android:clipChildren="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:paddingTop="48dp">
+
+    <RelativeLayout
+        android:id="@+id/images"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:clipChildren="false">
+
+        <ImageView
+            android:id="@+id/welcome_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/guide_001" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="36dp"
+            android:src="@mipmap/guide_003" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="39dp"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/guide_004" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="21dp"
+            android:src="@mipmap/guide_005" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom|center_horizontal"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="随时随地地观看直播"
+        android:textAppearance="@style/WelcomeHeadingAppearance" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|center_horizontal"
+        android:minHeight="@dimen/welcome_content_min_height"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="中鸽网APP 赛鸽直播新体验"
+        android:textAppearance="@style/WelcomeContentAppearance" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent" />
+
+</LinearLayout>

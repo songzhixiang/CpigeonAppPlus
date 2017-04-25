@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="com.cpigeon.app.MainActivity">
 
     <android.support.v4.view.ViewPager
+        android:fitsSystemWindows="true"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

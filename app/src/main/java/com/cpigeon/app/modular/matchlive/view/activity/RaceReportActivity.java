@@ -222,7 +222,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_gg:
-                if ("".equals(bulletin.getContent())) {
+                if (bulletin==null|| TextUtils.isEmpty(bulletin.getContent())) {
                     return;
                 }
                 SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);

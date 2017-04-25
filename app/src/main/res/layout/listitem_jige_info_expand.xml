@@ -3,14 +3,12 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
     android:padding="8dp">
 
-
     <TextView
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/tv_jige_huiyuanpenghao"
         android:layout_width="match_parent"
@@ -22,7 +20,7 @@
     <TextView
         android:id="@+id/tv_jige_saigeshijian"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_height="wrap_content"
         android:text="集鸽时间:null"
@@ -31,14 +29,15 @@
     <TextView
         android:id="@+id/tv_jige_dengjizuobiao"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_height="wrap_content"
         android:text="登记坐标:null"
          />
 
     <TextView
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:id="@+id/tv_jige_chazubaodao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,20 +3,17 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:visibility="gone"
-
             android:id="@+id/tv_sifangdidian"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -25,7 +22,6 @@
 
         <TextView
             android:visibility="gone"
-
             android:id="@+id/tv_cankaokongju"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -36,7 +32,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <TextView
@@ -68,7 +63,6 @@
         android:id="@+id/tv_sifangshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="司放时间:null" />
 
     <TextView

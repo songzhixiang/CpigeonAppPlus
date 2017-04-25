@@ -237,7 +237,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.7"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="序号"
             android:textColor="@color/colorWhite"
@@ -246,7 +246,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/name"
             android:textColor="@color/colorWhite"
@@ -255,7 +255,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/foot_number"
             android:textColor="@color/colorWhite"

@@ -136,7 +136,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements ISp
         String guide_version = SharedPreferencesTool.Get(this, "guide_version", "");
         String version = CommonTool.getVersionName(this);
         if (!guide_version.equals(version)) {
-            intent = new Intent(SplashActivity.this, AppIntroActivity.class);
+            intent = new Intent(SplashActivity.this, WelcomeActivity.class);
         } else if (checkLogin())
             intent = new Intent(SplashActivity.this, MainActivity.class);
         else

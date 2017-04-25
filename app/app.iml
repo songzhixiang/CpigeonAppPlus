@@ -163,6 +163,7 @@
     <orderEntry type="library" exported="" name="jcore-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="nativecrashreport-3.1.2" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
+    <orderEntry type="library" exported="" name="nineoldandroids-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.8.0" level="project" />
     <orderEntry type="library" exported="" name="jpush-3.0.3" level="project" />
     <orderEntry type="library" exported="" name="crashreport-2.5.0" level="project" />

@@ -3,15 +3,13 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <TextView
@@ -20,6 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="会员棚号:null"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
            />
 
         <TextView
@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="比赛空距:null"
-           />
+            android:layout_marginBottom="8dp"
+
+            />
     </LinearLayout>
 
 
@@ -37,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="赛鸽分数:null"
        />
 
@@ -47,6 +50,7 @@
 
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="归巢时间:null"
        />
     <TextView
@@ -55,6 +59,7 @@
 
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="登记坐标:null"
        />
     <TextView
@@ -63,12 +68,14 @@
 
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="扫描坐标:null"
        />
     <TextView
         android:id="@+id/tv_chazubaodao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:text="插组报道:"
        />
 

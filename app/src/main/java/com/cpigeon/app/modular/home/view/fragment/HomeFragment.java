@@ -16,14 +16,13 @@ import android.widget.TextView;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
-import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.commonstandard.view.fragment.BaseMVPFragment;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
+import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.ScreenTool;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
@@ -42,6 +41,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/4/6.
@@ -72,6 +72,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     TextView tvRaceinfoXhCount;
     @BindView(R.id.recyclerview_home_xh)
     RecyclerView recyclerviewHomeXh;
+    Unbinder unbinder;
 
     private HomeAdapter mAdapter;
 
@@ -208,7 +209,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @Override
     public void showMatchGPLiveData(List<MatchInfo> list, int type) {
-        if (list!=null&&list.size()>0) {
+        if (list != null && list.size() > 0) {
             tvRaceinfoGpCount.setText(String.format("正在直播%d场", list.size()));
             mAdapter = new HomeAdapter(list, type);
             recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -218,7 +219,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @Override
     public void showMatchXhLiveData(List<MatchInfo> list, int type) {
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             tvRaceinfoXhCount.setText(String.format("正在直播%d场", list.size()));
             mAdapter = new HomeAdapter(list, type);
             recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -249,6 +250,11 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     @Override
     protected boolean isCanDettach() {
         return true;
+    }
+
+    @OnClick(R.id.search_edittext)
+    public void onViewClicked() {
+        startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 
 

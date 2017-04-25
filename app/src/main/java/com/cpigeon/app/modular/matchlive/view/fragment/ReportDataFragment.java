@@ -117,8 +117,6 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                 Logger.d(item.getClass().getName());
                 if ("xh".equals(getMatchType())) {
                     if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
                         if (((RaceReportAdapter.MatchTitleXHItem) item).isExpanded()) {
                             adapter.collapse(position);
                         } else {
@@ -126,19 +124,11 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                         }
                     } else if (item instanceof RaceReportAdapter.MatchDetialXHItem) {
                         MatchReportXH mi = ((RaceReportAdapter.MatchDetialXHItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
+
                     }
                 } else if ("gp".equals(getMatchType())) {
                     if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
+
                         if (((RaceReportAdapter.MatchTitleGPItem) item).isExpanded()) {
                             adapter.collapse(position);
                         } else {
@@ -146,14 +136,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                         }
                     } else if (item instanceof RaceReportAdapter.MatchDetialGPItem) {
                         MatchReportGP mi = ((RaceReportAdapter.MatchDetialGPItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
+
                     }
                 }
 

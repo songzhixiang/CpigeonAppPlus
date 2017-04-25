@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/welcome_fragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipChildren="false"
+    android:background="@color/colorGuide"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_weight="6"
+    android:paddingTop="48dp">
+
+    <RelativeLayout
+        android:id="@+id/images"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:clipChildren="false">
+        <ImageView
+            android:id="@+id/welcome_03"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/logo"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginTop="120dp"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_margin="36dp"
+            android:src="@mipmap/guide_003"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/guide_004"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:src="@mipmap/guide_005"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="21dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/heading"
+        android:text="中鸽直播"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="center|center_horizontal"
+        android:textAppearance="@style/WelcomeHeadingAppearance" />
+
+    <TextView
+        android:id="@+id/content"
+        android:text="开启赛鸽直播时代"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="top|center_horizontal"
+        android:minHeight="@dimen/welcome_content_min_height"
+        android:textAppearance="@style/WelcomeContentAppearance" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

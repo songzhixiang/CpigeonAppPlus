@@ -77,7 +77,7 @@
     <string name="pigeon_special_words_race_detial_cpz" translatable="false">裁判长:</string>
     <string name="pigeon_special_words_race_detial_sfz" translatable="false">司放长:</string>
     <string name="pigeon_special_words_race_detial_cpy" translatable="false">裁判员:</string>
-    <string name="ranking_temp">暂排名次:</string>
+    <string name="ranking_temp">暂排名次</string>
 
     <string name="format_pay_account_balance_tips">余额%1$s元,支付扣除%2$s元</string>
     <string name="format_pay_account_score_tips">我的鸽币%1$s,兑换消耗%2$s鸽币</string>

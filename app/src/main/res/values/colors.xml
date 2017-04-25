@@ -120,6 +120,8 @@
     <color name="background_guide">#c0030303</color>
     <color name="colorBlue">#3e9cfc</color>
     <color name="colorRed">#f5372d</color>
+    <color name="colorGuide">#58C1F0</color>
+    <color name="text_selected">#888</color>
 
 
 </resources>

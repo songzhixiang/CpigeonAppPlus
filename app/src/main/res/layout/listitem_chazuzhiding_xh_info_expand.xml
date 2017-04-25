@@ -3,32 +3,32 @@
     android:id="@+id/matchlive_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
     android:padding="8dp">
-
 
     <TextView
         android:id="@+id/tv_huiyuanpenghao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="会员棚号:null" />
 
     <TextView
         android:id="@+id/tv_shanglongshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="上笼时间:" />
 
     <TextView
         android:id="@+id/tv_dengjizuobiao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="登记坐标:"/>
 
 
@@ -36,6 +36,7 @@
         android:id="@+id/tv_chazuzhiding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:text="插组指定:" />
 </LinearLayout>
