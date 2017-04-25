@@ -73,7 +73,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     protected int getDefaultPageSize() {
-        return 50;
+        return 100;
     }
 
 

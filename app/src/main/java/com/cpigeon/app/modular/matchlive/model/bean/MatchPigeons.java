@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 
 public abstract class MatchPigeons implements Serializable {
+    @Column(name = "order")
+    private int order;
     @Column(name = "tid", isId = true, autoGen = false)
     private long tid;
     @Column(name = "name")
@@ -69,6 +71,14 @@ public abstract class MatchPigeons implements Serializable {
     private boolean c23;
     @Column(name = "c24")
     private boolean c24;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
     public long getTid() {
         return tid;

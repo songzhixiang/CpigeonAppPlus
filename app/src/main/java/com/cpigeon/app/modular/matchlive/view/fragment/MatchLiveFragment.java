@@ -2,15 +2,20 @@ package com.cpigeon.app.modular.matchlive.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
+import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.customview.SearchEditText;
@@ -18,7 +23,6 @@ import com.cpigeon.app.utils.customview.SearchEditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.bingoogolapple.badgeview.BGABadgeTextView;
 
 /**
@@ -47,10 +51,10 @@ public class MatchLiveFragment extends BaseFragment {
         currMatchType = Const.MATCHLIVE_TYPE_XH;
         matchLiveSubFragment_GP = new MatchLiveSubFragment();
         matchLiveSubFragment_GP.setMatchType(Const.MATCHLIVE_TYPE_GP);
-        matchLiveSubFragment_GP.setOnRefreshListener(onRefreshListener);
+        matchLiveSubFragment_GP.setOnRefreshListener(onSubRefreshListener);
         matchLiveSubFragment_XH = new MatchLiveSubFragment();
         matchLiveSubFragment_XH.setMatchType(Const.MATCHLIVE_TYPE_XH);
-        matchLiveSubFragment_XH.setOnRefreshListener(onRefreshListener);
+        matchLiveSubFragment_XH.setOnRefreshListener(onSubRefreshListener);
         currMatchLiveSubFragment = matchLiveSubFragment_XH;
 
         mContentFragmentAdapter = new ContentFragmentAdapter(getFragmentManager());
@@ -91,8 +95,13 @@ public class MatchLiveFragment extends BaseFragment {
         return R.layout.fragment_live;
     }
 
+    private MatchLiveSubFragment.OnRefreshListener onRefreshListener;
 
-    private MatchLiveSubFragment.OnRefreshListener onRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
+    public void setOnRefreshListener(MatchLiveSubFragment.OnRefreshListener onRefreshListener) {
+        this.onRefreshListener = onRefreshListener;
+    }
+
+    private MatchLiveSubFragment.OnRefreshListener onSubRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
         @Override
         public void onStartRefresh(MatchLiveSubFragment fragment) {
         }
@@ -104,6 +113,9 @@ public class MatchLiveFragment extends BaseFragment {
             }
             if (type == DATA_Type_GP) {
                 tvActionbarMatchtypeGp.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
+            }
+            if (onRefreshListener != null) {
+                onRefreshListener.onRefreshFinished(type, loadCount);
             }
         }
     };

@@ -25,16 +25,16 @@
         android:background="@android:color/transparent"
         >
 
-        <Button
-            android:id="@+id/skip"
-            android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:layout_alignParentLeft="true"
-            android:text="跳过"
-            android:textSize="18sp"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:background="@drawable/selectable_item_background_general"/>
+        <!--<Button-->
+            <!--android:id="@+id/skip"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:text="跳过"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/abc_primary_text_material_dark"-->
+            <!--android:background="@drawable/selectable_item_background_general"/>-->
 
         <LinearLayout
             android:id="@+id/circles"

@@ -36,8 +36,8 @@ public class WelcomeActivity extends BaseActivity {
     private ContentFragmentAdapter mContentFragmentAdapter;
     @BindView(R.id.pager)
     ViewPager pager;
-    @BindView(R.id.skip)
-    Button skip;
+//    @BindView(R.id.skip)
+//    Button skip;
     @BindView(R.id.circles)
     LinearLayout circles;
     @BindView(R.id.done)
@@ -96,11 +96,11 @@ public class WelcomeActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 setIndicator(position);
                 if (position == NUM_PAGES - 2) {
-                    skip.setVisibility(View.GONE);
+//                    skip.setVisibility(View.GONE);
                     next.setVisibility(View.GONE);
                     done.setVisibility(View.VISIBLE);
                 } else if (position < NUM_PAGES - 2) {
-                    skip.setVisibility(View.VISIBLE);
+//                    skip.setVisibility(View.VISIBLE);
                     next.setVisibility(View.VISIBLE);
                     done.setVisibility(View.GONE);
                 } else if (position == NUM_PAGES - 1) {
@@ -157,12 +157,12 @@ public class WelcomeActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.skip, R.id.done, R.id.next})
+    @OnClick({ R.id.done, R.id.next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.skip:
-                endTutorial();
-                break;
+//            case R.id.skip:
+//                endTutorial();
+//                break;
             case R.id.done:
                 endTutorial();
                 break;

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,8 +84,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
         lp.height = ScreenTool.getScreenWidth(getActivity()) / 2;
         homeBanner.setLayoutParams(lp);
         mPresenter.laodAd();
-        mPresenter.loadMatchInfo(1);
-        mPresenter.loadMatchInfo(0);
+        loadMatchInfo();
     }
 
     @Override
@@ -224,11 +225,15 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
             mAdapter = new HomeAdapter(list, type);
             recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerviewHomeXh.setAdapter(mAdapter);
-
         }
 
     }
 
+    public void loadMatchInfo() {
+        com.orhanobut.logger.Logger.d("首页加载赛事列表");
+        mPresenter.loadMatchInfo(1);
+        mPresenter.loadMatchInfo(0);
+    }
 
     @Override
     public void onStart() {

@@ -1502,7 +1502,7 @@ public class CallAPI {
                             @Override
                             public void run() {
                                 List list;
-                                DbManager db = x.getDb(getDataDb());
+                                //DbManager db = x.getDb(getDataDb());
                                 try {
                                     JSONObject obj = new JSONObject(result);
                                     if (obj.getBoolean("status")) {
@@ -1517,7 +1517,7 @@ public class CallAPI {
                                                 jo = array.getJSONObject(i);
                                                 matchPigeons = new MatchPigeonsGP();
                                                 matchPigeons.setTid(jo.getLong("id"));
-
+                                                matchPigeons.setOrder(jo.getInt("order"));
                                                 matchPigeons.setSsid(ssid);
                                                 matchPigeons.setJgtime(jo.getString("jgtime"));
                                                 matchPigeons.setName(jo.getString("name"));
@@ -1564,6 +1564,7 @@ public class CallAPI {
                                             for (int i = 0; i < array.length(); i++) {
                                                 jo = array.getJSONObject(i);
                                                 matchPigeons = new MatchPigeonsXH();
+                                                matchPigeons.setOrder(jo.getInt("order"));
                                                 matchPigeons.setTid(jo.getLong("id"));
                                                 matchPigeons.setSsid(ssid);
                                                 matchPigeons.setJgtime(jo.getString("jgtime"));
@@ -1606,7 +1607,7 @@ public class CallAPI {
 
                                         }
 
-                                        db.saveOrUpdate(list);
+                                        //db.saveOrUpdate(list);
                                         CacheManager.put(cacheKey, list, 60 * 1000, 1000 * 60 * 60 * 24);
                                         //db.close();
                                         callback.onSuccess(list);

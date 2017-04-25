@@ -30,20 +30,16 @@ public class JiGeDataAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
-     *
      */
     public JiGeDataAdapter(String matchType) {
         super(null);
         this.matchType = matchType;
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
-        if ("xh".equals(matchType))
-        {
+        if ("xh".equals(matchType)) {
             addItemType(TYPE_DETIAL, R.layout.listitem_jige_info_expand);
-        }else if ("gp".equals(matchType))
-        {
+        } else if ("gp".equals(matchType)) {
             addItemType(TYPE_DETIAL, R.layout.listitem_shanglong_info_expand);
         }
-
 
 
     }
@@ -54,19 +50,20 @@ public class JiGeDataAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, 
             case TYPE_TITLE:
                 helper.getView(R.id.report_info_item_mc_img).setVisibility(View.GONE);
                 helper.setVisible(R.id.report_info_item_mc, true);
-                mc = getParentPosition(item) + 1;
+
                 if ("xh".equals(matchType)) {
                     JiGeTitleItem_XH titleItem = (JiGeTitleItem_XH) item;
-
+                    mc = titleItem.getMatchPigeonsXH().getOrder();
                     name = titleItem.getMatchPigeonsXH().getName();
                     footNumber = EncryptionTool.decryptAES(titleItem.getMatchPigeonsXH().getFoot());
 
                 } else {
                     JiGeTitleItem_GP titleItem = (JiGeTitleItem_GP) item;
+                    mc = titleItem.getMatchPigeonsGP().getOrder();
                     name = titleItem.getMatchPigeonsGP().getName();
                     footNumber = EncryptionTool.decryptAES(titleItem.getMatchPigeonsGP().getFoot());
                 }
-                helper.setText(R.id.report_info_item_mc,mc+"");
+                helper.setText(R.id.report_info_item_mc, mc + "");
                 helper.setText(R.id.report_info_item_xm, name);
                 helper.setText(R.id.report_info_item_hh, footNumber);
                 break;

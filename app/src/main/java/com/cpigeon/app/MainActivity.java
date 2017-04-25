@@ -34,6 +34,7 @@ import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
 import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
+import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveSubFragment;
 import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.service.MainActivityService;
@@ -146,7 +147,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             mainActivityService = null;
         }
     };
+    private MatchLiveSubFragment.OnRefreshListener onMatchInfoRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
+        @Override
+        public void onStartRefresh(MatchLiveSubFragment fragment) {
+        }
 
+        @Override
+        public void onRefreshFinished(int type, int loadCount) {
+            if (homeFragment != null) homeFragment.loadMatchInfo();
+        }
+    };
 
     public void setOnMatchTypeChangeListener(OnMatchTypeChangeListener onMatchTypeChangeListener) {
         this.onMatchTypeChangeListener = onMatchTypeChangeListener;
@@ -218,6 +228,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
+        matchLiveFragment.setOnRefreshListener(onMatchInfoRefreshListener);
         userCenterFragment = new UserCenterFragment();
         footSearchFragment = new FootSearchFragment();
 //        mCpigeonGroupFragment = new CpigeonGroupFragment();
@@ -368,7 +379,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public interface OnMatchTypeChangeListener {
         void onChanged(String lastType, String currType);
     }
-
 
 
     public void onHomeItemClick(View v) {

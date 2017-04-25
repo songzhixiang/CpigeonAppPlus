@@ -24,20 +24,19 @@ import static com.cpigeon.app.modular.matchlive.view.adapter.MatchLiveExpandAdap
  * Created by Administrator on 2017/4/21.
  */
 
-public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity,BaseViewHolder>{
+public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
     private String mathType;//加载的数据类型，xh-协会，gp-公棚
     private String name;//姓名
     private String footNumber;//足环
+
     public ChaZuZhiDingDetailsAdapter(String mathType) {
         super(null);
         this.mathType = mathType;
-        Logger.e("mathtype"+mathType.toString());
+        Logger.e("mathtype" + mathType.toString());
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
-        if ("xh".equals(mathType))
-        {
+        if ("xh".equals(mathType)) {
             addItemType(TYPE_DETIAL, R.layout.listitem_chazuzhiding_xh_info_expand);
-        }else if ("gp".equals(mathType))
-        {
+        } else if ("gp".equals(mathType)) {
             addItemType(TYPE_DETIAL, R.layout.listitem_chazuzhiding_gp_info_expand);
         }
     }
@@ -54,11 +53,12 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
                     ChaZuZhiDingDetailsAdapter.MatchTitleXHItem titleItem = (ChaZuZhiDingDetailsAdapter.MatchTitleXHItem) item;
                     name = titleItem.getMatchPigeonsXH().getName();
                     footNumber = EncryptionTool.decryptAES(titleItem.getMatchPigeonsXH().getFoot());
-
+                    xuhao = titleItem.getMatchPigeonsXH().getOrder();
                 } else {
                     ChaZuZhiDingDetailsAdapter.MatchTitleGPItem titleItem = (ChaZuZhiDingDetailsAdapter.MatchTitleGPItem) item;
                     name = titleItem.getMatchPigeonsGP().getName();
                     footNumber = EncryptionTool.decryptAES(titleItem.getMatchPigeonsGP().getFoot());
+                    xuhao = titleItem.getMatchPigeonsGP().getOrder();
                 }
 
                 helper.setText(R.id.report_info_item_mc, xuhao + "");
@@ -66,29 +66,26 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
                 helper.setText(R.id.report_info_item_hh, footNumber);
                 break;
             case TYPE_DETIAL:
-                if ("xh".equals(mathType))
-                {
+                if ("xh".equals(mathType)) {
                     final ChaZuZhiDingDetailsAdapter.MatchDetialXHItem detialItem = (ChaZuZhiDingDetailsAdapter.MatchDetialXHItem) item;
-                    helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn()+"");
-                    helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime()+"");
+                    helper.setText(R.id.tv_huiyuanpenghao, "会员棚号:" + detialItem.getSubItem(0).getPn() + "");
+                    helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime() + "");
                     helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx() + "/" + detialItem.getSubItem(0).getZy());
-                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组指定:无":"插组指定 :"+detialItem.getSubItem(0).CZtoString());
-                }else if ("gp".equals(mathType)){
+                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty(detialItem.getSubItem(0).CZtoString()) ? "插组指定:无" : "插组指定 :" + detialItem.getSubItem(0).CZtoString());
+                } else if ("gp".equals(mathType)) {
                     final ChaZuZhiDingDetailsAdapter.MatchDetialGPItem detialItem = (ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) item;
-                    helper.setText(R.id.tv_saigecolor, "赛鸽羽色:" + detialItem.getSubItem(0).getColor()+"");
+                    helper.setText(R.id.tv_saigecolor, "赛鸽羽色:" + detialItem.getSubItem(0).getColor() + "");
                     helper.setText(R.id.tv_suoshuarea, "所属地区:" + detialItem.getSubItem(0).getArea());
                     helper.setText(R.id.tv_dianzihuanhao, "电子环号:" + detialItem.getSubItem(0).getRing());
                     helper.setText(R.id.tv_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
                     helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime());
                     helper.setText(R.id.tv_shangchuanshijian, "上传时间:" + detialItem.getSubItem(0).getUptime());
-                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报道:无":"插组报道 :"+detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty(detialItem.getSubItem(0).CZtoString()) ? "插组报道:无" : "插组报道 :" + detialItem.getSubItem(0).CZtoString());
                 }
                 break;
 
         }
     }
-
-
 
 
     public static List<MultiItemEntity> getXH(List<MatchPigeonsXH> data) {

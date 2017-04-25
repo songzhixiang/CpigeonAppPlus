@@ -195,7 +195,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 
     @Override
     public int getDefaultPageSize() {
-        return 20;
+        return 100;
     }
 
     @Override

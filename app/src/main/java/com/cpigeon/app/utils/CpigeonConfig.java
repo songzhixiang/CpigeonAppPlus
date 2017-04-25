@@ -85,7 +85,7 @@ public class CpigeonConfig {
     public static DbManager.DaoConfig getDataDb() {
         DbManager.DaoConfig daoConfig = new DbManager.DaoConfig();
         daoConfig.setDbName("data.db");
-        daoConfig.setDbVersion(6);
+        daoConfig.setDbVersion(7);
         daoConfig.setDbUpgradeListener(new DbManager.DbUpgradeListener() {
             @Override
             public void onUpgrade(DbManager db, int oldVersion, int newVersion) {

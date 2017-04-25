@@ -238,6 +238,7 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
         } else {
             mAdapter.loadMoreEnd(false);
         }
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
 //        mAdapter.setEnableLoadMore(canLoadMore);
         isMoreDateLoading = isRefreshing = false;
     }

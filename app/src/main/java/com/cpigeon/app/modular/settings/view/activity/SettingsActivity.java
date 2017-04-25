@@ -123,8 +123,8 @@ public class SettingsActivity extends BaseActivity {
         sbPushNotification.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, true, SharedPreferencesTool.SP_FILE_APPSETTING));
         sbSearchOnline.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, true, SharedPreferencesTool.SP_FILE_APPSETTING));
         tvCheckNewVersionVersionName.setText(CommonTool.getVersionName(this));
-        String cacheCount = FileTool.getFileOrFilesSize(CpigeonConfig.CACHE_FOLDER);
-        tvClearCacheCount.setText(cacheCount.equals("0B") ? getString(R.string.no_cache) : cacheCount);
+        double cacheCount = FileTool.getFileOrFilesSize(CpigeonConfig.CACHE_FOLDER, FileTool.SIZETYPE_B);
+        tvClearCacheCount.setText(cacheCount < 1024 ? getString(R.string.no_cache) : FileTool.formatFileSize(cacheCount));
         //logout.setVisibility(View.GONE);
         btnLogout.setText(checkLogin() ? "退出登录" : "登录");
     }
@@ -204,6 +204,7 @@ public class SettingsActivity extends BaseActivity {
                         showTips("清理中...", TipType.LoadingShow);
                         FileTool.DeleteFolder(CpigeonConfig.CACHE_FOLDER, false);
                         CacheManager.delete();
+                        CacheManager.init(mContext);
                         try {
                             DbManager db = x.getDb(CpigeonConfig.getDataDb());
                             db.delete(MatchInfo.class, WhereBuilder.b()
