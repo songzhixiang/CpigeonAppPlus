@@ -1,7 +1,7 @@
-package com.cpigeon.app.modular.matchlive.view.activity.viewdao;
+package com.cpigeon.app.modular.home.view.activity.viewdao;
 
 import com.cpigeon.app.commonstandard.view.activity.IView;
-import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
+import com.cpigeon.app.modular.home.model.bean.SearchHistory;
 
 import java.util.List;
 import java.util.Map;

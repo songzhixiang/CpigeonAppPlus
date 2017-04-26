@@ -136,7 +136,7 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".modular.matchlive.view.activity.SearchActivity"
+            android:name=".modular.home.view.activity.WebActivity$SearchActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity

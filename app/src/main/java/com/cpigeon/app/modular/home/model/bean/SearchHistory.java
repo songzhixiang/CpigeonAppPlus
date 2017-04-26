@@ -1,4 +1,4 @@
-package com.cpigeon.app.modular.matchlive.model.bean;
+package com.cpigeon.app.modular.home.model.bean;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

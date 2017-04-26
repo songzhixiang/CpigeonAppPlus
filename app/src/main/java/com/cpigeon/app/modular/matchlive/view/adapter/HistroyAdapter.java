@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
-import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
+import com.cpigeon.app.modular.home.model.bean.SearchHistory;
 import com.cpigeon.app.utils.CpigeonBaseAdapter;
 
 import java.util.List;

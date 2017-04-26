@@ -1,7 +1,7 @@
-package com.cpigeon.app.modular.matchlive.model.dao;
+package com.cpigeon.app.modular.home.model.dao;
 
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
-import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
+import com.cpigeon.app.modular.home.model.bean.SearchHistory;
 
 import java.util.List;
 import java.util.Map;

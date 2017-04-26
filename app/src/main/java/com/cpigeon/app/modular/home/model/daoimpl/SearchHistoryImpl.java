@@ -1,12 +1,11 @@
-package com.cpigeon.app.modular.matchlive.model.daoimpl;
+package com.cpigeon.app.modular.home.model.daoimpl;
 
 import com.cpigeon.app.MyApp;
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.model.bean.SearchHistory;
-import com.cpigeon.app.modular.matchlive.model.dao.ISearchHistory;
+import com.cpigeon.app.modular.home.model.bean.SearchHistory;
+import com.cpigeon.app.modular.home.model.dao.ISearchHistory;
 import com.cpigeon.app.modular.matchlive.view.adapter.SearchResultAdapter;
-import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.CpigeonConfig;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.DateTool;

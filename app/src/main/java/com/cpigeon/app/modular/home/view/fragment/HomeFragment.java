@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,7 +20,6 @@ import com.cpigeon.app.modular.home.presenter.HomePresenter;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.view.activity.SearchActivity;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.ScreenTool;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
@@ -38,10 +34,8 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -259,7 +253,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @OnClick(R.id.search_edittext)
     public void onViewClicked() {
-        startActivity(new Intent(getActivity(), SearchActivity.class));
+        startActivity(new Intent(getActivity(), WebActivity.SearchActivity.class));
     }
 
 
