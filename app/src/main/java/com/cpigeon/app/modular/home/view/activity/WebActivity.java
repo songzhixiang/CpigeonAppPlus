@@ -226,7 +226,8 @@ public class WebActivity extends BaseActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                pbProgressbar.setVisibility(View.GONE);
+                if (pbProgressbar != null)
+                    pbProgressbar.setVisibility(View.GONE);
                 super.onPageFinished(view, url);
                 //这里是webview加载结束时调用的，可以在这里结束前面设置的一个progressbar.
                 //也可以做一些别的功能的处理，如得到源码中的一些数据，下面会详细说下。

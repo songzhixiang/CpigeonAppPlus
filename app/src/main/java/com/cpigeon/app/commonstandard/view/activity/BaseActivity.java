@@ -27,6 +27,7 @@ import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
 import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.networkstatus.NetChangeObserver;
+import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.NetUtils;
@@ -247,7 +248,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         AppManager.getAppManager().removeActivity(weakReference);
         if (mUnbinder != null)
             mUnbinder.unbind();
-
+        CommonTool.hideIME(this);
     }
 
     @Override

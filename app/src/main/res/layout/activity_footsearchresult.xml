@@ -86,7 +86,7 @@
             android:textColor="#3A3A3A"
             android:textSize="@dimen/sp_16" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_last_item"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
@@ -97,7 +97,7 @@
             android:rotation="180"
             app:srcCompat="@drawable/svg_ic_triangle_right" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_next_item"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"

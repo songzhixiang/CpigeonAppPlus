@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_race_details"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_race_details">
+
     <com.cpigeon.app.utils.customview.smarttab.SmartTabLayout
         android:id="@+id/race_report_smartTabLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:paddingBottom="2dp"
         android:background="@color/colorPrimary"
+        android:paddingBottom="2dp"
         app:stl_defaultTabTextColor="@color/colorWhite"
+        app:stl_defaultTabTextSize="18sp"
         app:stl_distributeEvenly="true"
         app:stl_dividerColor="@color/colorPrimary"
+
         app:stl_indicatorColor="@color/colorWhite"
         app:stl_indicatorInterpolation="smart"
         app:stl_indicatorThickness="3dp"
-        app:stl_underlineColor="@color/transparent"/>
+        app:stl_underlineColor="@color/transparent" />
 
     <LinearLayout
         android:id="@+id/layout_gg"
@@ -41,7 +44,7 @@
             android:minHeight="@dimen/list_header_race_detial_gg_minheight"
             android:text="公告："
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize"/>
+            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize" />
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

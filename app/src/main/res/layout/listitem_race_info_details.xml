@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_layout_race_info_detial"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,20 +13,22 @@
         android:orientation="horizontal">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_sifangdidian"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
-            android:text="司放地点:null" />
+            android:text="司放地点:null"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_cankaokongju"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
-            android:text="参考空距:null" />
+            android:text="参考空距:null"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,42 +37,46 @@
         android:orientation="horizontal">
 
         <TextView
-            android:visibility="gone"
-
             android:id="@+id/tv_sifangyushu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
-            android:text="司放羽数:null" />
+            android:text="司放羽数:null"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
-
             android:id="@+id/tv_weather"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_weight="1"
-            android:text="天气:null" />
+            android:text="天气:null"
+            android:visibility="gone" />
     </LinearLayout>
+
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_xunsaikongju"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="训赛空距:null" />
+        android:layout_marginBottom="4dp"
+        android:text="训赛空距:null"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_sifangshijian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:text="司放时间:null" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_sifangzuobiao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="司放坐标:null" />
+        android:layout_marginBottom="4dp"
+        android:text="司放坐标:null"
+        android:visibility="gone" />
 
     <TextView
 

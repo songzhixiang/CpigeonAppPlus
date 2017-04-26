@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cpigeon.app.R;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -65,9 +65,9 @@ public class FootSearchResultActivity extends BaseActivity {
     @BindView(R.id.tv_curr_item)
     TextView tvCurrItem;
     @BindView(R.id.iv_last_item)
-    ImageView ivLastItem;
+    AppCompatImageView ivLastItem;
     @BindView(R.id.iv_next_item)
-    ImageView ivNextItem;
+    AppCompatImageView ivNextItem;
     @BindView(R.id.layout_op)
     RelativeLayout layoutOp;
     @BindView(R.id.tv_tips)
@@ -95,9 +95,9 @@ public class FootSearchResultActivity extends BaseActivity {
 
     public void initView() {
 
-        Logger.e("当前Activity的Context"+this);
-        Logger.e("当前Activity的ApplicationContext"+getApplicationContext());
-        Logger.e("当前Activity的Application"+getApplication());
+        Logger.e("当前Activity的Context" + this);
+        Logger.e("当前Activity的ApplicationContext" + getApplicationContext());
+        Logger.e("当前Activity的Application" + getApplication());
 //        //setActionbarTitleText("查询结果");
 //        mFootSearchFragment = new FootSearchResultCardFragment();
         toolbar.setTitle("查询结果");
@@ -301,5 +301,12 @@ public class FootSearchResultActivity extends BaseActivity {
                 mSaActionSheetDialog.show();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

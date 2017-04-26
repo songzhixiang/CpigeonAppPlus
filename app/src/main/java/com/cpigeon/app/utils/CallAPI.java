@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.BadGuy;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.CpigeonGroupUserInfo;
 import com.cpigeon.app.modular.cpigeongroup.model.bean.Message;
@@ -42,6 +44,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -1255,150 +1258,30 @@ public class CallAPI {
                             @Override
                             public void run() {
                                 List list;
-                                DbManager db = x.getDb(getDataDb());
                                 try {
-                                    JSONObject obj = new JSONObject(result);
-                                    if (obj.getBoolean("status")) {
-                                        JSONArray array = obj.getJSONArray("data");
-                                        JSONObject jo;
-                                        if ("gp".equals(matchType)) {
-                                            list = new ArrayList<MatchReportGP>();
-                                            MatchReportGP matchReportGP;
-                                            Logger.i("gp报道数据共计：" + array.length());
-                                            for (int i = 0; i < array.length(); i++) {
-                                                jo = array.getJSONObject(i);
-                                                matchReportGP = new MatchReportGP();
-                                                matchReportGP.setId(jo.getLong("id"));
-                                                matchReportGP.setSsid(ssid);
-
-                                                matchReportGP.setMc(jo.getInt("mc"));
-                                                matchReportGP.setName(jo.getString("name"));
-                                                matchReportGP.setFoot(EncryptionTool.encryptAES(jo.getString("foot")));
-                                                matchReportGP.setArrive(jo.getString("arrive"));
-                                                matchReportGP.setSpeed(jo.getDouble("speed"));
-                                                matchReportGP.setArea(jo.getString("area"));
-                                                matchReportGP.setSex(jo.getString("sex"));
-                                                matchReportGP.setColor(jo.getString("color"));
-                                                matchReportGP.setEye(jo.getString("eye"));
-                                                matchReportGP.setTtzb(jo.getString("ttzb"));
-                                                matchReportGP.setRing(jo.getString("ring"));
-                                                if (hascz) {
-                                                    matchReportGP.setC1(jo.getInt("c1") == 1);
-                                                    matchReportGP.setC2(jo.getInt("c2") == 1);
-                                                    matchReportGP.setC3(jo.getInt("c3") == 1);
-                                                    matchReportGP.setC4(jo.getInt("c4") == 1);
-                                                    matchReportGP.setC5(jo.getInt("c5") == 1);
-                                                    matchReportGP.setC6(jo.getInt("c6") == 1);
-                                                    matchReportGP.setC7(jo.getInt("c7") == 1);
-                                                    matchReportGP.setC8(jo.getInt("c8") == 1);
-                                                    matchReportGP.setC9(jo.getInt("c9") == 1);
-                                                    matchReportGP.setC10(jo.getInt("c10") == 1);
-                                                    matchReportGP.setC11(jo.getInt("c11") == 1);
-                                                    matchReportGP.setC12(jo.getInt("c12") == 1);
-                                                    matchReportGP.setC13(jo.getInt("c13") == 1);
-                                                    matchReportGP.setC14(jo.getInt("c14") == 1);
-                                                    matchReportGP.setC15(jo.getInt("c15") == 1);
-                                                    matchReportGP.setC16(jo.getInt("c16") == 1);
-                                                    matchReportGP.setC17(jo.getInt("c17") == 1);
-                                                    matchReportGP.setC18(jo.getInt("c18") == 1);
-                                                    matchReportGP.setC19(jo.getInt("c19") == 1);
-                                                    matchReportGP.setC20(jo.getInt("c20") == 1);
-                                                    matchReportGP.setC21(jo.getInt("c21") == 1);
-                                                    matchReportGP.setC22(jo.getInt("c22") == 1);
-                                                    matchReportGP.setC23(jo.getInt("c23") == 1);
-                                                    matchReportGP.setC24(jo.getInt("c24") == 1);
-                                                }
-                                                list.add(matchReportGP);
-                                            }
-
-                                        } else {
-                                            list = new ArrayList<MatchReportXH>();
-                                            MatchReportXH matchReport;
-                                            Logger.i("xh报道数据共计：" + array.length());
-                                            for (int i = 0; i < array.length(); i++) {
-                                                jo = array.getJSONObject(i);
-                                                matchReport = new MatchReportXH();
-                                                matchReport.setId(jo.getLong("id"));
-                                                matchReport.setSsid(ssid);
-
-                                                matchReport.setMc(jo.getInt("mc"));
-                                                matchReport.setName(jo.getString("name"));
-                                                matchReport.setFoot(EncryptionTool.encryptAES(jo.getString("foot")));
-                                                matchReport.setArrive(jo.getString("arrive"));
-                                                matchReport.setSpeed(jo.getDouble("speed"));
-                                                matchReport.setArea(jo.getString("area"));
-                                                matchReport.setSex(jo.getString("sex"));
-                                                matchReport.setColor(jo.getString("color"));
-                                                matchReport.setEye(jo.getString("eye"));
-
-                                                matchReport.setPass(jo.getString("pass"));
-                                                matchReport.setSp(jo.getDouble("sp"));
-                                                matchReport.setPn(jo.getString("pn"));
-                                                matchReport.setZx(jo.getString("zx"));
-                                                matchReport.setZy(jo.getString("zy"));
-                                                matchReport.setDczx(jo.getString("dczx"));
-                                                matchReport.setDczy(jo.getString("dczy"));
-                                                if (hascz) {
-                                                    matchReport.setC1(jo.getInt("c1") == 1);
-                                                    matchReport.setC2(jo.getInt("c2") == 1);
-                                                    matchReport.setC3(jo.getInt("c3") == 1);
-                                                    matchReport.setC4(jo.getInt("c4") == 1);
-                                                    matchReport.setC5(jo.getInt("c5") == 1);
-                                                    matchReport.setC6(jo.getInt("c6") == 1);
-                                                    matchReport.setC7(jo.getInt("c7") == 1);
-                                                    matchReport.setC8(jo.getInt("c8") == 1);
-                                                    matchReport.setC9(jo.getInt("c9") == 1);
-                                                    matchReport.setC10(jo.getInt("c10") == 1);
-                                                    matchReport.setC11(jo.getInt("c11") == 1);
-                                                    matchReport.setC12(jo.getInt("c12") == 1);
-                                                    matchReport.setC13(jo.getInt("c13") == 1);
-                                                    matchReport.setC14(jo.getInt("c14") == 1);
-                                                    matchReport.setC15(jo.getInt("c15") == 1);
-                                                    matchReport.setC16(jo.getInt("c16") == 1);
-                                                    matchReport.setC17(jo.getInt("c17") == 1);
-                                                    matchReport.setC18(jo.getInt("c18") == 1);
-                                                    matchReport.setC19(jo.getInt("c19") == 1);
-                                                    matchReport.setC20(jo.getInt("c20") == 1);
-                                                    matchReport.setC21(jo.getInt("c21") == 1);
-                                                    matchReport.setC22(jo.getInt("c22") == 1);
-                                                    matchReport.setC23(jo.getInt("c23") == 1);
-                                                    matchReport.setC24(jo.getInt("c24") == 1);
-
-                                                    matchReport.setCr1(jo.getInt("cr1"));
-                                                    matchReport.setCr2(jo.getInt("cr2"));
-                                                    matchReport.setCr3(jo.getInt("cr3"));
-                                                    matchReport.setCr4(jo.getInt("cr4"));
-                                                    matchReport.setCr5(jo.getInt("cr5"));
-                                                    matchReport.setCr6(jo.getInt("cr6"));
-                                                    matchReport.setCr7(jo.getInt("cr7"));
-                                                    matchReport.setCr8(jo.getInt("cr8"));
-                                                    matchReport.setCr9(jo.getInt("cr9"));
-                                                    matchReport.setCr10(jo.getInt("cr10"));
-                                                    matchReport.setCr11(jo.getInt("cr11"));
-                                                    matchReport.setCr12(jo.getInt("cr12"));
-                                                    matchReport.setCr13(jo.getInt("cr13"));
-                                                    matchReport.setCr14(jo.getInt("cr14"));
-                                                    matchReport.setCr15(jo.getInt("cr15"));
-                                                    matchReport.setCr16(jo.getInt("cr16"));
-                                                    matchReport.setCr17(jo.getInt("cr17"));
-                                                    matchReport.setCr18(jo.getInt("cr18"));
-                                                    matchReport.setCr19(jo.getInt("cr19"));
-                                                    matchReport.setCr20(jo.getInt("cr20"));
-                                                    matchReport.setCr21(jo.getInt("cr21"));
-                                                    matchReport.setCr22(jo.getInt("cr22"));
-                                                    matchReport.setCr23(jo.getInt("cr23"));
-                                                    matchReport.setCr24(jo.getInt("cr24"));
-                                                }
-                                                list.add(matchReport);
-                                            }
+                                    ApiResponse apiResponse;
+                                    if ("gp".equals(matchType)) {
+                                        ApiResponse<List<MatchReportGP>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportGP>>>() {
+                                        });
+                                        apiResponse = apiResponse1;
+                                        Logger.i("gp报道数据共计：" + apiResponse1.data.size());
+                                        for (MatchReportGP item : apiResponse1.data) {
+                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
                                         }
-                                        db.saveOrUpdate(list);
-                                        CacheManager.put(cacheKey, list);
-                                        // db.close();
-                                        callback.onSuccess(list);
-
                                     } else {
-                                        callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
+                                        ApiResponse<List<MatchReportXH>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportXH>>>() {
+                                        });
+                                        apiResponse = apiResponse1;
+                                        Logger.i("xh报道数据共计：" + apiResponse1.data.size());
+                                        for (MatchReportXH item : apiResponse1.data) {
+                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
+                                        }
+                                    }
+                                    if (apiResponse.status) {
+                                        CacheManager.put(cacheKey, apiResponse.data);
+                                        callback.onSuccess((List) apiResponse.data);
+                                    } else {
+                                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse.errorCode);
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -1481,7 +1364,6 @@ public class CallAPI {
             callback.onSuccess(data);
             return null;
         }
-//        requestParams.setConnectTimeout(CpigeonConfig.CONNECT_TIMEOUT);
         addApiSign(requestParams);
         return x.http().get
                 (requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
@@ -1502,114 +1384,28 @@ public class CallAPI {
                             @Override
                             public void run() {
                                 List list;
-                                //DbManager db = x.getDb(getDataDb());
+                                Gson gson = new Gson();
                                 try {
                                     JSONObject obj = new JSONObject(result);
                                     if (obj.getBoolean("status")) {
-                                        JSONArray array = obj.getJSONArray("data");
-                                        MatchPigeons matchPigeons;
-                                        JSONObject jo;
                                         if ("gp".equals(matchType)) {
-                                            list = new ArrayList<MatchPigeonsGP>();
-
-                                            Logger.i("gp集鸽数据共计：" + array.length());
-                                            for (int i = 0; i < array.length(); i++) {
-                                                jo = array.getJSONObject(i);
-                                                matchPigeons = new MatchPigeonsGP();
-                                                matchPigeons.setTid(jo.getLong("id"));
-                                                matchPigeons.setOrder(jo.getInt("order"));
-                                                matchPigeons.setSsid(ssid);
-                                                matchPigeons.setJgtime(jo.getString("jgtime"));
-                                                matchPigeons.setName(jo.getString("name"));
-                                                matchPigeons.setFoot(EncryptionTool.encryptAES(jo.getString("foot")));
-
-                                                ((MatchPigeonsGP) matchPigeons).setArea(jo.getString("area"));
-                                                ((MatchPigeonsGP) matchPigeons).setColor(jo.getString("color"));
-                                                ((MatchPigeonsGP) matchPigeons).setRing(jo.getString("ring"));
-                                                ((MatchPigeonsGP) matchPigeons).setUptime(jo.getString("uptime"));
-                                                ((MatchPigeonsGP) matchPigeons).setTtzb(jo.getString("ttzb"));
-
-                                                if (hascz) {
-                                                    matchPigeons.setC1(jo.getInt("c1") == 1);
-                                                    matchPigeons.setC2(jo.getInt("c2") == 1);
-                                                    matchPigeons.setC3(jo.getInt("c3") == 1);
-                                                    matchPigeons.setC4(jo.getInt("c4") == 1);
-                                                    matchPigeons.setC5(jo.getInt("c5") == 1);
-                                                    matchPigeons.setC6(jo.getInt("c6") == 1);
-                                                    matchPigeons.setC7(jo.getInt("c7") == 1);
-                                                    matchPigeons.setC8(jo.getInt("c8") == 1);
-                                                    matchPigeons.setC9(jo.getInt("c9") == 1);
-                                                    matchPigeons.setC10(jo.getInt("c10") == 1);
-                                                    matchPigeons.setC11(jo.getInt("c11") == 1);
-                                                    matchPigeons.setC12(jo.getInt("c12") == 1);
-                                                    matchPigeons.setC13(jo.getInt("c13") == 1);
-                                                    matchPigeons.setC14(jo.getInt("c14") == 1);
-                                                    matchPigeons.setC15(jo.getInt("c15") == 1);
-                                                    matchPigeons.setC16(jo.getInt("c16") == 1);
-                                                    matchPigeons.setC17(jo.getInt("c17") == 1);
-                                                    matchPigeons.setC18(jo.getInt("c18") == 1);
-                                                    matchPigeons.setC19(jo.getInt("c19") == 1);
-                                                    matchPigeons.setC20(jo.getInt("c20") == 1);
-                                                    matchPigeons.setC21(jo.getInt("c21") == 1);
-                                                    matchPigeons.setC22(jo.getInt("c22") == 1);
-                                                    matchPigeons.setC23(jo.getInt("c23") == 1);
-                                                    matchPigeons.setC24(jo.getInt("c24") == 1);
-                                                }
-                                                list.add(matchPigeons);
+                                            ApiResponse<List<MatchPigeonsGP>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsGP>>>() {
+                                            });
+                                            list = apiResponse.data;
+                                            Logger.i("gp集鸽数据共计：" + list.size());
+                                            for (MatchPigeons item : apiResponse.data) {
+                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
                                             }
-
                                         } else {
-                                            list = new ArrayList<MatchPigeonsXH>();
-                                            Logger.i("xh集鸽数据共计：" + array.length());
-                                            for (int i = 0; i < array.length(); i++) {
-                                                jo = array.getJSONObject(i);
-                                                matchPigeons = new MatchPigeonsXH();
-                                                matchPigeons.setOrder(jo.getInt("order"));
-                                                matchPigeons.setTid(jo.getLong("id"));
-                                                matchPigeons.setSsid(ssid);
-                                                matchPigeons.setJgtime(jo.getString("jgtime"));
-                                                matchPigeons.setName(jo.getString("name"));
-                                                matchPigeons.setFoot(EncryptionTool.encryptAES(jo.getString("foot")));
-
-                                                ((MatchPigeonsXH) matchPigeons).setPn(jo.getString("pn"));
-                                                ((MatchPigeonsXH) matchPigeons).setZx(jo.getString("zx"));
-                                                ((MatchPigeonsXH) matchPigeons).setZy(jo.getString("zy"));
-
-                                                if (hascz) {
-                                                    matchPigeons.setC1(jo.getInt("c1") == 1);
-                                                    matchPigeons.setC2(jo.getInt("c2") == 1);
-                                                    matchPigeons.setC3(jo.getInt("c3") == 1);
-                                                    matchPigeons.setC4(jo.getInt("c4") == 1);
-                                                    matchPigeons.setC5(jo.getInt("c5") == 1);
-                                                    matchPigeons.setC6(jo.getInt("c6") == 1);
-                                                    matchPigeons.setC7(jo.getInt("c7") == 1);
-                                                    matchPigeons.setC8(jo.getInt("c8") == 1);
-                                                    matchPigeons.setC9(jo.getInt("c9") == 1);
-                                                    matchPigeons.setC10(jo.getInt("c10") == 1);
-                                                    matchPigeons.setC11(jo.getInt("c11") == 1);
-                                                    matchPigeons.setC12(jo.getInt("c12") == 1);
-                                                    matchPigeons.setC13(jo.getInt("c13") == 1);
-                                                    matchPigeons.setC14(jo.getInt("c14") == 1);
-                                                    matchPigeons.setC15(jo.getInt("c15") == 1);
-                                                    matchPigeons.setC16(jo.getInt("c16") == 1);
-                                                    matchPigeons.setC17(jo.getInt("c17") == 1);
-                                                    matchPigeons.setC18(jo.getInt("c18") == 1);
-                                                    matchPigeons.setC19(jo.getInt("c19") == 1);
-                                                    matchPigeons.setC20(jo.getInt("c20") == 1);
-                                                    matchPigeons.setC21(jo.getInt("c21") == 1);
-                                                    matchPigeons.setC22(jo.getInt("c22") == 1);
-                                                    matchPigeons.setC23(jo.getInt("c23") == 1);
-                                                    matchPigeons.setC24(jo.getInt("c24") == 1);
-
-                                                }
-                                                list.add(matchPigeons);
+                                            ApiResponse<List<MatchPigeonsXH>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsXH>>>() {
+                                            });
+                                            list = apiResponse.data;
+                                            Logger.i("xh集鸽数据共计：" + list.size());
+                                            for (MatchPigeons item : apiResponse.data) {
+                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
                                             }
-
                                         }
-
-                                        //db.saveOrUpdate(list);
                                         CacheManager.put(cacheKey, list, 60 * 1000, 1000 * 60 * 60 * 24);
-                                        //db.close();
                                         callback.onSuccess(list);
 
                                     } else {
@@ -4462,7 +4258,7 @@ public class CallAPI {
     }
 
 
-    public static class ApiResponse<T> {
+    public static class ApiResponse<T> implements Serializable {
 
         /**
          * status : false

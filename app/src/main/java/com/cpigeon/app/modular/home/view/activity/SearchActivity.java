@@ -1,5 +1,9 @@
 package com.cpigeon.app.modular.home.view.activity;
 
+/**
+ * Created by chenshuai on 2017/4/26.
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -236,13 +240,18 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements ISe
      * 判断并执行隐藏命令
      *
      * @param str
-     * @return
+     * @return 是否执行隐藏命令
      */
     private boolean judgmentAndExecutionCommand(String str) {
+        boolean isStart = false;
         if (!TextUtils.isEmpty(str) && str.startsWith("://")) {
+            isStart = true;
             switch (str.substring(3, str.length()).toLowerCase()) {
                 case "currserver":
                     ToastUtil.showToast(this, CPigeonApiUrl.getInstance().getServer(), Toast.LENGTH_SHORT);
+                    break;
+                case "changeserver":
+                    ToastUtil.showToast(this, CPigeonApiUrl.getInstance().getServer(true), Toast.LENGTH_SHORT);
                     break;
                 case "initdb":
                     try {
@@ -257,10 +266,10 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements ISe
                 case "reguide":
                     SharedPreferencesTool.Save(this, "guide_version", "");
                     break;
+                default:
+                    isStart = false;
             }
-            return true;
         }
-        return false;
+        return isStart;
     }
-
 }

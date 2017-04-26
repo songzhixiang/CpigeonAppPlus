@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 public class IRaceReportImpl implements IRaceReport {
-    DbManager db = x.getDb(CpigeonConfig.getDataDb());
     private Bulletin bull = null;//公告信息
 
     @Override
@@ -27,6 +26,7 @@ public class IRaceReportImpl implements IRaceReport {
         CallAPI.getBulletin(MyApp.getInstance(), lx, ssid, new CallAPI.Callback<List<Bulletin>>() {
             @Override
             public void onSuccess(List<Bulletin> data) {
+                DbManager db = x.getDb(CpigeonConfig.getDataDb());
                 if (data != null && data.size() > 0) {
                     bull = data.get(0);
                     try {
@@ -51,13 +51,8 @@ public class IRaceReportImpl implements IRaceReport {
     @Override
     public void queryBulletin(String ssid, IBaseDao.OnCompleteListener<Bulletin> onCompleteListener) {
         try {
-            if (db == null)
-            {
-                db = x.getDb(CpigeonConfig.getDataDb());
-            }else {
-                bull = db.selector(Bulletin.class).where("ssid", "=", ssid).findFirst();
-            }
-
+            DbManager db = x.getDb(CpigeonConfig.getDataDb());
+            bull = db.selector(Bulletin.class).where("ssid", "=", ssid).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }

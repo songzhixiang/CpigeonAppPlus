@@ -232,7 +232,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
         //创建支付方式
         View v = LayoutInflater.from(mContext).inflate(R.layout.layout_item_pay_way, null);
         ((TextView) v.findViewById(R.id.tv_pay_way_name)).setText("余额支付");
-        ((ImageView) v.findViewById(R.id.iv_pay_icon)).setImageResource(R.drawable.ic_launcher);
+        ((ImageView) v.findViewById(R.id.iv_pay_icon)).setImageResource(R.drawable.svg_ic_pay_balance);
         layoutOrderPayWay.addView(v);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,7 +306,7 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
 
         v = LayoutInflater.from(mContext).inflate(R.layout.layout_item_pay_way, null);
         ((TextView) v.findViewById(R.id.tv_pay_way_name)).setText("微信支付");
-        ((ImageView) v.findViewById(R.id.iv_pay_icon)).setImageResource(R.drawable.ic_launcher);
+        ((ImageView) v.findViewById(R.id.iv_pay_icon)).setImageResource(R.drawable.svg_ic_pay_weixin);
         layoutOrderPayWay.addView(v);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
