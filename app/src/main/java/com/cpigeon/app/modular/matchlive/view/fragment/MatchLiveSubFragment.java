@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
+import com.cpigeon.app.modular.home.view.activity.SearchActivity;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.MatchLiveSubPre;
@@ -150,10 +151,10 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                             .addSheetItem(String.format(getString(R.string.search_prompt_has_key), s), new SaActionSheetDialog.OnSheetItemClickListener() {
                                 @Override
                                 public void onClick(int which) {
-                                    Intent intent = new Intent(getActivity(), WebActivity.SearchActivity.class);
+                                    Intent intent = new Intent(getActivity(), SearchActivity.class);
                                     Bundle bundle = new Bundle();                           //创建Bundle对象
-                                    bundle.putSerializable(WebActivity.SearchActivity.INTENT_KEY_SEARCHKEY, s);     //装入数据
-                                    bundle.putSerializable(WebActivity.SearchActivity.INTENT_KEY_SEARCH_HINT_TEXT, "比赛名称、" + (currMatchType.equals(Const.MATCHLIVE_TYPE_GP) ? "公棚名称" : "协会名称"));     //装入数据
+                                    bundle.putSerializable(SearchActivity.INTENT_KEY_SEARCHKEY, s);     //装入数据
+                                    bundle.putSerializable(SearchActivity.INTENT_KEY_SEARCH_HINT_TEXT, "比赛名称、" + (currMatchType.equals(Const.MATCHLIVE_TYPE_GP) ? "公棚名称" : "协会名称"));     //装入数据
                                     intent.putExtras(bundle);
                                     startActivity(intent);
                                 }

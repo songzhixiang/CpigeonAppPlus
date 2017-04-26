@@ -23,6 +23,7 @@ import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.JiGeDataAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
+import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -50,10 +51,21 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     @BindView(R.id.viewstub_empty)
     ViewStub viewstubEmpty;
     private MatchInfo matchInfo;
+    private String sKey = "";
+    private Boolean isSearch = false;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
+    }
+
+    @Override
+    public void onRefresh() {
+        if (!isSearch)
+            sKey = "";
+        super.onRefresh();
+        isSearch = false;
     }
 
     @Override
@@ -84,14 +96,13 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     public JiGeDataAdapter getNewAdapterWithNoData() {
-        JiGeDataAdapter adapter=  new JiGeDataAdapter(getMatchType());
+        JiGeDataAdapter adapter = new JiGeDataAdapter(getMatchType());
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Object item = ((JiGeDataAdapter) adapter).getData().get(position);
                 Logger.d(item.getClass().getName());
-                if ("xh".equals(getMatchType()))
-                {
+                if ("xh".equals(getMatchType())) {
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_XH) item).isExpanded()) {
@@ -103,8 +114,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                         MatchPigeonsXH mi = ((JiGeDataAdapter.JiGeDetialItem_XH) item).getSubItem(0);
 
                     }
-                }else if ("gp".equals(getMatchType()))
-                {
+                } else if ("gp".equals(getMatchType())) {
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_GP) item).isExpanded()) {
@@ -118,6 +128,44 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                     }
                 }
 
+
+            }
+        });
+        recyclerview.addOnItemTouchListener(new OnItemLongClickListener() {
+            @Override
+            public void onSimpleItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+
+                if ("xh".equals(getMatchType())) {
+                    Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
+                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
+                        sKey = ((JiGeDataAdapter.JiGeTitleItem_XH) item).getMatchPigeonsXH().getName();
+                        new SaActionSheetDialog(getActivity())
+                                .builder()
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        isSearch = true;
+                                        onRefresh();
+                                    }
+                                })
+                                .show();
+                    }
+                } else if ("gp".equals(getMatchType())) {
+                    Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
+                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
+                        sKey = ((JiGeDataAdapter.JiGeTitleItem_GP) item).getMatchPigeonsGP().getName();
+                        new SaActionSheetDialog(getActivity())
+                                .builder()
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        isSearch = true;
+                                        onRefresh();
+                                    }
+                                })
+                                .show();
+                    }
+                }
 
             }
         });
@@ -146,8 +194,6 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     }
 
 
-
-
     @Override
     public String getName() {
         return "";
@@ -165,6 +211,6 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     public String sKey() {
-        return "";
+        return sKey;
     }
 }

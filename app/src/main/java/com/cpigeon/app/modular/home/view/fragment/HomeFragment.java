@@ -17,6 +17,7 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseMVPFragment;
 import com.cpigeon.app.modular.home.model.bean.HomeAd;
 import com.cpigeon.app.modular.home.presenter.HomePresenter;
+import com.cpigeon.app.modular.home.view.activity.SearchActivity;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.home.view.fragment.viewdao.IHomeView;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -253,7 +254,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @OnClick(R.id.search_edittext)
     public void onViewClicked() {
-        startActivity(new Intent(getActivity(), WebActivity.SearchActivity.class));
+        startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 
 

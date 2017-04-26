@@ -17,6 +17,7 @@ import com.cpigeon.app.modular.matchlive.presenter.RacePre;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
+import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -37,6 +38,15 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     LinearLayout layoutListTableHeader;
     private MatchInfo matchInfo;
     private String sKey = "";//当前搜索关键字
+    boolean isSearch = false;
+
+    @Override
+    public void onRefresh() {
+        if (!isSearch)
+            sKey = "";
+        super.onRefresh();
+        isSearch = false;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -137,6 +147,45 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                     } else if (item instanceof RaceReportAdapter.MatchDetialGPItem) {
                         MatchReportGP mi = ((RaceReportAdapter.MatchDetialGPItem) item).getSubItem(0);
 
+                    }
+                }
+
+            }
+        });
+        recyclerview.addOnItemTouchListener(new OnItemLongClickListener() {
+            @Override
+            public void onSimpleItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                if ("xh".equals(getMatchType()))
+                {
+                    Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
+                    if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
+                        sKey = ((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getName();
+                        new SaActionSheetDialog(getActivity())
+                                .builder()
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        isSearch = true;
+                                        onRefresh();
+                                    }
+                                })
+                                .show();
+                    }
+                }else if ("gp".equals(getMatchType()))
+                {
+                    Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
+                    if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
+                        sKey = ((RaceReportAdapter.MatchTitleGPItem) item).getMatchReportGP().getName();
+                        new SaActionSheetDialog(getActivity())
+                                .builder()
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        isSearch = true;
+                                        onRefresh();
+                                    }
+                                })
+                                .show();
                     }
                 }
 
