@@ -45,8 +45,8 @@ public class MyApp extends Application {
         }
         mCpigeonData = CpigeonData.getInstance();
         //极光推送
-        JPushInterface.setDebugMode(BuildConfig.DEBUG);
-        JPushInterface.init(this);
+//        JPushInterface.setDebugMode(BuildConfig.DEBUG);
+//        JPushInterface.init(this);
 
         CacheManager.setCacheModel(CacheManager.ALL_ALLOW);
         CacheManager.setMemaryCacheTime(30 * 1000);

@@ -2,6 +2,7 @@ package com.cpigeon.app.modular.matchlive.presenter;
 
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
+import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.matchlive.model.dao.IChaZuDao;
 import com.cpigeon.app.modular.matchlive.model.daoimpl.IChaZuDaoImpl;
 import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRacePigeonsView;
@@ -29,13 +30,14 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
 
     public void loadChaZuBaoDaoDetails() {
         if (isAttached()) {
+            if (!mView.isMoreDataLoading()) mView.showRefreshLoading();
             mDao.loadChaZuBaoDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
                     mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
                     mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {
                         @Override
                         public void onSuccess(final List data) {
                             final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? ChaZuBaoDaoDetailsAdapter.getXH(data) : ChaZuBaoDaoDetailsAdapter.getGP(data);
-                            post(new Runnable() {
+                            postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
@@ -46,19 +48,24 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                         mView.showMoreData(d);
                                     }
                                 }
-                            });
+                            }, 300);
                         }
 
                         @Override
                         public void onFail(String msg) {
-                            post(new Runnable() {
+                            postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        //TODO 显示错误界面
+                                        if (mView.isRefreshing()) {
+                                            mView.hideRefreshLoading();
+                                            mView.showTips("加载失败", IView.TipType.View);
+                                        } else if (mView.isMoreDataLoading()) {
+                                            mView.loadMoreFail();
+                                        }
                                     }
                                 }
-                            });
+                            }, 300);
                         }
                     });
         }
@@ -66,6 +73,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
 
     public void loadChaZuZhiding() {
         if (isAttached()) {
+            if (!mView.isMoreDataLoading()) mView.showRefreshLoading();
             mDao.loadChaZhiDingDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
                     mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
                     mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {
@@ -73,7 +81,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                         public void onSuccess(List data) {
                             Logger.e(data.size() + "");
                             final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? ChaZuZhiDingDetailsAdapter.getXH(data) : ChaZuZhiDingDetailsAdapter.getGP(data);
-                            post(new Runnable() {
+                            postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
@@ -84,12 +92,24 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                         mView.showMoreData(d);
                                     }
                                 }
-                            });
+                            }, 300);
                         }
 
                         @Override
                         public void onFail(String msg) {
-
+                            postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (isAttached()) {
+                                        if (mView.isRefreshing()) {
+                                            mView.hideRefreshLoading();
+                                            mView.showTips("加载失败", IView.TipType.View);
+                                        } else if (mView.isMoreDataLoading()) {
+                                            mView.loadMoreFail();
+                                        }
+                                    }
+                                }
+                            }, 300);
                         }
                     });
         }

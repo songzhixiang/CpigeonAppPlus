@@ -22,6 +22,7 @@ import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IChaZuReport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -40,6 +41,7 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     private ChaZuAdapter mAdapter;
     private Bulletin mBulletin;
     private String loadType;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -78,27 +80,29 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     @Override
     public void showChaZuBaoDaoView(List list) {
         CURRENT_DATA_TYPE = 2;
-        mAdapter = new ChaZuAdapter(list,0);
+        mAdapter = new ChaZuAdapter(list, 0);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), RaceChaZuBaoDaoActivity.class);
-                Bundle b = new Bundle();
-                b.putSerializable("matchinfo", matchInfo);
-                b.putInt("czindex", position);//组别
-                b.putString("loadType",loadType);
-                b.putSerializable("czmap", (ArrayList) adapter.getData());//插组统计数据
-                b.putInt("czposition", position);//指定数量
-                if (((RaceReportActivity)getActivity()).getBulletin()!=null)
-                {
-                    b.putString("bulletin",((RaceReportActivity)getActivity()).getBulletin().getContent());
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                if (((Map<String, Integer>) baseQuickAdapter.getItem(i)).get("gcys") > 0) {
+                    Intent intent = new Intent(getActivity(), RaceChaZuBaoDaoActivity.class);
+                    Bundle b = new Bundle();
+                    b.putSerializable("matchinfo", matchInfo);
+                    b.putInt("czindex", i);//组别
+                    b.putString("loadType", loadType);
+                    b.putSerializable("czmap", (ArrayList) baseQuickAdapter.getData());//插组统计数据
+                    b.putInt("czposition", i);//指定数量
+                    if (((RaceReportActivity) getActivity()).getBulletin() != null) {
+                        b.putString("bulletin", ((RaceReportActivity) getActivity()).getBulletin().getContent());
+                    }
+                    intent.putExtras(b);
+                    startActivity(intent);
                 }
-                intent.putExtras(b);
-                startActivity(intent);
             }
         });
+
         mRecyclerView.setAdapter(mAdapter);
     }
 

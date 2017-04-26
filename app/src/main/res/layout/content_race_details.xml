@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:paddingBottom="2dp"
         app:stl_defaultTabTextColor="@color/colorWhite"
-        app:stl_defaultTabTextSize="18sp"
+        app:stl_defaultTabTextSize="16sp"
         app:stl_distributeEvenly="true"
         app:stl_dividerColor="@color/colorPrimary"
 

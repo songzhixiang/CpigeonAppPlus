@@ -50,7 +50,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tv_service_item_price"
             android:rotation="270"
-            app:srcCompat="@drawable/ic_arrow_downward_black" />
+            app:srcCompat="@drawable/ic_arrow_down" />
 
         <TextView
             android:id="@+id/tv_service_item_prompt"

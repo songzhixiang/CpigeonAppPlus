@@ -18,7 +18,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/list_header_race_detial_imageview_racedetialshow_marginright"
-            app:srcCompat="@drawable/ic_arrow_downward_black" />
+            app:srcCompat="@drawable/ic_arrow_down" />
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
             android:padding="8dp"

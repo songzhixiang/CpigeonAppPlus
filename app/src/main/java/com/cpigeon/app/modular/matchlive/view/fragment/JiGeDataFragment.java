@@ -46,12 +46,6 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     TextView listHeaderRaceDetialTableHeader3;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.swiperefreshlayout)
-    SwipeRefreshLayout swiperefreshlayout;
-    @BindView(R.id.viewstub_empty)
-    ViewStub viewstubEmpty;
     @BindView(R.id.searchEditText)
     SearchEditText searchEditText;
     private MatchInfo matchInfo;

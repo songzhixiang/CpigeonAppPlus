@@ -41,7 +41,7 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 helper.setText(R.id.race_info_raceName, bsmc);
 //                helper.getView(R.id.race_info_race_right_image_expand).setRotation(titleItem.isExpanded() ? 180 : 0);
                 if ("bs".equals(titleItem.matchInfo.getDt())) {
-                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
+//                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
                     helper.setText(R.id.race_info_race_right_text, titleItem.matchInfo.compuberGcys(true));
                     helper.setText(R.id.race_info_raceOrg, titleItem.matchInfo.getMc());
                     if ("gp".equals(titleItem.matchInfo.getLx()) && !titleItem.matchInfo.isMatch()) {
