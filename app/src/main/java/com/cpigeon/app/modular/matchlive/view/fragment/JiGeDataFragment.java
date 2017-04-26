@@ -3,6 +3,7 @@ package com.cpigeon.app.modular.matchlive.view.fragment;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.cpigeon.app.modular.matchlive.view.adapter.JiGeDataAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
+import com.cpigeon.app.utils.customview.SearchEditText;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -50,10 +52,13 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     SwipeRefreshLayout swiperefreshlayout;
     @BindView(R.id.viewstub_empty)
     ViewStub viewstubEmpty;
+    @BindView(R.id.searchEditText)
+    SearchEditText searchEditText;
     private MatchInfo matchInfo;
     private String sKey = "";
+    private String keyword = "";
     private Boolean isSearch = false;
-
+    private int lastExpandItemPosition = -1;//最后一个索引
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -66,6 +71,26 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
             sKey = "";
         super.onRefresh();
         isSearch = false;
+    }
+
+    @Override
+    protected void initView(View view) {
+        super.initView(view);
+        initSearch();
+    }
+
+    private void initSearch() {
+        searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
+            @Override
+            public void onSearchClick(View view, String keyword) {
+                sKey = keyword;
+
+                search(keyword);
+
+                searchEditText.setText(keyword);
+
+            }
+        });
     }
 
     @Override
@@ -106,9 +131,27 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_XH) item).isExpanded()) {
+                            if (lastExpandItemPosition == position){
+                                lastExpandItemPosition = -1;
+                            }
                             adapter.collapse(position);
                         } else {
-                            adapter.expand(position);
+                            if (lastExpandItemPosition >= 0) {
+                                adapter.collapse(lastExpandItemPosition);
+                                Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+                                if (lastExpandItemPosition > position){//展开上面的项
+                                    adapter.expand(position);
+                                    lastExpandItemPosition = position;
+                                }else if (lastExpandItemPosition < position){//展开下面的项
+                                    adapter.expand(position - 1);
+                                    lastExpandItemPosition = position - 1;
+                                }
+
+                            } else {
+                                lastExpandItemPosition = position;
+                                adapter.expand(lastExpandItemPosition);
+                                Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+                            }
                         }
                     } else if (item instanceof JiGeDataAdapter.JiGeDetialItem_XH) {
                         MatchPigeonsXH mi = ((JiGeDataAdapter.JiGeDetialItem_XH) item).getSubItem(0);
@@ -118,9 +161,27 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_GP) item).isExpanded()) {
+                            if (lastExpandItemPosition == position){
+                                lastExpandItemPosition = -1;
+                            }
                             adapter.collapse(position);
                         } else {
-                            adapter.expand(position);
+                            if (lastExpandItemPosition >= 0) {
+                                adapter.collapse(lastExpandItemPosition);
+                                Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+                                if (lastExpandItemPosition > position){//展开上面的项
+                                    adapter.expand(position);
+                                    lastExpandItemPosition = position;
+                                }else if (lastExpandItemPosition < position){//展开下面的项
+                                    adapter.expand(position - 1);
+                                    lastExpandItemPosition = position - 1;
+                                }
+
+                            } else {
+                                lastExpandItemPosition = position;
+                                adapter.expand(lastExpandItemPosition);
+                                Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+                            }
                         }
                     } else if (item instanceof JiGeDataAdapter.JiGeDetialItem_GP) {
                         MatchPigeonsGP mi = ((JiGeDataAdapter.JiGeDetialItem_GP) item).getSubItem(0);
@@ -131,11 +192,15 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
             }
         });
-        recyclerview.addOnItemTouchListener(new OnItemLongClickListener() {
-            @Override
-            public void onSimpleItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
 
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 if ("xh".equals(getMatchType())) {
+                    if (!"".equals(sKey))
+                    {
+                        sKey = "";
+                    }
                     Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
                         sKey = ((JiGeDataAdapter.JiGeTitleItem_XH) item).getMatchPigeonsXH().getName();
@@ -146,11 +211,17 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                                     public void onClick(int which) {
                                         isSearch = true;
                                         onRefresh();
+
                                     }
                                 })
+                                .setCancelable(true)
                                 .show();
                     }
                 } else if ("gp".equals(getMatchType())) {
+                    if (!"".equals(sKey))
+                    {
+                        sKey = "";
+                    }
                     Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
                         sKey = ((JiGeDataAdapter.JiGeTitleItem_GP) item).getMatchPigeonsGP().getName();
@@ -163,10 +234,12 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                                         onRefresh();
                                     }
                                 })
+                                .setCancelable(true)
+
                                 .show();
                     }
                 }
-
+                return true;
             }
         });
         return adapter;
@@ -212,5 +285,15 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     @Override
     public String sKey() {
         return sKey;
+    }
+
+    public void search(String keyword) {
+        if (TextUtils.isEmpty(keyword)) {
+            return;
+        } else {
+            this.sKey = keyword;
+            isSearch = true;
+            onRefresh();
+        }
     }
 }

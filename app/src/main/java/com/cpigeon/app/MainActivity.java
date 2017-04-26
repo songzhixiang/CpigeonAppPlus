@@ -36,6 +36,7 @@ import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveSubFragment;
 import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
+import com.cpigeon.app.modular.usercenter.view.activity.MyFollowActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.service.MainActivityService;
 import com.cpigeon.app.utils.Const;
@@ -147,6 +148,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             mainActivityService = null;
         }
     };
+    //赛事加载完毕之后的监听
     private MatchLiveSubFragment.OnRefreshListener onMatchInfoRefreshListener = new MatchLiveSubFragment.OnRefreshListener() {
         @Override
         public void onStartRefresh(MatchLiveSubFragment fragment) {
@@ -402,8 +404,35 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 mBottomNavigationBar.selectTab(2);
                 break;
             case R.id.layout_wdsc:
-//                startActivity(new Intent(HomeActivity.this, CollectionActivity.class));
+                startActivity(new Intent(MainActivity.this, MyFollowActivity.class));
                 break;
+            case R.id.tv_raceinfo_gp_count:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_GP);
+
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+            case R.id.recyclerview_home_gp:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_GP);
+
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+            case R.id.tv_raceinfo_xh_count:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_XH);
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+            case R.id.recyclerview_home_xh:
+                if (onMatchTypeChangeListener != null)
+                    onMatchTypeChangeListener.onChanged(matchLiveFragment.getCurrMatchType(), Const.MATCHLIVE_TYPE_XH);
+                setCurrIndex(1);
+                mBottomNavigationBar.selectTab(1);
+                break;
+
         }
     }
 

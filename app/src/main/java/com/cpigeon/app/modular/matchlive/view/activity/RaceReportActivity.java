@@ -2,10 +2,10 @@ package com.cpigeon.app.modular.matchlive.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -29,10 +29,12 @@ import com.cpigeon.app.modular.matchlive.view.fragment.RaceDetailsFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.ReportDataFragment;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
+import com.cpigeon.app.utils.customview.SearchEditText;
 import com.cpigeon.app.utils.customview.smarttab.SmartTabLayout;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -40,7 +42,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/10.
  */
 
-public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl {
+public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl{
 
     ///////////////////////////////////////////////////////////////////////////
     // 视图
@@ -51,14 +53,13 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     SmartTabLayout mSmartTabLayout;
     @BindView(R.id.race_report_viewpager)
     ViewPager mViewPager;
-    @BindView(R.id.fab)
-    FloatingActionButton mFloatingActionButton;
     @BindView(R.id.race_details_marqueetv)
     MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.list_header_race_detial_gg)
     MarqueeTextView listHeaderRaceDetialGg;
     @BindView(R.id.layout_gg)
     LinearLayout layoutGg;
+
     ///////////////////////////////////////////////////////////////////////////
     // 适配器和数据
     ///////////////////////////////////////////////////////////////////////////
@@ -74,7 +75,6 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     private Bulletin bulletin;
     private String loadType;
     private String tablayout_seconde_name;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_race_details;
@@ -101,14 +101,13 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         mPresenter.addRaceClickCount();
         if (matchInfo != null) {
             Logger.e("matchinfo" + matchInfo.getBsmc());
-            if (bundle.getString("jigesuccess")!=null)
-            {
+            if (bundle.getString("jigesuccess") != null) {
                 mFragmentPagerAdapter = new FragmentPagerItemAdapter(
                         getSupportFragmentManager(), FragmentPagerItems.with(this)
                         .add(tablayout_seconde_name, JiGeDataFragment.class)
                         .add("插组指定", ChaZuZhiDingFragment.class)
                         .create());
-            }else {
+            } else {
                 mFragmentPagerAdapter = new FragmentPagerItemAdapter(
                         getSupportFragmentManager(), FragmentPagerItems.with(this)
                         .add("报道数据", ReportDataFragment.class)
@@ -136,9 +135,9 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
             @Override
             public void onPageSelected(int i) {
                 if (i == 1 || i == 3) {
-                    mFloatingActionButton.hide();
+
                 } else {
-                    mFloatingActionButton.show();
+
                 }
             }
 
@@ -147,6 +146,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
             }
         });
+//        searchEditText.setOnSearchClickListener(this);
 
 
     }
@@ -218,11 +218,11 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     }
 
-    @OnClick({R.id.layout_gg, R.id.fab})
+    @OnClick({R.id.layout_gg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_gg:
-                if (bulletin==null|| TextUtils.isEmpty(bulletin.getContent())) {
+                if (bulletin == null || TextUtils.isEmpty(bulletin.getContent())) {
                     return;
                 }
                 SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
@@ -231,9 +231,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
                 dialog.setCancelable(true);
                 dialog.show();
                 break;
-            case R.id.fab:
 
-                break;
         }
     }
 

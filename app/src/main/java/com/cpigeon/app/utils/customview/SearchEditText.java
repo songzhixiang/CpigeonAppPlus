@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,7 +19,7 @@ import android.widget.EditText;
 import com.cpigeon.app.R;
 
 
-public class SearchEditText extends EditText implements View.OnFocusChangeListener, View.OnKeyListener, TextWatcher {
+public class SearchEditText extends AppCompatEditText implements View.OnFocusChangeListener, View.OnKeyListener, TextWatcher {
     private static final String TAG = "SearchEditText";
     /**
      * 图标是否默认在左边

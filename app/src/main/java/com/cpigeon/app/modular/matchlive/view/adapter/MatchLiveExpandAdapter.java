@@ -39,7 +39,7 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 final MatchTitleItem titleItem = (MatchTitleItem) item;
                 String bsmc = titleItem.matchInfo.computerBSMC().trim();
                 helper.setText(R.id.race_info_raceName, bsmc);
-                helper.getView(R.id.race_info_race_right_image_expand).setRotation(titleItem.isExpanded() ? 180 : 0);
+//                helper.getView(R.id.race_info_race_right_image_expand).setRotation(titleItem.isExpanded() ? 180 : 0);
                 if ("bs".equals(titleItem.matchInfo.getDt())) {
                     helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
                     helper.setText(R.id.race_info_race_right_text, titleItem.matchInfo.compuberGcys(true));
@@ -56,11 +56,11 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                         helper.getView(R.id.race_info_raceType).setVisibility(View.GONE);
                     }
                     helper.setTextColor(R.id.race_info_race_right_text, mContext.getResources().getColor(R.color.light_red));
-                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.VISIBLE);
+//                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.VISIBLE);
                     helper.setTextColor(R.id.race_info_raceName, mContext.getResources().getColor(R.color.textColor_gray));
                 } else {
                     //集鸽数据
-                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
+//                    helper.getView(R.id.race_info_race_right_image_expand).setVisibility(View.GONE);
                     helper.setText(R.id.race_info_race_right_text, titleItem.matchInfo.compuberSLYS());
                     helper.setTextColor(R.id.race_info_race_right_text, mContext.getResources().getColor(R.color.light_green));
                     helper.setTextColor(R.id.race_info_raceName, mContext.getResources().getColor(R.color.light_green));

@@ -4,7 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <com.cpigeon.app.utils.customview.SearchEditText
+        android:id="@+id/searchEditText"
+        style="@style/searchedittextstyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_edittext_height"
+        android:hint="比赛/协会名称"/>
     <LinearLayout
         android:id="@+id/layout_list_table_header"
         android:layout_width="match_parent"

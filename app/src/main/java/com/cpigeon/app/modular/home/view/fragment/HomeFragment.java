@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.ScreenTool;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.cpigeon.app.utils.customview.SearchEditText;
+import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -37,6 +40,7 @@ import org.xutils.x;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -69,8 +73,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     TextView tvRaceinfoXhCount;
     @BindView(R.id.recyclerview_home_xh)
     RecyclerView recyclerviewHomeXh;
-    Unbinder unbinder;
-
     private HomeAdapter mAdapter;
 
     @Override
@@ -88,7 +90,8 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     }
 
 
-    @OnClick({R.id.layout_gpzb, R.id.layout_xhzb, R.id.layout_zhcx, R.id.layout_wdsc})
+    @OnClick({R.id.layout_gpzb, R.id.layout_xhzb, R.id.layout_zhcx, R.id.layout_wdsc
+            , R.id.tv_raceinfo_gp_count, R.id.recyclerview_home_gp, R.id.tv_raceinfo_xh_count, R.id.recyclerview_home_xh})
     public void onClick(View view) {
         ((MainActivity) getActivity()).onHomeItemClick(view);
     }
@@ -225,7 +228,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     }
 
     public void loadMatchInfo() {
-        com.orhanobut.logger.Logger.d("首页加载赛事列表");
+        Logger.d("首页加载赛事列表");
         mPresenter.loadMatchInfo(1);
         mPresenter.loadMatchInfo(0);
     }
@@ -252,8 +255,9 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
         return true;
     }
 
+
     @OnClick(R.id.search_edittext)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
         startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 

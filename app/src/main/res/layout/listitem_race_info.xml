@@ -76,6 +76,7 @@
                 android:textColor="@color/light_red"/>
 
             <android.support.v7.widget.AppCompatImageView
+                android:visibility="gone"
                 android:id="@+id/race_info_race_right_image_expand"
                 android:layout_width="16dp"
                 android:layout_height="16dp"

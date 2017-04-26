@@ -1,13 +1,16 @@
 package com.cpigeon.app.modular.matchlive.view.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BasePageTurnFragment;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -18,9 +21,12 @@ import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.cpigeon.app.utils.customview.SaActionSheetDialog;
+import com.cpigeon.app.utils.customview.SearchEditText;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/4/15.
@@ -36,9 +42,12 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     TextView listHeaderRaceDetialTableHeader3;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
+    @BindView(R.id.searchEditText)
+    SearchEditText searchEditText;
     private MatchInfo matchInfo;
     private String sKey = "";//当前搜索关键字
     boolean isSearch = false;
+    private String keyword;
 
     @Override
     public void onRefresh() {
@@ -69,6 +78,25 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
         return true;
     }
 
+    @Override
+    protected void initView(View view) {
+        super.initView(view);
+        initSearch();
+    }
+
+    private void initSearch() {
+        searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
+            @Override
+            public void onSearchClick(View view, String keyword) {
+                sKey = keyword;
+
+                search(keyword);
+
+                searchEditText.setText(keyword);
+
+            }
+        });
+    }
 
     @Override
     public String getMatchType() {
@@ -152,11 +180,14 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
             }
         });
-        recyclerview.addOnItemTouchListener(new OnItemLongClickListener() {
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
-            public void onSimpleItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                if ("xh".equals(getMatchType()))
-                {
+            public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+
+                if ("xh".equals(getMatchType())) {
+                    if (!"".equals(sKey)) {
+                        sKey = "";
+                    }
                     Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
                     if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
                         sKey = ((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getName();
@@ -169,10 +200,13 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                                         onRefresh();
                                     }
                                 })
+                                .setCancelable(true)
                                 .show();
                     }
-                }else if ("gp".equals(getMatchType()))
-                {
+                } else if ("gp".equals(getMatchType())) {
+                    if (!"".equals(sKey)) {
+                        sKey = "";
+                    }
                     Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
                     if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
                         sKey = ((RaceReportAdapter.MatchTitleGPItem) item).getMatchReportGP().getName();
@@ -185,12 +219,14 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                                         onRefresh();
                                     }
                                 })
+                                .setCancelable(true)
                                 .show();
                     }
                 }
-
+                return true;
             }
         });
+
         return adapter;
     }
 
@@ -198,4 +234,15 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     protected void loadDataByPresenter() {
         mPresenter.loadRaceData(0);
     }
+
+    public void search(String keyword) {
+        if (TextUtils.isEmpty(keyword)) {
+            return;
+        } else {
+            this.sKey = keyword;
+            isSearch = true;
+            onRefresh();
+        }
+    }
+
 }

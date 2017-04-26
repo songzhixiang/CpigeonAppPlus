@@ -140,10 +140,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                 }
             }
         });
-        mRecyclerView.addOnItemTouchListener(new OnItemLongClickListener() {
+
+        matchLiveAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
-            public void onSimpleItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                Object item = ((MatchLiveExpandAdapter) adapter).getData().get(position);
+            public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Object item = ((MatchLiveExpandAdapter) baseQuickAdapter).getData().get(i);
                 if (item instanceof MatchLiveExpandAdapter.MatchTitleItem) {
                     final String s = ((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getMc();
                     new SaActionSheetDialog(getActivity())
@@ -161,6 +162,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                             })
                             .show();
                 }
+                return true;
             }
         });
         mRecyclerView.setAdapter(matchLiveAdapter);
