@@ -56,7 +56,6 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
     private ArrayList<CpigeonServicesInfo> allServicesInfo;
     private String queryKey;
     private SweetAlertDialog pDialog;
-    private boolean isPrepared;
     private Callback.Cancelable mFootSearchCancelable;
     private Handler mHandler = new Handler() {
 
@@ -69,7 +68,6 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
 
     @Override
     protected void initView(View view) {
-        isPrepared = true;
         initToolbar();
         if (searchEdittext != null) {
             searchEdittext.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
@@ -89,10 +87,7 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
 
     @Override
     protected void lazyLoad() {
-        if (isPrepared && isVisible) {
-            mPresenter.loadUserServiceInfo();
-            isPrepared = false;
-        }
+        mPresenter.loadUserServiceInfo();
     }
 
     private void initToolbar() {

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:icon="@drawable/ic_favorite"
-        android:id="@+id/action_save"
-        android:orderInCategory="80"
-        android:title=" 收藏"
-        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:icon="@drawable/ic_favorite"-->
+        <!--android:id="@+id/action_save"-->
+        <!--android:orderInCategory="80"-->
+        <!--android:title=" 收藏"-->
+        <!--app:showAsAction="always" />-->
     <item
         android:id="@+id/action_details"
         android:orderInCategory="80"

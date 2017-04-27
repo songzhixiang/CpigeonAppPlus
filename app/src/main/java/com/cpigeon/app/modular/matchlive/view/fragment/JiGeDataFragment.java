@@ -50,9 +50,9 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     SearchEditText searchEditText;
     private MatchInfo matchInfo;
     private String sKey = "";
-    private String keyword = "";
     private Boolean isSearch = false;
     private int lastExpandItemPosition = -1;//最后一个索引
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -71,18 +71,15 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     protected void initView(View view) {
         super.initView(view);
         initSearch();
+        listHeaderRaceDetialTableHeader1.setText("序号");
     }
 
     private void initSearch() {
         searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
             @Override
             public void onSearchClick(View view, String keyword) {
-                sKey = keyword;
-
                 search(keyword);
-
                 searchEditText.setText(keyword);
-
             }
         });
     }
@@ -110,7 +107,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     protected String getEmptyDataTips() {
-        return "对不起，暂时无法获取数据，请您稍后再试";
+        return "暂时没有数据，请您稍后再试";
     }
 
     @Override
@@ -125,7 +122,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_XH) item).isExpanded()) {
-                            if (lastExpandItemPosition == position){
+                            if (lastExpandItemPosition == position) {
                                 lastExpandItemPosition = -1;
                             }
                             adapter.collapse(position);
@@ -133,10 +130,10 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                             if (lastExpandItemPosition >= 0) {
                                 adapter.collapse(lastExpandItemPosition);
                                 Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
-                                if (lastExpandItemPosition > position){//展开上面的项
+                                if (lastExpandItemPosition > position) {//展开上面的项
                                     adapter.expand(position);
                                     lastExpandItemPosition = position;
-                                }else if (lastExpandItemPosition < position){//展开下面的项
+                                } else if (lastExpandItemPosition < position) {//展开下面的项
                                     adapter.expand(position - 1);
                                     lastExpandItemPosition = position - 1;
                                 }
@@ -155,7 +152,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                     if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
 
                         if (((JiGeDataAdapter.JiGeTitleItem_GP) item).isExpanded()) {
-                            if (lastExpandItemPosition == position){
+                            if (lastExpandItemPosition == position) {
                                 lastExpandItemPosition = -1;
                             }
                             adapter.collapse(position);
@@ -163,10 +160,10 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                             if (lastExpandItemPosition >= 0) {
                                 adapter.collapse(lastExpandItemPosition);
                                 Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
-                                if (lastExpandItemPosition > position){//展开上面的项
+                                if (lastExpandItemPosition > position) {//展开上面的项
                                     adapter.expand(position);
                                     lastExpandItemPosition = position;
-                                }else if (lastExpandItemPosition < position){//展开下面的项
+                                } else if (lastExpandItemPosition < position) {//展开下面的项
                                     adapter.expand(position - 1);
                                     lastExpandItemPosition = position - 1;
                                 }
@@ -191,8 +188,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
             @Override
             public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 if ("xh".equals(getMatchType())) {
-                    if (!"".equals(sKey))
-                    {
+                    if (!"".equals(sKey)) {
                         sKey = "";
                     }
                     Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
@@ -212,8 +208,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
                                 .show();
                     }
                 } else if ("gp".equals(getMatchType())) {
-                    if (!"".equals(sKey))
-                    {
+                    if (!"".equals(sKey)) {
                         sKey = "";
                     }
                     Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
@@ -282,12 +277,11 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     }
 
     public void search(String keyword) {
-        if (TextUtils.isEmpty(keyword)) {
+        if (TextUtils.isEmpty(keyword))
             return;
-        } else {
-            this.sKey = keyword;
-            isSearch = true;
-            onRefresh();
-        }
+        this.sKey = keyword;
+        isSearch = true;
+        onRefresh();
+
     }
 }

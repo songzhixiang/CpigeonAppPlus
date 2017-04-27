@@ -163,13 +163,11 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
         raceDetialMatchInfoContentTq.setText(matchInfo.getTq());
         raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "KM");
         toolbar.setTitle(matchInfo.getMc());
-        if ("xh".equals(loadType))
-        {
+        if ("xh".equals(loadType)) {
             layoutCaipanzhang.setVisibility(View.GONE);
             layoutCaipanyuan.setVisibility(View.GONE);
             layoutSifangzhang.setVisibility(View.GONE);
-        }else if ("gp".equals(loadType))
-        {
+        } else if ("gp".equals(loadType)) {
             layoutCaipanzhang.setVisibility(View.VISIBLE);
             layoutCaipanyuan.setVisibility(View.VISIBLE);
             layoutSifangzhang.setVisibility(View.VISIBLE);
@@ -230,7 +228,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
 
     @Override
     protected String getEmptyDataTips() {
-        return null;
+        return "暂时没有数据";
     }
 
     @Override

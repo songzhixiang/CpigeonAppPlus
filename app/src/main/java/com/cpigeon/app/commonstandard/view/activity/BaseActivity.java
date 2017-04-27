@@ -34,7 +34,6 @@ import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarSetting;
 import com.cpigeon.app.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -102,7 +101,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         //开启广播去监听 网络 改变事件
         NetStateReceiver.registerObserver(mNetChangeObserver);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
-        Logger.e("当前" + this.getClass().getSimpleName() + "上面的栈内存Activity还有" + AppManager.getAppManager().stackSize());
+//        Logger.e("当前" + this.getClass().getSimpleName() + "上面的栈内存Activity还有" + AppManager.getAppManager().stackSize());
+
     }
 
     @Override

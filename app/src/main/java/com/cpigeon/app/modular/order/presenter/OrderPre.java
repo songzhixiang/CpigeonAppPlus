@@ -34,10 +34,10 @@ public class OrderPre extends BasePresenter<IOrderView, OrderDao> {
                     @Override
                     public void run() {
                         if (isAttached()) {
-                            if (mView.isRefreshing()) {
-                                mView.hideRefreshLoading();
-                            } else if (mView.isMoreDataLoading()) {
+                            if (mView.isMoreDataLoading()) {
                                 mView.loadMoreComplete();
+                            } else {
+                                mView.hideRefreshLoading();
                             }
                             mView.showMoreData(data);
                         }
@@ -51,11 +51,11 @@ public class OrderPre extends BasePresenter<IOrderView, OrderDao> {
                     @Override
                     public void run() {
                         if (isAttached()) {
-                            if (mView.isRefreshing()) {
-                                mView.hideRefreshLoading();
-                                mView.showTips("加载失败", IView.TipType.View);
-                            } else if (mView.isMoreDataLoading()) {
+                            if (mView.isMoreDataLoading()) {
                                 mView.loadMoreFail();
+                            } else {
+                                mView.hideRefreshLoading();
+                                mView.showTips("订单记录加载失败", IView.TipType.View);
                             }
                         }
                     }

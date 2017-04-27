@@ -23,6 +23,7 @@ import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceXunFangAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.ViewExpandAnimation;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.orhanobut.logger.Logger;
 
@@ -104,8 +105,6 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
         initToolbar();
         initInfo();
         super.initView();
-
-
     }
 
     private void initInfo() {
@@ -117,10 +116,9 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
             layoutKj.setVisibility(View.GONE);
         } else {
             layoutKj.setVisibility(View.VISIBLE);
-            raceDetialMatchInfoContentKj.setText(matchInfo.getBskj()+"Km");
-
-
+            raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "Km");
         }
+        listHeaderRaceDetialTableHeader1.setText("名次");
     }
 
     private void initToolbar() {
@@ -206,6 +204,7 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
             case R.id.race_detial_info_detial_show:
                 break;
             case R.id.race_detial_info_match_name_layout:
+
                 break;
         }
     }

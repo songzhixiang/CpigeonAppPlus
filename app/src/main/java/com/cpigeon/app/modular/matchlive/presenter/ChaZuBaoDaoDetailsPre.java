@@ -41,10 +41,11 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        if (mView.isRefreshing())
-                                            mView.hideRefreshLoading();
-                                        else if (mView.isMoreDataLoading())
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreComplete();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                        }
                                         mView.showMoreData(d);
                                     }
                                 }
@@ -57,11 +58,11 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        if (mView.isRefreshing()) {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("加载失败", IView.TipType.View);
-                                        } else if (mView.isMoreDataLoading()) {
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreFail();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                            mView.showTips("获取报道记录失败", IView.TipType.View);
                                         }
                                     }
                                 }
@@ -85,10 +86,11 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        if (mView.isRefreshing())
-                                            mView.hideRefreshLoading();
-                                        else if (mView.isMoreDataLoading())
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreComplete();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                        }
                                         mView.showMoreData(d);
                                     }
                                 }
@@ -101,11 +103,11 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        if (mView.isRefreshing()) {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("加载失败", IView.TipType.View);
-                                        } else if (mView.isMoreDataLoading()) {
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreFail();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                            mView.showTips("获取报道记录失败", IView.TipType.View);
                                         }
                                     }
                                 }

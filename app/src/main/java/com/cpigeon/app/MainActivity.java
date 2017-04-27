@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -65,7 +63,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-
+@RuntimePermissions
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private static boolean isExit = false;
@@ -230,9 +228,78 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         });
     }
+    @NeedsPermission({
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void sysytemAlertWindow() {
+
+    }
+
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+
+    void systemAlertWindowOnShowRationale(final PermissionRequest request) {
+        showRequest(request);
+    }
+
+    private void showRequest(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.proceed();
+                    }
+                })
+                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.cancel();
+                    }
+                })
+                .setCancelable(true)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        request.cancel();
+                    }
+                })
+                .setMessage("我们需要一些权限，以便您更好的体验")
+                .show();
+    }
+
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void systemAlertWindowOnPermissionDenied() {
+        showTips("权限被拒绝了", TipType.ToastShort);
+        AppManager.getAppManager().AppExit();
+    }
+
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void systemAlertWindowOnNeverAskAgain() {
+        showTips("权限不再提示", TipType.ToastShort);
+        AppManager.getAppManager().AppExit();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
 
     public void initView() {
-
+        MainActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
         homeFragment = new HomeFragment();
         matchLiveFragment = new MatchLiveFragment();
         matchLiveFragment.setOnRefreshListener(onMatchInfoRefreshListener);

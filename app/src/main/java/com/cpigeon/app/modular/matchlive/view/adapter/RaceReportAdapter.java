@@ -39,13 +39,11 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
         {
             addItemType(TYPE_DETIAL,R.layout.listitem_race_gp_info_expand);
         }
-
-
     }
 
     @Override
     protected void convert(BaseViewHolder helper, MultiItemEntity item) {
-        Logger.d(item);
+//        Logger.d(item);
         switch (helper.getItemViewType()) {
             case TYPE_TITLE:
                 helper.getView(R.id.report_info_item_mc_img).setVisibility(View.GONE);
@@ -109,8 +107,6 @@ public class RaceReportAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
                     helper.setText(R.id.tv_suoshutuandui,"所属团队:"+detialItem.getSubItem(0).getTtzb());
                     helper.setText(R.id.tv_chazubaodao,"插组报道:"+detialItem.getSubItem(0).CZtoString());
                 }
-
-
                 break;
         }
     }

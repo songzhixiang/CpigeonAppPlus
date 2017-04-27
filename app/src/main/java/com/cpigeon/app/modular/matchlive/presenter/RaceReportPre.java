@@ -32,7 +32,7 @@ public class RaceReportPre extends BasePresenter<IRaceReportView, IRaceReport> {
                                 mDao.queryBulletin(mView.getSsid(), new IBaseDao.OnCompleteListener<Bulletin>() {
                                     @Override
                                     public void onSuccess(Bulletin data) {
-                                        mView.showBulletin(data);
+                                        if (isAttached()) mView.showBulletin(data);
                                     }
 
                                     @Override

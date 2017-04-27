@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+
+updateVersionConfig()
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
@@ -64,8 +66,12 @@ android {
             shrinkResources true
         }
         debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //混淆
+            minifyEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             buildConfigField "String", "SERVER", "\"http://192.168.0.52:8888\"" //配置BuildConfig字段
-            signingConfig signingConfigs.release
         }
     }
     productFlavors {

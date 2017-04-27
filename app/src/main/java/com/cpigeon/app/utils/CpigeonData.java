@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import static com.cpigeon.app.MyApp.mCpigeonData;
 
 /**
  * Created by Administrator on 2017/1/13.

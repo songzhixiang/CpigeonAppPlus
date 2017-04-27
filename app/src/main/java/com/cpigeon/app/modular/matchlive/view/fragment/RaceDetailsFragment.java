@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,10 +122,12 @@ public class RaceDetailsFragment extends DialogFragment {
     private void initView() {
         layoutCaipanyuan.setVisibility(View.GONE);
         layoutCaptain.setVisibility(View.GONE);
-        if (!"".equals(matchInfo.getMc())) {
+        if ("jg".equals(matchInfo.getDt())) {
+            raceDetialInfoTextviewRacename.setText("集鸽完毕");
+        } else if (!TextUtils.isEmpty(matchInfo.getMc())) {
             raceDetialInfoTextviewRacename.setText(matchInfo.getBsmc());
         }
-        if (!"".equals(matchInfo.getArea())) {
+        if (!TextUtils.isEmpty(matchInfo.getArea())) {
             raceDetialMatchInfoContentArea.setText(matchInfo.getArea());
         }
 
@@ -132,17 +135,16 @@ public class RaceDetailsFragment extends DialogFragment {
 
         raceDetialMatchInfoContentSlys.setText(matchInfo.getCsys() + "羽");
 
-        if (!"".equals(matchInfo.getTq())) {
+        if (!TextUtils.isEmpty(matchInfo.getTq())) {
             raceDetialMatchInfoContentTq.setText(matchInfo.getTq());
         }
-        if (!"".equals(matchInfo.getMc())) {
+        if (!TextUtils.isEmpty(matchInfo.getMc())) {
             raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
         }
-        if (!"".equals(matchInfo.getMc())) {
+        if (!TextUtils.isEmpty(matchInfo.getMc())) {
             raceDetialMatchInfoContentJwd.setText(matchInfo.computerSFZB());
         }
-        if ("gp".equals(loadType))
-        {
+        if ("gp".equals(loadType)) {
             layoutCaipanyuan.setVisibility(View.VISIBLE);
             layoutCaptain.setVisibility(View.VISIBLE);
             raceDetialMatchInfoContentCaipanyuan.setText(matchInfo.getCpy());

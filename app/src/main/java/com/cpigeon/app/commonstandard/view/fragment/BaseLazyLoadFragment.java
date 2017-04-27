@@ -54,7 +54,7 @@ public abstract class BaseLazyLoadFragment<Pre extends BasePresenter> extends Ba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isCreateView = true;
-        Logger.e("onActivityCreated " + TAG + " isFristLoad=" + isFristLoad + "；isVisible=" + isVisible);
+//        Logger.e("onActivityCreated " + TAG + " isFristLoad=" + isFristLoad + "；isVisible=" + isVisible);
         canLoadLazy();
     }
 

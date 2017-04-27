@@ -12,6 +12,7 @@ import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.EncryptionTool;
 import com.cpigeon.app.utils.SharedPreferencesTool;
+import com.cpigeon.app.utils.databean.ApiResponse;
 import com.orhanobut.logger.Logger;
 
 import java.util.Timer;
@@ -53,12 +54,12 @@ public class MainActivityService extends Service {
         public void onError(int errorType, Object data) {
             if (errorType == ERROR_TYPE_API_RETURN) {
                 //// TODO: 2017/4/18
-                CallAPI.ApiResponse apiResponse = (CallAPI.ApiResponse) data;
+                ApiResponse apiResponse = (ApiResponse) data;
                 if (20002 == apiResponse.getErrorCode()) {
                     Logger.d("当前账号在新设备上登录并使用");
                     Logger.d(apiResponse.getData());
 
-                    UseDevInfo useDevInfo = ((CallAPI.ApiResponse<UseDevInfo>) apiResponse).getData();
+                    UseDevInfo useDevInfo = ((ApiResponse<UseDevInfo>) apiResponse).getData();
                     if (onDeviceLoginCheckListener != null && onDeviceLoginCheckListener.onOtherDeviceLogin(useDevInfo))
                         stopSingleLoginCheckTimer();
                 }

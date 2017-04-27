@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.fragment.BaseLazyLoadFragment;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
 import com.cpigeon.app.modular.order.view.activity.OrderActivity;
 import com.cpigeon.app.modular.settings.view.activity.SettingsActivity;
+import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.view.activity.AboutActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.BalanceActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.FeedBackActivity;
@@ -23,7 +23,6 @@ import com.cpigeon.app.modular.usercenter.view.activity.MessageActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.MyFollowActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.ScoreActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
-import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
@@ -38,7 +37,6 @@ import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.cpigeon.app.MyApp.mCpigeonData;
 
 /**
  * Created by Administrator on 2017/4/6.
@@ -92,7 +90,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initView(View view) {
-        mCpigeonData.addOnDataChangedListener(onDataChangedListener);
+        CpigeonData.getInstance().addOnDataChangedListener(onDataChangedListener);
     }
 
     @Override
@@ -168,7 +166,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     private void refreshUserInfo() {
         if (!isVisible) return;
         if (checkLogin()) {
-            UserInfo.DataBean userInfo = mCpigeonData.getUserInfo();
+            UserInfo.DataBean userInfo = CpigeonData.getInstance().getUserInfo();
             String userHeadImageURl = "", nickName = "";
 
             Map<String, Object> map = getLoginUserInfo();
@@ -206,11 +204,11 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         }
         //余额
 
-        tvUserMoney.setText(String.format("%.2f", mCpigeonData.getUserBalance()));
+        tvUserMoney.setText(String.format("%.2f", CpigeonData.getInstance().getUserBalance()));
 
-        tvUserJifen.setText(String.format("%d", mCpigeonData.getUserScore()));
+        tvUserJifen.setText(String.format("%d", CpigeonData.getInstance().getUserScore()));
 
-        tvSignStatus.setText(mCpigeonData.getUserSignStatus() == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
+        tvSignStatus.setText(CpigeonData.getInstance().getUserSignStatus() == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
 
     }
 

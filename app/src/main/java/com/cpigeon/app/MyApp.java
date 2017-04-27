@@ -2,6 +2,10 @@ package com.cpigeon.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
 import com.cpigeon.app.utils.CpigeonData;
@@ -21,13 +25,11 @@ import cn.jpush.android.api.JPushInterface;
 
 public class MyApp extends Application {
     private static MyApp instance;
-    private static String TAG = "AndySong";
+    private static String TAG = "cpigeon";
 
     public static MyApp getInstance() {
         return instance;
     }
-
-    public static CpigeonData mCpigeonData;
 
     @Override
     public void onCreate() {
@@ -38,12 +40,10 @@ public class MyApp extends Application {
         //开启网络广播监听
         NetStateReceiver.registerNetworkStateReceiver(this);
         if (!BuildConfig.DEBUG) {
-            //bugly
-            CrashReport.initCrashReport(getApplicationContext(), "f7c8c8f49a", BuildConfig.DEBUG);
+            initBugly();
         } else {
             Logger.init(TAG);
         }
-        mCpigeonData = CpigeonData.getInstance();
         //极光推送
 //        JPushInterface.setDebugMode(BuildConfig.DEBUG);
 //        JPushInterface.init(this);
@@ -62,5 +62,31 @@ public class MyApp extends Application {
         super.onLowMemory();
         NetStateReceiver.unRegisterNetworkStateReceiver(this);
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    /**
+     * 初始化BUGLY
+     */
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(), "f7c8c8f49a", BuildConfig.DEBUG);
+        //设置用户ID
+        CrashReport.setUserId("" + CpigeonData.getInstance().getUserId(this));
+        try {
+            //获取并设置Bugly渠道
+            ApplicationInfo appInfo = null;
+            appInfo = getPackageManager().getApplicationInfo(getPackageName(),
+                    PackageManager.GET_META_DATA);
+            String app_channel = appInfo.metaData.getString("APP_CHANNEL");
+            CrashReport.setAppChannel(getApplicationContext(), app_channel);
+            Log.d(TAG, "APP_CHANNEL:" + app_channel);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

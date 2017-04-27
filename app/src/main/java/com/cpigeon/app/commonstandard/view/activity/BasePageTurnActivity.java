@@ -132,6 +132,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
             if (mEmptyTipTextView == null)
                 mEmptyTipTextView = (TextView) mEmptyTip.findViewById(R.id.tv_empty_tips);
             mEmptyTipTextView.setText(tip);
+            mEmptyTip.setVisibility(View.VISIBLE);
             return true;
         }
         switch (tipType) {
@@ -187,8 +188,12 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
     @Override
     public void showMoreData(List<DataBean> dataBeen) {
         hideRefreshLoading();
-        if (getPageIndex() == 1 && (dataBeen == null || dataBeen.size() == 0))
+        if (getPageIndex() == 1 && (dataBeen == null || dataBeen.size() == 0)) {
             showEmptyData();
+        } else {
+            if (mEmptyTip != null)
+                mEmptyTip.setVisibility(View.GONE);
+        }
         if (dataBeen != null)
             mAdapter.addData(dataBeen);
 
@@ -199,8 +204,6 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         } else {
             mAdapter.loadMoreEnd(false);
         }
-        if (mEmptyTip != null)
-            mEmptyTip.setVisibility(View.GONE);
 //        mAdapter.setEnableLoadMore(canLoadMore);
         isMoreDateLoading = isRefreshing = false;
     }

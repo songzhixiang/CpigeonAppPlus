@@ -47,7 +47,6 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     private MatchInfo matchInfo;
     private String sKey = "";//当前搜索关键字
     boolean isSearch = false;
-    private String keyword;
 
     @Override
     public void onRefresh() {
@@ -82,18 +81,17 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     protected void initView(View view) {
         super.initView(view);
         initSearch();
+        if ("gp".equals(this.matchInfo.getLx())) {
+            listHeaderRaceDetialTableHeader1.setText("名次");
+        }
     }
 
     private void initSearch() {
         searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
             @Override
             public void onSearchClick(View view, String keyword) {
-                sKey = keyword;
-
                 search(keyword);
-
                 searchEditText.setText(keyword);
-
             }
         });
     }
@@ -120,7 +118,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     public boolean hascz() {
-        return matchInfo.isMatch();
+        return true;
     }
 
     @Override
@@ -140,7 +138,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     protected String getEmptyDataTips() {
-        return "没有报道数据";
+        return "暂时没有报道数据";
     }
 
     @Override
@@ -236,13 +234,11 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     }
 
     public void search(String keyword) {
-        if (TextUtils.isEmpty(keyword)) {
+        this.sKey = keyword;
+        if (TextUtils.isEmpty(keyword))
             return;
-        } else {
-            this.sKey = keyword;
-            isSearch = true;
-            onRefresh();
-        }
+        isSearch = true;
+        onRefresh();
     }
 
 }

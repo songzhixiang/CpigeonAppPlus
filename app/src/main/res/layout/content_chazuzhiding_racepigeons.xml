@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:id="@+id/race_detial_info_match_name_layout"
@@ -21,7 +21,6 @@
             app:srcCompat="@drawable/ic_arrow_down" />
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
-            android:padding="8dp"
             android:id="@+id/race_detial_info_textview_racename"
             style="@style/Marquee"
             android:layout_width="match_parent"
@@ -29,6 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/race_detial_info_detial_show"
             android:gravity="center"
+            android:padding="8dp"
             android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
             android:textColor="@color/light_black"
             android:textSize="@dimen/list_header_race_detial_textview_racename_textsize" />
@@ -299,7 +299,8 @@
             android:minHeight="@dimen/list_header_race_detial_gg_minheight"
             android:text="公告："
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize" />
+            android:textSize="@dimen/list_header_race_detial_textview_gg_textsize"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -338,5 +339,6 @@
             android:textSize="@dimen/list_header_race_detial_textview_tableheader_textsize" />
 
     </LinearLayout>
-    <include layout="@layout/layout_com_swiperefreshlayout_recyclerview"/>
+
+    <include layout="@layout/layout_com_swiperefreshlayout_recyclerview" />
 </LinearLayout>

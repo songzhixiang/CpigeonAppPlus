@@ -76,7 +76,7 @@
                     style="@style/report_info_detial_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="比赛空距" />
+                    android:text="比赛空距:" />
 
                 <TextView
                     android:id="@+id/race_detial_match_info_content_kj"

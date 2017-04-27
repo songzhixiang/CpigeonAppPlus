@@ -200,7 +200,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 
     @Override
     protected String getEmptyDataTips() {
-        return null;
+        return "暂时没有报道数据，请稍后再试";
     }
 
     @Override

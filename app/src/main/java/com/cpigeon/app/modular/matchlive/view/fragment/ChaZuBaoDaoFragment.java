@@ -86,7 +86,7 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                if (((Map<String, Integer>) baseQuickAdapter.getItem(i)).get("gcys") > 0) {
+//                if (((Map<String, Integer>) baseQuickAdapter.getItem(i)).get("gcys") > 0) {
                     Intent intent = new Intent(getActivity(), RaceChaZuBaoDaoActivity.class);
                     Bundle b = new Bundle();
                     b.putSerializable("matchinfo", matchInfo);
@@ -99,7 +99,7 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
                     }
                     intent.putExtras(b);
                     startActivity(intent);
-                }
+//                }
             }
         });
 

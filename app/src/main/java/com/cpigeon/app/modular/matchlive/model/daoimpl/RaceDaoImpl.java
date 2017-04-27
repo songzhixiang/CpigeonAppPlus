@@ -50,9 +50,8 @@ public class RaceDaoImpl implements IRaceDao {
         CallAPI.getReportData(mContext, matchType, ssid, "", "", hascz, pager, pagesize, czIndex, sKey, new CallAPI.Callback<List>() {
             @Override
             public void onSuccess(List data) {
-                Logger.e(data+"");
+//                Logger.e(data+"");
                 onCompleteListener.onSuccess(data);
-
             }
 
             @Override

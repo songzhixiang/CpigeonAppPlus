@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -29,12 +28,9 @@ import com.cpigeon.app.modular.matchlive.view.fragment.RaceDetailsFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.ReportDataFragment;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
-import com.cpigeon.app.utils.customview.SearchEditText;
 import com.cpigeon.app.utils.customview.smarttab.SmartTabLayout;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -91,7 +87,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         bundle = intent.getExtras();
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
         loadType = bundle.getString("loadType");
-        Logger.e("当前页面加载的数据是：" + loadType + "类型的数据");
+//        Logger.e("当前页面加载的数据是：" + loadType + "类型的数据");
         if ("xh".equals(loadType)) {
             tablayout_seconde_name = "集鸽数据";
         } else if ("gp".equals(loadType)) {
@@ -100,7 +96,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         mPresenter.showBulletin();
         mPresenter.addRaceClickCount();
         if (matchInfo != null) {
-            Logger.e("matchinfo" + matchInfo.getBsmc());
+//            Logger.e("matchinfo" + matchInfo.getBsmc());
             if (bundle.getString("jigesuccess") != null) {
                 mFragmentPagerAdapter = new FragmentPagerItemAdapter(
                         getSupportFragmentManager(), FragmentPagerItems.with(this)
@@ -173,8 +169,6 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     @Override
     public void showBulletin(Bulletin bulletin) {
         this.bulletin = bulletin;
-
-
         if (bulletin != null && !TextUtils.isEmpty(bulletin.getContent().trim())) {
             layoutGg.setVisibility(View.VISIBLE);
             listHeaderRaceDetialGg.setText("公告:" + bulletin.getContent());
@@ -200,8 +194,6 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
                 break;
             case R.id.action_details:
                 showDialogFragment();
-
-
                 break;
         }
         return super.onOptionsItemSelected(item);

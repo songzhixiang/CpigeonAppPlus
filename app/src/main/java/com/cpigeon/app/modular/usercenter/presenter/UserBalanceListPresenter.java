@@ -34,7 +34,11 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
                 @Override
                 public void run() {
                     if (isAttached()) {
-                        mView.hideRefreshLoading();
+                        if (mView.isMoreDataLoading()) {
+                            mView.loadMoreComplete();
+                        } else {
+                            mView.hideRefreshLoading();
+                        }
                         mView.showMoreData(data);
                     }
                 }
@@ -42,13 +46,17 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
         }
 
         @Override
-        public void onFail(final String msg) {
+        public void onFail(String msg) {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (isAttached()) {
-                        mView.hideRefreshLoading();
-                        mView.showTips("加载失败", IView.TipType.View);
+                        if (mView.isMoreDataLoading()) {
+                            mView.loadMoreFail();
+                        } else {
+                            mView.hideRefreshLoading();
+                            mView.showTips("充值记录加载失败", IView.TipType.View);
+                        }
                     }
                 }
             }, 300);

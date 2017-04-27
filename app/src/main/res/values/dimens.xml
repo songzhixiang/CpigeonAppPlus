@@ -259,11 +259,11 @@
     <dimen name="list_header_race_detial_imageview_racedetialshow_marginright">10dp</dimen>
     <dimen name="list_header_race_detial_layout_detial_padding">10dp</dimen>
     <dimen name="list_header_race_detial_textview_detial_title_padding">3dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_title_minwidth">60dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_title_minwidth">48dp</dimen>
     <dimen name="list_header_race_detial_textview_detial_title_textsize">14sp</dimen>
     <dimen name="list_header_race_detial_textview_detial_title__right_minwidth">45dp</dimen>
     <dimen name="list_header_race_detial_textview_detial_content_padding">3dp</dimen>
-    <dimen name="list_header_race_detial_textview_detial_content_marginleft">10dp</dimen>
+    <dimen name="list_header_race_detial_textview_detial_content_marginleft">4dp</dimen>
     <dimen name="list_header_race_detial_textview_detial_content_textsize">14sp</dimen>
     <dimen name="list_header_race_detial_layout_gg_paddingleft">5dp</dimen>
     <dimen name="list_header_race_detial_layout_gg_paddingright">5dp</dimen>

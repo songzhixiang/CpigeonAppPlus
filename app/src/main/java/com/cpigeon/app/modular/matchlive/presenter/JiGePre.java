@@ -38,10 +38,11 @@ public class JiGePre extends BasePresenter<IReportData, IJiGeDao> {
                                 public void run() {
                                     final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? JiGeDataAdapter.getXH(data) : JiGeDataAdapter.getGP(data);
                                     if (isAttached()) {
-                                        if (mView.isRefreshing())
-                                            mView.hideRefreshLoading();
-                                        else if (mView.isMoreDataLoading())
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreComplete();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                        }
                                         mView.showMoreData(d);
                                     }
                                 }
@@ -54,11 +55,11 @@ public class JiGePre extends BasePresenter<IReportData, IJiGeDao> {
                                 @Override
                                 public void run() {
                                     if (isAttached()) {
-                                        if (mView.isRefreshing()) {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("加载失败", IView.TipType.View);
-                                        } else if (mView.isMoreDataLoading()) {
+                                        if (mView.isMoreDataLoading()) {
                                             mView.loadMoreFail();
+                                        } else {
+                                            mView.hideRefreshLoading();
+                                            mView.showTips("获取记录失败", IView.TipType.View);
                                         }
                                     }
                                 }

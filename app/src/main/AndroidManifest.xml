@@ -24,6 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <!-- UMeng 配置 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL_VALUE}" />
         <!--APP 渠道配置-->
         <meta-data
             android:name="APP_CHANNEL"

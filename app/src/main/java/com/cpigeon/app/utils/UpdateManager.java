@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.cpigeon.app.MyApp;
@@ -68,7 +69,7 @@ public class UpdateManager {
             @Override
             public void onSuccess(final List<UpdateInfo> data) {
                 if (onCheckUpdateInfoListener != null) {
-                    new Handler()
+                    new Handler(Looper.getMainLooper())
                             .postDelayed(new Runnable() {
                                              @Override
                                              public void run() {
@@ -98,7 +99,7 @@ public class UpdateManager {
     private void checkUpdate(List<UpdateInfo> updateInfos) {
         if (updateInfos == null || updateInfos.size() == 0) return;
         for (UpdateInfo updateInfo : updateInfos) {
-            if (updateInfo.getPackageName().equals(mContext.getPackageName())) {
+            if (mContext.getPackageName().equals(updateInfo.getPackageName())) {
                 if (updateInfo.getVerCode() > CommonTool.getVersionCode(mContext)) {
                     updateReady(updateInfo);
                     return;

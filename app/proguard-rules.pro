@@ -31,19 +31,59 @@
 -dontwarn android.support.v4.**                                             #去掉警告
 -keep class android.support.v4.** { *; }                                    #过滤android.support.v4
 -keep interface android.support.v4.app.** { *; }
--keep public class * extends android.support.v4.**
--keep public class * extends android.app.Fragment
+
 
 -keep class org.apache.**{*;}                                               #过滤commons-httpclient-3.1.jar
-
--keep class com.fasterxml.jackson.**{*;}                                    #过滤jackson-core-2.1.4.jar等
 
 -dontwarn org.xutils.**                                                     #去掉警告
 -keep class org.xutils.** { *; }
 -keep class android.**{*;}
 -keep class * extends java.lang.annotation.Annotation{*;}                   #这是xUtils文档中提到的过滤掉注解
+
+#不混淆SweetAlert
+-dontwarn cn.pedant.SweetAlert.**                                             #去掉警告
+-keep class cn.pedant.SweetAlert.** { *; }                                    #过滤cn.pedant.SweetAlert
+
+#不混淆com.alibaba.fastjson
+-dontwarn com.alibaba.fastjson.**                                             #去掉警告
+-keep class com.alibaba.fastjson.** { *; }                                    #过滤com.alibaba.fastjson
+-keep interface com.alibaba.fastjson.** { *; }                                #过滤com.alibaba.fastjson
+#fastJson
+-keepattributes Singature     #避免混淆泛型
+-keepattributes *Annotation  #不混淆注释
+
+# 不混淆butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+#不混淆 com.squareup.picasso
+-keepattributes SourceFile,LineNumberTable
+-keep class com.parse.*{ *; }
+-dontwarn com.parse.**
+-dontwarn com.squareup.picasso.**
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+#不混淆 com.squareup.picasso
+
+#不混淆极光推送
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
 #保留model
--keep class com.cpigeon.model.**{*;}
+-keep class com.cpigeon.app.modular.*.model.bean.**{*;}
+-keep class com.cpigeon.app.commonstandard.**{*;}
+-keep class com.cpigeon.app.utils.databean.**{*;}
+
 ###保留使用xUtils的方法和类，并且不要混淆名字
 -keep @org.xutils.db.annotation.Table class *
 -keepclassmembers class * {
@@ -60,7 +100,7 @@
 
 
 #如果引用了v4或者v7包
-            -dontwarn android.support.**
+-dontwarn android.support.**
 
 #集成 JPush Android SDK 的混淆
 -dontoptimize

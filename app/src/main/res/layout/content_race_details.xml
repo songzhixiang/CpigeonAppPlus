@@ -33,7 +33,8 @@
         android:paddingBottom="@dimen/list_header_race_detial_layout_gg_paddingbottom"
         android:paddingLeft="@dimen/list_header_race_detial_layout_gg_paddingleft"
         android:paddingRight="@dimen/list_header_race_detial_layout_gg_paddingright"
-        android:paddingTop="@dimen/list_header_race_detial_layout_gg_paddingtop">
+        android:paddingTop="@dimen/list_header_race_detial_layout_gg_paddingtop"
+        android:visibility="gone">
 
         <com.cpigeon.app.utils.customview.MarqueeTextView
             android:id="@+id/list_header_race_detial_gg"

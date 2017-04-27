@@ -10,7 +10,6 @@
     </style>
 
 
-
     <style name="WelcomeHeadingAppearance" parent="@android:style/TextAppearance.Large">
         <item name="android:textSize">@dimen/welcome_heading</item>
         <item name="android:textColor">@android:color/white</item>
@@ -130,6 +129,9 @@
         </item>
         <item name="android:textColor">@color/light_black2</item>
         <item name="android:layout_marginLeft">
+            @dimen/list_header_race_detial_textview_detial_content_marginleft
+        </item>
+        <item name="android:layout_marginRight">
             @dimen/list_header_race_detial_textview_detial_content_marginleft
         </item>
         <item name="android:textSize">

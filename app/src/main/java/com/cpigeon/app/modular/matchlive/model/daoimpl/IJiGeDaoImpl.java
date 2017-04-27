@@ -25,7 +25,7 @@ public class IJiGeDaoImpl implements IJiGeDao {
 
             @Override
             public void onError(int errorType, Object data) {
-
+                listOnCompleteListener.onFail("加载失败");
             }
         });
     }

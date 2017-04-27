@@ -73,7 +73,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 Object item = ((MatchLiveExpandAdapter) adapter).getData().get(position);
-                Logger.d(item.getClass().getName());
+//                Logger.d(item.getClass().getName());
                 if (item instanceof MatchLiveExpandAdapter.MatchTitleItem) {
                     if (!"bs".equals(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo().getDt())) {
                         if (checkArrearage(((MatchLiveExpandAdapter.MatchTitleItem) item).getMatchInfo()))
@@ -93,11 +93,11 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                             lastExpandItemPosition = -1;
                         }
                         adapter.collapse(position);
-                        Logger.e("当前被关闭的项的postion" + position);
+//                        Logger.e("当前被关闭的项的postion" + position);
                     } else {
                         if (lastExpandItemPosition >= 0) {
                             adapter.collapse(lastExpandItemPosition);
-                            Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+//                            Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
                             if (lastExpandItemPosition > position){//展开上面的项
                                 adapter.expand(position);
                                 lastExpandItemPosition = position;
@@ -109,22 +109,21 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                         } else {
                             lastExpandItemPosition = position;
                             adapter.expand(lastExpandItemPosition);
-                            Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+//                            Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
                         }
 
                     }
                     if (lastExpandItemPosition == -1)
                     {
-                        Logger.e("当前没有任何项被展开");
+//                        Logger.e("当前没有任何项被展开");
                     }
-                    Logger.e("lastExpandItemPosition:" + lastExpandItemPosition);
+//                    Logger.e("lastExpandItemPosition:" + lastExpandItemPosition);
                 } else if (item instanceof MatchLiveExpandAdapter.MatchDetialItem) {
                     MatchInfo mi = ((MatchLiveExpandAdapter.MatchDetialItem) item).getSubItem(0);
                     if (checkArrearage(mi)) return;
                     if (mi != null && !"jg".equals(mi.getDt())) {
                         if (mi.isMatch()) {
                             intent = new Intent(getActivity(), RaceReportActivity.class);
-
                         } else {
                             intent = new Intent(getActivity(), RaceXunFangActivity.class);
                         }
@@ -238,7 +237,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
             if (matchInfo.getRuid() == CpigeonData.getInstance().getUserId(getActivity())) {
                 dialog.setContentText("您的直播平台已欠费\n请前往中鸽网充值缴费.");
                 dialog.setCancelText("关闭");
-                dialog.setConfirmText("去充值");
+                dialog.setConfirmText("知道了");
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {

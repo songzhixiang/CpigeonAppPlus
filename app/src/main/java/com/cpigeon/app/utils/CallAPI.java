@@ -1,6 +1,7 @@
 package com.cpigeon.app.utils;
 
 import android.content.Context;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -27,10 +28,10 @@ import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
 import com.cpigeon.app.service.MainActivityService;
 import com.cpigeon.app.utils.cache.CacheManager;
+import com.cpigeon.app.utils.databean.ApiResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Cache;
 import com.tencent.mm.sdk.modelpay.PayReq;
 
 import org.json.JSONArray;
@@ -44,7 +45,6 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -583,12 +583,15 @@ public class CallAPI {
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_COMMON_1MIN_TIME);
         return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
+            boolean hasError = true;
+
             @Override
             public void onSuccess(String result) {
                 if (result != null) dealData(result);
             }
 
             private void dealData(String result) {
+                hasError = false;
                 Logger.i(result);
                 try {
                     JSONObject obj = new JSONObject(result);
@@ -634,6 +637,8 @@ public class CallAPI {
             @Override
             public void onFinished() {
                 Logger.i("");
+                if (hasError)
+                    callback.onError(Callback.ERROR_TYPE_OTHER, null);
             }
 
         });
@@ -666,12 +671,14 @@ public class CallAPI {
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_COMMON_1MIN_TIME);
         addApiSign(requestParams);
         return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
+            boolean hasError = true;
             @Override
             public void onSuccess(String result) {
                 if (result != null) dealData(result);
             }
 
             private void dealData(String result) {
+                hasError=false;
                 Logger.json(result);
                 try {
                     JSONObject obj = new JSONObject(result);
@@ -722,7 +729,8 @@ public class CallAPI {
 
             @Override
             public void onFinished() {
-
+                if (hasError)
+                    callback.onError(Callback.ERROR_TYPE_OTHER, null);
             }
 
         });
@@ -986,17 +994,16 @@ public class CallAPI {
         requestParams.addHeader("u", userToken);
         requestParams.setCacheMaxAge(CACHE_MATCH_INFO_TIME);
 
+        requestParams.addParameter("bt", beginTime);
+        if (endTime != 0)
+            requestParams.addParameter("et", endTime);
         final String cacheKey = getCacheKey(CPigeonApiUrl.RACE_ITEM_INFO_URL, requestParams);
         List<MatchInfo> data = CacheManager.getCache(cacheKey);
+
         if (data != null) {
             callback.onSuccess(data);
             return null;
         }
-
-        requestParams.addParameter("bt", beginTime);
-        if (endTime != 0)
-            requestParams.addParameter("et", endTime);
-
         addApiSign(requestParams);
         return x.http().get
                 (requestParams, new org.xutils.common.Callback.CacheCallback<String>() {
@@ -1028,7 +1035,8 @@ public class CallAPI {
 
                     private void dealData(String result) {
 
-                        Logger.json(result);
+//                        Logger.json(result);
+                        Logger.d(result);
                         try {
                             JSONObject obj = new JSONObject(result);
                             if (obj.getBoolean("status")) {
@@ -1206,8 +1214,6 @@ public class CallAPI {
                                                                       int czIndex,
                                                                       String sKey,
                                                                       @NonNull final Callback<List> callback) {
-
-
         //计算TOKEN
         String userToken = CommonTool.getUserToken(context);
 
@@ -1249,39 +1255,41 @@ public class CallAPI {
                     @Override
                     public void onSuccess(String result) {
                         if (result != null) dealData(result);
-                        Logger.json(result);
+//                        Logger.json(result);
                     }
 
                     private void dealData(final String result) {
                         hasError = false;
+                        Logger.d(result);
                         new Thread() {
                             @Override
                             public void run() {
-                                List list;
                                 try {
                                     ApiResponse apiResponse;
                                     if ("gp".equals(matchType)) {
                                         ApiResponse<List<MatchReportGP>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportGP>>>() {
                                         });
                                         apiResponse = apiResponse1;
-                                        Logger.i("gp报道数据共计：" + apiResponse1.data.size());
-                                        for (MatchReportGP item : apiResponse1.data) {
-                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
-                                        }
+                                        Logger.i("gp报道数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
+                                        if (apiResponse1.getData() != null)
+                                            for (MatchReportGP item : apiResponse1.getData()) {
+                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
+                                            }
                                     } else {
                                         ApiResponse<List<MatchReportXH>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportXH>>>() {
                                         });
                                         apiResponse = apiResponse1;
-                                        Logger.i("xh报道数据共计：" + apiResponse1.data.size());
-                                        for (MatchReportXH item : apiResponse1.data) {
-                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
-                                        }
+                                        Logger.i("xh报道数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
+                                        if (apiResponse1.getData() != null)
+                                            for (MatchReportXH item : apiResponse1.getData()) {
+                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
+                                            }
                                     }
-                                    if (apiResponse.status) {
-                                        CacheManager.put(cacheKey, apiResponse.data);
-                                        callback.onSuccess((List) apiResponse.data);
+                                    if (apiResponse.isStatus()) {
+                                        CacheManager.put(cacheKey, apiResponse.getData());
+                                        callback.onSuccess((List) apiResponse.getData());
                                     } else {
-                                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse.errorCode);
+                                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse.getErrorCode());
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -1380,43 +1388,40 @@ public class CallAPI {
                     }
 
                     private void dealData(final String result) {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                List list;
-                                Gson gson = new Gson();
-                                try {
-                                    JSONObject obj = new JSONObject(result);
-                                    if (obj.getBoolean("status")) {
-                                        if ("gp".equals(matchType)) {
-                                            ApiResponse<List<MatchPigeonsGP>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsGP>>>() {
-                                            });
-                                            list = apiResponse.data;
-                                            Logger.i("gp集鸽数据共计：" + list.size());
-                                            for (MatchPigeons item : apiResponse.data) {
-                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
-                                            }
-                                        } else {
-                                            ApiResponse<List<MatchPigeonsXH>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsXH>>>() {
-                                            });
-                                            list = apiResponse.data;
-                                            Logger.i("xh集鸽数据共计：" + list.size());
-                                            for (MatchPigeons item : apiResponse.data) {
-                                                item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
-                                            }
+                        Logger.d("isMain=" + (Looper.getMainLooper() == Looper.myLooper()));
+                        List list;
+                        try {
+                            JSONObject obj = new JSONObject(result);
+                            if (obj.getBoolean("status")) {
+                                if ("gp".equals(matchType)) {
+                                    ApiResponse<List<MatchPigeonsGP>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsGP>>>() {
+                                    });
+                                    list = apiResponse.getData();
+                                    Logger.i("gp集鸽数据共计：" + (list == null ? "null" : list.size() + ""));
+                                    if (apiResponse.getData() != null)
+                                        for (MatchPigeons item : apiResponse.getData()) {
+                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
                                         }
-                                        CacheManager.put(cacheKey, list, 60 * 1000, 1000 * 60 * 60 * 24);
-                                        callback.onSuccess(list);
-
-                                    } else {
-                                        callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
+                                } else {
+                                    ApiResponse<List<MatchPigeonsXH>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchPigeonsXH>>>() {
+                                    });
+                                    list = apiResponse.getData();
+                                    Logger.i("xh集鸽数据共计：" + (list == null ? "null" : list.size() + ""));
+                                    if (apiResponse.getData() != null)
+                                        for (MatchPigeons item : apiResponse.getData()) {
+                                            item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
+                                        }
                                 }
+                                CacheManager.put(cacheKey, list, 60 * 1000, 1000 * 60 * 60 * 24);
+                                callback.onSuccess(list);
+
+                            } else {
+                                callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
                             }
-                        }.start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
+                        }
                     }
 
                     @Override
@@ -1504,7 +1509,7 @@ public class CallAPI {
                         CacheManager.put(cacheKey, listData, 1000 * 60, 1000 * 60 * 60 * 2);
                         callback.onSuccess(listData);
                     } else if (obj.getBoolean("status")) {
-                        Logger.i("没有公告");
+//                        Logger.i("没有公告");
                         callback.onSuccess(listData);
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
@@ -1836,7 +1841,7 @@ public class CallAPI {
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
-                        Logger.i("获取用户在用服务完成");
+//                        Logger.i("获取用户在用服务完成");
                         CpigeonUserServiceInfo cpigeonUserServiceInfo = null;
                         if (!obj.isNull("data")) {
                             cpigeonUserServiceInfo = new CpigeonUserServiceInfo();
@@ -2369,9 +2374,9 @@ public class CallAPI {
                     return;
                 }
                 try {
-                    if (result.getBoolean("data")) {
-                        Logger.e("增加访问量成功");
-                    }
+//                    if (result.getBoolean("data")) {
+//                        Logger.e("增加访问量成功");
+//                    }
                     callback.onSuccess(result.getBoolean("data"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2421,7 +2426,7 @@ public class CallAPI {
             @Override
             public void onSuccess(JSONObject result) {
 
-                Logger.d(result.toString());
+//                Logger.d(result.toString());
                 if (!result.has("status") || result.isNull("data")) {
                     try {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, result.getInt("errorCode"));
@@ -4257,53 +4262,6 @@ public class CallAPI {
         return builder.toString();
     }
 
-
-    public static class ApiResponse<T> implements Serializable {
-
-        /**
-         * status : false
-         * errorCode : 20002
-         * msg :
-         * data : null
-         */
-
-        private boolean status;
-        private int errorCode;
-        private String msg;
-        private T data;
-
-        public boolean isStatus() {
-            return status;
-        }
-
-        public void setStatus(boolean status) {
-            this.status = status;
-        }
-
-        public int getErrorCode() {
-            return errorCode;
-        }
-
-        public void setErrorCode(int errorCode) {
-            this.errorCode = errorCode;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-    }
 
     public interface Callback<E> {
         int NO_ERROR = -1;

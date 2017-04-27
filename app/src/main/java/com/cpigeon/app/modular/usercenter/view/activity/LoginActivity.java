@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     TextView tvForgetPass;
     @BindView(R.id.activity_login)
     RelativeLayout activityLogin;
-
+//
     @NeedsPermission({
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
