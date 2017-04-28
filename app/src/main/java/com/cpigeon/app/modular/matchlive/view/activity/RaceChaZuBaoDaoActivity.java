@@ -15,12 +15,9 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.presenter.ChaZuBaoDaoDetailsPre;
 import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRacePigeonsView;
 import com.cpigeon.app.modular.matchlive.view.adapter.ChaZuBaoDaoDetailsAdapter;
@@ -91,6 +88,8 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     private Bundle bundle;
     private Intent intent;
     private ChaZuBaoDaoDetailsAdapter mAdapter;
@@ -137,11 +136,12 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     }
 
     private void initDetails() {
-        toolbar.setTitle(getTitleName());
+        toolbar.setTitle("");
+        raceDetailsMarqueetv.setText(getTitleName());
         layoutReportInfoDetial.setVisibility(View.GONE);
         listHeaderRaceDetialGg.setText(Annotation);
         currGroupData = getData_CZTJ().get(getCzIndex() - 1);
-        raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s)", matchInfo.computerBSMC(), (char) (getCzIndex() - 1 + 'A'), "报道" + currGroupData.get("gcys") + "羽"));
+        raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s)", matchInfo.computerBSMC(), (char) (getCzIndex() - 1 + 'A'), "报到" + currGroupData.get("gcys") + "羽"));
         raceDetialMatchInfoContentArea.setText(matchInfo.getArea());
         raceDetialMatchInfoContentJwd.setText(matchInfo.computerSFZB());
         raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
@@ -201,7 +201,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
 
     @Override
     protected String getEmptyDataTips() {
-        return "暂时没有报道数据，请稍后再试";
+        return "暂时没有报到数据，请稍后再试";
     }
 
     @Override
@@ -374,4 +374,5 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         }
 
     }
+
 }

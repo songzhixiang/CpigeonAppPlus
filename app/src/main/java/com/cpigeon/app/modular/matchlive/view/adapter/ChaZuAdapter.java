@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class ChaZuAdapter extends BaseQuickAdapter<HashMap<String, Object>,BaseViewHolder>{
-    private int loadType;//设置加载数据的类型，0-插组报道；1-插组指定
+    private int loadType;//设置加载数据的类型，0-插组报到；1-插组指定
     public ChaZuAdapter(List<HashMap<String, Object>> data,int loadType) {
         super(R.layout.listitem_pigeons_groups,data);
         this.loadType = loadType;
@@ -34,7 +34,7 @@ public class ChaZuAdapter extends BaseQuickAdapter<HashMap<String, Object>,BaseV
         helper.setText(R.id.pigeons_groups_group_join_count,builder);
         switch (loadType)
         {
-            case 0://插组报道
+            case 0://插组报到
 
                 helper.setVisible(R.id.pigeons_groups_group_homing_count,true);
                 builder = new SpannableStringBuilder("归巢" + String.valueOf(item.get("gcys")) + "羽");

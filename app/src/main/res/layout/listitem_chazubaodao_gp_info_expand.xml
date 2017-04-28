@@ -68,5 +68,5 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        android:text="插组报道:" />
+        android:text="插组报到:" />
 </LinearLayout>

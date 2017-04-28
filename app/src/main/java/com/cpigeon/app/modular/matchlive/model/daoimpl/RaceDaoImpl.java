@@ -26,14 +26,14 @@ import java.util.List;
  */
 
 public class RaceDaoImpl implements IRaceDao {
-    private final static int DATA_TYPE_BDSJ = 1;//数据类型-报道数据
+    private final static int DATA_TYPE_BDSJ = 1;//数据类型-报到数据
     private int CURRENT_DATA_TYPE;//当前数据类型
-    private List<HashMap<String, Object>> data_BDSJ = null;//显示数据缓存-报道数据
+    private List<HashMap<String, Object>> data_BDSJ = null;//显示数据缓存-报到数据
     private MatchInfo matchInfo;//赛事信息
     private final static int mLoadMoreSize = 100;
     private Context mContext = MyApp.getInstance();
     /**
-     * 获取报道数据
+     * 获取报到数据
      * @param matchType
      * @param ssid
      * @param foot
@@ -128,7 +128,7 @@ public class RaceDaoImpl implements IRaceDao {
             String key = "%%";
             Selector selector;
             if (CURRENT_DATA_TYPE == DATA_TYPE_BDSJ) {
-                //报道数据和插组报道需要的数据
+                //报到数据和插组报到需要的数据
                 if ("xh".equals(matchInfo.getLx())) {
                     selector = db.selector(MatchReportXH.class);
                     selector.orderBy("speed", true);

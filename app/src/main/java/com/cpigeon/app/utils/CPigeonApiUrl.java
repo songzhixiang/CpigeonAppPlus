@@ -160,7 +160,7 @@ public class CPigeonApiUrl {
     public static final String RACE_ITEM_HOMING_COUNT_URL = API_VERSION + "RaceHomingCount";
 
     /**
-     * 比赛报道数据URL
+     * 比赛报到数据URL
      */
     public static final String RACE_REPORT_INFO_URL = API_VERSION + "RaceReport";
     /**

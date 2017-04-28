@@ -139,7 +139,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     protected String getEmptyDataTips() {
-        return "暂时没有报道数据";
+        return "暂时没有报到数据";
     }
 
     @Override

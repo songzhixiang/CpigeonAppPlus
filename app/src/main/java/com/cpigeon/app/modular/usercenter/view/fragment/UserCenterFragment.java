@@ -39,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
+ *
  * Created by Administrator on 2017/4/6.
  */
 
@@ -112,7 +113,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 if (!isNetworkConnected()) {
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("无法连接网络")
-                            .setConfirmText("知道了")
+                            .setConfirmText("知到了")
                             .show();
                     return;
                 }
@@ -167,7 +168,8 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         if (!isVisible) return;
         if (checkLogin()) {
             UserInfo.DataBean userInfo = CpigeonData.getInstance().getUserInfo();
-            String userHeadImageURl = "", nickName = "";
+            String userHeadImageURl = "";
+            String nickName = "";
 
             Map<String, Object> map = getLoginUserInfo();
             if (map.get("touxiang") != null && (!map.get("touxiang").equals("null") || !map.get("touxiang").equals(""))) {
@@ -180,7 +182,16 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 nickName = map.get("username").toString();
             }
             if (userInfo != null) {
-                userHeadImageURl = userInfo.getHeadimg();
+                if (!TextUtils.isEmpty(userInfo.getHeadimg()))
+                {
+                    userHeadImageURl = userInfo.getHeadimg();
+                    //余额
+                    Picasso.with(getActivity())
+                            .load(userHeadImageURl)
+                            .error(R.mipmap.head_image_default)
+                            .into(fragmentUserCenterUserLogo);
+                }
+
                 nickName = TextUtils.isEmpty(userInfo.getNickname()) ? userInfo.getUsername() : userInfo.getNickname();
 //              更新用户缓存数据
                 if (userHeadImageURl != null)
@@ -188,10 +199,9 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 if (userInfo.getNickname() != null)
                     SharedPreferencesTool.Save(getActivity(), "nicheng", userInfo.getNickname(), SharedPreferencesTool.SP_FILE_LOGIN);
             }
-            Picasso.with(getActivity())
-                    .load(userHeadImageURl)
-                    .error(R.mipmap.head_image_default)
-                    .into(fragmentUserCenterUserLogo);
+
+
+
 
             final String name = nickName;
             fragmentUserCenterUserName.setText(name);
@@ -202,7 +212,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         if (fragmentUserCenterDetails != null) {
             fragmentUserCenterDetails.setVisibility(checkLogin() ? View.VISIBLE : View.GONE);
         }
-        //余额
 
         tvUserMoney.setText(String.format("%.2f", CpigeonData.getInstance().getUserBalance()));
 

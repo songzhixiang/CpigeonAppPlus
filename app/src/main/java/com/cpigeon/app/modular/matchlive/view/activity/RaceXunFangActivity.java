@@ -154,7 +154,7 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
 
     @Override
     protected String getEmptyDataTips() {
-        return "没有报道数据";
+        return "没有报到数据";
     }
 
     @Override

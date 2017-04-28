@@ -41,7 +41,7 @@
         android:id="@+id/tv_jige_chazubaodao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="插组报道:"
+        android:text="插组报到:"
          />
 
 

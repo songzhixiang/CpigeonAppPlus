@@ -60,7 +60,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                         mView.loadMoreFail();
                                     } else {
                                         mView.hideRefreshLoading();
-                                        mView.showTips("获取报道记录失败", IView.TipType.View);
+                                        mView.showTips("获取报到记录失败", IView.TipType.View);
                                     }
                                 }
                             }, 300);
@@ -102,7 +102,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                                         mView.loadMoreFail();
                                     } else {
                                         mView.hideRefreshLoading();
-                                        mView.showTips("获取报道记录失败", IView.TipType.View);
+                                        mView.showTips("获取报到记录失败", IView.TipType.View);
                                     }
                                 }
                             }, 300);

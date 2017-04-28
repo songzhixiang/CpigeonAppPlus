@@ -30,7 +30,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 /**
- * 插组报道Fragment
+ * 插组报到Fragment
  * Created by Administrator on 2017/4/15.
  */
 

@@ -19,7 +19,7 @@ public interface IChaZuDao extends IBaseDao{
     void loadChaZuTongJi(String lx, String ssid, IBaseDao.OnCompleteListener<List<HashMap<String, Object>>> onCompleteListener);
 
     /**
-     * 加载插组报道的详细信息
+     * 加载插组报到的详细信息
      * @param matchType
      * @param ssid
      * @param foot

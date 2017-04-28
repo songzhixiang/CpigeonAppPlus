@@ -81,6 +81,8 @@ public class RaceDetailsFragment extends DialogFragment {
     TextView raceDetialMatchInfoContentJwd;
     @BindView(R.id.layout_report_info_detial)
     LinearLayout layoutReportInfoDetial;
+    @BindView(R.id.layout_sfzb)
+    LinearLayout layoutSfzb;
     private MatchInfo matchInfo;
     private String loadType;
 
@@ -121,6 +123,16 @@ public class RaceDetailsFragment extends DialogFragment {
         layoutCaptain.setVisibility(View.GONE);
         if ("jg".equals(matchInfo.getDt())) {
             raceDetialInfoTextviewRacename.setText("集鸽完毕");
+            layoutCaipanyuan.setVisibility(View.GONE);
+            layoutCaipanzhang.setVisibility(View.GONE);
+            layoutArea.setVisibility(View.GONE);
+            layoutKj.setVisibility(View.GONE);
+            raceDetialMatchInfoTitleSlys.setText("共计上传:");
+            raceDetialMatchInfoContentSlys.setText(matchInfo.getCsys() + "羽");
+            layoutTq.setVisibility(View.GONE);
+            layoutSfzb.setVisibility(View.GONE);
+            raceDetialMatchInfoTitleSt.setText("上传时间:");
+            raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
         } else if (!TextUtils.isEmpty(matchInfo.getMc())) {
             raceDetialInfoTextviewRacename.setText(matchInfo.getBsmc());
         }

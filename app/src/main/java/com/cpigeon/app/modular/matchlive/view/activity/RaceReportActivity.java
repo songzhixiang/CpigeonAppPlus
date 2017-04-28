@@ -38,7 +38,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Administrator on 2017/4/10.
  */
 
-public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl{
+public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl {
 
     ///////////////////////////////////////////////////////////////////////////
     // 视图
@@ -71,6 +71,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     private Bulletin bulletin;
     private String loadType;
     private String tablayout_seconde_name;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_race_details;
@@ -87,8 +88,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         bundle = intent.getExtras();
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
         loadType = bundle.getString("loadType");
-        if (TextUtils.isEmpty(loadType))
-        {
+        if (TextUtils.isEmpty(loadType)) {
             loadType = matchInfo.getLx();
         }
 
@@ -111,8 +111,8 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
             } else {
                 mFragmentPagerAdapter = new FragmentPagerItemAdapter(
                         getSupportFragmentManager(), FragmentPagerItems.with(this)
-                        .add("报道数据", ReportDataFragment.class)
-                        .add("插组报道", ChaZuBaoDaoFragment.class)
+                        .add("报到数据", ReportDataFragment.class)
+                        .add("插组报到", ChaZuBaoDaoFragment.class)
                         .add(tablayout_seconde_name, JiGeDataFragment.class)
                         .add("插组指定", ChaZuZhiDingFragment.class)
                         .create());
@@ -207,7 +207,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     @Override
     protected void onNetworkConnected(NetUtils.NetType type) {
-        showTips("网络加载失败",TipType.DialogError);
+        showTips("网络加载失败", TipType.DialogError);
     }
 
     @Override
@@ -239,12 +239,14 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     public void showDialogFragment() {
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("dialogFragment");
         if (fragment != null) {
             mFragmentTransaction.remove(fragment);
         }
         RaceDetailsFragment detailsFragment = RaceDetailsFragment.newInstance("直播数据");
         detailsFragment.show(mFragmentTransaction, "dialogFragment");
+
     }
 
 }

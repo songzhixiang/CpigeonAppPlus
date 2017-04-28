@@ -78,7 +78,7 @@ public class MyApp extends Application {
         //设置用户ID
         CrashReport.setUserId("" + CpigeonData.getInstance().getUserId(this));
         try {
-            //获取并设置Bugly渠道
+            //获取并设置Bugly渠到
             ApplicationInfo appInfo = null;
             appInfo = getPackageManager().getApplicationInfo(getPackageName(),
                     PackageManager.GET_META_DATA);

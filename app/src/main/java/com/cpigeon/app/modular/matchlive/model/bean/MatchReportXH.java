@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 /**
- * 协会报道数据
+ * 协会报到数据
  * <p>
  * <p>
- * 插组报道数据
+ * 插组报到数据
  * Created by Administrator on 2016/11/7.
  */
 @Table(name = "matchreport_xh")

@@ -6,7 +6,7 @@ import org.xutils.db.annotation.Table;
 import java.io.Serializable;
 
 /**
- * 公棚报道数据
+ * 公棚报到数据
  * Created by Administrator on 2016/11/7.
  */
 @Table(name = "matchreport_gp")

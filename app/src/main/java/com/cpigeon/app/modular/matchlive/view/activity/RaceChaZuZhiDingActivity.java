@@ -14,12 +14,9 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsGP;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchPigeonsXH;
 import com.cpigeon.app.modular.matchlive.presenter.ChaZuBaoDaoDetailsPre;
 import com.cpigeon.app.modular.matchlive.view.activity.viewdao.IRacePigeonsView;
 import com.cpigeon.app.modular.matchlive.view.adapter.ChaZuZhiDingDetailsAdapter;
@@ -107,6 +104,10 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
+    @BindView(R.id.layout_sfzb)
+    LinearLayout layoutSfzb;
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     private Bundle bundle;
     private Intent intent;
     private ChaZuZhiDingDetailsAdapter mAdapter;
@@ -154,6 +155,8 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
 
     private void initDetails() {
         layoutReportInfoDetial.setVisibility(View.GONE);
+        toolbar.setTitle("");
+        raceDetailsMarqueetv.setText(getTitleName());
         listHeaderRaceDetialGg.setText(Annotation);
         currGroupData = getData_CZTJ().get(getCzIndex() - 1);
         raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s)", matchInfo.computerBSMC(), (char) (getCzIndex() - 1 + 'A'), "指定" + currGroupData.get("sfys") + "羽"));
@@ -164,6 +167,20 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
         raceDetialMatchInfoContentTq.setText(matchInfo.getTq());
         raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "KM");
         toolbar.setTitle(matchInfo.getMc());
+
+        if ("jg".equals(matchInfo.getDt())) {
+            raceDetialInfoTextviewRacename.setText("集鸽完毕");
+            layoutCaipanyuan.setVisibility(View.GONE);
+            layoutCaipanzhang.setVisibility(View.GONE);
+            layoutArea.setVisibility(View.GONE);
+            layoutKj.setVisibility(View.GONE);
+            raceDetialMatchInfoTitleSlys.setText("共计上传:");
+            raceDetialMatchInfoContentSlys.setText(matchInfo.getCsys() + "羽");
+            layoutTq.setVisibility(View.GONE);
+            layoutSfzb.setVisibility(View.GONE);
+            raceDetialMatchInfoTitleSt.setText("上传时间:");
+        }
+
         if ("xh".equals(loadType)) {
             layoutCaipanzhang.setVisibility(View.GONE);
             layoutCaipanyuan.setVisibility(View.GONE);

@@ -79,7 +79,7 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
                     helper.setText(R.id.tv_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
                     helper.setText(R.id.tv_shanglongshijian, "上笼时间:" + detialItem.getSubItem(0).getJgtime());
                     helper.setText(R.id.tv_shangchuanshijian, "上传时间:" + detialItem.getSubItem(0).getUptime());
-                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty(detialItem.getSubItem(0).CZtoString()) ? "插组报道:无" : "插组报道 :" + detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazuzhiding, TextUtils.isEmpty(detialItem.getSubItem(0).CZtoString()) ? "插组报到:无" : "插组报到 :" + detialItem.getSubItem(0).CZtoString());
                 }
                 break;
 

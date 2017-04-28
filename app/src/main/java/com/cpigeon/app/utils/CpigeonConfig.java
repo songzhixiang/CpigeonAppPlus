@@ -42,7 +42,7 @@ public class CpigeonConfig {
      */
     public static final int CACHE_MATCH_INFO_TIME = BuildConfig.DEBUG ? 1000 * 10 : 1000 * 60 * 3;
     /**
-     * 报道列表信息缓存时间(毫秒)
+     * 报到列表信息缓存时间(毫秒)
      */
     public static final int CACHE_MATCH_REPORT_INFO_TIME = BuildConfig.DEBUG ? 1000 * 10 : 1000 * 60 * 3;
     /**

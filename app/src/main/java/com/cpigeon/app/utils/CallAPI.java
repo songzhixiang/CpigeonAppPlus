@@ -1267,7 +1267,7 @@ public class CallAPI {
                                         ApiResponse<List<MatchReportGP>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportGP>>>() {
                                         });
                                         apiResponse = apiResponse1;
-                                        Logger.i("gp报道数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
+                                        Logger.i("gp报到数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
                                         if (apiResponse1.getData() != null)
                                             for (MatchReportGP item : apiResponse1.getData()) {
                                                 item.setFoot(EncryptionTool.encryptAES(item.getFoot()));
@@ -1276,7 +1276,7 @@ public class CallAPI {
                                         ApiResponse<List<MatchReportXH>> apiResponse1 = JSON.parseObject(result, new TypeReference<ApiResponse<List<MatchReportXH>>>() {
                                         });
                                         apiResponse = apiResponse1;
-                                        Logger.i("xh报道数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
+                                        Logger.i("xh报到数据共计：" + (apiResponse1.getData() == null ? "null" : apiResponse1.getData().size() + ""));
                                         if (apiResponse1.getData() != null)
                                             for (MatchReportXH item : apiResponse1.getData()) {
                                                 item.setFoot(EncryptionTool.encryptAES(item.getFoot()));

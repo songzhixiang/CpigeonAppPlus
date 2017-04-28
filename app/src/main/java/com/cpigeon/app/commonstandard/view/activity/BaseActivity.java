@@ -57,6 +57,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private WeakReference<Activity> weakReference;
     private SwipeBackActivityHelper mHelper;
     private SwipeBackLayout mSwipeBackLayout;
+    private SweetAlertDialog dialogPrompt;
     /**
      * 网络观察者
      */
@@ -327,7 +328,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public boolean showTips(String tip, TipType tipType) {
-        SweetAlertDialog dialogPrompt;
+
         switch (tipType) {
             case Dialog:
                 dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
@@ -347,9 +348,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
                 dialogPrompt.setCancelable(false);
                 dialogPrompt.setTitleText("失败")
-                        .setContentText(tip)
-                        //// TODO: 2017/4/10 图标
-                        .setConfirmText(getString(R.string.confirm)).show();
+                        .setContentText(tip).
+                        setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case View:
             case ViewSuccess:
