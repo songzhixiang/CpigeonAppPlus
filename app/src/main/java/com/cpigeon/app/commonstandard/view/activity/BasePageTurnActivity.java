@@ -80,10 +80,10 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         swiperefreshlayout.setEnabled(false);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         pagesize = getDefaultPageSize();
-        onRefresh();
-//        if (isNetworkConnected()) onRefresh();
-//        else
-//            showTips("网络连接已断开", TipType.View);
+//        onRefresh();
+        if (isNetworkConnected()) onRefresh();
+        else
+            showTips("网络连接已断开", TipType.View);
     }
 
 

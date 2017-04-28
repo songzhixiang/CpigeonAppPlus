@@ -87,6 +87,11 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         bundle = intent.getExtras();
         matchInfo = (MatchInfo) bundle.getSerializable("matchinfo");
         loadType = bundle.getString("loadType");
+        if (TextUtils.isEmpty(loadType))
+        {
+            loadType = matchInfo.getLx();
+        }
+
 //        Logger.e("当前页面加载的数据是：" + loadType + "类型的数据");
         if ("xh".equals(loadType)) {
             tablayout_seconde_name = "集鸽数据";
@@ -202,7 +207,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
 
     @Override
     protected void onNetworkConnected(NetUtils.NetType type) {
-
+        showTips("网络加载失败",TipType.DialogError);
     }
 
     @Override

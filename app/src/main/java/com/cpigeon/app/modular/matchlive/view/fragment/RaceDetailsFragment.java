@@ -9,15 +9,12 @@ import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.cpigeon.app.R;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

@@ -3,11 +3,14 @@ package com.cpigeon.app.modular.matchlive.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatImageView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,14 +20,13 @@ import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchReportXH;
 import com.cpigeon.app.modular.matchlive.presenter.RacePre;
-import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceXunFangAdapter;
+import com.cpigeon.app.modular.matchlive.view.fragment.RaceDetailsXunFangFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.cpigeon.app.utils.NetUtils;
-import com.cpigeon.app.utils.ViewExpandAnimation;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
+import com.cpigeon.app.utils.customview.SearchEditText;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -37,35 +39,14 @@ import butterknife.OnClick;
  */
 
 public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFangAdapter, MultiItemEntity> implements IReportData {
-
-    @BindView(R.id.race_details_marqueetv)
-    MarqueeTextView raceDetailsMarqueetv;
-    @BindView(R.id.race_detial_info_detial_show)
-    AppCompatImageView raceDetialInfoDetialShow;
-    @BindView(R.id.race_detial_info_textview_racename)
-    MarqueeTextView raceDetialInfoTextviewRacename;
-    @BindView(R.id.race_detial_info_match_name_layout)
-    RelativeLayout raceDetialInfoMatchNameLayout;
-    @BindView(R.id.race_detial_match_info_title_area)
-    TextView raceDetialMatchInfoTitleArea;
-    @BindView(R.id.race_detial_match_info_content_area)
-    TextView raceDetialMatchInfoContentArea;
-    @BindView(R.id.layout_area)
-    LinearLayout layoutArea;
-    @BindView(R.id.race_detial_match_info_title_kj)
-    TextView raceDetialMatchInfoTitleKj;
-    @BindView(R.id.race_detial_match_info_content_kj)
-    TextView raceDetialMatchInfoContentKj;
-    @BindView(R.id.layout_kj)
-    LinearLayout layoutKj;
-    @BindView(R.id.race_detial_match_info_title_st)
-    TextView raceDetialMatchInfoTitleSt;
-    @BindView(R.id.race_detial_match_info_content_st)
-    TextView raceDetialMatchInfoContentSt;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.list_header_race_detial_gg)
     MarqueeTextView listHeaderRaceDetialGg;
     @BindView(R.id.layout_gg)
     LinearLayout layoutGg;
+    @BindView(R.id.searchEditText)
+    SearchEditText searchEditText;
     @BindView(R.id.list_header_race_detial_table_header_1)
     TextView listHeaderRaceDetialTableHeader1;
     @BindView(R.id.list_header_race_detial_table_header_2)
@@ -74,8 +55,6 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     TextView listHeaderRaceDetialTableHeader3;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     private MatchInfo matchInfo;//赛事信息
     private Bundle bundle;
     private Intent intent;
@@ -87,6 +66,10 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
 
     private Bulletin bulletin;
     private String loadType;
+
+    public MatchInfo getMatchInfo() {
+        return matchInfo;
+    }
 
     @Override
     public int getLayoutId() {
@@ -108,22 +91,21 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     }
 
     private void initInfo() {
-        raceDetialInfoTextviewRacename.setText(matchInfo.computerBSMC());
-        raceDetialMatchInfoContentArea.setText(!"".equals(matchInfo.getArea()) ? matchInfo.getArea() : "无");
-        raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
-        if (matchInfo.getBskj() == 0)//家飞
-        {
-            layoutKj.setVisibility(View.GONE);
-        } else {
-            layoutKj.setVisibility(View.VISIBLE);
-            raceDetialMatchInfoContentKj.setText(matchInfo.getBskj() + "Km");
-        }
+        if (bulletin!=null && TextUtils.isEmpty(bulletin.getContent())) listHeaderRaceDetialGg.setText(bulletin.getContent());
         listHeaderRaceDetialTableHeader1.setText("名次");
+        searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
+            @Override
+            public void onSearchClick(View view, String keyword) {
+                search(keyword);
+                searchEditText.setText(keyword);
+            }
+        });
     }
 
     private void initToolbar() {
-        toolbar.setTitle("");
-        raceDetailsMarqueetv.setText(matchInfo.getMc());
+        mToolbar.setTitle(matchInfo.getMc());
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initData() {
@@ -138,9 +120,23 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
 
     }
 
+    public void search(String keyword) {
+        this.sKey = keyword;
+        if (TextUtils.isEmpty(keyword))
+            return;
+        onRefresh();
+    }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        sKey = "";
+        searchEditText.setText(sKey);
+    }
+
     @Override
     protected void onNetworkDisConnected() {
-
+        showTips("网络连接断开啦，请您检查网络", TipType.DialogError);
     }
 
     @NonNull
@@ -198,17 +194,6 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
         mPresenter.loadRaceData(1);
     }
 
-    @OnClick({R.id.race_detial_info_detial_show, R.id.race_detial_info_match_name_layout})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.race_detial_info_detial_show:
-                break;
-            case R.id.race_detial_info_match_name_layout:
-
-                break;
-        }
-    }
-
     @Override
     public String getMatchType() {
         return matchInfo.getLx();
@@ -244,5 +229,35 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
         return sKey;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_race_details, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //android.R.id.home是Android内置home按钮的id
+                finish();
+                break;
+            case R.id.action_save:
+
+                break;
+            case R.id.action_details:
+                showDialogFragment();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showDialogFragment() {
+        FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("xunfangdialogFragment");
+        if (fragment != null) {
+            mFragmentTransaction.remove(fragment);
+        }
+        RaceDetailsXunFangFragment detailsFragment = RaceDetailsXunFangFragment.newInstance("训放数据");
+        detailsFragment.show(mFragmentTransaction, "xunfangdialogFragment");
+    }
 }

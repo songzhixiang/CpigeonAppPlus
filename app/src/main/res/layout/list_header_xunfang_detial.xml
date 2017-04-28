@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:minHeight="@dimen/list_header_race_detial_layout_root_minheight"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <com.cpigeon.app.utils.customview.MarqueeTextView
+        android:id="@+id/race_detial_info_textview_racename"
+        style="@style/Marquee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_header_race_detial_textview_racename_height"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/list_header_race_detial_textview_racename_textsize" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/split_line_width"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorLayoutSplitLineGray"></View>
+
+
+    <LinearLayout
+        android:id="@+id/layout_report_info_detial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/layout_area"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/race_detial_match_info_title_area"
+                    style="@style/report_info_detial_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pigeon_special_words_race_detial_area" />
+
+                <TextView
+                    android:id="@+id/race_detial_match_info_content_area"
+                    style="@style/report_info_detial_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="四川成都" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_kj"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/race_detial_match_info_title_kj"
+                    style="@style/report_info_detial_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="训赛空距:" />
+
+                <TextView
+                    android:id="@+id/race_detial_match_info_content_kj"
+                    style="@style/report_info_detial_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="359.256KM" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/race_detial_match_info_title_st"
+                style="@style/report_info_detial_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pigeon_special_words_race_detial_sfsj" />
+
+            <TextView
+                android:id="@+id/race_detial_match_info_content_st"
+                style="@style/report_info_detial_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2016-11-25 09:33:33" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

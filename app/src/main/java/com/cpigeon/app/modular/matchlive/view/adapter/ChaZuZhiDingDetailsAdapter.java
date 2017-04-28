@@ -32,7 +32,6 @@ public class ChaZuZhiDingDetailsAdapter extends BaseMultiItemQuickAdapter<MultiI
     public ChaZuZhiDingDetailsAdapter(String mathType) {
         super(null);
         this.mathType = mathType;
-        Logger.e("mathtype" + mathType.toString());
         addItemType(TYPE_TITLE, R.layout.listitem_report_info);
         if ("xh".equals(mathType)) {
             addItemType(TYPE_DETIAL, R.layout.listitem_chazuzhiding_xh_info_expand);

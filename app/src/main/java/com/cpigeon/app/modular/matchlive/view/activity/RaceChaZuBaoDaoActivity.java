@@ -101,6 +101,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     private Map<String, Object> currGroupData = null;
     private int czIndex = 0;//当前插组索引(1-24)
     private String loadType;//该页面需要加载的数据类型
+    private int lastExpandItemPosition = -1;//最后一个索引
 
     @Override
     public int getLayoutId() {
@@ -206,54 +207,65 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     @Override
     public ChaZuBaoDaoDetailsAdapter getNewAdapterWithNoData() {
         mAdapter = new ChaZuBaoDaoDetailsAdapter(getMatchType());
-        recyclerview.addOnItemTouchListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                Object item = ((ChaZuBaoDaoDetailsAdapter) adapter).getData().get(position);
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Object item = ((ChaZuBaoDaoDetailsAdapter) baseQuickAdapter).getData().get(i);
                 Logger.d(item.getClass().getName());
                 if ("xh".equals(getMatchType())) {
                     if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
                         if (((ChaZuBaoDaoDetailsAdapter.MatchTitleXHItem) item).isExpanded()) {
-                            adapter.collapse(position);
+                            if (lastExpandItemPosition == i) {
+                                lastExpandItemPosition = -1;
+                            }
+                            baseQuickAdapter.collapse(i);
                         } else {
-                            adapter.expand(position);
+                            if (lastExpandItemPosition >= 0) {
+                                baseQuickAdapter.collapse(lastExpandItemPosition);
+                                if (lastExpandItemPosition > i) {//展开上面的项
+                                    baseQuickAdapter.expand(i);
+                                    lastExpandItemPosition = i;
+                                } else if (lastExpandItemPosition < i) {//展开下面的项
+                                    baseQuickAdapter.expand(i - 1);
+                                    lastExpandItemPosition = i - 1;
+                                }
+
+                            } else {
+                                lastExpandItemPosition = i;
+                                baseQuickAdapter.expand(lastExpandItemPosition);
+                            }
+
                         }
-                    } else if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) {
-                        MatchReportXH mi = ((ChaZuBaoDaoDetailsAdapter.MatchDetialXHItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
                     }
+
+
                 } else if ("gp".equals(getMatchType())) {
                     if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchTitleGPItem) {
-//                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
-//                        return;
+
                         if (((ChaZuBaoDaoDetailsAdapter.MatchTitleGPItem) item).isExpanded()) {
-                            adapter.collapse(position);
+                            if (lastExpandItemPosition == i) {
+                                lastExpandItemPosition = -1;
+                            }
+                            baseQuickAdapter.collapse(i);
                         } else {
-                            adapter.expand(position);
+                            if (lastExpandItemPosition >= 0) {
+                                baseQuickAdapter.collapse(lastExpandItemPosition);
+                                if (lastExpandItemPosition > i) {//展开上面的项
+                                    baseQuickAdapter.expand(i);
+                                    lastExpandItemPosition = i;
+                                } else if (lastExpandItemPosition < i) {//展开下面的项
+                                    baseQuickAdapter.expand(i - 1);
+                                    lastExpandItemPosition = i - 1;
+                                }
+
+                            } else {
+                                lastExpandItemPosition = i;
+                                baseQuickAdapter.expand(lastExpandItemPosition);
+                            }
+
                         }
-                    } else if (item instanceof ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) {
-                        MatchReportGP mi = ((ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
                     }
                 }
-
             }
         });
         return mAdapter;

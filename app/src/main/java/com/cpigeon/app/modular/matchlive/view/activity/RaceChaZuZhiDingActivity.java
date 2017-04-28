@@ -116,6 +116,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     private Map<String, Object> currGroupData = null;
     private int czIndex = 0;//当前插组索引(1-24)
     private String loadType;//该页面需要加载的数据类型
+    private int lastExpandItemPosition = -1;//最后一个索引
 
     @Override
     public int getLayoutId() {
@@ -234,34 +235,61 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     @Override
     public ChaZuZhiDingDetailsAdapter getNewAdapterWithNoData() {
         mAdapter = new ChaZuZhiDingDetailsAdapter(getMatchType());
-        recyclerview.addOnItemTouchListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                Object item = ((ChaZuZhiDingDetailsAdapter) adapter).getData().get(position);
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Object item = ((ChaZuZhiDingDetailsAdapter) baseQuickAdapter).getData().get(i);
                 Logger.d(item.getClass().getName());
                 if ("xh".equals(getMatchType())) {
                     if (item instanceof ChaZuZhiDingDetailsAdapter.MatchTitleXHItem) {
 
                         if (((ChaZuZhiDingDetailsAdapter.MatchTitleXHItem) item).isExpanded()) {
-                            adapter.collapse(position);
+                            if (lastExpandItemPosition == i) {
+                                lastExpandItemPosition = -1;
+                            }
+                            baseQuickAdapter.collapse(i);
                         } else {
-                            adapter.expand(position);
-                        }
-                    } else if (item instanceof ChaZuZhiDingDetailsAdapter.MatchDetialXHItem) {
-                        MatchPigeonsXH mi = ((ChaZuZhiDingDetailsAdapter.MatchDetialXHItem) item).getSubItem(0);
+                            if (lastExpandItemPosition >= 0) {
+                                baseQuickAdapter.collapse(lastExpandItemPosition);
+                                if (lastExpandItemPosition > i) {//展开上面的项
+                                    baseQuickAdapter.expand(i);
+                                    lastExpandItemPosition = i;
+                                } else if (lastExpandItemPosition < i) {//展开下面的项
+                                    baseQuickAdapter.expand(i - 1);
+                                    lastExpandItemPosition = i - 1;
+                                }
 
+                            } else {
+                                lastExpandItemPosition = i;
+                                baseQuickAdapter.expand(lastExpandItemPosition);
+                            }
+
+                        }
                     }
                 } else if ("gp".equals(getMatchType())) {
                     if (item instanceof ChaZuZhiDingDetailsAdapter.MatchTitleGPItem) {
                         if (((ChaZuZhiDingDetailsAdapter.MatchTitleGPItem) item).isExpanded()) {
-                            adapter.collapse(position);
+                            if (lastExpandItemPosition == i) {
+                                lastExpandItemPosition = -1;
+                            }
+                            baseQuickAdapter.collapse(i);
                         } else {
-                            adapter.expand(position);
-                        }
-                    } else if (item instanceof ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) {
-                        MatchPigeonsGP mi = ((ChaZuZhiDingDetailsAdapter.MatchDetialGPItem) item).getSubItem(0);
+                            if (lastExpandItemPosition >= 0) {
+                                baseQuickAdapter.collapse(lastExpandItemPosition);
+                                if (lastExpandItemPosition > i) {//展开上面的项
+                                    baseQuickAdapter.expand(i);
+                                    lastExpandItemPosition = i;
+                                } else if (lastExpandItemPosition < i) {//展开下面的项
+                                    baseQuickAdapter.expand(i - 1);
+                                    lastExpandItemPosition = i - 1;
+                                }
 
+                            } else {
+                                lastExpandItemPosition = i;
+                                baseQuickAdapter.expand(lastExpandItemPosition);
+                            }
+
+                        }
                     }
                 }
 
