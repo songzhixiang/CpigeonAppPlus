@@ -47,6 +47,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     private MatchInfo matchInfo;
     private String sKey = "";//当前搜索关键字
     boolean isSearch = false;
+    private int lastExpandItemPosition = -1;//最后一个索引
 
     @Override
     public void onRefresh() {
@@ -154,30 +155,62 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
                 if ("xh".equals(getMatchType())) {
                     if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
                         if (((RaceReportAdapter.MatchTitleXHItem) item).isExpanded()) {
+                            if (lastExpandItemPosition == position) {
+                                lastExpandItemPosition = -1;
+                            }
                             adapter.collapse(position);
                         } else {
-                            adapter.expand(position);
-                        }
-                    } else if (item instanceof RaceReportAdapter.MatchDetialXHItem) {
-                        MatchReportXH mi = ((RaceReportAdapter.MatchDetialXHItem) item).getSubItem(0);
+                            if (lastExpandItemPosition >= 0) {
+                                adapter.collapse(lastExpandItemPosition);
+                                Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+                                if (lastExpandItemPosition > position) {//展开上面的项
+                                    adapter.expand(position);
+                                    lastExpandItemPosition = position;
+                                } else if (lastExpandItemPosition < position) {//展开下面的项
+                                    adapter.expand(position - 1);
+                                    lastExpandItemPosition = position - 1;
+                                }
 
+                            } else {
+                                lastExpandItemPosition = position;
+                                adapter.expand(lastExpandItemPosition);
+                                Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+                            }
+                        }
                     }
                 } else if ("gp".equals(getMatchType())) {
                     if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
-
                         if (((RaceReportAdapter.MatchTitleGPItem) item).isExpanded()) {
+                            if (lastExpandItemPosition == position) {
+                                lastExpandItemPosition = -1;
+                            }
                             adapter.collapse(position);
                         } else {
-                            adapter.expand(position);
-                        }
-                    } else if (item instanceof RaceReportAdapter.MatchDetialGPItem) {
-                        MatchReportGP mi = ((RaceReportAdapter.MatchDetialGPItem) item).getSubItem(0);
+                            if (lastExpandItemPosition >= 0) {
+                                adapter.collapse(lastExpandItemPosition);
+                                Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+                                if (lastExpandItemPosition > position) {//展开上面的项
+                                    adapter.expand(position);
+                                    lastExpandItemPosition = position;
+                                } else if (lastExpandItemPosition < position) {//展开下面的项
+                                    adapter.expand(position - 1);
+                                    lastExpandItemPosition = position - 1;
+                                }
 
+                            } else {
+                                lastExpandItemPosition = position;
+                                adapter.expand(lastExpandItemPosition);
+                                Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+                            }
+                        }
                     }
+
                 }
 
             }
+
         });
+
         adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
