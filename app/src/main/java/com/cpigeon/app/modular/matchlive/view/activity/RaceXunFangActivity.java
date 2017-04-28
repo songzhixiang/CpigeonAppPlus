@@ -31,7 +31,6 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 家飞测试和训放
@@ -55,6 +54,8 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     TextView listHeaderRaceDetialTableHeader3;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     private MatchInfo matchInfo;//赛事信息
     private Bundle bundle;
     private Intent intent;
@@ -91,7 +92,8 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     }
 
     private void initInfo() {
-        if (bulletin!=null && TextUtils.isEmpty(bulletin.getContent())) listHeaderRaceDetialGg.setText(bulletin.getContent());
+        if (bulletin != null && TextUtils.isEmpty(bulletin.getContent()))
+            listHeaderRaceDetialGg.setText(bulletin.getContent());
         listHeaderRaceDetialTableHeader1.setText("名次");
         searchEditText.setOnSearchClickListener(new SearchEditText.OnSearchClickListener() {
             @Override
@@ -103,7 +105,7 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     }
 
     private void initToolbar() {
-        mToolbar.setTitle(matchInfo.getMc());
+        raceDetailsMarqueetv.setText(matchInfo.getMc());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
