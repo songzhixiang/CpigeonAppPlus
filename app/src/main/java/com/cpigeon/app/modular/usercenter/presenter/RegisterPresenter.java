@@ -51,9 +51,9 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
     IRegisterDao.OnCompleteListener onCompleteListener = new IRegisterDao.OnCompleteListener<String>() {
         @Override
         public void onSuccess(String data) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.complete();
                 }
@@ -63,9 +63,9 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
 
         @Override
         public void onFail(final String msg) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
@@ -75,9 +75,9 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
     ISendVerificationCode.OnSendCompleteListener onSendCompleteListener = new ISendVerificationCode.OnSendCompleteListener() {
         @Override
         public void onSuccess(final String yzmMd5) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     if (isInSetpFrist)
                         mView.nextStep();
                     setp2View.sendYZMSuccess(setp1View.getPhoneNumber(), yzmMd5);
@@ -89,9 +89,9 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
 
         @Override
         public void onFail(final int errorCode, final String msg) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     setp2View.sendYZMFail(msg);
                     if (isInSetpFrist) {
                         if (errorCode == 1000 || errorCode == 1003 || errorCode == 1004 || errorCode == 1005 || errorCode == 1008) {

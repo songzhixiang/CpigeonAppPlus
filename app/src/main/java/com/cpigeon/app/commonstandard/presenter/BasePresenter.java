@@ -119,7 +119,7 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
      *
      * @param r
      */
-    public void post(@NonNull Runnable r) {
+    public void post(@NonNull CheckAttachRunnable r) {
         if (mHandler == null || r == null || isDetached()) return;
         mHandler.post(r);
     }
@@ -130,8 +130,33 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
      * @param r
      * @param delayMillis
      */
-    public void postDelayed(@NonNull Runnable r, long delayMillis) {
+    public void postDelayed(@NonNull CheckAttachRunnable r, long delayMillis) {
         if (mHandler == null || r == null || isDetached()) return;
         mHandler.postDelayed(r, delayMillis);
+    }
+
+    /**
+     * 自动检查Presenter与视图的绑定情况的Runnable
+     */
+    public abstract class CheckAttachRunnable implements Runnable {
+        @Override
+        public void run() {
+            if (isAttached()) {
+                runAttached();
+            } else {
+                runDetached();
+            }
+        }
+
+        /**
+         * 绑定情况下
+         */
+        protected abstract void runAttached();
+
+        /**
+         * 解绑或未绑定情况下
+         */
+        protected void runDetached() {
+        }
     }
 }

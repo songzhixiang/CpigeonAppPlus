@@ -26,9 +26,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
         @Override
         public void loginPreError(final ILoginDao.OperateCheck operateCheck) {
             if (operateCheck != ILoginDao.OperateCheck.None) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         if (operateCheck.getVal() == ILoginDao.OperateCheck.UsernameIsEmpty.getVal()) {
                             mView.focusEditTextLoginName();
                         } else {
@@ -39,9 +39,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
                 });
                 return;
             }
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("登录中...", IView.TipType.LoadingShow);
                 }
             });
@@ -49,9 +49,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void loginSuccess() {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.loginSuccess();
                 }
@@ -60,9 +60,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void loginFailed(final String msg) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
@@ -73,9 +73,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
     ILoginDao.OnLoadUserHeadImageListener onLoadUserHeadImageListener = new ILoginDao.OnLoadUserHeadImageListener() {
         @Override
         public void onSuccess(final String url) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showUserHeadImg(url);
                 }
             });
@@ -83,9 +83,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, ILoginDao> {
 
         @Override
         public void onError(String msg) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showUserHeadImg("");
                 }
             });

@@ -30,33 +30,29 @@ public class OrderPre extends BasePresenter<IOrderView, OrderDao> {
 
             @Override
             public void onSuccess(final List<CpigeonOrderInfo> data) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isAttached()) {
-                            if (mView.isMoreDataLoading()) {
-                                mView.loadMoreComplete();
-                            } else {
-                                mView.hideRefreshLoading();
-                            }
-                            mView.showMoreData(data);
+                    public void runAttached() {
+                        if (mView.isMoreDataLoading()) {
+                            mView.loadMoreComplete();
+                        } else {
+                            mView.hideRefreshLoading();
                         }
+                        mView.showMoreData(data);
                     }
                 }, 300);
             }
 
             @Override
             public void onFail(String msg) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isAttached()) {
-                            if (mView.isMoreDataLoading()) {
-                                mView.loadMoreFail();
-                            } else {
-                                mView.hideRefreshLoading();
-                                mView.showTips("订单记录加载失败", IView.TipType.View);
-                            }
+                    public void runAttached() {
+                        if (mView.isMoreDataLoading()) {
+                            mView.loadMoreFail();
+                        } else {
+                            mView.hideRefreshLoading();
+                            mView.showTips("订单记录加载失败", IView.TipType.View);
                         }
                     }
                 }, 300);

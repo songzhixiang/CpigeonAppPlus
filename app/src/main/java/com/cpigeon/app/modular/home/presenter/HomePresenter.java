@@ -16,28 +16,22 @@ import java.util.List;
  * Created by Administrator on 2017/4/6.
  */
 
-public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
+public class HomePresenter extends BasePresenter<IHomeView, IHomeFragmentDao> {
 
 
     public HomePresenter(IHomeView mView) {
         super(mView);
     }
 
-    public void laodAd()
-    {
-        if (isAttached())
-        {
+    public void laodAd() {
+        if (isAttached()) {
             mDao.loadHomeAd(new IBaseDao.OnCompleteListener<List<HomeAd>>() {
                 @Override
                 public void onSuccess(final List<HomeAd> data) {
-                    post(new Runnable() {
+                    post(new CheckAttachRunnable() {
                         @Override
-                        public void run() {
-                            if (isAttached())
-                            {
-                                mView.showAd(data);
-                            }
-
+                        protected void runAttached() {
+                            mView.showAd(data);
                         }
                     });
                 }
@@ -50,36 +44,26 @@ public class HomePresenter extends BasePresenter<IHomeView,IHomeFragmentDao>{
         }
 
     }
-    public void loadMatchInfo(final int loadType)
-    {
-        if (isAttached())
-        {
+
+    public void loadMatchInfo(final int loadType) {
+        if (isAttached()) {
             mDao.loadMatchInfo(loadType, new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
                 @Override
                 public void onSuccess(final List<MatchInfo> data) {
-                    post(new Runnable() {
+                    post(new CheckAttachRunnable() {
                         @Override
-                        public void run() {
-
-                            switch (loadType)
-                            {
+                        protected void runAttached() {
+                            switch (loadType) {
                                 case 0:
-                                    if (isAttached())
-                                    {
-                                        mView.showMatchGPLiveData(data,loadType);
-                                    }
-
+                                    mView.showMatchGPLiveData(data, loadType);
                                     break;
                                 case 1:
-                                    if (isAttached())
-                                    {
-                                        mView.showMatchXhLiveData(data,loadType);
-                                    }
-
+                                    mView.showMatchXhLiveData(data, loadType);
                                     break;
                             }
                         }
                     });
+
                 }
 
                 @Override

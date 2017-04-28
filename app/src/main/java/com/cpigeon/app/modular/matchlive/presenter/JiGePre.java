@@ -33,34 +33,31 @@ public class JiGePre extends BasePresenter<IReportData, IJiGeDao> {
                         @Override
                         public void onSuccess(final List data) {
                             Logger.d(data == null ? "null" : data.size() + "");
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? JiGeDataAdapter.getXH(data) : JiGeDataAdapter.getGP(data);
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreComplete();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                        }
-                                        mView.showMoreData(d);
+                                protected void runAttached() {
+                                    final List d = "xh".equals(mView.getMatchType()) ? JiGeDataAdapter.getXH(data) : JiGeDataAdapter.getGP(data);
+
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreComplete();
+                                    } else {
+                                        mView.hideRefreshLoading();
                                     }
+                                    mView.showMoreData(d);
                                 }
                             }, 300);
                         }
 
                         @Override
                         public void onFail(String msg) {
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreFail();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("获取记录失败", IView.TipType.View);
-                                        }
+                                protected void runAttached() {
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreFail();
+                                    } else {
+                                        mView.hideRefreshLoading();
+                                        mView.showTips("获取记录失败", IView.TipType.View);
                                     }
                                 }
                             }, 300);

@@ -23,9 +23,9 @@ public class SplashPresenter extends BasePresenter<ISplashView, ISplashDao> {
     ISplashDao.OnLoadCompleteListener onLoadCompleteListener = new ISplashDao.OnLoadCompleteListener() {
         @Override
         public void onLoadComplete(final String url) {
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                protected void runAttached() {
                     mView.showAd(url);
                 }
             });

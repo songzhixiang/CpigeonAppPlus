@@ -31,17 +31,15 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
         @Override
         public void onSuccess(final List<UserScore> data) {
             if (isDetached()) return;
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
-                    if (isAttached()) {
-                        if (mView.isMoreDataLoading()) {
-                            mView.loadMoreComplete();
-                        } else {
-                            mView.hideRefreshLoading();
-                        }
-                        mView.showMoreData(data);
+                public void runAttached() {
+                    if (mView.isMoreDataLoading()) {
+                        mView.loadMoreComplete();
+                    } else {
+                        mView.hideRefreshLoading();
                     }
+                    mView.showMoreData(data);
                 }
             }, 300);
         }
@@ -49,16 +47,14 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
         @Override
         public void onFail(String msg) {
             if (isDetached()) return;
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
-                    if (isAttached()) {
-                        if (mView.isMoreDataLoading()) {
-                            mView.loadMoreFail();
-                        } else {
-                            mView.hideRefreshLoading();
-                            mView.showTips("获取鸽币记录失败", IView.TipType.View);
-                        }
+                public void runAttached() {
+                    if (mView.isMoreDataLoading()) {
+                        mView.loadMoreFail();
+                    } else {
+                        mView.hideRefreshLoading();
+                        mView.showTips("获取鸽币记录失败", IView.TipType.View);
                     }
                 }
             }, 300);

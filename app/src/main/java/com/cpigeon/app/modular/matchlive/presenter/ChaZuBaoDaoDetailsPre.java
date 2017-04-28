@@ -37,36 +37,34 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                         @Override
                         public void onSuccess(final List data) {
                             final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? ChaZuBaoDaoDetailsAdapter.getXH(data) : ChaZuBaoDaoDetailsAdapter.getGP(data);
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreComplete();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                        }
-                                        mView.showMoreData(d);
+                                protected void runAttached() {
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreComplete();
+                                    } else {
+                                        mView.hideRefreshLoading();
                                     }
+                                    mView.showMoreData(d);
                                 }
                             }, 300);
+
                         }
 
                         @Override
                         public void onFail(String msg) {
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreFail();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("获取报道记录失败", IView.TipType.View);
-                                        }
+                                protected void runAttached() {
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreFail();
+                                    } else {
+                                        mView.hideRefreshLoading();
+                                        mView.showTips("获取报道记录失败", IView.TipType.View);
                                     }
                                 }
                             }, 300);
+
                         }
                     });
         }
@@ -82,33 +80,29 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
                         public void onSuccess(List data) {
                             Logger.e(data.size() + "");
                             final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? ChaZuZhiDingDetailsAdapter.getXH(data) : ChaZuZhiDingDetailsAdapter.getGP(data);
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreComplete();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                        }
-                                        mView.showMoreData(d);
+                                protected void runAttached() {
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreComplete();
+                                    } else {
+                                        mView.hideRefreshLoading();
                                     }
+                                    mView.showMoreData(d);
                                 }
                             }, 300);
                         }
 
                         @Override
                         public void onFail(String msg) {
-                            postDelayed(new Runnable() {
+                            postDelayed(new CheckAttachRunnable() {
                                 @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreFail();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("获取报道记录失败", IView.TipType.View);
-                                        }
+                                protected void runAttached() {
+                                    if (mView.isMoreDataLoading()) {
+                                        mView.loadMoreFail();
+                                    } else {
+                                        mView.hideRefreshLoading();
+                                        mView.showTips("获取报道记录失败", IView.TipType.View);
                                     }
                                 }
                             }, 300);

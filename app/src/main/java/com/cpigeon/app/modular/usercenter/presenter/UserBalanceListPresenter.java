@@ -30,33 +30,29 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
     IBaseDao.OnCompleteListener<List<CpigeonRechargeInfo.DataBean>> onCompleteListener = new IBaseDao.OnCompleteListener<List<CpigeonRechargeInfo.DataBean>>() {
         @Override
         public void onSuccess(final List<CpigeonRechargeInfo.DataBean> data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
-                    if (isAttached()) {
-                        if (mView.isMoreDataLoading()) {
-                            mView.loadMoreComplete();
-                        } else {
-                            mView.hideRefreshLoading();
-                        }
-                        mView.showMoreData(data);
+                public void runAttached() {
+                    if (mView.isMoreDataLoading()) {
+                        mView.loadMoreComplete();
+                    } else {
+                        mView.hideRefreshLoading();
                     }
+                    mView.showMoreData(data);
                 }
             }, 300);
         }
 
         @Override
         public void onFail(String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
-                    if (isAttached()) {
-                        if (mView.isMoreDataLoading()) {
-                            mView.loadMoreFail();
-                        } else {
-                            mView.hideRefreshLoading();
-                            mView.showTips("充值记录加载失败", IView.TipType.View);
-                        }
+                public void runAttached() {
+                    if (mView.isMoreDataLoading()) {
+                        mView.loadMoreFail();
+                    } else {
+                        mView.hideRefreshLoading();
+                        mView.showTips("充值记录加载失败", IView.TipType.View);
                     }
                 }
             }, 300);

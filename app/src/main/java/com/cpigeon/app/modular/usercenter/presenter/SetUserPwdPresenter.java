@@ -16,9 +16,9 @@ public class SetUserPwdPresenter extends BasePresenter<ISetUserPwdView, ISetUser
     private IBaseDao.OnCompleteListener<Boolean> onCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(Boolean data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("修改成功，请使用新密码登录", IView.TipType.DialogSuccess, mView.TAG_SetUserPwdSuccessAndRunLogin);
                 }
@@ -27,9 +27,9 @@ public class SetUserPwdPresenter extends BasePresenter<ISetUserPwdView, ISetUser
 
         @Override
         public void onFail(final String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }

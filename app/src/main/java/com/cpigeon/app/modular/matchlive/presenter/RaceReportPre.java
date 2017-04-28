@@ -24,30 +24,44 @@ public class RaceReportPre extends BasePresenter<IRaceReportView, IRaceReport> {
             mDao.updateBulletin(mView.getLx(), mView.getSsid(), new IBaseDao.OnCompleteListener<List<Bulletin>>() {
                 @Override
                 public void onSuccess(List<Bulletin> data) {
-                    post(new Runnable() {
+                    post(new CheckAttachRunnable() {
                         @Override
-                        public void run() {
-                            if (isAttached())
+                        protected void runAttached() {
+                            mDao.queryBulletin(mView.getSsid(), new IBaseDao.OnCompleteListener<Bulletin>() {
+                                @Override
+                                public void onSuccess(final Bulletin data) {
+                                    post(new CheckAttachRunnable() {
+                                        @Override
+                                        protected void runAttached() {
+                                            mView.showBulletin(data);
+                                        }
+                                    });
+                                }
 
-                                mDao.queryBulletin(mView.getSsid(), new IBaseDao.OnCompleteListener<Bulletin>() {
-                                    @Override
-                                    public void onSuccess(Bulletin data) {
-                                        if (isAttached()) mView.showBulletin(data);
-                                    }
-
-                                    @Override
-                                    public void onFail(String msg) {
-
-                                    }
-                                });
+                                @Override
+                                public void onFail(String msg) {
+                                    post(new CheckAttachRunnable() {
+                                        @Override
+                                        protected void runAttached() {
+                                            mView.showBulletin(null);
+                                        }
+                                    });
+                                }
+                            });
                         }
                     });
+
 
                 }
 
                 @Override
                 public void onFail(String msg) {
-
+                    post(new CheckAttachRunnable() {
+                        @Override
+                        protected void runAttached() {
+                            mView.showBulletin(null);
+                        }
+                    });
                 }
             });
         }

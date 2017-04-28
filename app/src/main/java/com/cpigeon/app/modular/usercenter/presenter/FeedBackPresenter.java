@@ -16,9 +16,9 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
     private IFeedBackDao.OnCompleteListener onCompleteListener = new IFeedBackDao.OnCompleteListener() {
         @Override
         public void onSuccess() {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips("您的反馈我们会认真查看并尽快完善.\n感谢您对中鸽网的支持", IView.TipType.DialogSuccess);
                     mView.clearFeedbackContent();
@@ -28,9 +28,9 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
 
         @Override
         public void onFail(final String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("", IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
@@ -53,9 +53,9 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, IFeedBackDao
             @Override
             public void onSuccess(final String phoneNumber, boolean isBand) {
                 if (isBand)
-                    postDelayed(new Runnable() {
+                    postDelayed(new CheckAttachRunnable() {
                         @Override
-                        public void run() {
+                        public void runAttached() {
                             mView.setFeedbackUserPhone(phoneNumber);
                         }
                     }, 100);

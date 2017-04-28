@@ -15,7 +15,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="密码位数至少6位"
         android:textColor="@color/light_red2"
         android:textSize="@dimen/sp_16"
         android:visibility="invisible" />

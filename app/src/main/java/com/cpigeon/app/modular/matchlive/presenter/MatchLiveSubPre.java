@@ -30,22 +30,21 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView, IMatchInfo> {
         mDao.loadXHDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
             public void onSuccess(final List<MatchInfo> data) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isDetached()) return;
+                    protected void runAttached() {
                         mView.hideRefreshLoading();
                         mView.showXHData(data, type);
                     }
                 });
+
             }
 
             @Override
             public void onFail(String msg) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isDetached()) return;
+                    protected void runAttached() {
                         mView.hideRefreshLoading();
                         mView.showTips("获取比赛列表失败", mView.hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
                     }
@@ -63,23 +62,20 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView, IMatchInfo> {
         mDao.loadGPDatas(new IBaseDao.OnCompleteListener<List<MatchInfo>>() {
             @Override
             public void onSuccess(final List<MatchInfo> data) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isDetached()) return;
+                    protected void runAttached() {
                         mView.hideRefreshLoading();
                         mView.showGPData(data, type);
                     }
                 });
-
             }
 
             @Override
             public void onFail(String msg) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isDetached()) return;
+                    protected void runAttached() {
                         mView.hideRefreshLoading();
                         mView.showTips("获取比赛列表失败", mView.hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
                     }

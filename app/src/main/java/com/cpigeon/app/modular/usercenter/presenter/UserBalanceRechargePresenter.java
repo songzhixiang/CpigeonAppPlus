@@ -29,9 +29,9 @@ public class UserBalanceRechargePresenter extends BasePresenter<IUserBalanceRech
     IBaseDao.OnCompleteListener<PayReq> onCompleteListener = new IBaseDao.OnCompleteListener<PayReq>() {
         @Override
         public void onSuccess(final PayReq data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.onWXPay(data);
                 }
@@ -40,9 +40,9 @@ public class UserBalanceRechargePresenter extends BasePresenter<IUserBalanceRech
 
         @Override
         public void onFail(String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("微信跳转失败", IView.TipType.DialogError);
                 }
@@ -52,9 +52,9 @@ public class UserBalanceRechargePresenter extends BasePresenter<IUserBalanceRech
     IBaseDao.OnCompleteListener<CpigeonRechargeInfo.DataBean> onCreateRechargeOrderCompleteListener = new IBaseDao.OnCompleteListener<CpigeonRechargeInfo.DataBean>() {
         @Override
         public void onSuccess(final CpigeonRechargeInfo.DataBean data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     if (data != null) {
                         if (mView.getPayway() == mView.TYPE_PAY_WAY_WXPAY) {
@@ -72,9 +72,9 @@ public class UserBalanceRechargePresenter extends BasePresenter<IUserBalanceRech
 
         @Override
         public void onFail(String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("创建充值订单失败", IView.TipType.DialogError);
                 }

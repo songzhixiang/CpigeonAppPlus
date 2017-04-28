@@ -19,10 +19,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
     private IUserInfoDao.OnUpdateUserFaceImageCompleteListener onUpdateUserFaceImageCompleteListener = new IUserInfoDao.OnUpdateUserFaceImageCompleteListener() {
         @Override
         public void onSuccess(String url) {
-            if (mView == null) return;
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("更新成功", IView.TipType.ToastShort);
                 }
             });
@@ -30,10 +29,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
 
         @Override
         public void onError(String msg) {
-            if (mView == null) return;
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("更新失败", IView.TipType.ToastShort);
                 }
             });
@@ -42,10 +40,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
     private IUserInfoDao.OnUserinfoMotifyCompleteListener onUserinfoMotifyCompleteListener = new IUserInfoDao.OnUserinfoMotifyCompleteListener() {
         @Override
         public void onSuccess() {
-            if (mView == null) return;
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("更新成功", IView.TipType.ToastShort);
                 }
             });
@@ -53,10 +50,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, IUserInfoDao
 
         @Override
         public void onError(String msg) {
-            if (mView == null) return;
-            post(new Runnable() {
+            post(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("更新失败", IView.TipType.ToastShort);
                 }
             });

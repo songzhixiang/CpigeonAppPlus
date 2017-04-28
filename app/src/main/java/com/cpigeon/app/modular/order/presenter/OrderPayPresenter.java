@@ -37,9 +37,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
         mDao.getOrderInfoById(orderId, new IBaseDao.OnCompleteListener<CpigeonOrderInfo>() {
             @Override
             public void onSuccess(final CpigeonOrderInfo data) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide);
                         mView.showOrderInfo(data);
                     }
@@ -48,9 +48,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
 
             @Override
             public void onFail(String msg) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide);
                         mView.showTips("加载订单信息失败", IView.TipType.DialogError);
                     }
@@ -62,9 +62,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
     IBaseDao.OnCompleteListener<Boolean> onPayCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(final Boolean data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showPayResult(data);
                 }
@@ -73,9 +73,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
 
         @Override
         public void onFail(final String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
@@ -120,9 +120,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
             @Override
             public void onSuccess(final PayReq data) {
                 postDelayed(
-                        new Runnable() {
+                        new CheckAttachRunnable() {
                             @Override
-                            public void run() {
+                            public void runAttached() {
                                 mView.showTips(null, IView.TipType.LoadingHide);
                                 mView.entryWXPay(data);
                             }
@@ -132,9 +132,9 @@ public class OrderPayPresenter extends BasePresenter<IOrderPayView, IOrderPayDao
             @Override
             public void onFail(final String msg) {
                 postDelayed(
-                        new Runnable() {
+                        new CheckAttachRunnable() {
                             @Override
-                            public void run() {
+                            public void runAttached() {
                                 mView.showTips(null, IView.TipType.LoadingHide);
                                 mView.showTips(msg, IView.TipType.ToastShort);
                             }

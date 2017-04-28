@@ -3,10 +3,13 @@ package com.cpigeon.app.modular.matchlive.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -41,6 +44,8 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     private ChaZuAdapter mAdapter;
     private Bulletin mBulletin;
     private String loadType;
+    View mEmptyTip;
+    TextView mEmptyTipTextView;
 
     @Override
     public void onAttach(Context context) {
@@ -87,23 +92,24 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
 //                if (((Map<String, Integer>) baseQuickAdapter.getItem(i)).get("gcys") > 0) {
-                    Intent intent = new Intent(getActivity(), RaceChaZuBaoDaoActivity.class);
-                    Bundle b = new Bundle();
-                    b.putSerializable("matchinfo", matchInfo);
-                    b.putInt("czindex", i);//组别
-                    b.putString("loadType", loadType);
-                    b.putSerializable("czmap", (ArrayList) baseQuickAdapter.getData());//插组统计数据
-                    b.putInt("czposition", i);//指定数量
-                    if (((RaceReportActivity) getActivity()).getBulletin() != null) {
-                        b.putString("bulletin", ((RaceReportActivity) getActivity()).getBulletin().getContent());
-                    }
-                    intent.putExtras(b);
-                    startActivity(intent);
+                Intent intent = new Intent(getActivity(), RaceChaZuBaoDaoActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("matchinfo", matchInfo);
+                b.putInt("czindex", i);//组别
+                b.putString("loadType", loadType);
+                b.putSerializable("czmap", (ArrayList) baseQuickAdapter.getData());//插组统计数据
+                b.putInt("czposition", i);//指定数量
+                if (((RaceReportActivity) getActivity()).getBulletin() != null) {
+                    b.putString("bulletin", ((RaceReportActivity) getActivity()).getBulletin().getContent());
+                }
+                intent.putExtras(b);
+                startActivity(intent);
 //                }
             }
         });
 
         mRecyclerView.setAdapter(mAdapter);
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
     }
 
     @Override
@@ -115,4 +121,18 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     public String getSsid() {
         return matchInfo.getSsid();
     }
+
+    @Override
+    public boolean showTips(String tip, TipType tipType) {
+        if (tipType == TipType.View) {
+            if (mEmptyTip == null) mEmptyTip = viewstubEmpty.inflate();
+            if (mEmptyTipTextView == null)
+                mEmptyTipTextView = (TextView) mEmptyTip.findViewById(R.id.tv_empty_tips);
+            mEmptyTipTextView.setText(tip);
+            mEmptyTip.setVisibility(View.VISIBLE);
+            return true;
+        }
+        return super.showTips(tip, tipType);
+    }
+
 }

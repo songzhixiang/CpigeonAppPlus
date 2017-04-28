@@ -30,9 +30,9 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
         mDao.loadAllServicesInfo(mView.getOpenServiceName(), new IBaseDao.OnCompleteListener<List<CpigeonServicesInfo>>() {
             @Override
             public void onSuccess(final List<CpigeonServicesInfo> data) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    protected void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide, mView.TAG_LoadServiceInfo);
                         mView.showServicesInfo(data);
                     }
@@ -41,9 +41,9 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
 
             @Override
             public void onFail(final String msg) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide, mView.TAG_LoadServiceInfo);
                         mView.showTips(msg, IView.TipType.DialogError);
                     }
@@ -57,9 +57,9 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
         mDao.createServiceOrder(serviceId, new IBaseDao.OnCompleteListener<CpigeonOrderInfo>() {
             @Override
             public void onSuccess(final CpigeonOrderInfo data) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide);
                         mView.createServiceOrderSuccess(data);
                     }
@@ -68,9 +68,9 @@ public class OpenServicePresenter extends BasePresenter<IOpenServiceView, IOpenS
 
             @Override
             public void onFail(final String msg) {
-                postDelayed(new Runnable() {
+                postDelayed(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    public void runAttached() {
                         mView.showTips(null, IView.TipType.LoadingHide);
                         mView.showTips(msg, IView.TipType.DialogError);
                     }

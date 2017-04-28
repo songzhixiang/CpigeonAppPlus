@@ -11,28 +11,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * Created by Administrator on 2017/4/14.
  */
 
-public class SearchPresenter extends BasePresenter<ISearchView,ISearchHistory> {
+public class SearchPresenter extends BasePresenter<ISearchView, ISearchHistory> {
 
     public SearchPresenter(ISearchView mView) {
         super(mView);
     }
+
     @Override
     protected ISearchHistory initDao() {
         return new SearchHistoryImpl();
     }
-    public void doSearch()
-    {
+
+    public void doSearch() {
         mDao.doSearch(mView.getSearch(), new IBaseDao.OnCompleteListener<List<Map<String, Object>>>() {
 
             @Override
             public void onSuccess(final List<Map<String, Object>> data) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    protected void runAttached() {
                         mView.showLoadSearchResult(data);
                     }
                 });
@@ -44,18 +44,17 @@ public class SearchPresenter extends BasePresenter<ISearchView,ISearchHistory> {
             }
         });
     }
-    public void showHistory()
-    {
+
+    public void showHistory() {
         mDao.loadSearchHistory(mView.getSearch(), new IBaseDao.OnCompleteListener<List<SearchHistory>>() {
             @Override
             public void onSuccess(final List<SearchHistory> data) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
+                    protected void runAttached() {
                         mView.showLoadSearchHistory(data);
                     }
                 });
-
             }
 
             @Override
@@ -64,8 +63,8 @@ public class SearchPresenter extends BasePresenter<ISearchView,ISearchHistory> {
             }
         });
     }
-    public void deleteHistory()
-    {
+
+    public void deleteHistory() {
         mDao.deleteHistory();
     }
 }

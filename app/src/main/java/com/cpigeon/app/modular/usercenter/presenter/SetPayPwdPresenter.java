@@ -34,10 +34,10 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IGetUserBandPhone.OnCompleteListener onAutoGetUserBandPhoneCompleteListener = new IGetUserBandPhone.OnCompleteListener() {
         @Override
         public void onSuccess(String phoneNumber, boolean isBand) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
-                    mView.showTips(null, IView.TipType.LoadingHide);
+                public void runAttached() {
+                        mView.showTips(null, IView.TipType.LoadingHide);
                 }
             }, 300);
 
@@ -45,13 +45,13 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail() {
-            if (retryTimes < mView.getBandPhoneRetryTimes()) {
+            if (isDetached() || retryTimes < mView.getBandPhoneRetryTimes()) {
                 mDao.getUserBandPhone(onAutoGetUserBandPhoneCompleteListener);
                 return;
             }
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("获取绑定手机号失败", IView.TipType.DialogError);
                 }
@@ -63,9 +63,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IGetUserBandPhone.OnCompleteListener onGetUserBandPhoneCompleteListener = new IGetUserBandPhone.OnCompleteListener() {
         @Override
         public void onSuccess(String phoneNumber, final boolean isBand) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     if (!isBand) {
                         mView.showTips("您未完成手机号绑定,请到中鸽网完成绑定后再试", IView.TipType.DialogError, mView.TAG_UnBandPhone);
@@ -77,9 +77,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail() {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("获取绑定手机号失败,请稍后再试", IView.TipType.DialogError);
                 }
@@ -91,9 +91,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
         @Override
         public void onSuccess(final String yzmMd5) {
             mYzmMD5 = yzmMd5;
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips("验证码已发送，请注意查收", IView.TipType.ToastShort);
                     mView.sendYzmSuccess(yzmMd5);
                 }
@@ -102,9 +102,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail(int errorCode, final String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(msg, IView.TipType.DialogError);
                 }
             }, 100);
@@ -134,9 +134,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
     IBaseDao.OnCompleteListener onCompleteListener = new IBaseDao.OnCompleteListener<Boolean>() {
         @Override
         public void onSuccess(Boolean data) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips("设置成功", IView.TipType.DialogSuccess, mView.TAG_SetPayPwdSuccess);
                 }
@@ -145,9 +145,9 @@ public class SetPayPwdPresenter extends BasePresenter<ISetPayPwdView, ISetPayPwd
 
         @Override
         public void onFail(final String msg) {
-            postDelayed(new Runnable() {
+            postDelayed(new CheckAttachRunnable() {
                 @Override
-                public void run() {
+                public void runAttached() {
                     mView.showTips(null, IView.TipType.LoadingHide);
                     mView.showTips(msg, IView.TipType.DialogError);
                 }

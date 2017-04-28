@@ -28,20 +28,22 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
             mDao.getFootSearchService(mView.getQueryService(), new IBaseDao.OnCompleteListener<CpigeonUserServiceInfo>() {
                 @Override
                 public void onSuccess(final CpigeonUserServiceInfo data) {
-                    post(new Runnable() {
+                    post(new CheckAttachRunnable() {
                         @Override
-                        public void run() {
-                            if (isAttached())
-                                mView.getFootSearchService(data);
+                        protected void runAttached() {
+                            mView.getFootSearchService(data);
                         }
                     });
                 }
 
                 @Override
                 public void onFail(String msg) {
-                    if (isAttached()) {
-                        mView.getFootSearchService(null);
-                    }
+                    post(new CheckAttachRunnable() {
+                        @Override
+                        protected void runAttached() {
+                            mView.getFootSearchService(null);
+                        }
+                    });
                 }
             });
         }
@@ -56,21 +58,24 @@ public class FootSearchPre extends BasePresenter<IFootSearchView, ICpigeonServic
         return mDao.queryFoot(mView.getQueryKey(), new IBaseDao.OnCompleteListener<Map<String, Object>>() {
             @Override
             public void onSuccess(final Map<String, Object> data) {
-                post(new Runnable() {
+                post(new CheckAttachRunnable() {
                     @Override
-                    public void run() {
-                        if (isAttached()) {
-                            mView.showTips(null, IView.TipType.LoadingHide);
-                            mView.queryFoot(data);
-                        }
-
+                    protected void runAttached() {
+                        mView.showTips(null, IView.TipType.LoadingHide);
+                        mView.queryFoot(data);
                     }
                 });
             }
 
             @Override
             public void onFail(String msg) {
-
+                post(new CheckAttachRunnable() {
+                    @Override
+                    protected void runAttached() {
+                        mView.showTips(null, IView.TipType.LoadingHide);
+                        mView.showTips("暂未找到记录", IView.TipType.ToastShort);
+                    }
+                });
             }
         });
 

@@ -32,35 +32,31 @@ public class RacePre extends BasePresenter<IReportData, IRaceDao> {
                     @Override
                     public void onSuccess(final List data) {
                         if (isAttached()) {
-                            if (loadType == 0)
-                            {
+                            if (loadType == 0) {
                                 final List d = isDetached() ? null : "xh".equals(mView.getMatchType()) ? RaceReportAdapter.getXH(data) : RaceReportAdapter.getGP(data);
-                                postDelayed(new Runnable() {
+                                postDelayed(new CheckAttachRunnable() {
                                     @Override
-                                    public void run() {
-                                        if (isAttached()) {
-                                            if (mView.isMoreDataLoading()) {
-                                                mView.loadMoreComplete();
-                                            } else {
-                                                mView.hideRefreshLoading();
-                                            }
-                                            mView.showMoreData(d);
+                                    protected void runAttached() {
+                                        if (mView.isMoreDataLoading()) {
+                                            mView.loadMoreComplete();
+                                        } else {
+                                            mView.hideRefreshLoading();
                                         }
+                                        mView.showMoreData(d);
                                     }
                                 }, 300);
-                            }else {
+
+                            } else {
                                 final List d = isDetached() ? null : RaceXunFangAdapter.getGP(data);
-                                postDelayed(new Runnable() {
+                                postDelayed(new CheckAttachRunnable() {
                                     @Override
-                                    public void run() {
-                                        if (isAttached()) {
-                                            if (mView.isMoreDataLoading()) {
-                                                mView.loadMoreComplete();
-                                            } else {
-                                                mView.hideRefreshLoading();
-                                            }
-                                            mView.showMoreData(d);
+                                    protected void runAttached() {
+                                        if (mView.isMoreDataLoading()) {
+                                            mView.loadMoreComplete();
+                                        } else {
+                                            mView.hideRefreshLoading();
                                         }
+                                        mView.showMoreData(d);
                                     }
                                 }, 300);
                             }
@@ -70,19 +66,17 @@ public class RacePre extends BasePresenter<IReportData, IRaceDao> {
 
                     @Override
                     public void onFail(String msg) {
-                            postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (isAttached()) {
-                                        if (mView.isMoreDataLoading()) {
-                                            mView.loadMoreFail();
-                                        } else {
-                                            mView.hideRefreshLoading();
-                                            mView.showTips("获取报道记录失败", IView.TipType.View);
-                                        }
-                                    }
+                        postDelayed(new CheckAttachRunnable() {
+                            @Override
+                            protected void runAttached() {
+                                if (mView.isMoreDataLoading()) {
+                                    mView.loadMoreFail();
+                                } else {
+                                    mView.hideRefreshLoading();
+                                    mView.showTips("获取报道记录失败", IView.TipType.View);
                                 }
-                            }, 300);
+                            }
+                        }, 300);
                     }
                 });
     }
