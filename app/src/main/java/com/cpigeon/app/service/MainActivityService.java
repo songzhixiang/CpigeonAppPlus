@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.cpigeon.app.BuildConfig;
+import com.cpigeon.app.service.databean.UseDevInfo;
 import com.cpigeon.app.utils.CallAPI;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.EncryptionTool;
@@ -103,53 +104,6 @@ public class MainActivityService extends Service {
         }, BuildConfig.DEBUG ? 3000 : 0, BuildConfig.DEBUG ? 30000 : 90000);
     }
 
-    /**
-     * 使用设备信息
-     */
-    public class UseDevInfo {
-
-        /**
-         * type : Android
-         * time : 2017-04-18 14:22:19
-         * devinfo : BLT-10
-         */
-
-        private String type;
-        private String time;
-        private String devinfo;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public String getDevinfo() {
-            return devinfo;
-        }
-
-        public void setDevinfo(String devinfo) {
-            this.devinfo = devinfo;
-        }
-
-        public String getString() {
-            return "UseDevInfo{" +
-                    "type='" + type + '\'' +
-                    ", time='" + time + '\'' +
-                    ", devinfo='" + devinfo + '\'' +
-                    '}';
-        }
-    }
 
     @Override
     public boolean bindService(Intent service, ServiceConnection conn,

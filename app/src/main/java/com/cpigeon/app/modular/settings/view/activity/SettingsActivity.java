@@ -59,10 +59,6 @@ public class SettingsActivity extends BaseActivity {
     SwitchButton sbPushNotification;
     @BindView(R.id.rl_push_notification)
     RelativeLayout rlPushNotification;
-    @BindView(R.id.sb_search_online)
-    SwitchButton sbSearchOnline;
-    @BindView(R.id.rl_search_online)
-    RelativeLayout rlSearchOnline;
     @BindView(R.id.rl_security)
     RelativeLayout rlSecurity;
     @BindView(R.id.rl_market_score)
@@ -103,12 +99,12 @@ public class SettingsActivity extends BaseActivity {
                 SharedPreferencesTool.Save(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, isChecked, SharedPreferencesTool.SP_FILE_APPSETTING);
             }
         });
-        sbSearchOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferencesTool.Save(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, isChecked, SharedPreferencesTool.SP_FILE_APPSETTING);
-            }
-        });
+//        sbSearchOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                SharedPreferencesTool.Save(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, isChecked, SharedPreferencesTool.SP_FILE_APPSETTING);
+//            }
+//        });
     }
 
     @Override
@@ -121,7 +117,7 @@ public class SettingsActivity extends BaseActivity {
         if (mEntryInstall)
             AppManager.getAppManager().AppExit();
         sbPushNotification.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_PUSH_NOTIFICATION, true, SharedPreferencesTool.SP_FILE_APPSETTING));
-        sbSearchOnline.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, true, SharedPreferencesTool.SP_FILE_APPSETTING));
+//        sbSearchOnline.setChecked(SharedPreferencesTool.Get(SettingsActivity.this, SETTING_KEY_SEARCH_ONLINE, true, SharedPreferencesTool.SP_FILE_APPSETTING));
         tvCheckNewVersionVersionName.setText(CommonTool.getVersionName(this));
         double cacheCount = FileTool.getFileOrFilesSize(CpigeonConfig.CACHE_FOLDER, FileTool.SIZETYPE_B);
         tvClearCacheCount.setText(cacheCount < 1024 ? getString(R.string.no_cache) : FileTool.formatFileSize(cacheCount));

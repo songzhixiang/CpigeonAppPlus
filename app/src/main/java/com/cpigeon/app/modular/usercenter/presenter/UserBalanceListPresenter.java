@@ -7,6 +7,7 @@ import com.cpigeon.app.modular.usercenter.model.bean.CpigeonRechargeInfo;
 import com.cpigeon.app.modular.usercenter.model.dao.IUserBalanceListDao;
 import com.cpigeon.app.modular.usercenter.model.daoimpl.UserBalanceListDaoImpl;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.IUserBalanceListView;
+import com.tencent.mm.sdk.modelpay.PayReq;
 
 import org.xutils.common.Callback;
 
@@ -65,5 +66,29 @@ public class UserBalanceListPresenter extends BasePresenter<IUserBalanceListView
 
         Callback.Cancelable cancelable = mDao.getUserBalancePage(mView.getPageIndex(), mView.getPageSize(), onCompleteListener);
         addCancelableIntoMap("loadUserBalancePage", cancelable);
+    }
+
+    public void wxPay(int id) {
+        mDao.getWXPrePayOrderForRecharge(id, new IBaseDao.OnCompleteListener<PayReq>() {
+            @Override
+            public void onSuccess(final PayReq data) {
+                post(new CheckAttachRunnable() {
+                    @Override
+                    protected void runAttached() {
+                        mView.wxPay(data);
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(final String msg) {
+                post(new CheckAttachRunnable() {
+                    @Override
+                    protected void runAttached() {
+                        mView.showTips(msg, IView.TipType.ToastShort);
+                    }
+                });
+            }
+        });
     }
 }

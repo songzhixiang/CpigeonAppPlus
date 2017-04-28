@@ -210,7 +210,11 @@ public class UserBalanceRechargeActivity extends BaseActivity<UserBalanceRecharg
                 startActivity(intent);
                 break;
             case R.id.btn_ok_income:
-                mPresenter.recharge();
+                if (mWxApi.isWXAppInstalled())
+                    mPresenter.recharge();
+                else {
+                    showTips("未安装微信", TipType.ToastShort);
+                }
                 break;
         }
     }
@@ -256,7 +260,9 @@ public class UserBalanceRechargeActivity extends BaseActivity<UserBalanceRecharg
     public void onWXPay(PayReq payReq) {
         this.payReq = payReq;
         if (mWxApi != null) {
-            mWxApi.sendReq(payReq);
+            boolean result = mWxApi.sendReq(payReq);
+            if (!result)
+                showTips("支付失败", TipType.ToastShort);
             Logger.d("发起微信支付");
         }
     }

@@ -37,6 +37,7 @@ import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
 import com.cpigeon.app.modular.usercenter.view.activity.MyFollowActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.service.MainActivityService;
+import com.cpigeon.app.service.databean.UseDevInfo;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.DateTool;
@@ -63,6 +64,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+
 @RuntimePermissions
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
@@ -105,7 +107,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
         @Override
-        public boolean onOtherDeviceLogin(final MainActivityService.UseDevInfo useDevInfo) {
+        public boolean onOtherDeviceLogin(final UseDevInfo useDevInfo) {
             if (useDevInfo == null) return false;
 
             Logger.d(useDevInfo.getString());
@@ -228,6 +230,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         });
     }
+
     @NeedsPermission({
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
@@ -243,7 +246,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
-
     void systemAlertWindowOnShowRationale(final PermissionRequest request) {
         showRequest(request);
     }
@@ -292,6 +294,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         showTips("权限不再提示", TipType.ToastShort);
         AppManager.getAppManager().AppExit();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

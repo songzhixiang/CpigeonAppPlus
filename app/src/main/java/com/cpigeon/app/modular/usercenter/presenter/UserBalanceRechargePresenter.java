@@ -100,6 +100,5 @@ public class UserBalanceRechargePresenter extends BasePresenter<IUserBalanceRech
 
         mView.showTips("创建充值订单中", IView.TipType.LoadingShow);
         mDao.createRechargeOrder(mView.getInputFee(), mView.getPayway(), onCreateRechargeOrderCompleteListener);
-
     }
 }

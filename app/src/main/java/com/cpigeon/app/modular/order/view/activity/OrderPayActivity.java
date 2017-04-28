@@ -212,7 +212,9 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
     public void entryWXPay(PayReq payReq) {
         this.payReq = payReq;
         if (mWxApi != null) {
-            mWxApi.sendReq(payReq);
+            boolean result = mWxApi.sendReq(payReq);
+            if (!result)
+                showTips("支付失败", TipType.ToastShort);
             Logger.d("发起微信支付");
         }
     }
@@ -315,7 +317,11 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
                     showTips(getString(R.string.sentence_not_watch_pay_agreement_prompt), TipType.DialogError);
                     return;
                 }
-                mPresenter.wxPay();
+                if (mWxApi.isWXAppInstalled())
+                    mPresenter.wxPay();
+                else {
+                    showTips("未安装微信", TipType.ToastShort);
+                }
             }
         });
 

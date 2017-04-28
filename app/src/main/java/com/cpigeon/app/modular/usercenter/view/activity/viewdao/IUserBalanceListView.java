@@ -4,6 +4,7 @@ import com.cpigeon.app.commonstandard.view.activity.IPageTurn;
 import com.cpigeon.app.commonstandard.view.activity.IRefresh;
 import com.cpigeon.app.commonstandard.view.activity.IView;
 import com.cpigeon.app.modular.usercenter.model.bean.CpigeonRechargeInfo;
+import com.tencent.mm.sdk.modelpay.PayReq;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
 
 public interface IUserBalanceListView extends IView, IRefresh, IPageTurn<CpigeonRechargeInfo.DataBean> {
 
+    void wxPay(PayReq payReq);
 }

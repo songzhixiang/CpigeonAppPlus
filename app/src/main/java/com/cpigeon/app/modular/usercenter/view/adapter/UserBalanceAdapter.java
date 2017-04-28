@@ -50,6 +50,9 @@ public class UserBalanceAdapter extends BaseQuickAdapter<CpigeonRechargeInfo.Dat
                 orderStatusColor = mContext.getResources().getColor(R.color.colorRed);
                 helper.setText(R.id.tv_item_order_status, "待充值，去支付");
                 break;
+            default:
+                orderStatusColor = Color.parseColor("#8B8A8A");
+                break;
         }
         helper.setTextColor(R.id.tv_item_order_status, orderStatusColor);
         helper.setText(R.id.tv_item_time, dateTimeFormat.format(DateTool.strToDate(item.getTime())));

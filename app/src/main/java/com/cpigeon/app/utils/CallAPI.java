@@ -27,6 +27,7 @@ import com.cpigeon.app.modular.usercenter.model.bean.CpigeonUserServiceInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserInfo;
 import com.cpigeon.app.modular.usercenter.model.bean.UserScore;
 import com.cpigeon.app.service.MainActivityService;
+import com.cpigeon.app.service.databean.UseDevInfo;
 import com.cpigeon.app.utils.cache.CacheManager;
 import com.cpigeon.app.utils.databean.ApiResponse;
 import com.google.gson.Gson;
@@ -95,16 +96,12 @@ public class CallAPI {
             public void onSuccess(String result) {
                 Logger.i(result);
                 try {
-                    Gson gson = new Gson();
-                    ApiResponse apiResponse = gson.fromJson(result, new TypeToken<ApiResponse>() {
-                    }.getType());
+                    ApiResponse<UseDevInfo> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<UseDevInfo>>() {
+                    });
                     if (apiResponse.isStatus()) {
                         callback.onSuccess(apiResponse.getData());
                     } else {
-                        ApiResponse<MainActivityService.UseDevInfo> apiResponse1 = gson.fromJson(result,
-                                new TypeToken<ApiResponse<MainActivityService.UseDevInfo>>() {
-                                }.getType());
-                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse1);
+                        callback.onError(Callback.ERROR_TYPE_API_RETURN, apiResponse);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -145,10 +142,9 @@ public class CallAPI {
             public void onSuccess(String result) {
                 Logger.i(result);
                 try {
-                    Gson gson = new Gson();
-                    List<UpdateManager.UpdateInfo> updateInfos = gson.fromJson(result, new TypeToken<List<UpdateManager.UpdateInfo>>() {
-                    }.getType());
-                    callback.onSuccess(updateInfos);
+                    List<UpdateManager.UpdateInfo> apiResponse = JSON.parseObject(result, new TypeReference<List<UpdateManager.UpdateInfo>>() {
+                    });
+                    callback.onSuccess(apiResponse);
                 } catch (Exception e) {
                     e.printStackTrace();
                     callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
@@ -672,13 +668,14 @@ public class CallAPI {
         addApiSign(requestParams);
         return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
             boolean hasError = true;
+
             @Override
             public void onSuccess(String result) {
                 if (result != null) dealData(result);
             }
 
             private void dealData(String result) {
-                hasError=false;
+                hasError = false;
                 Logger.json(result);
                 try {
                     JSONObject obj = new JSONObject(result);
@@ -2239,11 +2236,10 @@ public class CallAPI {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
                         Logger.i("获取订单完成");
-                        Gson gson = new Gson();
-                        CpigeonRechargeInfo json = gson.fromJson(result, new TypeToken<CpigeonRechargeInfo>() {
-                        }.getType());
-                        Logger.d(json.getData().size() + "");
-                        callback.onSuccess(json.getData());
+                        ApiResponse<List<CpigeonRechargeInfo.DataBean>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<CpigeonRechargeInfo.DataBean>>>() {
+                        });
+                        Logger.d(apiResponse.getData().size() + "");
+                        callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
                     }
@@ -2291,36 +2287,26 @@ public class CallAPI {
         requestParams.addParameter("u", userid);
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         addApiSign(requestParams);
-        return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<JSONObject>() {
+        return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
 
             @Override
-            public void onSuccess(JSONObject result) {
+            public void onSuccess(String result) {
                 Logger.d(result.toString());
-                if (!result.has("status") || result.isNull("data")) {
-                    try {
-                        callback.onError(Callback.ERROR_TYPE_API_RETURN, result.getInt("errorCode"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    return;
+                ApiResponse<PayReq> res = JSON.parseObject(result.toString(), new TypeReference<ApiResponse<PayReq>>() {
+                });
+                if (res.isStatus()) {
+//                    JSONObject obj = result.getJSONObject("data");
+//                    req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
+//                    req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
+//                    req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
+//                    req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
+//                    req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
+//                    req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
+//                    req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
+                    callback.onSuccess(res.getData());
+                } else {
+                    callback.onError(Callback.ERROR_TYPE_API_RETURN, res.getErrorCode());
                 }
-                PayReq req = new PayReq();
-                try {
-                    JSONObject obj = result.getJSONObject("data");
-                    req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
-                    req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
-                    req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
-                    req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
-                    req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
-                    req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
-                    req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
-                    callback.onSuccess(req);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
-                }
-
             }
 
             @Override
@@ -2493,11 +2479,10 @@ public class CallAPI {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
                         Logger.i("获取用户基本信息成功");
-                        Gson gson = new Gson();
-                        UserInfo json = gson.fromJson(result, new TypeToken<UserInfo>() {
-                        }.getType());
-                        Logger.d(json.getData().getUsername() + "");
-                        callback.onSuccess(json.getData());
+                        ApiResponse<UserInfo.DataBean> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<UserInfo.DataBean>>() {
+                        });
+                        Logger.d(apiResponse.getData().getUsername() + "");
+                        callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
                     }
@@ -2565,11 +2550,10 @@ public class CallAPI {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
                         Logger.i("修改成功");
-                        Gson gson = new Gson();
-                        UserInfo json = gson.fromJson(result, new TypeToken<UserInfo>() {
-                        }.getType());
-                        Logger.d(json.getData().getUsername() + "");
-                        callback.onSuccess(json.getData());
+                        ApiResponse<UserInfo.DataBean> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<UserInfo.DataBean>>() {
+                        });
+                        Logger.d(apiResponse.getData().getUsername() + "");
+                        callback.onSuccess(apiResponse.getData());
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
                     }
@@ -2830,10 +2814,9 @@ public class CallAPI {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status")) {
                         Logger.i("获取成功");
-                        Gson gson = new Gson();
-                        Message json = gson.fromJson(result, new TypeToken<Message>() {
-                        }.getType());
-                        callback.onSuccess(json.getData());
+                        ApiResponse<List<Message.DataBean>> apiResponse = JSON.parseObject(result, new TypeReference<ApiResponse<List<Message.DataBean>>>() {
+                        });
+                        callback.onSuccess(apiResponse.getData());
 
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
@@ -3129,6 +3112,7 @@ public class CallAPI {
                         Gson gson = new Gson();
                         CpigeonGroupUserInfo json = gson.fromJson(result, new TypeToken<CpigeonGroupUserInfo>() {
                         }.getType());
+
                         callback.onSuccess(json.getData());
                     } else {
                         callback.onError(Callback.ERROR_TYPE_API_RETURN, obj.getInt("errorCode"));
@@ -3732,6 +3716,7 @@ public class CallAPI {
                         Gson gson = new Gson();
                         ShieldMessage json = gson.fromJson(result, new TypeToken<ShieldMessage>() {
                         }.getType());
+
                         callback.onSuccess(json.getData());
 
                     } else {

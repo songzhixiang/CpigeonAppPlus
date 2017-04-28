@@ -34,10 +34,10 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         api = WXAPIFactory.createWXAPI(this, APP_ID);
         api.handleIntent(getIntent(), this);
     }
-    
+
     @Override
     public void onReq(BaseReq baseReq) {
-
+        Logger.d("baseReq = [" + baseReq.toString() + "]");
     }
 
     /**

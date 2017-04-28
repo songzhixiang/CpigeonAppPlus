@@ -42,7 +42,7 @@ public class MyApp extends Application {
         if (!BuildConfig.DEBUG) {
             initBugly();
         } else {
-            Logger.init(TAG);
+            Logger.init(TAG).methodCount(3);
         }
         //极光推送
 //        JPushInterface.setDebugMode(BuildConfig.DEBUG);

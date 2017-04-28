@@ -83,6 +83,7 @@
 -keep class com.cpigeon.app.modular.*.model.bean.**{*;}
 -keep class com.cpigeon.app.commonstandard.**{*;}
 -keep class com.cpigeon.app.utils.databean.**{*;}
+-keep class com.cpigeon.app.service.databean.**{*;}
 
 ###保留使用xUtils的方法和类，并且不要混淆名字
 -keep @org.xutils.db.annotation.Table class *
