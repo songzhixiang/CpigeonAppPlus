@@ -6,7 +6,7 @@
     android:background="@color/colorWhite"
     android:minHeight="@dimen/list_header_race_detial_layout_root_minheight"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
 
     <com.cpigeon.app.utils.customview.MarqueeTextView

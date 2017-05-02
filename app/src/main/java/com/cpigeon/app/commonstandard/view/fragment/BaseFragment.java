@@ -158,7 +158,6 @@ public abstract class BaseFragment extends Fragment implements IView {
     public void onDestroyView() {
         super.onDestroyView();
 
-
     }
 
 }

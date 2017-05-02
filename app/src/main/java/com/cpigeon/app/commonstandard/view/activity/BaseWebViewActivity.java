@@ -233,4 +233,16 @@ public abstract class BaseWebViewActivity extends BaseActivity {
         vTips.setVisibility(isError ? View.VISIBLE : View.GONE);
         wvWebview.setVisibility(isError ? View.GONE : View.VISIBLE);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (wvWebview!=null)
+        {
+            wvWebview.pauseTimers();
+            wvWebview.removeAllViews();
+            wvWebview.destroy();
+            wvWebview = null;
+        }
+    }
 }

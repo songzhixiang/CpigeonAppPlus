@@ -63,6 +63,10 @@ public abstract class BasePresenter<TView extends IView, TDao extends IBaseDao> 
         onDetach();
         this.mView = null;
         this.mHandler = null;
+        if (mDao != null)
+        {
+            mDao = null;
+        }
         if (mCancelableWeakHashMap != null)
             for (String key : mCancelableWeakHashMap.keySet()) {
                 Callback.Cancelable cancelable = mCancelableWeakHashMap.get(key);

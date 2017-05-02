@@ -1,6 +1,7 @@
 package com.cpigeon.app.modular.usercenter.view.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
@@ -113,7 +114,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 if (!isNetworkConnected()) {
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("无法连接网络")
-                            .setConfirmText("知到了")
+                            .setConfirmText("知道了")
                             .show();
                     return;
                 }
@@ -214,8 +215,9 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         }
 
         tvUserMoney.setText(String.format("%.2f", CpigeonData.getInstance().getUserBalance()));
-
+        tvUserMoney.setTextColor(Color.RED);
         tvUserJifen.setText(String.format("%d", CpigeonData.getInstance().getUserScore()));
+        tvUserJifen.setTextColor(Color.RED);
 
         tvSignStatus.setText(CpigeonData.getInstance().getUserSignStatus() == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
 

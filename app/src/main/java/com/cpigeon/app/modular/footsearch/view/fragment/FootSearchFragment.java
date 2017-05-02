@@ -179,13 +179,13 @@ public class FootSearchFragment extends BaseLazyLoadFragment<FootSearchPre> impl
         if (TextUtils.isEmpty(queryKey)) {
             new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("请您输入足环号码")
-                    .setConfirmText("知到了")
+                    .setConfirmText("知道了")
                     .show();
 
         } else if (!isNetworkConnected()) {
             new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("无法连接网络")
-                    .setConfirmText("知到了")
+                    .setConfirmText("知道了")
                     .show();
         } else {
             pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);

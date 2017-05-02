@@ -86,7 +86,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mUnbinder = ButterKnife.bind(this);
         mContext = this;
         mPresenter = this.initPresenter();
-        this.initView();
+        initView();
         // 网络改变的一个回掉类
         mNetChangeObserver = new NetChangeObserver() {
             @Override
@@ -246,10 +246,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppManager.getAppManager().removeActivity(weakReference);
-        if (mUnbinder != null)
-            mUnbinder.unbind();
+        if (mPresenter!=null && !mPresenter.isDetached())
+        {
+            mPresenter.detach();
+        }
+
         CommonTool.hideIME(this);
+        mUnbinder.unbind();
+        AppManager.getAppManager().removeActivity(weakReference);
     }
 
     @Override
@@ -290,7 +294,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     // 获取点击事件
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TODO Auto-generated method stub
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
             if (isHideInput(view, ev)) {

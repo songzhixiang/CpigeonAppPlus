@@ -236,13 +236,13 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     @Override
     public void onStart() {
         super.onStart();
-        homeBanner.startAutoPlay();
+        if (homeBanner!=null) homeBanner.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        homeBanner.stopAutoPlay();
+        if (homeBanner!=null) homeBanner.stopAutoPlay();
     }
 
     @Override

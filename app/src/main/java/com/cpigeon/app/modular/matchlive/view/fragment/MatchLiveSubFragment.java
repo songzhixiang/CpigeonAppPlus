@@ -237,7 +237,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
             if (matchInfo.getRuid() == CpigeonData.getInstance().getUserId(getActivity())) {
                 dialog.setContentText("您的直播平台已欠费\n请前往中鸽网充值缴费.");
                 dialog.setCancelText("关闭");
-                dialog.setConfirmText("知到了");
+                dialog.setConfirmText("知道了");
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {

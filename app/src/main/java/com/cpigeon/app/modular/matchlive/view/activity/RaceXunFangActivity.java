@@ -60,6 +60,7 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     private Bundle bundle;
     private Intent intent;
     private String sKey = "";//当前搜索关键字
+    private int lastExpandItemPosition = -1;//最后一个索引
 
     public Bulletin getBulletin() {
         return bulletin;
@@ -171,20 +172,30 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
                     if (((RaceXunFangAdapter.MatchTitleGPItem) item).isExpanded()) {
+                        if (lastExpandItemPosition == position){
+                            lastExpandItemPosition = -1;
+                        }
                         adapter.collapse(position);
+//                        Logger.e("当前被关闭的项的postion" + position);
                     } else {
-                        adapter.expand(position);
+                        if (lastExpandItemPosition >= 0) {
+                            adapter.collapse(lastExpandItemPosition);
+//                            Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
+                            if (lastExpandItemPosition > position){//展开上面的项
+                                adapter.expand(position);
+                                lastExpandItemPosition = position;
+                            }else if (lastExpandItemPosition < position){//展开下面的项
+                                adapter.expand(position - 1);
+                                lastExpandItemPosition = position - 1;
+                            }
+
+                        } else {
+                            lastExpandItemPosition = position;
+                            adapter.expand(lastExpandItemPosition);
+//                            Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
+                        }
+
                     }
-                } else if (item instanceof RaceXunFangAdapter.MatchDetialGPItem) {
-                    MatchReportGP mi = ((RaceXunFangAdapter.MatchDetialGPItem) item).getSubItem(0);
-//                    if (mi != null && !"jg".equals(mi.getDt())) {
-//                        Intent intent = new Intent(getActivity(), RaceReportActivity.class);
-//                        Bundle bundle = new Bundle();                           //创建Bundle对象
-//                        bundle.putSerializable("matchinfo", mi);     //装入数据
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-//                        return;
-//                    }
                 }
             }
         });

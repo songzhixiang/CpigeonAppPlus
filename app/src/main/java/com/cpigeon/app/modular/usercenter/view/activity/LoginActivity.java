@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,14 +46,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 @RuntimePermissions
 public class LoginActivity extends BaseActivity<LoginPresenter> implements ILoginView {
-    private Handler mHandler = new Handler() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isExit = false;
-        }
-    };
     private static boolean isExit = false;
     @BindView(R.id.civ_user_head_img)
     CircleImageView civUserHeadImg;
@@ -77,14 +72,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     TextView tvForgetPass;
     @BindView(R.id.activity_login)
     RelativeLayout activityLogin;
-//
+
     @NeedsPermission({
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
-    void sysytemAlertWindow() {
+    void AlertWindow() {
 
     }
 
@@ -94,10 +89,42 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
 
-    void systemAlertWindowOnShowRationale(final PermissionRequest request) {
+    void AlertWindowOnShowRationale(final PermissionRequest request) {
         showRequest(request);
     }
 
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void AlertWindowOnPermissionDenied() {
+        AppManager.getAppManager().AppExit();
+    }
+
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE})
+    void AlertWindowOnNeverAskAgain() {
+        AppManager.getAppManager().AppExit();
+    }
+
+    private static Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+        }
+    };
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        LoginActivityPermissionsDispatcher.AlertWindowWithCheck(this);
+        super.onCreate(savedInstanceState);
+    }
     private void showRequest(final PermissionRequest request) {
         new AlertDialog.Builder(this)
                 .setPositiveButton("允许", new DialogInterface.OnClickListener() {
@@ -119,29 +146,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
                         request.cancel();
                     }
                 })
-                .setMessage("我们需要一些权限，以便您更好的体验")
+                .setMessage("我们需要一些权限，以便您更好的体验,若您拒绝，将无法使用本产品")
                 .show();
     }
 
-    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void systemAlertWindowOnPermissionDenied() {
-        showTips("权限被拒绝了", TipType.ToastShort);
-        AppManager.getAppManager().AppExit();
-    }
 
-    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE})
-    void systemAlertWindowOnNeverAskAgain() {
-        showTips("权限不再提示", TipType.ToastShort);
-        AppManager.getAppManager().AppExit();
-    }
 
     @Override
     public int getLayoutId() {
@@ -155,7 +164,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
     @Override
     public void initView() {
-        LoginActivityPermissionsDispatcher.sysytemAlertWindowWithCheck(this);
         clearLoginInfo();
         AppManager.getAppManager().killAllToLoginActivity(LoginActivity.class);
         etUsername.addTextChangedListener(new TextWatcher() {
@@ -191,7 +199,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        LoginActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 
     }
 
@@ -275,6 +282,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             AppManager.getAppManager().AppExit();
         }
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
     }
 }
