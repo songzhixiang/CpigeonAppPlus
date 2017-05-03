@@ -50,7 +50,8 @@
             android:textColor="@color/light_black"
             android:textSize="@dimen/listitem_report_info_textview_jyxx_textsize" />
 
-        <TextView
+        <com.cpigeon.app.utils.customview.MarqueeTextView
+            style="@style/Marquee"
             android:id="@+id/report_info_item_hh"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -19,7 +19,6 @@ import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
-import com.cpigeon.app.modular.matchlive.model.bean.MatchReportGP;
 import com.cpigeon.app.modular.matchlive.presenter.RacePre;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceXunFangAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.RaceDetailsXunFangFragment;
@@ -38,8 +37,9 @@ import butterknife.ButterKnife;
  */
 
 public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFangAdapter, MultiItemEntity> implements IReportData {
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.list_header_race_detial_gg)
     MarqueeTextView listHeaderRaceDetialGg;
     @BindView(R.id.layout_gg)
@@ -54,8 +54,9 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     TextView listHeaderRaceDetialTableHeader3;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.race_details_marqueetv)
-    MarqueeTextView raceDetailsMarqueetv;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     private MatchInfo matchInfo;//赛事信息
     private Bundle bundle;
     private Intent intent;
@@ -172,7 +173,7 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
 //                    if (!"bs".equals(((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getDt()))
 //                        return;
                     if (((RaceXunFangAdapter.MatchTitleGPItem) item).isExpanded()) {
-                        if (lastExpandItemPosition == position){
+                        if (lastExpandItemPosition == position) {
                             lastExpandItemPosition = -1;
                         }
                         adapter.collapse(position);
@@ -181,10 +182,10 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
                         if (lastExpandItemPosition >= 0) {
                             adapter.collapse(lastExpandItemPosition);
 //                            Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
-                            if (lastExpandItemPosition > position){//展开上面的项
+                            if (lastExpandItemPosition > position) {//展开上面的项
                                 adapter.expand(position);
                                 lastExpandItemPosition = position;
-                            }else if (lastExpandItemPosition < position){//展开下面的项
+                            } else if (lastExpandItemPosition < position) {//展开下面的项
                                 adapter.expand(position - 1);
                                 lastExpandItemPosition = position - 1;
                             }
@@ -273,4 +274,5 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
         RaceDetailsXunFangFragment detailsFragment = RaceDetailsXunFangFragment.newInstance("训放数据");
         detailsFragment.show(mFragmentTransaction, "xunfangdialogFragment");
     }
+
 }

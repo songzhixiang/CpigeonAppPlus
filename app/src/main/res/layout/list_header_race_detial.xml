@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:text="比赛空距:" />
 
-                <TextView
+                <com.cpigeon.app.utils.customview.MarqueeTextView
                     android:id="@+id/race_detial_match_info_content_kj"
                     style="@style/report_info_detial_content"
                     android:layout_width="match_parent"

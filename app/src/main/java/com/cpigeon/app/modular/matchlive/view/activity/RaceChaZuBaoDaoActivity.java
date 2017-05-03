@@ -42,6 +42,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuBaoDaoDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
 
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.race_detial_info_detial_show)
     ImageView raceDetialInfoDetialShow;
     @BindView(R.id.race_detial_info_textview_racename)
@@ -88,8 +90,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.race_details_marqueetv)
-    MarqueeTextView raceDetailsMarqueetv;
     private Bundle bundle;
     private Intent intent;
     private ChaZuBaoDaoDetailsAdapter mAdapter;
@@ -139,10 +139,9 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         toolbar.setTitle("");
         raceDetailsMarqueetv.setText(getTitleName());
         layoutReportInfoDetial.setVisibility(View.GONE);
-        if (Annotation == null ||"".equals(Annotation))
-        {
+        if (Annotation == null || "".equals(Annotation)) {
             layoutGg.setVisibility(View.GONE);
-        }else {
+        } else {
             layoutGg.setVisibility(View.VISIBLE);
             listHeaderRaceDetialGg.setText(Annotation);
         }
@@ -193,7 +192,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     public boolean isHascz() {
         return getMatchInfo().isMatch();
     }
-
 
     @NonNull
     @Override
@@ -283,7 +281,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         mPresenter.loadChaZuBaoDaoDetails();
     }
 
-
     @Override
     public int getCzIndex() {
         return czIndex;//组别
@@ -293,7 +290,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
     public String getSkey() {
         return "";
     }
-
 
     @Override
     public void showMenuGroup() {
@@ -323,7 +319,6 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         }
         mSelectGroupMenuDialog.show();
     }
-
 
     /**
      * 获取上一个界面传过来的插组统计
@@ -381,5 +376,4 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         }
 
     }
-
 }

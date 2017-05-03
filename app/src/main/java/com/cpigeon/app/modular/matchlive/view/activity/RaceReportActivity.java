@@ -31,6 +31,7 @@ import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.cpigeon.app.utils.customview.smarttab.SmartTabLayout;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -39,22 +40,23 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class RaceReportActivity extends BaseActivity<RaceReportPre> implements IRaceReportView, RaceDetailsFragment.DialogFragmentDataImpl {
-
-    ///////////////////////////////////////////////////////////////////////////
-    // 视图
-    ///////////////////////////////////////////////////////////////////////////
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.race_report_smartTabLayout)
     SmartTabLayout mSmartTabLayout;
-    @BindView(R.id.race_report_viewpager)
-    ViewPager mViewPager;
-    @BindView(R.id.race_details_marqueetv)
-    MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.list_header_race_detial_gg)
     MarqueeTextView listHeaderRaceDetialGg;
     @BindView(R.id.layout_gg)
     LinearLayout layoutGg;
+    @BindView(R.id.race_report_viewpager)
+    ViewPager mViewPager;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 视图
+    ///////////////////////////////////////////////////////////////////////////
+
 
     ///////////////////////////////////////////////////////////////////////////
     // 适配器和数据

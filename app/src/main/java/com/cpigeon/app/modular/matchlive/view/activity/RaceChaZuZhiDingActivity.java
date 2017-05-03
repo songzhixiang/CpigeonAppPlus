@@ -40,6 +40,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDetailsPre, ChaZuZhiDingDetailsAdapter, MultiItemEntity> implements IRacePigeonsView {
+
+    @BindView(R.id.race_details_marqueetv)
+    MarqueeTextView raceDetailsMarqueetv;
     @BindView(R.id.race_detial_info_detial_show)
     AppCompatImageView raceDetialInfoDetialShow;
     @BindView(R.id.race_detial_info_textview_racename)
@@ -96,6 +99,8 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     TextView raceDetialMatchInfoTitleJwd;
     @BindView(R.id.race_detial_match_info_content_jwd)
     TextView raceDetialMatchInfoContentJwd;
+    @BindView(R.id.layout_sfzb)
+    LinearLayout layoutSfzb;
     @BindView(R.id.layout_report_info_detial)
     LinearLayout layoutReportInfoDetial;
     @BindView(R.id.list_header_race_detial_gg)
@@ -104,10 +109,6 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
     LinearLayout layoutGg;
     @BindView(R.id.layout_list_table_header)
     LinearLayout layoutListTableHeader;
-    @BindView(R.id.layout_sfzb)
-    LinearLayout layoutSfzb;
-    @BindView(R.id.race_details_marqueetv)
-    MarqueeTextView raceDetailsMarqueetv;
     private Bundle bundle;
     private Intent intent;
     private ChaZuZhiDingDetailsAdapter mAdapter;
