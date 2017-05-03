@@ -139,7 +139,14 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         toolbar.setTitle("");
         raceDetailsMarqueetv.setText(getTitleName());
         layoutReportInfoDetial.setVisibility(View.GONE);
-        listHeaderRaceDetialGg.setText(Annotation);
+        if (Annotation == null ||"".equals(Annotation))
+        {
+            layoutGg.setVisibility(View.GONE);
+        }else {
+            layoutGg.setVisibility(View.VISIBLE);
+            listHeaderRaceDetialGg.setText(Annotation);
+        }
+
         currGroupData = getData_CZTJ().get(getCzIndex() - 1);
         raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s)", matchInfo.computerBSMC(), (char) (getCzIndex() - 1 + 'A'), "报到" + currGroupData.get("gcys") + "羽"));
         raceDetialMatchInfoContentArea.setText(matchInfo.getArea());
