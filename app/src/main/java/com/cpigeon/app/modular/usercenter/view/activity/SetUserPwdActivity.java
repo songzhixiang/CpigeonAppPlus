@@ -54,16 +54,16 @@ public class SetUserPwdActivity extends BaseActivity<SetUserPwdPresenter> implem
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             btnOk.setEnabled(false);
-            tvErrorPrompt.setVisibility(View.VISIBLE);
+            tvErrorPrompt.setVisibility(View.INVISIBLE);
             if (etOldpwd.getText().toString().length() == 0) {
                 return;
             }
             if (etNewpwd.getText().toString().length() == 0) {
-                tvErrorPrompt.setText("");
                 return;
             } else if (etNewpwd.getText().toString().length() == 0) {
                 return;
             } else if (etNewpwd.getText().toString().length() < 6) {
+                tvErrorPrompt.setVisibility(View.VISIBLE);
                 tvErrorPrompt.setText("新密码至少6位");
                 return;
             }
@@ -71,12 +71,12 @@ public class SetUserPwdActivity extends BaseActivity<SetUserPwdPresenter> implem
                 tvErrorPrompt.setText("");
                 return;
             } else if (!etConfirmnewpwd.getText().toString().equals(etNewpwd.getText().toString())) {
+                tvErrorPrompt.setVisibility(View.VISIBLE);
                 tvErrorPrompt.setText("两次新密码不一致");
                 return;
             }
             oldPwd = etOldpwd.getText().toString();
             newPwd = etNewpwd.getText().toString();
-            tvErrorPrompt.setVisibility(View.INVISIBLE);
             btnOk.setEnabled(true);
         }
 

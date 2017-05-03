@@ -45,7 +45,7 @@ public class UserInfoDaoImpl implements IUserInfoDao {
             @Override
             public void onSuccess(String data) {
                 if (!TextUtils.isEmpty(data)) {
-                    SharedPreferencesTool.Get(MyApp.getInstance(), "touxiangurl", data, SharedPreferencesTool.SP_FILE_LOGIN);
+                    SharedPreferencesTool.Save(MyApp.getInstance(), "touxiangurl", data, SharedPreferencesTool.SP_FILE_LOGIN);
                     UserInfo.DataBean userInfo = CpigeonData.getInstance().getUserInfo();
                     if (userInfo != null) {
                         userInfo.setHeadimg(data);

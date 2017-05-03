@@ -65,7 +65,7 @@ public class BalanceActivity extends BaseActivity {
                 finish();
             }
         });
-        tvUserBalance.setText(String.format("￥%s", String.valueOf(CpigeonData.getInstance().getUserBalance())));
+        tvUserBalance.setText(String.format("￥%.2f", CpigeonData.getInstance().getUserBalance()));
         CpigeonData.getInstance().addOnDataChangedListener(onDataChangedLisenter);
         CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
     }

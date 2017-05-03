@@ -34,7 +34,7 @@
             android:layout_marginTop="24dp"
             android:gravity="right"
             android:layout_marginRight="8dp"
-            android:text="点击升级套餐查看更多结果>>"
+            android:text="点击开通套餐>>"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

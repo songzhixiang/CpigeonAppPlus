@@ -27,6 +27,7 @@ import com.cpigeon.app.modular.usercenter.view.activity.UserInfoActivity;
 import com.cpigeon.app.utils.CPigeonApiUrl;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.SharedPreferencesTool;
+import com.cpigeon.app.utils.WeakHandler;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
@@ -40,7 +41,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
- *
  * Created by Administrator on 2017/4/6.
  */
 
@@ -82,17 +82,20 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     LinearLayout llUserCenterAboutus;
     @BindView(R.id.ll_user_center_help)
     LinearLayout llUserCenterHelp;
+    long lastUpdateViewTime = -1;
+    WeakHandler mHandler;
 
     CpigeonData.OnDataChangedListener onDataChangedListener = new CpigeonData.OnDataChangedListener() {
         @Override
         public void OnDataChanged(CpigeonData cpigeonData) {
-            refreshUserInfo();
+            refreshUserInfo(true);
         }
     };
 
     @Override
     protected void initView(View view) {
         CpigeonData.getInstance().addOnDataChangedListener(onDataChangedListener);
+        mHandler = new WeakHandler();
     }
 
     @Override
@@ -166,25 +169,38 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     }
 
     private void refreshUserInfo() {
-        if (!isVisible) return;
+        refreshUserInfo(false);
+    }
+
+    private void refreshUserInfo(boolean isRefersh) {
+        if (!isVisible) {
+            //if (System.currentTimeMillis() - lastUpdateViewTime > 1000)
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        refreshUserInfo();
+//                    }
+//                }, 500);
+            return;
+        }
         if (checkLogin()) {
             UserInfo.DataBean userInfo = CpigeonData.getInstance().getUserInfo();
             String userHeadImageURl = "";
             String nickName = "";
-
-            Map<String, Object> map = getLoginUserInfo();
-            if (map.get("touxiang") != null && (!map.get("touxiang").equals("null") || !map.get("touxiang").equals(""))) {
-                userHeadImageURl = (String) map.get("touxiangurl");
-            }
-            Logger.d(String.format("%s  %s", map.get("nicheng"), map.get("username")));
-            if (map.get("nicheng") != null && (!TextUtils.isEmpty(map.get("nicheng").toString()))) {
-                nickName = map.get("nicheng").toString();
-            } else {
-                nickName = map.get("username").toString();
+            if (!isRefersh) {
+                Map<String, Object> map = getLoginUserInfo();
+                if (map.get("touxiang") != null && (!map.get("touxiang").equals("null") || !map.get("touxiang").equals(""))) {
+                    userHeadImageURl = (String) map.get("touxiangurl");
+                }
+                Logger.d(String.format("%s  %s", map.get("nicheng"), map.get("username")));
+                if (map.get("nicheng") != null && (!TextUtils.isEmpty(map.get("nicheng").toString()))) {
+                    nickName = map.get("nicheng").toString();
+                } else {
+                    nickName = map.get("username").toString();
+                }
             }
             if (userInfo != null) {
-                if (!TextUtils.isEmpty(userInfo.getHeadimg()))
-                {
+                if (!TextUtils.isEmpty(userInfo.getHeadimg())) {
                     userHeadImageURl = userInfo.getHeadimg();
                     //余额
                     Picasso.with(getActivity())
@@ -200,8 +216,6 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
                 if (userInfo.getNickname() != null)
                     SharedPreferencesTool.Save(getActivity(), "nicheng", userInfo.getNickname(), SharedPreferencesTool.SP_FILE_LOGIN);
             }
-
-
 
 
             final String name = nickName;
@@ -220,14 +234,19 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
         tvUserJifen.setTextColor(Color.RED);
 
         tvSignStatus.setText(CpigeonData.getInstance().getUserSignStatus() == CpigeonData.USER_SIGN_STATUS_SIGNED ? "已签到" : "签到");
-
+        lastUpdateViewTime = System.currentTimeMillis();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         CpigeonData.DataHelper.getInstance().updateUserSignStatus();
-        refreshUserInfo();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshUserInfo(true);
+            }
+        }, 3000);
     }
 
     @Override

@@ -1,20 +1,22 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
-updateVersionConfig()
 android {
+    compileOptions.encoding = "UTF-8"
+    updateVersionConfig()
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
     signingConfigs {
         //签名设置
         release {
-            keyAlias "Cpigeon.APP"
-            keyPassword 'cpi+ge*on@2#017~'
-            storeFile file("C:\\APP\\cpigeonapp.jks")
-            storePassword "cpi+ge*on@2#01~7."
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
         }
     }
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.cpigeon.app"
         minSdkVersion 17
         targetSdkVersion 25
@@ -22,14 +24,12 @@ android {
         versionName getCustomVersionName()
         signingConfig signingConfigs.release //默认签名配置
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "SERVER", "\"http://www.cpigeon.com:818\"" //默认服务器地址配置
-
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
-
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "1040749beca7f03dc6211519", //JPush上注册的包名对应的appkey.
@@ -73,7 +73,7 @@ android {
 //            // 移除无用的resource文件
 //            shrinkResources true
             buildConfigField "String", "SERVER", "\"http://192.168.0.52:8888\"" //配置BuildConfig字段
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
     productFlavors {
@@ -84,10 +84,10 @@ android {
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
 }
 
 dependencies {
@@ -199,10 +199,4 @@ def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMddHHmm')
     return formattedDate
-}
-
-//从androidManifest.xml中获取版本号
-def getVersionNameFromManifest() {
-    def manifestParser = new com.android.builder.core.DefaultManifestParser()
-    return manifestParser.getVersionName(android.sourceSets.main.manifest.srcFile)
 }

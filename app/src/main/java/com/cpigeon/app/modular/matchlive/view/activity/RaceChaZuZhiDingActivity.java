@@ -170,7 +170,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
         toolbar.setTitle(matchInfo.getMc());
 
         if ("jg".equals(matchInfo.getDt())) {
-            raceDetialInfoTextviewRacename.setText("集鸽完毕");
+            //raceDetialInfoTextviewRacename.setText("集鸽完毕");
             layoutCaipanyuan.setVisibility(View.GONE);
             layoutCaipanzhang.setVisibility(View.GONE);
             layoutArea.setVisibility(View.GONE);
@@ -341,7 +341,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
             for (int group = 0; group < getData_CZTJ().size(); group++) {
                 final Map<String, Object> map = getData_CZTJ().get(group);
 
-                mSelectGroupMenuDialog.addSheetItem(String.format("%s组%s(%d羽)", map.get("group"),
+                mSelectGroupMenuDialog.addSheetItem(String.format("%s组%s（%d羽)", map.get("group"),
                         "指定",
                         map.get("sfys")), new SaActionSheetDialog.OnSheetItemClickListener() {
                     @Override
@@ -350,7 +350,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
                         czIndex = which;
                         currGroupData = getData_CZTJ().get(czIndex - 1);
 
-                        raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s(%d羽))", matchInfo.computerBSMC(),
+                        raceDetialInfoTextviewRacename.setText(String.format("%s(%s组%s%d羽)", matchInfo.computerBSMC(),
                                 map.get("group"),
                                 "指定",
                                 map.get("sfys")));

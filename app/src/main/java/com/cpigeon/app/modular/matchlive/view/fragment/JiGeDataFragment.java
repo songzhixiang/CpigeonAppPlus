@@ -65,6 +65,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
             sKey = "";
         super.onRefresh();
         isSearch = false;
+        searchEditText.setText(sKey);
     }
 
     @Override
