@@ -42,7 +42,11 @@ public class UserBalanceListActivity extends BasePageTurnActivity<UserBalanceLis
 
     @Override
     public void initView() {
-        mWxApi = WXAPIFactory.createWXAPI(mContext, WXPayEntryActivity.APP_ID, true);
+        if (mWxApi == null) {
+            mWxApi = WXAPIFactory.createWXAPI(mContext, WXPayEntryActivity.APP_ID, true);
+            boolean result = mWxApi.registerApp(WXPayEntryActivity.APP_ID);
+            com.orhanobut.logger.Logger.d("微信支付API注册结果" + result);
+        }
         super.initView();
     }
 
@@ -82,10 +86,8 @@ public class UserBalanceListActivity extends BasePageTurnActivity<UserBalanceLis
 
     @Override
     public void wxPay(PayReq payReq) {
-        if (mWxApi == null) {
-            mWxApi = WXAPIFactory.createWXAPI(mContext, WXPayEntryActivity.APP_ID, true);
-        }
-        mWxApi.registerApp(WXPayEntryActivity.APP_ID);
+
+
         boolean result = mWxApi.sendReq(payReq);
         if (!result)
             showTips("支付失败", TipType.ToastShort);

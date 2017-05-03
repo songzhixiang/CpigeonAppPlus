@@ -2,14 +2,12 @@ package com.cpigeon.app.wxapi;
 
 //import com.cpigeon.common.AppManager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.utils.CpigeonData;
-import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -36,6 +34,13 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        api.handleIntent(intent, this);
+    }
+
+    @Override
     public void onReq(BaseReq baseReq) {
         Logger.d("baseReq = [" + baseReq.toString() + "]");
     }
@@ -48,7 +53,12 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 //        0 支付成功
 //        -1 发生错误 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
 //        -2 用户取消 发生场景：用户不支付了，点击取消，返回APP。
-        Logger.d("errCode = " + baseResp.errCode + ";errStr = " + baseResp.errStr);// 支付结果码
+        Logger.d("BaseResp{" +
+                "errCode=" + baseResp.errCode +
+                ", errStr='" + baseResp.errStr + '\'' +
+                ", transaction='" + baseResp.transaction + '\'' +
+                ", openId='" + baseResp.openId + '\'' +
+                '}');// 支付结果码
         CpigeonData.getInstance().onWxPay(this, baseResp.errCode);
         this.finish();
     }

@@ -30,6 +30,7 @@ import com.cpigeon.app.service.MainActivityService;
 import com.cpigeon.app.service.databean.UseDevInfo;
 import com.cpigeon.app.utils.cache.CacheManager;
 import com.cpigeon.app.utils.databean.ApiResponse;
+import com.cpigeon.app.utils.databean.WxPayRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
@@ -2287,25 +2288,36 @@ public class CallAPI {
         requestParams.addParameter("u", userid);
         requestParams.addHeader("u", CommonTool.getUserToken(context));
         addApiSign(requestParams);
-        return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<String>() {
+        return x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback<JSONObject>() {
 
             @Override
-            public void onSuccess(String result) {
-                Logger.d(result.toString());
-                ApiResponse<PayReq> res = JSON.parseObject(result.toString(), new TypeReference<ApiResponse<PayReq>>() {
-                });
-                if (res.isStatus()) {
-//                    JSONObject obj = result.getJSONObject("data");
-//                    req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
-//                    req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
-//                    req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
-//                    req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
-//                    req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
-//                    req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
-//                    req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
-                    callback.onSuccess(res.getData());
-                } else {
-                    callback.onError(Callback.ERROR_TYPE_API_RETURN, res.getErrorCode());
+            public void onSuccess(JSONObject result) {
+                Logger.i(result.toString());
+                try {
+                    if (result.has("status") && result.getBoolean("status")) {
+                        try {
+                            PayReq req = new PayReq();
+
+                            JSONObject obj = result.getJSONObject("data");
+                            req.appId = obj.getString("appid");// 微信开放平台审核通过的应用APPID
+                            req.partnerId = obj.getString("partnerid");// 微信支付分配的商户号
+                            req.prepayId = obj.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
+                            req.nonceStr = obj.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
+                            req.timeStamp = obj.getString("timestamp");// 时间戳，app服务器小哥给出
+                            req.packageValue = obj.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
+                            req.sign = obj.getString("sign");// 签名，服务器小哥给出，他会根据：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=4_3指导得到这个
+                            callback.onSuccess(req);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        callback.onError(Callback.ERROR_TYPE_API_RETURN, result.getInt("errorCode"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
                 }
             }
 

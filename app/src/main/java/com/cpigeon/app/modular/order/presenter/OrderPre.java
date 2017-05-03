@@ -25,7 +25,8 @@ public class OrderPre extends BasePresenter<IOrderView, OrderDao> {
 
     public void loadOrder() {
         if (isDetached()) return;
-        mView.showRefreshLoading();
+        if (!mView.isMoreDataLoading())
+            mView.showRefreshLoading();
         mDao.getUserAllOrder(mView.getPageSize(), mView.getPageIndex(), mView.getQuery(), new IBaseDao.OnCompleteListener<List<CpigeonOrderInfo>>() {
 
             @Override

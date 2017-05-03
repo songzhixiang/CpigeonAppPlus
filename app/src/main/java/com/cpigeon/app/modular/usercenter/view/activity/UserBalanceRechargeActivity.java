@@ -128,7 +128,8 @@ public class UserBalanceRechargeActivity extends BaseActivity<UserBalanceRecharg
 
         if (mWxApi == null) {
             mWxApi = WXAPIFactory.createWXAPI(mContext, WXPayEntryActivity.APP_ID, true);
-            mWxApi.registerApp(WXPayEntryActivity.APP_ID);
+            boolean res = mWxApi.registerApp(WXPayEntryActivity.APP_ID);
+            Logger.d("微信支付API注册结果：" + res);
         }
     }
 
