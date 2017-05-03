@@ -172,6 +172,7 @@ public class SearchEditText extends AppCompatEditText implements View.OnFocusCha
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             // 清空edit内容
+
             if (drawableTempDel != null) {
                 eventX = (int) event.getRawX();
                 eventY = (int) event.getRawY();
@@ -184,9 +185,18 @@ public class SearchEditText extends AppCompatEditText implements View.OnFocusCha
                     return true;
                 }
             }
+        }else if(MotionEvent.ACTION_DOWN == event.getAction()) {
+            performClick();
+            clearFocus();
+
         }
 
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override

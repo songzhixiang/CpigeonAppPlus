@@ -164,13 +164,12 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenter> implements
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (Build.VERSION.SDK_INT >= 24) {
-            imageUri = FileProvider.getUriForFile(UserInfoActivity.this,
-                    "com.example.andysong.cameraalbumtest.fileprovider", outputImage);
-        } else {
+        if (Build.VERSION.SDK_INT < 24) {
             imageUri = Uri.fromFile(outputImage);
+        } else {
+            imageUri = FileProvider.getUriForFile(UserInfoActivity.this, "com.cpigeon.app.fileprovider", outputImage);
         }
-        //启动相机程序
+        // 启动相机程序
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);

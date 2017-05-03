@@ -254,7 +254,7 @@ public class FootSearchResultActivity extends BaseActivity {
             if (layoutOp != null)
                 layoutOp.setVisibility(View.GONE);
             if (tvTips != null) {
-                SpannableStringBuilder builder = new SpannableStringBuilder(String.format("没有搜索到“%s”\n\n可能原因：\n足环记录库中没有您要找的足环号码", mSkey));
+                SpannableStringBuilder builder = new SpannableStringBuilder(String.format("没有搜索到“%s”\n\n可能原因：\n足环记录库中没有您要找的足环号码\n此次搜索不会扣除查询条数", mSkey));
                 ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().getColor(R.color.light_red2));
                 builder.setSpan(redSpan, 6, 6 + mSkey.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvTips.setText(builder);
