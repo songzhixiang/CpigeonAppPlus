@@ -56,6 +56,7 @@ public class UserRegistSetp3Fragment extends BaseFragment implements IRegisterVi
         };
         etRegistPass.addTextChangedListener(textWatcher);
         etRegistRepass.addTextChangedListener(textWatcher);
+        btnRegistSubmit.setText(((RegisterActivity)getActivity()).getRunModel()==RegisterActivity.START_TYPE_FINDPASSWORD?"确认重置":"确认注册");
     }
 
 

@@ -40,7 +40,7 @@ public class BalanceActivity extends BaseActivity {
         @Override
         public void OnDataChanged(CpigeonData cpigeonData) {
             if (tvUserBalance != null)
-                tvUserBalance.setText(String.format("￥%s", String.valueOf(cpigeonData.getUserBalance())));
+                tvUserBalance.setText(String.format("￥%.2f", cpigeonData.getUserBalance()));
         }
     };
 

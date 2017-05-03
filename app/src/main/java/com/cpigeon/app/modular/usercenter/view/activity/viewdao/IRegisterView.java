@@ -47,6 +47,13 @@ public interface IRegisterView extends IView {
          * 聚焦手机号码输入框
          */
         void focusInputPhoneNumber();
+
+        /**
+         * 设置下一步的按钮启用
+         *
+         * @param enable
+         */
+        void setBtnNextEnable(boolean enable);
     }
 
     interface IRegisterSetp2View extends IView {

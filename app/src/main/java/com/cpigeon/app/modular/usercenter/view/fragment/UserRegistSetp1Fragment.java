@@ -93,6 +93,12 @@ public class UserRegistSetp1Fragment extends BaseFragment implements IRegisterVi
         etRegistPhone.requestFocus();
     }
 
+    @Override
+    public void setBtnNextEnable(boolean enable) {
+        if (btnRegistNext != null)
+            btnRegistNext.setEnabled(enable);
+    }
+
     @OnClick({R.id.btn_regist_next, R.id.tv_regist_user_protocol})
     public void onViewClicked(View view) {
         switch (view.getId()) {

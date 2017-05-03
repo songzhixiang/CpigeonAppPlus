@@ -78,8 +78,10 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
             post(new CheckAttachRunnable() {
                 @Override
                 public void runAttached() {
-                    if (isInSetpFrist)
+                    if (isInSetpFrist) {
                         mView.nextStep();
+                        setp1View.setBtnNextEnable(true);
+                    }
                     setp2View.sendYZMSuccess(setp1View.getPhoneNumber(), yzmMd5);
                     setp2View.runSendTimer();
                 }
@@ -98,6 +100,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
                             mView.showTips("", IView.TipType.LoadingHide);
                             mView.showTips(msg, IView.TipType.ToastShort);
                         }
+                        setp1View.setBtnNextEnable(true);
                     } else {
                         mView.showTips("", IView.TipType.LoadingHide);
                         mView.showTips(msg, IView.TipType.ToastShort);
@@ -201,7 +204,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterView, IRegisterDao
             return;
         }
         this.isInSetpFrist = isInSetpFrist;
-
+        if (isInSetpFrist) setp1View.setBtnNextEnable(false);
         mDao.sendYZM(setp1View.getPhoneNumber(), mView.getRunModel() == RegisterActivity.START_TYPE_REGIST ? CallAPI.DATATYPE.YZM.REGIST : CallAPI.DATATYPE.YZM.FIND_PASSWORD, onSendCompleteListener);
     }
 }
