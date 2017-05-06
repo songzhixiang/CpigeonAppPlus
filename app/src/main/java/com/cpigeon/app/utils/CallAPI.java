@@ -4169,7 +4169,7 @@ public class CallAPI {
      */
     public static void pretreatmentParams(RequestParams requestParams) {
         requestParams.setConnectTimeout(8000);
-        requestParams.setMaxRetryCount(1);
+        requestParams.setMaxRetryCount(0);
     }
 
     /**

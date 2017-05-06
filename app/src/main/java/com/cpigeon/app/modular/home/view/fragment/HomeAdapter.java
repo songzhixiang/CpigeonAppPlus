@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Administrator on 2017/4/12.
  */
 
-public class HomeAdapter extends BaseQuickAdapter<MatchInfo , BaseViewHolder> {
+public class HomeAdapter extends BaseQuickAdapter<MatchInfo, BaseViewHolder> {
     private int loadType;
 
 
@@ -32,23 +32,19 @@ public class HomeAdapter extends BaseQuickAdapter<MatchInfo , BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, MatchInfo item) {
         if (loadType == 0) {
-            if ("jg".equals(item.getDt()) || TextUtils.isEmpty(item.getMc()))
-            {
+            if ("jg".equals(item.getDt()) || TextUtils.isEmpty(item.getMc())) {
                 return;
             }
-            if ("gp".equals(item.getLx()))
-            {
-                helper.setText(R.id.tv_raceinfo_title,item.getMc());
-                helper.setText(R.id.tv_raceinfo_count,item.compuberGcys(true));
+            if ("gp".equals(item.getLx())) {
+                helper.setText(R.id.tv_raceinfo_title, item.getMc());
+                helper.setText(R.id.tv_raceinfo_count, item.compuberGcys(true));
                 helper.setTextColor(R.id.tv_raceinfo_count, mContext.getResources().getColor(R.color.light_red2));
 
             }
-        }else if (loadType == 1)
-        {
-            if ("xh".equals(item.getLx()))
-            {
-                helper.setText(R.id.tv_raceinfo_title,item.getMc());
-                helper.setText(R.id.tv_raceinfo_count,item.compuberGcys(true));
+        } else if (loadType == 1) {
+            if ("xh".equals(item.getLx())) {
+                helper.setText(R.id.tv_raceinfo_title, item.getMc());
+                helper.setText(R.id.tv_raceinfo_count, item.compuberGcys(true));
                 helper.setTextColor(R.id.tv_raceinfo_count, mContext.getResources().getColor(R.color.colorPrimary));
             }
         }
@@ -57,6 +53,6 @@ public class HomeAdapter extends BaseQuickAdapter<MatchInfo , BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return getData().size() > 3 ? 3 : super.getItemCount();
     }
 }

@@ -46,7 +46,12 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView, IMatchInfo> {
                     @Override
                     protected void runAttached() {
                         mView.hideRefreshLoading();
-                        mView.showTips("获取失败，上拉可以重新加载", mView.hasDataList() ? IView.TipType.ToastShort : IView.TipType.View);
+                        if (mView.hasDataList())
+                        {
+                            mView.showTips("获取比赛列表失败",IView.TipType.ToastShort);
+                        }else {
+                            mView.showTips("获取失败，下拉重新加载",IView.TipType.View);
+                        }
                     }
                 });
             }
@@ -81,7 +86,7 @@ public class MatchLiveSubPre extends BasePresenter<IMatchSubView, IMatchInfo> {
                         {
                             mView.showTips("获取比赛列表失败",IView.TipType.ToastShort);
                         }else {
-                            mView.showTips("获取失败，上拉重新加载",IView.TipType.View);
+                            mView.showTips("获取失败，下拉重新加载",IView.TipType.View);
                         }
                     }
                 });

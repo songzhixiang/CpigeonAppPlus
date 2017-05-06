@@ -22,6 +22,7 @@ import com.cpigeon.app.commonstandard.presenter.BasePresenter;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.NetUtils;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,6 +113,7 @@ public abstract class BaseWebViewActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                CrashReport.setJavascriptMonitor(view, true);
                 super.onProgressChanged(view, newProgress);
             }
         });
@@ -237,8 +239,7 @@ public abstract class BaseWebViewActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (wvWebview!=null)
-        {
+        if (wvWebview != null) {
             wvWebview.pauseTimers();
             wvWebview.removeAllViews();
             wvWebview.destroy();

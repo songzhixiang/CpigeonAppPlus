@@ -173,7 +173,7 @@ public class UserCenterFragment extends BaseLazyLoadFragment {
     }
 
     private void refreshUserInfo(boolean isRefersh) {
-        if (!isVisible) {
+        if (!isVisible || !isAdded()) {
             //if (System.currentTimeMillis() - lastUpdateViewTime > 1000)
 //                mHandler.postDelayed(new Runnable() {
 //                    @Override

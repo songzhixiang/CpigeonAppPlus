@@ -16,6 +16,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.x;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 
@@ -39,9 +42,8 @@ public class MyApp extends Application {
         instance = this;
         //开启网络广播监听
         NetStateReceiver.registerNetworkStateReceiver(this);
-        if (!BuildConfig.DEBUG) {
-            initBugly();
-        } else {
+        initBugly();
+        if (BuildConfig.DEBUG) {
             Logger.init(TAG).methodCount(3);
         }
         //极光推送
@@ -74,6 +76,29 @@ public class MyApp extends Application {
      * 初始化BUGLY
      */
     private void initBugly() {
+
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+//        strategy.setCrashHandleCallback(new CrashReport.CrashHandleCallback() {
+//            public Map<String, String> onCrashHandleStart(int crashType, String errorType,
+//                                                          String errorMessage, String errorStack) {
+//                LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+//                map.put("Key", "Value");
+//                return map;
+//            }
+//
+//            @Override
+//            public byte[] onCrashHandleStart2GetExtraDatas(int crashType, String errorType,
+//                                                           String errorMessage, String errorStack) {
+//                try {
+//                    return "Extra data.".getBytes("UTF-8");
+//                } catch (Exception e) {
+//                    return null;
+//                }
+//            }
+//
+//        });
+        CrashReport.setIsDevelopmentDevice(this, BuildConfig.DEBUG);
+//        CrashReport.initCrashReport(getApplicationContext(), "f7c8c8f49a", BuildConfig.DEBUG, strategy);
         CrashReport.initCrashReport(getApplicationContext(), "f7c8c8f49a", BuildConfig.DEBUG);
         //设置用户ID
         CrashReport.setUserId("" + CpigeonData.getInstance().getUserId(this));

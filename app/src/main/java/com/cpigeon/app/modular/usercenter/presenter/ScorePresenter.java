@@ -30,7 +30,6 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
     IBaseDao.OnCompleteListener<List<UserScore>> onCompleteListener = new IBaseDao.OnCompleteListener<List<UserScore>>() {
         @Override
         public void onSuccess(final List<UserScore> data) {
-            if (isDetached()) return;
             postDelayed(new CheckAttachRunnable() {
                 @Override
                 public void runAttached() {
@@ -46,7 +45,6 @@ public class ScorePresenter extends BasePresenter<IScoreView, IScoreDao> {
 
         @Override
         public void onFail(String msg) {
-            if (isDetached()) return;
             postDelayed(new CheckAttachRunnable() {
                 @Override
                 public void runAttached() {

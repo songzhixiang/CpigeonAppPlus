@@ -227,6 +227,7 @@ public class CommonTool {
         DeviceID = EncryptionTool.MD5(m_szLongID).toLowerCase();
         return DeviceID;
     }
+
     public static String getMacAddr() {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
@@ -240,7 +241,7 @@ public class CommonTool {
 
                 StringBuilder res1 = new StringBuilder();
                 for (byte b : macBytes) {
-                    res1.append(String.format("%02X:",b));
+                    res1.append(String.format("%02X:", b));
                 }
 
                 if (res1.length() > 0) {

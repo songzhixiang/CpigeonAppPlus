@@ -49,7 +49,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
 
     @Override
     public boolean isMoreDataLoading() {
-        return isMoreDateLoading;
+        return isMoreDateLoading || pageindex > 0;
     }
 
     @Override
@@ -226,6 +226,7 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         isMoreDateLoading = false;
         mAdapter.loadMoreFail();
         mAdapter.setEnableLoadMore(true);
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
     }
 
     @Override
