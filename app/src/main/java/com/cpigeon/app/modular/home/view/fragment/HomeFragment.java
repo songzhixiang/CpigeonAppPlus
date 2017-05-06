@@ -208,23 +208,28 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @Override
     public void showMatchGPLiveData(List<MatchInfo> list, int type) {
-        if (list != null && list.size() > 0) {
+        if (!isNetworkConnected()) {
+            tvRaceinfoGpCount.setText("今日休战");
+            list = null;
+        } else if (list != null && list.size() > 0) {
             tvRaceinfoGpCount.setText(String.format("正在直播%d场", list.size()));
-            mAdapter = new HomeAdapter(list, type);
-            recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerviewHomeGp.setAdapter(mAdapter);
         }
+        mAdapter = new HomeAdapter(list, type);
+        recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerviewHomeGp.setAdapter(mAdapter);
     }
 
     @Override
     public void showMatchXhLiveData(List<MatchInfo> list, int type) {
-        if (list != null && list.size() > 0) {
+        if (!isNetworkConnected()) {
+            tvRaceinfoXhCount.setText("今日休战");
+            list = null;
+        } else if (list != null && list.size() > 0) {
             tvRaceinfoXhCount.setText(String.format("正在直播%d场", list.size()));
-            mAdapter = new HomeAdapter(list, type);
-            recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerviewHomeXh.setAdapter(mAdapter);
         }
-
+        mAdapter = new HomeAdapter(list, type);
+        recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerviewHomeXh.setAdapter(mAdapter);
     }
 
     public void loadMatchInfo() {
@@ -236,13 +241,13 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
     @Override
     public void onStart() {
         super.onStart();
-        if (homeBanner!=null) homeBanner.startAutoPlay();
+        if (homeBanner != null) homeBanner.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (homeBanner!=null) homeBanner.stopAutoPlay();
+        if (homeBanner != null) homeBanner.stopAutoPlay();
     }
 
     @Override

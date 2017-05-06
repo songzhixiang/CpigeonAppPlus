@@ -38,12 +38,15 @@ import com.cpigeon.app.modular.usercenter.view.activity.MyFollowActivity;
 import com.cpigeon.app.modular.usercenter.view.fragment.UserCenterFragment;
 import com.cpigeon.app.service.MainActivityService;
 import com.cpigeon.app.service.databean.UseDevInfo;
+import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.DateTool;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.PermissionTool;
 import com.cpigeon.app.utils.SharedPreferencesTool;
 import com.cpigeon.app.utils.StatusBarTool;
+import com.cpigeon.app.utils.ToastUtil;
 import com.cpigeon.app.utils.UpdateManager;
 import com.cpigeon.app.utils.app.ControlManager;
 import com.orhanobut.logger.Logger;
@@ -111,29 +114,29 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             if (useDevInfo == null) return false;
 
             Logger.d(useDevInfo.getString());
-            Date time = DateTool.strToDateTime(useDevInfo.getTime());
-            StringBuilder builder = new StringBuilder();
-            builder.append("您的账号于")
-                    .append(dateTimeFormat.format(time))
-                    .append("在另一台")
-                    .append(useDevInfo.getType())
-                    .append(TextUtils.isEmpty(useDevInfo.getDevinfo()) ? "" : "(" + useDevInfo.getDevinfo() + ")")
-                    .append("设备登录。如非本人操作，则密码可能已泄漏，建议尽快修改密码。");
-            SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE);
-//                    dialog.getWindow().setType(WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW);
-            dialog.setTitleText("下线通知")
-                    .setContentText(builder.toString())
-                    .setConfirmText("确定")
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.dismiss();
-                            Intent intent = new Intent(mContext, LoginActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-            dialog.setCancelable(false);
-            dialog.show();
+//            Date time = DateTool.strToDateTime(useDevInfo.getTime());
+//            StringBuilder builder = new StringBuilder();
+//            builder.append("您的账号于")
+//                    .append(dateTimeFormat.format(time))
+//                    .append("在另一台")
+//                    .append(useDevInfo.getType())
+//                    .append(TextUtils.isEmpty(useDevInfo.getDevinfo()) ? "" : "(" + useDevInfo.getDevinfo() + ")")
+//                    .append("设备登录。如非本人操作，则密码可能已泄漏，建议尽快修改密码。");
+//            SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE);
+////                    dialog.getWindow().setType(WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW);
+//            dialog.setTitleText("下线通知")
+//                    .setContentText(builder.toString())
+//                    .setConfirmText("确定")
+//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                            sweetAlertDialog.dismiss();
+//                            Intent intent = new Intent(mContext, LoginActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    });
+//            dialog.setCancelable(false);
+//            dialog.show();
             clearLoginInfo();
             return true;
         }
@@ -281,8 +284,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnPermissionDenied() {
-        showTips("权限被拒绝了", TipType.ToastShort);
-        AppManager.getAppManager().AppExit();
+//        showTips("权限被拒绝了", TipType.ToastShort);
+        ToastUtil.showToast(MyApp.getInstance(), "权限已被拒绝，程序即将退出", Toast.LENGTH_SHORT);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppManager.getAppManager().AppExit();
+            }
+        }, 1000);
+
     }
 
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -291,8 +301,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void systemAlertWindowOnNeverAskAgain() {
-        showTips("权限不再提示", TipType.ToastShort);
-        AppManager.getAppManager().AppExit();
+//        showTips("权限不再提示", TipType.ToastShort);
+        SweetAlertDialog dialog = new SweetAlertDialog(this)
+                .setCancelText("退出程序")
+                .setTitleText("权限未开启")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                        AppManager.getAppManager().AppExit();
+                    }
+                }).setConfirmText("去开启").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        PermissionTool.gotoAppPermissionSetting(MainActivity.this);
+                        sweetAlertDialog.dismiss();
+                        AppManager.getAppManager().AppExit();
+                    }
+                });
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     @Override

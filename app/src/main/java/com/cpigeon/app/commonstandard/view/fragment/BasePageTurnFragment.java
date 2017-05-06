@@ -65,11 +65,11 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     protected void lazyLoad() {
-//        if (isNetworkConnected())
-        showRefreshLoading();
-        loadDataByPresenter();
-//        else
-//            showTips("网络连接已断开", TipType.View);
+        if (isNetworkConnected()) {
+            showRefreshLoading();
+            loadDataByPresenter();
+        } else
+            showTips("网络连接已断开", TipType.View);
     }
 
 
@@ -82,7 +82,7 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
 
     @Override
     public boolean isMoreDataLoading() {
-        return this.isMoreDateLoading;
+        return isMoreDateLoading || pageindex > 0;
     }
 
     @Override
@@ -114,6 +114,7 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
         isMoreDateLoading = false;
         mAdapter.loadMoreFail();
         mAdapter.setEnableLoadMore(true);
+        if (mEmptyTip != null) mEmptyTip.setVisibility(View.GONE);
     }
 
     @Override

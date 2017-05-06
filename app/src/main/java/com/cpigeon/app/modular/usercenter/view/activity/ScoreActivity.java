@@ -91,7 +91,7 @@ public class ScoreActivity extends BaseActivity {
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.EXPANDED) {
                     //展开状态
-                    collapsingToolbarLayout.setTitle("");
+                    collapsingToolbarLayout.setTitle(null);
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
                     collapsingToolbarLayout.setTitle("我的鸽币(" + CpigeonData.getInstance().getUserScore() + ")");

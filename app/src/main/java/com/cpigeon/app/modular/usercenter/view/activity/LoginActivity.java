@@ -22,17 +22,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cpigeon.app.MainActivity;
+import com.cpigeon.app.MyApp;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.modular.usercenter.presenter.LoginPresenter;
 import com.cpigeon.app.modular.usercenter.view.activity.viewdao.ILoginView;
+import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.NetUtils;
+import com.cpigeon.app.utils.PermissionTool;
 import com.cpigeon.app.utils.SharedPreferencesTool;
+import com.cpigeon.app.utils.ToastUtil;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -88,7 +93,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
-
     void AlertWindowOnShowRationale(final PermissionRequest request) {
         showRequest(request);
     }
@@ -99,7 +103,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void AlertWindowOnPermissionDenied() {
-        AppManager.getAppManager().AppExit();
+        ToastUtil.showToast(MyApp.getInstance(), "权限已被拒绝，程序即将退出", Toast.LENGTH_SHORT);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppManager.getAppManager().AppExit();
+            }
+        }, 1000);
     }
 
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -108,7 +118,25 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_NETWORK_STATE})
     void AlertWindowOnNeverAskAgain() {
-        AppManager.getAppManager().AppExit();
+        SweetAlertDialog dialog = new SweetAlertDialog(this)
+                .setCancelText("退出程序")
+                .setTitleText("权限未开启")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                        AppManager.getAppManager().AppExit();
+                    }
+                }).setConfirmText("去开启").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        PermissionTool.gotoAppPermissionSetting(LoginActivity.this);
+                        sweetAlertDialog.dismiss();
+                        AppManager.getAppManager().AppExit();
+                    }
+                });
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private static Handler mHandler = new Handler() {
@@ -125,6 +153,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
         LoginActivityPermissionsDispatcher.AlertWindowWithCheck(this);
         super.onCreate(savedInstanceState);
     }
+
     private void showRequest(final PermissionRequest request) {
         new AlertDialog.Builder(this)
                 .setPositiveButton("允许", new DialogInterface.OnClickListener() {
@@ -149,7 +178,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
                 .setMessage("我们需要一些权限，以便您更好的体验,若您拒绝，将无法使用本产品")
                 .show();
     }
-
 
 
     @Override

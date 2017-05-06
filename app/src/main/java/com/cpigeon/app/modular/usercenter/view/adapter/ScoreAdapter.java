@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ScoreAdapter extends BaseQuickAdapter<UserScore, BaseViewHolder> {
 
-    SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy.MM.dd");
+//    SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public ScoreAdapter(List<UserScore> data) {
         super(R.layout.listitem_score_record, data);
@@ -27,8 +27,8 @@ public class ScoreAdapter extends BaseQuickAdapter<UserScore, BaseViewHolder> {
             return;
         }
         helper.setText(R.id.tv_item_name, item.getItem().replace("积分","鸽币"));
-        helper.setText(R.id.tv_item_time, dateTimeFormat.format(DateTool.strToDate(item.getTime())));
-        String str = String.format(item.getScore() > 0 ? "获得鸽币：%d" : "消费鸽币：%d", Math.abs(item.getScore()));
-        helper.setText(R.id.tv_item_explain, str);
+        helper.setText(R.id.tv_item_time, item.getTime());
+        String str = String.format(item.getScore() > 0 ? "+%d" : "-%d", Math.abs(item.getScore()));
+        helper.setText(R.id.tv_item_score, str);
     }
 }

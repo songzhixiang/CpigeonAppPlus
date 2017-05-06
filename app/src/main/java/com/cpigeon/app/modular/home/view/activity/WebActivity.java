@@ -54,6 +54,7 @@ import com.cpigeon.app.utils.customview.CpigeonListView;
 import com.cpigeon.app.utils.customview.SearchEditText;
 import com.cpigeon.app.utils.customview.SearchTitleBar;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.ex.DbException;
 import org.xutils.x;
@@ -161,6 +162,7 @@ public class WebActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                CrashReport.setJavascriptMonitor(view, true);
                 if (pbProgressbar != null) {
                     if (newProgress == 100) {
                         pbProgressbar.setVisibility(View.GONE);

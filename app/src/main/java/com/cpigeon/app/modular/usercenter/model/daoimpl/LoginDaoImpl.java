@@ -148,7 +148,8 @@ public class LoginDaoImpl implements ILoginDao {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                String msg = "登录失败";
+                ex.printStackTrace();
+                String msg;
                 if (ex instanceof ConnectException)
                     msg = "网络无法连接，请检查您的网络";
                 else
