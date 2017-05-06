@@ -54,6 +54,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
         if (!isSearch)
             sKey = "";
         super.onRefresh();
+        lastExpandItemPosition = -1;
         isSearch = false;
         searchEditText.setText("");
     }

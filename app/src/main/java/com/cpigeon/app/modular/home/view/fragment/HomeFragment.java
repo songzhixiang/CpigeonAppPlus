@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cpigeon.app.MainActivity;
 import com.cpigeon.app.R;
 import com.cpigeon.app.commonstandard.view.fragment.BaseMVPFragment;
@@ -208,28 +209,37 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements IHom
 
     @Override
     public void showMatchGPLiveData(List<MatchInfo> list, int type) {
-        if (!isNetworkConnected()) {
-            tvRaceinfoGpCount.setText("今日休战");
-            list = null;
-        } else if (list != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             tvRaceinfoGpCount.setText(String.format("正在直播%d场", list.size()));
+            mAdapter = new HomeAdapter(list, type);
+            mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                    view.setId(R.id.recyclerview_home_gp);
+                    ((MainActivity) getActivity()).onHomeItemClick(view);
+                }
+            });
+            recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerviewHomeGp.setAdapter(mAdapter);
         }
-        mAdapter = new HomeAdapter(list, type);
-        recyclerviewHomeGp.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerviewHomeGp.setAdapter(mAdapter);
     }
 
     @Override
     public void showMatchXhLiveData(List<MatchInfo> list, int type) {
-        if (!isNetworkConnected()) {
-            tvRaceinfoXhCount.setText("今日休战");
-            list = null;
-        } else if (list != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             tvRaceinfoXhCount.setText(String.format("正在直播%d场", list.size()));
+            mAdapter = new HomeAdapter(list, type);
+            mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                    view.setId(R.id.recyclerview_home_xh);
+                    ((MainActivity) getActivity()).onHomeItemClick(view);
+                }
+            });
+            recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerviewHomeXh.setAdapter(mAdapter);
         }
-        mAdapter = new HomeAdapter(list, type);
-        recyclerviewHomeXh.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerviewHomeXh.setAdapter(mAdapter);
+
     }
 
     public void loadMatchInfo() {

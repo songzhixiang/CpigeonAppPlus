@@ -257,6 +257,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
     @Override
     public void onRefresh() {
+        lastExpandItemPosition = -1;
         if (onRefreshListener != null)
             onRefreshListener.onStartRefresh(MatchLiveSubFragment.this);
         matchLiveAdapter.setEnableLoadMore(false);

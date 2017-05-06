@@ -135,6 +135,8 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
     public void onRefresh() {
         super.onRefresh();
         sKey = "";
+        lastExpandItemPosition = -1;//最后一个索引
+
         searchEditText.setText(sKey);
     }
 

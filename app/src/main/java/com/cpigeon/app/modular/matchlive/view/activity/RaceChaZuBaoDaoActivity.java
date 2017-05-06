@@ -376,4 +376,10 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         }
 
     }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        lastExpandItemPosition = -1;
+    }
 }
