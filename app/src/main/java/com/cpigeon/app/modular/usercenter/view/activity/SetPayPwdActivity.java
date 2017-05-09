@@ -95,15 +95,6 @@ public class SetPayPwdActivity extends BaseActivity<SetPayPwdPresenter> implemen
         etPaypwd.addTextChangedListener(mCanResetTextWatcher);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     /**
      * 切换密码显示

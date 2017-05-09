@@ -101,15 +101,6 @@ public class FeedBackActivity extends BaseActivity<FeedBackPresenter> implements
         });
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @Override
     public String getFeedbackContent() {

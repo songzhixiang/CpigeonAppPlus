@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.cache.CacheManager;
 import com.orhanobut.logger.Logger;
@@ -40,8 +39,6 @@ public class MyApp extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
         instance = this;
-        //开启网络广播监听
-        NetStateReceiver.registerNetworkStateReceiver(this);
         initBugly();
         if (BuildConfig.DEBUG) {
             Logger.init(TAG).methodCount(3);
@@ -62,7 +59,6 @@ public class MyApp extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        NetStateReceiver.unRegisterNetworkStateReceiver(this);
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 

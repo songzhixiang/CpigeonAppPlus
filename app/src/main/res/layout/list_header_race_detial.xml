@@ -8,17 +8,34 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-
-    <com.cpigeon.app.utils.customview.MarqueeTextView
-        android:id="@+id/race_detial_info_textview_racename"
-        style="@style/Marquee"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_header_race_detial_textview_racename_height"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
-        android:textColor="@color/light_black"
-        android:textSize="@dimen/list_header_race_detial_textview_racename_textsize" />
+        android:orientation="horizontal">
+
+        <com.cpigeon.app.utils.customview.MarqueeTextView
+            android:id="@+id/race_detial_info_textview_racename"
+            style="@style/Marquee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:text="江苏姜堰市强豪赛鸽俱乐部信鸽竞翔原始记录实时显示"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/list_header_race_detial_textview_racename_textsize" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/race_detial_info_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp"
+            app:srcCompat="@drawable/svg_ic_close_storke" />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

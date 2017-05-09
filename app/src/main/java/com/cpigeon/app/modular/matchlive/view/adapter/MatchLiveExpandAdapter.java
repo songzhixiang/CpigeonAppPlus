@@ -1,6 +1,7 @@
 package com.cpigeon.app.modular.matchlive.view.adapter;
 
 import android.support.v7.widget.AppCompatImageView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -85,7 +86,7 @@ public class MatchLiveExpandAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                     helper.setVisible(R.id.tv_cankaokongju, true);
                     helper.setVisible(R.id.tv_weather, true);
                     helper.setVisible(R.id.tv_sifangzuobiao, true);
-                    if ("".equals(detialItem.getSubItem(0).getArea()))
+                    if (TextUtils.isEmpty(detialItem.getSubItem(0).getArea()))
                     {
                         helper.setText(R.id.tv_sifangdidian, "司放地点:" +"无");
 

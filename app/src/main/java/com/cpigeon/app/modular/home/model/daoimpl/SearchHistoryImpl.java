@@ -1,5 +1,7 @@
 package com.cpigeon.app.modular.home.model.daoimpl;
 
+import android.text.TextUtils;
+
 import com.cpigeon.app.MyApp;
 import com.cpigeon.app.commonstandard.model.dao.IBaseDao;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
@@ -50,7 +52,7 @@ public class SearchHistoryImpl implements ISearchHistory {
                                     .or("searchUserId", "=", 0))
                             .orderBy("searchCount", true)
                             .orderBy("searchTime", true);
-                    if (!"".equals(key))
+                    if (!TextUtils.isEmpty(key))
                         selector.and("searchKey", "like", "%" + key + "%");
                     final List<SearchHistory> data = selector.findAll();
                     listener.onSuccess(data);
@@ -68,7 +70,7 @@ public class SearchHistoryImpl implements ISearchHistory {
         new Thread() {
             @Override
             public void run() {
-                if ("".equals(key)) return;
+                if (TextUtils.isEmpty(key)) return;
                 SearchHistory sh;
                 try {
                     sh = mDB.selector(SearchHistory.class).where("searchKey", "=", key).findFirst();
@@ -95,7 +97,7 @@ public class SearchHistoryImpl implements ISearchHistory {
             public void run() {
                 Logger.i("赛事搜索... skey=" + key);
                 try {
-                    if (!"".equals(key)) {
+                    if (!TextUtils.isEmpty(key)) {
                         data_MatchInfo = mDB.selector(MatchInfo.class).where("st", ">", DateTool.dateTimeToStr(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3)))
                                 .and(WhereBuilder.b().or("mc", "like", "%" + key + "%").or("bsmc", "like", "%" + key + "%"))
                                 .orderBy("st", true)

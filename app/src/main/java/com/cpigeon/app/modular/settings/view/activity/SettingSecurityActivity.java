@@ -50,16 +50,6 @@ public class SettingSecurityActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
     @OnClick({R.id.rl_loginpwd, R.id.rl_paypwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {

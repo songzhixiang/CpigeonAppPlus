@@ -99,7 +99,7 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
                     helper.setText(R.id.tv_guichaoshijian, "归巢时间:" + detialItem.getSubItem(0).getArrive());
                     helper.setText(R.id.tv_dengjizuobiao, "登记坐标:" + detialItem.getSubItem(0).getZx() + "/" + detialItem.getSubItem(0).getZy());
                     helper.setText(R.id.tv_saomiaozuobiao, "扫描坐标:" + detialItem.getSubItem(0).getDczx() + "/" + detialItem.getSubItem(0).getDczy());
-                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报到:无":"插组报到 :"+detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报到:无":"插组报到:"+detialItem.getSubItem(0).CZtoString());
                 }else if ("gp".equals(mathType)){
                     final ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem detialItem = (ChaZuBaoDaoDetailsAdapter.MatchDetialGPItem) item;
                     helper.setText(R.id.tv_saigecolor, "赛鸽羽色:" + detialItem.getSubItem(0).getColor()+"");
@@ -108,7 +108,7 @@ public class ChaZuBaoDaoDetailsAdapter extends BaseMultiItemQuickAdapter<MultiIt
                     helper.setText(R.id.tv_suoshuarea, "所属地区:" + detialItem.getSubItem(0).getArea());
                     helper.setText(R.id.tv_dianzihuanhao, "电子环号:" + detialItem.getSubItem(0).getRing());
                     helper.setText(R.id.tv_suoshutuandui, "所属团队:" + detialItem.getSubItem(0).getTtzb());
-                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报到:无":"插组报到 :"+detialItem.getSubItem(0).CZtoString());
+                    helper.setText(R.id.tv_chazubaodao, TextUtils.isEmpty( detialItem.getSubItem(0).CZtoString())?"插组报到:无":"插组报到:"+detialItem.getSubItem(0).CZtoString());
                 }
                 break;
 

@@ -62,15 +62,6 @@ public class AboutActivity extends BaseActivity {
         tvCopyright.setText(String.format("Copyright © 2006- %d All rights reserved.", new Date(System.currentTimeMillis()).getYear() + 1900));
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @OnClick({R.id.tv_function_intro, R.id.tv_user_protocol})
     public void onViewClicked(View view) {

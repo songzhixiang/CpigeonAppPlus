@@ -125,15 +125,6 @@ public class SettingsActivity extends BaseActivity {
         btnLogout.setText(checkLogin() ? "退出登录" : "登录");
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @OnClick({R.id.rl_clear_cache, R.id.rl_security, R.id.rl_market_score, R.id.rl_check_new_version, R.id.btn_logout})
     public void onViewClicked(View view) {
@@ -263,10 +254,4 @@ public class SettingsActivity extends BaseActivity {
         mUpdateManager.checkUpdate();
     }
 
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
 }

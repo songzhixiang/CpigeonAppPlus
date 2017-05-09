@@ -50,14 +50,4 @@ public class MyFollowActivity extends BaseActivity {
             }
         });
     }
-
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 }

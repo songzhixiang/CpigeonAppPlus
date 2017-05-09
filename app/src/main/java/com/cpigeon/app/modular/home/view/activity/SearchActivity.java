@@ -163,15 +163,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements ISe
             mPresenter.showHistory();
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     /**
      * 显示搜索结果

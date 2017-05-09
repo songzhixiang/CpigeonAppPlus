@@ -77,15 +77,6 @@ public abstract class BaseWebViewActivity extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     protected abstract String getLoadUrl();
 

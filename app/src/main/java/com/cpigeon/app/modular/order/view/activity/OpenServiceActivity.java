@@ -100,16 +100,6 @@ public class OpenServiceActivity extends BaseActivity<OpenServicePresenter> impl
     }
 
     @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
-    @Override
     public boolean showTips(String tip, TipType tipType, int tag) {
         if (tag == TAG_LoadServiceInfo) {
             return true;

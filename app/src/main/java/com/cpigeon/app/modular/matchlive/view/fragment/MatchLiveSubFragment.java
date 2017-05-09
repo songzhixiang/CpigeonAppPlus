@@ -89,7 +89,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                         return;
                     }
                     if (((MatchLiveExpandAdapter.MatchTitleItem) item).isExpanded()) {
-                        if (lastExpandItemPosition == position){
+                        if (lastExpandItemPosition == position) {
                             lastExpandItemPosition = -1;
                         }
                         adapter.collapse(position);
@@ -98,10 +98,10 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
                         if (lastExpandItemPosition >= 0) {
                             adapter.collapse(lastExpandItemPosition);
 //                            Logger.e("上一个关闭的项的postion" + lastExpandItemPosition);
-                            if (lastExpandItemPosition > position){//展开上面的项
+                            if (lastExpandItemPosition > position) {//展开上面的项
                                 adapter.expand(position);
                                 lastExpandItemPosition = position;
-                            }else if (lastExpandItemPosition < position){//展开下面的项
+                            } else if (lastExpandItemPosition < position) {//展开下面的项
                                 adapter.expand(position - 1);
                                 lastExpandItemPosition = position - 1;
                             }
@@ -112,9 +112,23 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 //                            Logger.e("当前被展开的项的lastExpandItemPosition" + lastExpandItemPosition);
                         }
 
+//                        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+//                        //判断是当前layoutManager是否为LinearLayoutManager
+//                        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+//                        if (layoutManager instanceof LinearLayoutManager) {
+//                            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+//                            //获取最后一个可见view的位置
+//                            int lastItemPosition = linearManager.findLastVisibleItemPosition();
+//                            Logger.d("最后一个可见view的位置:" + lastItemPosition + ";当前打开的项：" + lastExpandItemPosition);
+//                            //获取第一个可见view的位置
+////                                int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+//                            if (lastExpandItemPosition > lastItemPosition) {
+//                                mRecyclerView.smoothScrollToPosition(lastExpandItemPosition);
+//                            }
+//                        }
+
                     }
-                    if (lastExpandItemPosition == -1)
-                    {
+                    if (lastExpandItemPosition == -1) {
 //                        Logger.e("当前没有任何项被展开");
                     }
 //                    Logger.e("lastExpandItemPosition:" + lastExpandItemPosition);
@@ -196,7 +210,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
         matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfoList));
         if (onRefreshListener != null)
-            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_GP, matchInfoList.size());
+            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_GP, matchInfoList);
     }
 
     @Override
@@ -207,7 +221,7 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 //        }
         matchLiveAdapter.setNewData(MatchLiveExpandAdapter.get(matchInfoList));
         if (onRefreshListener != null)
-            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_XH, matchInfoList.size());
+            onRefreshListener.onRefreshFinished(OnRefreshListener.DATA_Type_XH, matchInfoList);
     }
 
     @Override
@@ -317,6 +331,6 @@ public class MatchLiveSubFragment extends BaseFragment implements IMatchSubView,
 
         void onStartRefresh(MatchLiveSubFragment fragment);
 
-        void onRefreshFinished(int type, int loadCount);
+        void onRefreshFinished(int type, List<MatchInfo> list);
     }
 }

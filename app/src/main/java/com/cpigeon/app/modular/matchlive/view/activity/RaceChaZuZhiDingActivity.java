@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -388,7 +389,7 @@ public class RaceChaZuZhiDingActivity extends BasePageTurnActivity<ChaZuBaoDaoDe
                 layoutReportInfoDetial.startAnimation(expandAnimation);
                 break;
             case R.id.list_header_race_detial_gg:
-                if ("".equals(Annotation)) {
+                if (TextUtils.isEmpty(Annotation)) {
                     return;
                 }
                 SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);

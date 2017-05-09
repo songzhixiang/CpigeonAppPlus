@@ -39,17 +39,18 @@ public class ChaZuZhiDingFragment extends BaseLazyLoadFragment<ChaZuReportPre> i
     ViewStub viewstubEmpty;
     private MatchInfo matchInfo;
     private ChaZuAdapter mAdapter;
-    private Bulletin mBulletin;
-    private String loadType;
     View mEmptyTip;
     TextView mEmptyTipTextView;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
-        this.loadType = ((RaceReportActivity) context).getLoadType();
+        initMatchinfo();
+    }
 
+    private void initMatchinfo() {
+        if (matchInfo == null)
+            this.matchInfo = ((RaceReportActivity) getActivity()).getMatchInfo();
     }
 
 
@@ -92,7 +93,7 @@ public class ChaZuZhiDingFragment extends BaseLazyLoadFragment<ChaZuReportPre> i
                 Bundle b = new Bundle();
                 b.putSerializable("matchinfo", matchInfo);
                 b.putInt("czindex", i);//组别
-                b.putString("loadType", loadType);
+                b.putString("loadType", matchInfo.getLx());
                 b.putSerializable("czmap", (ArrayList) baseQuickAdapter.getData());//插组统计数据
                 b.putInt("czposition", i);//指定数量
                 if (((RaceReportActivity) getActivity()).getBulletin() != null) {
@@ -110,11 +111,13 @@ public class ChaZuZhiDingFragment extends BaseLazyLoadFragment<ChaZuReportPre> i
 
     @Override
     public String getLx() {
+        initMatchinfo();
         return matchInfo.getLx();
     }
 
     @Override
     public String getSsid() {
+        initMatchinfo();
         return matchInfo.getSsid();
     }
 

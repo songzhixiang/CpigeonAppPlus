@@ -6,17 +6,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.cpigeon.app.R;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.view.activity.RaceReportActivity;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -83,6 +88,8 @@ public class RaceDetailsFragment extends DialogFragment {
     LinearLayout layoutReportInfoDetial;
     @BindView(R.id.layout_sfzb)
     LinearLayout layoutSfzb;
+    @BindView(R.id.race_detial_info_close)
+    AppCompatImageView raceDetialInfoClose;
     private MatchInfo matchInfo;
     private String loadType;
 
@@ -91,6 +98,17 @@ public class RaceDetailsFragment extends DialogFragment {
         super.onAttach(context);
         this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
         this.loadType = ((RaceReportActivity) context).getLoadType();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.race_detial_info_close)
+    public void onViewClicked() {
+        getDialog().dismiss();
     }
 
     public interface DialogFragmentDataImpl {

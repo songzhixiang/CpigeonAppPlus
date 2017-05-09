@@ -3,6 +3,7 @@ package com.cpigeon.app.modular.usercenter.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,15 +71,6 @@ public class EditActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,7 +106,7 @@ public class EditActivity extends BaseActivity {
             super.finish();
             return;
         }
-        if (getIntent().getStringExtra(INTENT_KEY_OLD_VALUE).equals(mEditText.getText().toString().trim()) || "".equals(mEditText.getText().toString().trim())) {
+        if (getIntent().getStringExtra(INTENT_KEY_OLD_VALUE).equals(mEditText.getText().toString().trim()) || TextUtils.isEmpty(mEditText.getText().toString().trim())) {
             super.finish();
         } else {
             SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);

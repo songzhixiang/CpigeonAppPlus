@@ -71,15 +71,6 @@ public class MessageActivity extends BaseActivity {
         viewpagertab.setViewPager(viewpager);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

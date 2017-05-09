@@ -50,10 +50,15 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
-        this.loadType = ((RaceReportActivity) context).getLoadType();
+        initMatchinfo();
     }
 
+    private void initMatchinfo() {
+        if (matchInfo == null) {
+            this.matchInfo = ((RaceReportActivity) getActivity()).getMatchInfo();
+            this.loadType = ((RaceReportActivity) getActivity()).getLoadType();
+        }
+    }
 
     @Override
     protected ChaZuReportPre initPresenter() {
@@ -114,11 +119,13 @@ public class ChaZuBaoDaoFragment extends BaseLazyLoadFragment<ChaZuReportPre> im
 
     @Override
     public String getLx() {
+        initMatchinfo();
         return matchInfo.getLx();
     }
 
     @Override
     public String getSsid() {
+        initMatchinfo();
         return matchInfo.getSsid();
     }
 

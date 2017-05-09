@@ -3,6 +3,7 @@ package com.cpigeon.app.commonstandard.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -23,10 +24,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cpigeon.app.R;
-import com.cpigeon.app.broadcastreceiver.NetStateReceiver;
+import com.cpigeon.app.broadcastreceiver.NetWorkStateReceiver;
 import com.cpigeon.app.commonstandard.AppManager;
 import com.cpigeon.app.commonstandard.presenter.BasePresenter;
-import com.cpigeon.app.networkstatus.NetChangeObserver;
 import com.cpigeon.app.utils.CommonTool;
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.EncryptionTool;
@@ -58,11 +58,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private SwipeBackActivityHelper mHelper;
     private SwipeBackLayout mSwipeBackLayout;
     private SweetAlertDialog dialogPrompt;
-    /**
-     * 网络观察者
-     */
-    protected NetChangeObserver mNetChangeObserver = null;
-
+    private NetWorkStateReceiver netWorkStateReceiver;
     protected T mPresenter;
     /**
      * 加载中--对话框
@@ -87,20 +83,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mContext = this;
         mPresenter = this.initPresenter();
         initView();
-        // 网络改变的一个回掉类
-        mNetChangeObserver = new NetChangeObserver() {
-            @Override
-            public void onNetConnected(NetUtils.NetType type) {
-                onNetworkConnected(type);
-            }
-
-            @Override
-            public void onNetDisConnect() {
-                onNetworkDisConnected();
-            }
-        };
-        //开启广播去监听 网络 改变事件
-        NetStateReceiver.registerObserver(mNetChangeObserver);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
 //        Logger.e("当前" + this.getClass().getSimpleName() + "上面的栈内存Activity还有" + AppManager.getAppManager().stackSize());
 
@@ -246,8 +228,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter!=null && !mPresenter.isDetached())
-        {
+        if (mPresenter != null && !mPresenter.isDetached()) {
             mPresenter.detach();
         }
 
@@ -277,19 +258,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (netWorkStateReceiver == null) {
+//            netWorkStateReceiver = new NetWorkStateReceiver();
+//        }
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        registerReceiver(netWorkStateReceiver, filter);
 
-    /**
-     * 网络连接状态
-     *
-     * @param type 网络状态
-     */
-    protected abstract void onNetworkConnected(NetUtils.NetType type);
+    }
 
-    /**
-     * 网络断开的时候调用
-     */
-    protected abstract void onNetworkDisConnected();
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        unregisterReceiver(netWorkStateReceiver);
+    }
 
     // 获取点击事件
     @Override

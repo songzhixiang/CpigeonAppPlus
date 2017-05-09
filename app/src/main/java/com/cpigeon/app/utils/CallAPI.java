@@ -143,9 +143,9 @@ public class CallAPI {
             public void onSuccess(String result) {
                 Logger.i(result);
                 try {
-                    List<UpdateManager.UpdateInfo> apiResponse = JSON.parseObject(result, new TypeReference<List<UpdateManager.UpdateInfo>>() {
+                    List<UpdateManager.UpdateInfo> updateInfos = JSON.parseObject(result, new TypeReference<List<UpdateManager.UpdateInfo>>() {
                     });
-                    callback.onSuccess(apiResponse);
+                    callback.onSuccess(updateInfos);
                 } catch (Exception e) {
                     e.printStackTrace();
                     callback.onError(Callback.ERROR_TYPE_PARSING_EXCEPTION, 0);
@@ -1222,13 +1222,13 @@ public class CallAPI {
         requestParams.addParameter("hcz", hascz ? 1 : 0);
         requestParams.addParameter("c", czIndex);
         requestParams.addParameter("bi", ssid);
-        if (!("".equals(foot) || "".equals(name))) {
+        if (!(TextUtils.isEmpty(foot) || TextUtils.isEmpty(name))) {
             requestParams.addParameter("f", foot);
             requestParams.addParameter("n", name);
         }
         requestParams.addParameter("pi", pager < 0 ? -1 : pager);
         requestParams.addParameter("ps", pagesize > 0 ? pagesize : 100);
-        if (!"".equals(sKey))
+        if (!TextUtils.isEmpty(sKey))
             requestParams.addParameter("s", sKey);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_MATCH_REPORT_INFO_TIME);
 
@@ -1353,14 +1353,14 @@ public class CallAPI {
         requestParams.addHeader("u", userToken);
         requestParams.addParameter("hcz", hascz ? 1 : 0);
         requestParams.addParameter("c", czIndex);
-        if (!"".equals(foot) && !"".equals(name)) {
+        if (!TextUtils.isEmpty(foot) && !TextUtils.isEmpty(name)) {
             requestParams.addParameter("f", foot);
             requestParams.addParameter("n", name);
         }
         requestParams.addParameter("bi", ssid);
         requestParams.addParameter("pi", pager < 0 ? -1 : pager);
         requestParams.addParameter("ps", pagesize > 0 ? pagesize : 100);
-        if (!"".equals(sKey))
+        if (!TextUtils.isEmpty(sKey))
             requestParams.addParameter("s", sKey);
         requestParams.setCacheMaxAge(CpigeonConfig.CACHE_MATCH_REPORT_INFO_TIME);
 
@@ -1488,7 +1488,7 @@ public class CallAPI {
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status") && !obj.isNull("data")) {
-                        if (!"".equals("ssid")) {
+                        if (!TextUtils.isEmpty("ssid")) {
                             obj = obj.getJSONObject("data");
                             if (obj != null) {
                                 bull = new Bulletin(ssid, obj.getString("gg"), obj.getString("sj"));
@@ -1598,7 +1598,7 @@ public class CallAPI {
                 try {
                     JSONObject obj = new JSONObject(result);
                     if (obj.getBoolean("status") && !obj.isNull("data")) {
-                        if (!"".equals(ssid)) {
+                        if (!TextUtils.isEmpty(ssid)) {
                             JSONArray array = obj.getJSONArray("data");
                             for (int i = 0; i < array.length(); i++) {
                                 obj = array.getJSONObject(i);

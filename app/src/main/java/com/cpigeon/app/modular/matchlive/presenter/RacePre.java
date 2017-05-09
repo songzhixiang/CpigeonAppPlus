@@ -26,7 +26,7 @@ public class RacePre extends BasePresenter<IReportData, IRaceDao> {
     }
 
     public void loadRaceData(final int loadType) {
-
+        if (mView.getPageIndex() == 1) mView.showRefreshLoading();
         mDao.showReprotData(mView.getMatchType(), mView.getSsid(), mView.getFoot(), mView.getName(),
                 mView.hascz(), mView.getPageIndex(), mView.getPageSize(), mView.czIndex(), mView.sKey(), new IBaseDao.OnCompleteListener<List>() {
                     @Override

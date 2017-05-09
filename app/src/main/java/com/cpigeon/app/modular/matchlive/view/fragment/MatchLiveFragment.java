@@ -10,8 +10,12 @@ import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.commonstandard.view.fragment.BaseFragment;
 import com.cpigeon.app.modular.home.view.activity.SearchActivity;
 import com.cpigeon.app.modular.home.view.activity.WebActivity;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.utils.Const;
 import com.cpigeon.app.utils.customview.SearchEditText;
+
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,15 +103,22 @@ public class MatchLiveFragment extends BaseFragment {
         }
 
         @Override
-        public void onRefreshFinished(int type, int loadCount) {
+        public void onRefreshFinished(int type, List<MatchInfo> list) {
+            int loadCount = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (!list.get(i).isCollectionPigeon()) {
+                    loadCount = i;
+                    break;
+                }
+            }
             if (type == DATA_Type_XH) {
-                tvActionbarMatchtypeXh.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
+                tvActionbarMatchtypeXh.getBadgeViewHelper().showTextBadge(String.valueOf(list.size() - loadCount));
             }
             if (type == DATA_Type_GP) {
-                tvActionbarMatchtypeGp.getBadgeViewHelper().showTextBadge(String.valueOf(loadCount));
+                tvActionbarMatchtypeGp.getBadgeViewHelper().showTextBadge(String.valueOf(list.size() - loadCount));
             }
             if (onRefreshListener != null) {
-                onRefreshListener.onRefreshFinished(type, loadCount);
+                onRefreshListener.onRefreshFinished(type, list);
             }
         }
     };

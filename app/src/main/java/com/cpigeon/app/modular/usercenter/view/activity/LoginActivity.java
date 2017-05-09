@@ -215,14 +215,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
         etUsername.setSelection(username.length() > 0 ? username.length() : 0);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

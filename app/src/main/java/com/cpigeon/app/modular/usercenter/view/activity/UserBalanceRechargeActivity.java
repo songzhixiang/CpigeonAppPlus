@@ -133,15 +133,6 @@ public class UserBalanceRechargeActivity extends BaseActivity<UserBalanceRecharg
         }
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     /**
      * 添加手续费

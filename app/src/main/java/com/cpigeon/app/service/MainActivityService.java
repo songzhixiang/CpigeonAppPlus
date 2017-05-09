@@ -122,18 +122,22 @@ public class MainActivityService extends Service {
         mSingleLoginCheckTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                boolean res = SharedPreferencesTool.Get(getApplicationContext(), "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);
-                res &= SharedPreferencesTool.Get(getApplicationContext(), "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN).equals(
-                        Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(getApplicationContext(), "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]));
-                if (!res) {
-                    return;
+                try {
+                    boolean res = SharedPreferencesTool.Get(getApplicationContext(), "logined", false, SharedPreferencesTool.SP_FILE_LOGIN);
+                    res &= SharedPreferencesTool.Get(getApplicationContext(), "userid", 0, SharedPreferencesTool.SP_FILE_LOGIN).equals(
+                            Integer.valueOf(EncryptionTool.decryptAES(SharedPreferencesTool.Get(getApplicationContext(), "token", "", SharedPreferencesTool.SP_FILE_LOGIN).toString()).split("\\|")[0]));
+                    if (!res) {
+                        return;
+                    }
+                    String devid = CommonTool.getCombinedDeviceID(getApplicationContext());
+                    String dev = android.os.Build.MODEL;
+                    String ver = String.valueOf(CommonTool.getVersionCode(getApplicationContext()));
+                    String appid = BuildConfig.APPLICATION_ID;
+                    String sltoken = SharedPreferencesTool.Get(getApplicationContext(), "sltoken", "", SharedPreferencesTool.SP_FILE_LOGIN);
+                    CallAPI.singleLoginCheck(getApplicationContext(), devid, dev, ver, appid, sltoken, singleLoginCheckCallback);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
-                String devid = CommonTool.getCombinedDeviceID(getApplicationContext());
-                String dev = android.os.Build.MODEL;
-                String ver = String.valueOf(CommonTool.getVersionCode(getApplicationContext()));
-                String appid = BuildConfig.APPLICATION_ID;
-                String sltoken = SharedPreferencesTool.Get(getApplicationContext(), "sltoken", "", SharedPreferencesTool.SP_FILE_LOGIN);
-                CallAPI.singleLoginCheck(getApplicationContext(), devid, dev, ver, appid, sltoken, singleLoginCheckCallback);
             }
         }, BuildConfig.DEBUG ? 3000 : 0, BuildConfig.DEBUG ? 30000 : 90000);
     }

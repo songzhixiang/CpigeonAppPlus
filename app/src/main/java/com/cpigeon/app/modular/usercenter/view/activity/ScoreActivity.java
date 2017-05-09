@@ -124,13 +124,4 @@ public class ScoreActivity extends BaseActivity {
         CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 }

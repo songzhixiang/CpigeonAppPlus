@@ -82,23 +82,25 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
         pagesize = getDefaultPageSize();
 //        onRefresh();
         if (isNetworkConnected()) onRefresh();
-        else
+        else {
+            swiperefreshlayout.setEnabled(true);
             showTips("网络连接已断开", TipType.View);
-    }
-
-
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-        if (mAdapter == null || mAdapter.getData().size() == 0) {
-            loadDataByPresenter();
         }
     }
 
-    @Override
-    protected void onNetworkDisConnected() {
-        hideRefreshLoading();
-        showTips("网络连接断开,请打开网络连接", TipType.SnackbarLong);
-    }
+
+//    @Override
+//    protected void onNetworkConnected(NetUtils.NetType type) {
+//        if (mAdapter == null || mAdapter.getData().size() == 0) {
+//            loadDataByPresenter();
+//        }
+//    }
+//
+//    @Override
+//    protected void onNetworkDisConnected() {
+//        hideRefreshLoading();
+//        showTips("网络连接断开,请打开网络连接", TipType.SnackbarLong);
+//    }
 
     @Override
     public void showRefreshLoading() {
@@ -106,7 +108,8 @@ public abstract class BasePageTurnActivity<Pre extends BasePresenter, Adapter ex
             if (swiperefreshlayout == null || swiperefreshlayout.isRefreshing()) return;
             swiperefreshlayout.setRefreshing(true);
         } else {
-            onNetworkDisConnected();
+            //onNetworkDisConnected();
+            showTips("网络连接已断开", TipType.View);
         }
     }
 

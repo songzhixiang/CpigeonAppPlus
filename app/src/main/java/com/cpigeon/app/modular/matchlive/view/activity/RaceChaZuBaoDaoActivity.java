@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,7 +140,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
         toolbar.setTitle("");
         raceDetailsMarqueetv.setText(getTitleName());
         layoutReportInfoDetial.setVisibility(View.GONE);
-        if (Annotation == null || "".equals(Annotation)) {
+        if (Annotation == null || TextUtils.isEmpty(Annotation)) {
             layoutGg.setVisibility(View.GONE);
         } else {
             layoutGg.setVisibility(View.VISIBLE);
@@ -345,7 +346,7 @@ public class RaceChaZuBaoDaoActivity extends BasePageTurnActivity<ChaZuBaoDaoDet
                 layoutReportInfoDetial.startAnimation(expandAnimation);
                 break;
             case R.id.list_header_race_detial_gg:
-                if ("".equals(Annotation)) {
+                if (TextUtils.isEmpty(Annotation)) {
                     return;
                 }
                 SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);

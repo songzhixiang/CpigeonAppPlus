@@ -57,15 +57,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private UserRegistSetp2Fragment mUserRegistSetp2Fragment;
     private UserRegistSetp3Fragment mUserRegistSetp3Fragment;
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     public RegisterPresenter getRegisterPresenter() {
         return  this.mPresenter;

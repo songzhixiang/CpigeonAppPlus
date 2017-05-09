@@ -70,16 +70,6 @@ public class BalanceActivity extends BaseActivity {
         CpigeonData.DataHelper.getInstance().updateUserBalanceAndScoreFromServer();
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
     @OnClick({R.id.btn_money_recharge, R.id.btn_money_details, R.id.tv_question})
     public void onViewClicked(View view) {
         switch (view.getId()) {

@@ -98,7 +98,7 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
         if ("xh".equals(loadType)) {
             tablayout_seconde_name = "集鸽数据";
         } else if ("gp".equals(loadType)) {
-            tablayout_seconde_name = "上笼数据";
+            tablayout_seconde_name = "上笼清单";
         }
         mPresenter.showBulletin();
         mPresenter.addRaceClickCount();
@@ -129,29 +129,27 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
             setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                if (i == 1 || i == 3) {
-
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int i, float v, int i1) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int i) {
+//                if (i == 1 || i == 3) {
+//
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int i) {
+//
+//            }
+//        });
 //        searchEditText.setOnSearchClickListener(this);
-
-
     }
 
     public String getLoadType() {
@@ -207,15 +205,6 @@ public class RaceReportActivity extends BaseActivity<RaceReportPre> implements I
     }
 
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-        showTips("网络加载失败", TipType.DialogError);
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @OnClick({R.id.layout_gg})
     public void onViewClicked(View view) {

@@ -1,5 +1,7 @@
 package com.cpigeon.app.modular.matchlive.model.bean;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import org.xutils.db.annotation.Column;
@@ -13,7 +15,7 @@ import java.io.Serializable;
  */
 
 @Table(name = "matchInfo")
-public class MatchInfo implements Serializable{
+public class MatchInfo implements Serializable {
 
     @Column(name = "ssid", isId = true, autoGen = false)
     private String ssid;//比赛ID
@@ -510,7 +512,7 @@ public class MatchInfo implements Serializable{
         if (!"bs".equals(this.getDt())) return "xh".equals(getLx()) ? "集鸽完毕" : "上笼完毕";
         if ("xh".equals(this.getLx())) return bsmc;
         if (this.getCsys() > 0) return bsmc;
-        if (!"".equals(this.getXmbt())) return this.getXmbt();
+        if (!TextUtils.isEmpty(this.getXmbt())) return this.getXmbt();
         if (this.getBskj() == 0) return "家飞测试";
         else return ((int) this.getBskj()) + "公里训放";
     }
@@ -523,15 +525,24 @@ public class MatchInfo implements Serializable{
     }
 
     /**
+     * 是否是集鸽或上笼
+     *
+     * @return
+     */
+    public boolean isCollectionPigeon() {
+        return "jg".equals(dt);
+    }
+
+    /**
      * 计算司放坐标
      *
      * @return
      */
     public String computerSFZB() {
-        if ("".equals(this.getXmbt()) && this.getCsys() <= 0) return "训放家飞无此项";
-        if (!"".equals(this.getSfjd()) && !"".equals(this.getSfwd()))
+        if (TextUtils.isEmpty(this.getXmbt()) && this.getCsys() <= 0) return "训放家飞无此项";
+        if (!TextUtils.isEmpty(this.getSfjd()) && !TextUtils.isEmpty(this.getSfwd()))
             return this.getSfjd() + "/" + this.getSfwd();
-        if (!"".equals(this.getJd()) && !"".equals(this.getWd()))
+        if (!TextUtils.isEmpty(this.getJd()) && !TextUtils.isEmpty(this.getWd()))
             return this.getJd() + "/" + this.getWd();
         return "无";
     }

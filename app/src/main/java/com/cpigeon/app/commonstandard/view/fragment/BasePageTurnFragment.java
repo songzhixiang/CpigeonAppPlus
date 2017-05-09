@@ -68,8 +68,10 @@ public abstract class BasePageTurnFragment<Pre extends BasePresenter, Adapter ex
         if (isNetworkConnected()) {
             showRefreshLoading();
             loadDataByPresenter();
-        } else
+        } else {
+            swiperefreshlayout.setEnabled(true);
             showTips("网络连接已断开", TipType.View);
+        }
     }
 
 

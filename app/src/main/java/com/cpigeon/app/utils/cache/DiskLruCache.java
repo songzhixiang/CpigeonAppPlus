@@ -1,5 +1,7 @@
 package com.cpigeon.app.utils.cache;
 
+import android.text.TextUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.Closeable;
@@ -347,7 +349,7 @@ public final class DiskLruCache implements Closeable {
                     || !VERSION_1.equals(version)
                     || !Integer.toString(appVersion).equals(appVersionString)
                     || !Integer.toString(valueCount).equals(valueCountString)
-                    || !"".equals(blank)) {
+                    || !TextUtils.isEmpty(blank)) {
                 throw new IOException("unexpected journal header: ["
                         + magic + ", " + version + ", " + valueCountString + ", " + blank + "]");
             }

@@ -31,6 +31,7 @@ import com.cpigeon.app.commonstandard.view.activity.BaseActivity;
 import com.cpigeon.app.commonstandard.view.adapter.ContentFragmentAdapter;
 import com.cpigeon.app.modular.footsearch.view.fragment.FootSearchFragment;
 import com.cpigeon.app.modular.home.view.fragment.HomeFragment;
+import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.MatchLiveSubFragment;
 import com.cpigeon.app.modular.usercenter.view.activity.LoginActivity;
@@ -163,7 +164,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
 
         @Override
-        public void onRefreshFinished(int type, int loadCount) {
+        public void onRefreshFinished(int type, List<MatchInfo> list) {
             if (homeFragment != null) homeFragment.loadMatchInfo();
         }
     };
@@ -393,15 +394,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bindService(new Intent(mContext.getApplicationContext(), MainActivityService.class), conn, Context.BIND_AUTO_CREATE);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
+//
 
 
     @Override

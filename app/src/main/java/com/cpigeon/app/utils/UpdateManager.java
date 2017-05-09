@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.cpigeon.app.MyApp;
@@ -22,6 +23,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class UpdateManager {
 
     private long loadingTime = 1;
 
-    public UpdateManager(Context context) {
+    public UpdateManager(@NonNull Context context) {
         mContext = context;
     }
 
@@ -99,7 +101,7 @@ public class UpdateManager {
     private void checkUpdate(List<UpdateInfo> updateInfos) {
         if (updateInfos == null || updateInfos.size() == 0) return;
         for (UpdateInfo updateInfo : updateInfos) {
-            if (mContext.getPackageName().equals(updateInfo.getPackageName())) {
+            if (mContext.getPackageName() != null && mContext.getPackageName().equals(updateInfo.getPackageName())) {
                 if (updateInfo.getVerCode() > CommonTool.getVersionCode(mContext)) {
                     updateReady(updateInfo);
                     return;
@@ -301,7 +303,7 @@ public class UpdateManager {
      * 应用更新信息类
      */
 
-    public static class UpdateInfo {
+    public static class UpdateInfo implements Serializable {
 
         /**
          * appName : 中鸽网

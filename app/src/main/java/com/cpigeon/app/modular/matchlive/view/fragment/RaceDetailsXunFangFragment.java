@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatImageView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.cpigeon.app.utils.customview.MarqueeTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -48,7 +51,14 @@ public class RaceDetailsXunFangFragment extends DialogFragment {
     TextView raceDetialMatchInfoContentSt;
     @BindView(R.id.layout_report_info_detial)
     LinearLayout layoutReportInfoDetial;
+    @BindView(R.id.race_detial_info_close)
+    AppCompatImageView raceDetialInfoClose;
     private MatchInfo matchInfo;
+
+    @OnClick(R.id.race_detial_info_close)
+    public void onViewClicked() {
+        getDialog().dismiss();
+    }
 
     @NonNull
     @Override
@@ -63,7 +73,7 @@ public class RaceDetailsXunFangFragment extends DialogFragment {
 
     private void initView() {
         raceDetialInfoTextviewRacename.setText(matchInfo.computerBSMC());
-        raceDetialMatchInfoContentArea.setText(!"".equals(matchInfo.getArea()) ? matchInfo.getArea() : "无");
+        raceDetialMatchInfoContentArea.setText(!TextUtils.isEmpty(matchInfo.getArea()) ? matchInfo.getArea() : "无");
         raceDetialMatchInfoContentSt.setText(matchInfo.getSt());
         if (matchInfo.getBskj() == 0)//家飞
         {

@@ -137,7 +137,7 @@ public class WebActivity extends BaseActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra(INTENT_DATA_KEY_URL);
         String backName = intent.getStringExtra(INTENT_DATA_KEY_BACKNAME);
-        if ("".equals(backName)) backName = "返回";
+        if (TextUtils.isEmpty(backName)) backName = "返回";
 
         mHeaderMap = new HashMap<>();
         mHeaderMap.put("u", CommonTool.getUserToken(this));
@@ -313,13 +313,4 @@ public class WebActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 }

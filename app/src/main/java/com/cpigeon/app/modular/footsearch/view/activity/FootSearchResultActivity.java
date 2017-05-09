@@ -190,15 +190,6 @@ public class FootSearchResultActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

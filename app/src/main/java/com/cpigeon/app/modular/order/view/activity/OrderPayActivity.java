@@ -135,17 +135,6 @@ public class OrderPayActivity extends BaseActivity<OrderPayPresenter> implements
         }
     }
 
-
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
     @Override
     public void showOrderInfo(final CpigeonOrderInfo orderInfo) {
         if (orderInfo == null) {

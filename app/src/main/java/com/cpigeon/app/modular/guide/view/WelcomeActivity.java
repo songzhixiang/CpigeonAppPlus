@@ -146,16 +146,6 @@ public class WelcomeActivity extends BaseActivity {
         SharedPreferencesTool.Save(mContext, "guide_version", CommonTool.getVersionName(mContext));
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
-
 
     @OnClick({ R.id.done, R.id.next})
     public void onViewClicked(View view) {

@@ -130,7 +130,7 @@ public class EncryptionTool {
             cipher.init(Cipher.ENCRYPT_MODE, skey);
             crypted = cipher.doFinal(input.getBytes("utf-8"));
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
             return "";
         }
         return new String(Base64.encodeBase64(crypted));
@@ -151,7 +151,7 @@ public class EncryptionTool {
             cipher.init(Cipher.DECRYPT_MODE, skey);
             output = cipher.doFinal(Base64.decodeBase64(input.getBytes("utf-8")));
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
             return "";
         }
         return new String(output);

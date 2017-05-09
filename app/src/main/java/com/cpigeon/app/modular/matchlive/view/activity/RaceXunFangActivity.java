@@ -20,11 +20,13 @@ import com.cpigeon.app.commonstandard.view.activity.BasePageTurnActivity;
 import com.cpigeon.app.modular.matchlive.model.bean.Bulletin;
 import com.cpigeon.app.modular.matchlive.model.bean.MatchInfo;
 import com.cpigeon.app.modular.matchlive.presenter.RacePre;
+import com.cpigeon.app.modular.matchlive.view.adapter.RaceReportAdapter;
 import com.cpigeon.app.modular.matchlive.view.adapter.RaceXunFangAdapter;
 import com.cpigeon.app.modular.matchlive.view.fragment.RaceDetailsXunFangFragment;
 import com.cpigeon.app.modular.matchlive.view.fragment.viewdao.IReportData;
 import com.cpigeon.app.utils.NetUtils;
 import com.cpigeon.app.utils.customview.MarqueeTextView;
+import com.cpigeon.app.utils.customview.SaActionSheetDialog;
 import com.cpigeon.app.utils.customview.SearchEditText;
 import com.orhanobut.logger.Logger;
 
@@ -119,30 +121,20 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
         loadType = bundle.getString("loadType");
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
 
     public void search(String keyword) {
         this.sKey = keyword;
-        if (TextUtils.isEmpty(keyword))
-            return;
         onRefresh();
     }
 
     @Override
     public void onRefresh() {
         super.onRefresh();
-        sKey = "";
         lastExpandItemPosition = -1;//最后一个索引
-
-        searchEditText.setText(sKey);
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-        showTips("网络连接断开啦，请您检查网络", TipType.DialogError);
+        if (searchEditText != null) {
+            searchEditText.setText(this.sKey);
+            searchEditText.setSelection(this.sKey.length());
+        }
     }
 
     @NonNull
@@ -202,6 +194,47 @@ public class RaceXunFangActivity extends BasePageTurnActivity<RacePre, RaceXunFa
                 }
             }
         });
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                String key = sKey;
+                boolean show = false;
+                if (!TextUtils.isEmpty(key)) {
+                    new SaActionSheetDialog(mContext)
+                            .builder()
+                            .addSheetItem(getString(R.string.search_prompt_clear_key), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    search("");
+                                }
+                            })
+                            .setCancelable(true)
+                            .show();
+                } else {
+                    if ("gp".equals(getMatchType())) {
+                        Object item = ((RaceXunFangAdapter) baseQuickAdapter).getData().get(i);
+                        if (item instanceof RaceXunFangAdapter.MatchTitleGPItem) {
+                            key = ((RaceXunFangAdapter.MatchTitleGPItem) item).getMatchReportGP().getName();
+                            show = true;
+                        }
+                    }
+                    final String finalKey = key;
+                    if (show)
+                        new SaActionSheetDialog(mContext)
+                                .builder()
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), key), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+                                        search(finalKey);
+                                    }
+                                })
+                                .setCancelable(true)
+                                .show();
+                }
+                return true;
+            }
+        });
+
         return adapter;
     }
 

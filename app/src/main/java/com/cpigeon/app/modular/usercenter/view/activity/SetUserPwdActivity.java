@@ -113,15 +113,6 @@ public class SetUserPwdActivity extends BaseActivity<SetUserPwdPresenter> implem
         etConfirmnewpwd.addTextChangedListener(canSubmitWatcher);
     }
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
-
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @OnClick({R.id.tv_oldpwd_show, R.id.btn_ok})
     public void onViewClicked(View view) {

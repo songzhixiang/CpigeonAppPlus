@@ -71,29 +71,29 @@
             </RelativeLayout>
 
             <!--<View-->
-                <!--style="@style/Setting_Item_Split_Line"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/split_line_width" />-->
+            <!--style="@style/Setting_Item_Split_Line"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/split_line_width" />-->
 
             <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_search_online"-->
-                <!--style="@style/Setting_Item"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/activity_setting_item_layout_height">-->
+            <!--android:id="@+id/rl_search_online"-->
+            <!--style="@style/Setting_Item"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/activity_setting_item_layout_height">-->
 
-                <!--<TextView-->
-                    <!--style="@style/Setting_Item_Name"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:text="@string/search_online"-->
-                    <!--android:textSize="@dimen/activity_setting_item_title_textsize" />-->
+            <!--<TextView-->
+            <!--style="@style/Setting_Item_Name"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/search_online"-->
+            <!--android:textSize="@dimen/activity_setting_item_title_textsize" />-->
 
-                <!--<com.kyleduo.switchbutton.SwitchButton-->
-                    <!--android:id="@+id/sb_search_online"-->
-                    <!--style="@style/Setting_Item_CheckBox"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content" />-->
+            <!--<com.kyleduo.switchbutton.SwitchButton-->
+            <!--android:id="@+id/sb_search_online"-->
+            <!--style="@style/Setting_Item_CheckBox"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
             <!--</RelativeLayout>-->
 
             <View

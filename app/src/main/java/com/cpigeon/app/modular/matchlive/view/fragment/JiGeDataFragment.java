@@ -50,23 +50,27 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     SearchEditText searchEditText;
     private MatchInfo matchInfo;
     private String sKey = "";
-    private Boolean isSearch = false;
     private int lastExpandItemPosition = -1;//最后一个索引
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
+        initMatchinfo();
+    }
+
+    private void initMatchinfo() {
+        if (matchInfo == null)
+            this.matchInfo = ((RaceReportActivity) getActivity()).getMatchInfo();
     }
 
     @Override
     public void onRefresh() {
-        if (!isSearch)
-            sKey = "";
         super.onRefresh();
-        isSearch = false;
         lastExpandItemPosition = -1;
-        searchEditText.setText(sKey);
+        if (searchEditText != null) {
+            searchEditText.setText(this.sKey);
+            searchEditText.setSelection(this.sKey.length());
+        }
     }
 
     @Override
@@ -189,46 +193,45 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
         adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                if ("xh".equals(getMatchType())) {
-                    if (!"".equals(sKey)) {
-                        sKey = "";
+                String key = sKey;
+                boolean show = false;
+                if (!TextUtils.isEmpty(key)) {
+                    new SaActionSheetDialog(getActivity())
+                            .builder()
+                            .addSheetItem(getString(R.string.search_prompt_clear_key), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    search("");
+                                }
+                            })
+                            .setCancelable(true)
+                            .show();
+                } else {
+                    if ("xh".equals(getMatchType())) {
+                        Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
+                        if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
+                            key = ((JiGeDataAdapter.JiGeTitleItem_XH) item).getMatchPigeonsXH().getName();
+                            show = true;
+                        }
+                    } else if ("gp".equals(getMatchType())) {
+                        Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
+                        if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
+                            key = ((JiGeDataAdapter.JiGeTitleItem_GP) item).getMatchPigeonsGP().getName();
+                            show = true;
+                        }
                     }
-                    Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
-                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_XH) {
-                        sKey = ((JiGeDataAdapter.JiGeTitleItem_XH) item).getMatchPigeonsXH().getName();
+                    final String finalKey = key;
+                    if (show)
                         new SaActionSheetDialog(getActivity())
                                 .builder()
-                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), key), new SaActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        isSearch = true;
-                                        onRefresh();
-
+                                        search(finalKey);
                                     }
                                 })
                                 .setCancelable(true)
                                 .show();
-                    }
-                } else if ("gp".equals(getMatchType())) {
-                    if (!"".equals(sKey)) {
-                        sKey = "";
-                    }
-                    Object item = ((JiGeDataAdapter) baseQuickAdapter).getData().get(i);
-                    if (item instanceof JiGeDataAdapter.JiGeTitleItem_GP) {
-                        sKey = ((JiGeDataAdapter.JiGeTitleItem_GP) item).getMatchPigeonsGP().getName();
-                        new SaActionSheetDialog(getActivity())
-                                .builder()
-                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-                                        isSearch = true;
-                                        onRefresh();
-                                    }
-                                })
-                                .setCancelable(true)
-
-                                .show();
-                    }
                 }
                 return true;
             }
@@ -244,11 +247,13 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
 
     @Override
     public String getMatchType() {
+        initMatchinfo();
         return matchInfo.getLx();
     }
 
     @Override
     public String getSsid() {
+        initMatchinfo();
         return matchInfo.getSsid();
     }
 
@@ -279,11 +284,7 @@ public class JiGeDataFragment extends BasePageTurnFragment<JiGePre, JiGeDataAdap
     }
 
     public void search(String keyword) {
-        if (TextUtils.isEmpty(keyword))
-            return;
         this.sKey = keyword;
-        isSearch = true;
         onRefresh();
-
     }
 }

@@ -192,7 +192,13 @@ public class CommonTool {
         if (!TextUtils.isEmpty(DeviceID)) return DeviceID;
         //IMEI
         TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String m_szImei = TelephonyMgr.getDeviceId();
+        String m_szImei = null;
+        try {
+            m_szImei = TelephonyMgr.getDeviceId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            m_szImei = "";
+        }
 
         //Pseudo-Unique ID
         String m_szDevIDShort = "35" + //we make this look like a valid IMEI
@@ -211,7 +217,13 @@ public class CommonTool {
                 Build.USER.length() % 10; //13 digits
 
         //Android ID
-        String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String m_szAndroidID = null;
+        try {
+            m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            m_szAndroidID = "";
+        }
 
         //WIFI MAC Address string
 

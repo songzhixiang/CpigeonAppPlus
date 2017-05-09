@@ -30,7 +30,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
 
     public void loadChaZuBaoDaoDetails() {
         if (isAttached()) {
-            if (!mView.isMoreDataLoading()) mView.showRefreshLoading();
+            if (mView.getPageIndex() == 1) mView.showRefreshLoading();
             mDao.loadChaZuBaoDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
                     mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
                     mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {
@@ -72,7 +72,7 @@ public class ChaZuBaoDaoDetailsPre extends BasePresenter<IRacePigeonsView, IChaZ
 
     public void loadChaZuZhiding() {
         if (isAttached()) {
-            if (!mView.isMoreDataLoading()) mView.showRefreshLoading();
+            if (mView.getPageIndex() == 1) mView.showRefreshLoading();
             mDao.loadChaZhiDingDaoDetails(mView.getMatchType(), mView.getSsid(), mView.getFoot(),
                     mView.getName(), mView.isHascz(), mView.getPageIndex(), mView.getPageSize(),
                     mView.getCzIndex(), mView.getSkey(), new IBaseDao.OnCompleteListener<List>() {

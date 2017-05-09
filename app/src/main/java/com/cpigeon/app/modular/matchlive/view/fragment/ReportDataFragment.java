@@ -46,23 +46,28 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     SearchEditText searchEditText;
     private MatchInfo matchInfo;
     private String sKey = "";//当前搜索关键字
-    boolean isSearch = false;
+
     private int lastExpandItemPosition = -1;//最后一个索引
 
     @Override
     public void onRefresh() {
-        if (!isSearch)
-            sKey = "";
         super.onRefresh();
         lastExpandItemPosition = -1;
-        isSearch = false;
-        searchEditText.setText("");
+        if (searchEditText != null) {
+            searchEditText.setText(this.sKey);
+            searchEditText.setSelection(this.sKey.length());
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.matchInfo = ((RaceReportActivity) context).getMatchInfo();
+        initMatchinfo();
+    }
+
+    private void initMatchinfo() {
+        if (matchInfo == null)
+            this.matchInfo = ((RaceReportActivity) getActivity()).getMatchInfo();
     }
 
     @Override
@@ -84,7 +89,7 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
     protected void initView(View view) {
         super.initView(view);
         initSearch();
-        if ("gp".equals(this.matchInfo.getLx())) {
+        if ("gp".equals(getMatchType())) {
             listHeaderRaceDetialTableHeader1.setText("名次");
         }
     }
@@ -101,11 +106,13 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     @Override
     public String getMatchType() {
+        initMatchinfo();
         return matchInfo.getLx();
     }
 
     @Override
     public String getSsid() {
+        initMatchinfo();
         return matchInfo.getSsid();
     }
 
@@ -216,45 +223,45 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
         adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-
-                if ("xh".equals(getMatchType())) {
-                    if (!"".equals(sKey)) {
-                        sKey = "";
+                String key = sKey;
+                boolean show = false;
+                if (!TextUtils.isEmpty(key)) {
+                    new SaActionSheetDialog(getActivity())
+                            .builder()
+                            .addSheetItem(getString(R.string.search_prompt_clear_key), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    search("");
+                                }
+                            })
+                            .setCancelable(true)
+                            .show();
+                } else {
+                    if ("xh".equals(getMatchType())) {
+                        Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
+                        if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
+                            key = ((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getName();
+                            show = true;
+                        }
+                    } else if ("gp".equals(getMatchType())) {
+                        Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
+                        if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
+                            key = ((RaceReportAdapter.MatchTitleGPItem) item).getMatchReportGP().getName();
+                            show = true;
+                        }
                     }
-                    Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
-                    if (item instanceof RaceReportAdapter.MatchTitleXHItem) {
-                        sKey = ((RaceReportAdapter.MatchTitleXHItem) item).getMatchReportXH().getName();
+                    final String finalKey = key;
+                    if (show)
                         new SaActionSheetDialog(getActivity())
                                 .builder()
-                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
+                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), key), new SaActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        isSearch = true;
-                                        onRefresh();
+                                        search(finalKey);
                                     }
                                 })
                                 .setCancelable(true)
                                 .show();
-                    }
-                } else if ("gp".equals(getMatchType())) {
-                    if (!"".equals(sKey)) {
-                        sKey = "";
-                    }
-                    Object item = ((RaceReportAdapter) baseQuickAdapter).getData().get(i);
-                    if (item instanceof RaceReportAdapter.MatchTitleGPItem) {
-                        sKey = ((RaceReportAdapter.MatchTitleGPItem) item).getMatchReportGP().getName();
-                        new SaActionSheetDialog(getActivity())
-                                .builder()
-                                .addSheetItem(String.format(getString(R.string.search_prompt_has_key), sKey), new SaActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-                                        isSearch = true;
-                                        onRefresh();
-                                    }
-                                })
-                                .setCancelable(true)
-                                .show();
-                    }
                 }
                 return true;
             }
@@ -270,9 +277,6 @@ public class ReportDataFragment extends BasePageTurnFragment<RacePre, RaceReport
 
     public void search(String keyword) {
         this.sKey = keyword;
-        if (TextUtils.isEmpty(keyword))
-            return;
-        isSearch = true;
         onRefresh();
     }
 

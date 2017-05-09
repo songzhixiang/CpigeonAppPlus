@@ -78,15 +78,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements ISp
     }
 
 
-    @Override
-    protected void onNetworkConnected(NetUtils.NetType type) {
 
-    }
-
-    @Override
-    protected void onNetworkDisConnected() {
-
-    }
 
     @OnClick(R.id.btn_ad_spik)
     public void onViewClicked() {
