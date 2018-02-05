@@ -9,17 +9,9 @@ import android.util.Log;
 
 import com.cpigeon.app.utils.CpigeonData;
 import com.cpigeon.app.utils.cache.CacheManager;
-import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Cache;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.x;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/4/5.
@@ -41,7 +33,7 @@ public class MyApp extends Application {
         instance = this;
         initBugly();
         if (BuildConfig.DEBUG) {
-            Logger.init(TAG).methodCount(3);
+//            Logger.init(TAG).methodCount(3);
         }
         //极光推送
 //        JPushInterface.setDebugMode(BuildConfig.DEBUG);

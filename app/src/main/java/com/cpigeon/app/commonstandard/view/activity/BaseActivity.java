@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cpigeon.app.MyApp;
 import com.cpigeon.app.R;
 import com.cpigeon.app.broadcastreceiver.NetWorkStateReceiver;
 import com.cpigeon.app.commonstandard.AppManager;
@@ -80,7 +81,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         }
         mUnbinder = ButterKnife.bind(this);
-        mContext = this;
+        mContext = MyApp.getInstance();
         mPresenter = this.initPresenter();
         initView();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
@@ -333,24 +334,24 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                         .setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case DialogError:
-                dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
-                dialogPrompt.setCancelable(false);
-                dialogPrompt.setTitleText("失败")
-                        .setContentText(tip).
-                        setConfirmText(getString(R.string.confirm)).show();
+//                dialogPrompt = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+//                dialogPrompt.setCancelable(false);
+//                dialogPrompt.setTitleText("失败")
+//                        .setContentText(tip).
+//                        setConfirmText(getString(R.string.confirm)).show();
                 return true;
             case View:
             case ViewSuccess:
             case ViewError:
                 return false;
             case LoadingShow:
-                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
-                    mLoadingSweetAlertDialog.dismiss();
-                mLoadingSweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-                mLoadingSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                mLoadingSweetAlertDialog.setCancelable(true);
-                mLoadingSweetAlertDialog.setTitleText(tip);
-                mLoadingSweetAlertDialog.show();
+//                if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
+//                    mLoadingSweetAlertDialog.dismiss();
+//                mLoadingSweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+//                mLoadingSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+//                mLoadingSweetAlertDialog.setCancelable(true);
+//                mLoadingSweetAlertDialog.setTitleText(tip);
+//                mLoadingSweetAlertDialog.show();
                 return true;
             case LoadingHide:
                 if (mLoadingSweetAlertDialog != null && mLoadingSweetAlertDialog.isShowing())
